@@ -37,6 +37,42 @@
             padding: 40px 20px; /* 留出边缘让背景露出来 */
         }
 
+/* --- 新增：技术栈标签样式 --- */
+        .sidebar-skills {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.05); /* 分隔线 */
+        }
+
+        .skill-tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* 居中排列 */
+            gap: 8px; /* 标签间距 */
+        }
+
+        .sidebar-skill-tag {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.8rem;
+            color: #555;
+            background: rgba(255,255,255,0.6);
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            cursor: default;
+        }
+
+        .sidebar-skill-tag:hover {
+            background: #fff;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+
+        
     /* --- 新增：侧边栏底部的图集 --- */
         .sidebar-gallery {
             margin-top: 40px;
@@ -436,9 +472,9 @@
     <div class="paper-container">
         
         <aside class="sidebar">
-            <img src="avatar.jpg" alt="Yuri Xu" class="avatar">
+            <img src="avatar.jpg" alt="Yuxuan Xu" class="avatar">
             
-            <h1 class="name">Yuri Xu</h1>
+            <h1 class="name">Yuxuan Xu</h1>
             
             <div class="sidebar-subtitle">
                 AI Researcher | Snake Charmer 🐍<br>
@@ -446,26 +482,41 @@
             </div>
 
             <div class="contact-list">
-                
                 <a href="mailto:xuyx85@mail2.sysu.edu.cn" class="contact-item">
                     <span class="icon">📧</span> 
                     <span>xuyx85@mail2.sysu.edu.cn</span>
                 </a>
-                
                 <div class="contact-item">
                     <span class="icon">📱</span> 
                     <span>+86 188-6360-3050</span>
                 </div>
-
                 <div class="contact-item">
                     <span class="icon">🏫</span> 
                     <span>Sun Yat-sen University</span>
                 </div>
+            </div>
 
-                <a href="https://github.com/IamJerryXu" target="_blank" class="contact-item">
-                    <span class="icon">💻</span> 
-                    <span>GitHub Profile</span>
+            <div class="social-links">
+                <a href="https://github.com/IamJerryXu" target="_blank" class="social-btn">GitHub</a>
+                <a href="#" class="social-btn">Scholar</a>
+                
+                <a href="resume.pdf" target="_blank" class="social-btn" style="color: #d63384; border-color: #d63384; font-weight: bold;">
+                    <span style="font-style: normal; margin-right: 4px;">📄</span>CV
                 </a>
+            </div>
+
+            <div class="sidebar-skills">
+                <div class="gallery-title" style="font-family: 'Roboto', sans-serif;">Tech Stack</div>
+                <div class="skill-tag-container">
+                    <span class="sidebar-skill-tag">Python</span>
+                    <span class="sidebar-skill-tag">C++</span> <span class="sidebar-skill-tag">PyTorch</span>
+                    <span class="sidebar-skill-tag">OpenCV</span>
+                    
+                    <span class="sidebar-skill-tag">MATLAB</span>
+                    <span class="sidebar-skill-tag">LaTeX</span>
+                    <span class="sidebar-skill-tag">Linux</span>
+                    <span class="sidebar-skill-tag">Git</span>
+                </div>
             </div>
 
             <div class="sidebar-gallery">
