@@ -3,126 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuri Xu | AI Researcher</title>
+    <title>Yuxuan Xu | AI Researcher</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
 
-
-    
     <style>
         :root {
-            /* 核心配色：深灰文字，学术蓝作为点缀 */
-            --primary-color: #e85d75; /* 配合粉色背景，用一点柔和的红粉色作为高亮 */
-            --link-color: #2b70c9;    /* 链接依然保持学术蓝，显得专业 */
+            --primary-color: #e85d75; 
+            --link-color: #2b70c9;    
             --text-dark: #2c3e50;
             --text-light: #5f6368;
-            --glass-bg: rgba(255, 255, 255, 0.85); /* 85% 不透明度的白色 */
+            --glass-bg: rgba(255, 255, 255, 0.85);
             --glass-border: rgba(255, 255, 255, 0.9);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* --- 核心交互：滚动捕捉 --- */
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body {
             font-family: 'Roboto', sans-serif;
             color: var(--text-dark);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px; /* 留出边缘让背景露出来 */
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory; /* 强制捕捉 */
+            height: 100vh;
         }
 
-/* --- 新增：技术栈标签样式 --- */
-        .sidebar-skills {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(0,0,0,0.05); /* 分隔线 */
-        }
-
-        .skill-tag-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center; /* 居中排列 */
-            gap: 8px; /* 标签间距 */
-        }
-
-        .sidebar-skill-tag {
-            font-family: 'Roboto', sans-serif;
-            font-size: 0.8rem;
-            color: #555;
-            background: rgba(255,255,255,0.6);
-            padding: 4px 10px;
-            border-radius: 12px;
-            border: 1px solid rgba(0,0,0,0.1);
-            transition: all 0.2s;
-            cursor: default;
-        }
-
-        .sidebar-skill-tag:hover {
-            background: #fff;
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-
-        
-    /* --- 新增：侧边栏底部的图集 --- */
-        .sidebar-gallery {
-            margin-top: 40px;
-            width: 100%;
-            padding-top: 20px;
-            border-top: 1px solid rgba(0,0,0,0.05); /* 加一条淡淡的分隔线 */
-        }
-
-        .gallery-title {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #888;
-            margin-bottom: 15px;
-            text-transform: uppercase; /*以此区分正文标题 */
-            letter-spacing: 1px;
-        }
-
-        .gallery-grid {
-            display: flex;
-            flex-direction: column; /* 竖向排列 */
-            gap: 15px; /* 图片之间的间距 */
-        }
-
-        .gallery-img {
-            width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            object-fit: cover;
-            /* 如果图片尺寸不一，可以用 aspect-ratio 强制统一，比如 3:2 */
-            /* aspect-ratio: 3/2; */ 
-        }
-
-        .gallery-img:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 20px rgba(232, 93, 117, 0.2); /* 悬停时发一点粉色的光 */
-        }
-        
-        /* --- 1. 动态粉嫩背景 --- */
-        .bg-animation {
+        /* --- 1. 背景系统：星辰 + 粉蓝渐变 --- */
+        .bg-fixed {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            /* 这里的颜色是：浅粉、蜜桃、淡紫、柔白 */
-            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #e0c3fc, #fad0c4);
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            /* 更加鲜艳明快的粉蓝紫渐变 */
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            animation: gradientBG 8s ease infinite; /* 速度加快到 8s */
         }
 
         @keyframes gradientBG {
@@ -131,114 +50,265 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- 2. 悬浮的“玻璃”卡片容器 --- */
-        .paper-container {
-            width: 100%;
-            max-width: 1100px; /* 限制最大宽度，像一张大纸 */
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px); /* 核心：毛玻璃模糊效果 */
-            -webkit-backdrop-filter: blur(20px); /* 兼容 Safari */
-            border-radius: 24px; /* 圆角 */
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); /* 柔和的阴影 */
-            display: flex;
-            overflow: hidden; /* 防止内容溢出圆角 */
-            min-height: 85vh;
+        /* 星光层 */
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0));
+            background-size: 200px 200px;
+            animation: twinkle 4s linear infinite;
+            opacity: 0.6;
         }
 
-        /* --- 左侧侧边栏 --- */
-/* --- Sidebar 新样式：学术风格 --- */
+        @keyframes twinkle {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-200px); }
+        }
+
+        /* --- 2. 页面容器 --- */
+        section.page-section {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start; /* 滚动吸附点 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* --- 第一屏：Hero / Welcome --- */
+        .hero-content {
+            text-align: center;
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif; /* 用一种很浪漫的字体 */
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out;
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            color: #fff;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
+        }
+
+        /* --- 第二屏：Profile Paper --- */
+        /* 复用你之前的 Paper Container 样式，但做微调以适应 Section */
+        .paper-container {
+            width: 90%;
+            max-width: 1100px;
+            height: 85vh; /* 稍微留点空隙 */
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            display: flex;
+            overflow: hidden;
+            opacity: 0; /* 初始隐藏，滚动到了再显示 */
+            transform: scale(0.95);
+            transition: all 0.8s ease;
+        }
+
+        /* 当第二屏处于活动状态时，内容浮现 */
+        section.page-section:focus-within .paper-container,
+        section.page-section:hover .paper-container {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ---------------------------------------------------------
+           以下是你之前的 Sidebar 和 Main Content 样式 (完全保留)
+           --------------------------------------------------------- */
+        
+        /* Sidebar */
         .sidebar {
             width: 300px;
-            background: rgba(255, 255, 255, 0.5); /* 保持半透明 */
-            padding: 50px 30px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 40px 30px; /* 稍微减少padding以适应高度 */
             text-align: center;
             border-right: 1px solid rgba(0,0,0,0.05);
             flex-shrink: 0;
-            /* 核心修改：全局改为学术常用的衬线字体 */
-            font-family: 'Georgia', 'Times New Roman', serif; 
+            font-family: 'Georgia', 'Times New Roman', serif;
+            overflow-y: auto; /* 侧边栏如果内容多也允许内部滚动 */
         }
 
         .avatar {
-            width: 160px;
-            height: 160px;
+            width: 140px; /* 稍微调小一点，防溢出 */
+            height: 140px;
             border-radius: 50%;
             object-fit: cover;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             border: 4px solid #fff;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        /* 名字：加大字号，使用 Georgia 字体 */
         .name {
             font-family: 'Georgia', serif;
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #2c3e50;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
+            margin-bottom: 8px;
         }
 
-        /* 新增：Slogan (Snake Charmer...) 的样式 */
         .sidebar-subtitle {
             font-family: 'Georgia', serif;
-            font-size: 1.05rem;
-            font-style: italic; /* 斜体更有书卷气 */
+            font-size: 1rem;
+            font-style: italic;
             color: #7f8c8d;
-            margin-bottom: 30px; /* 拉开与联系方式的距离 */
-            line-height: 1.5;
+            margin-bottom: 25px;
+            line-height: 1.4;
         }
 
-        /* 新增：联系方式列表布局 */
         .contact-list {
             display: flex;
             flex-direction: column;
-            gap: 15px; /* 每一行之间的间距 */
-            align-items: center; /* 居中对齐 */
-            font-size: 0.95rem;
+            gap: 10px;
+            align-items: center;
+            font-size: 0.9rem;
             color: #444;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .contact-item {
             display: flex;
             align-items: center;
-            gap: 10px; /* 图标和文字的间距 */
+            gap: 8px;
             text-decoration: none;
             color: #333;
             transition: all 0.2s;
         }
+        .contact-item:hover { color: var(--primary-color); text-decoration: underline; }
+        .icon { font-size: 1.1rem; filter: grayscale(20%); }
 
-        .contact-item:hover {
-            color: var(--primary-color); /* 悬停变粉红色 */
-            text-decoration: underline;
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px; /* 间距微调 */
         }
 
-        /* Emoji 图标微调 */
-        .icon {
-            font-size: 1.2rem;
-            filter: grayscale(20%); /* 让 emoji 颜色稍微低调一点点，更学术 */
+        .social-btn {
+            text-decoration: none;
+            color: #555;
+            font-size: 0.85rem;
+            padding: 6px 14px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            font-family: 'Roboto', sans-serif;
         }
-        
-/* =========================================
-           RIGHT SIDE (MAIN CONTENT) STYLES - MERGED
-           ========================================= */
+        .social-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
 
-        /* --- 主容器：正文用易读的 Roboto，标题用学术的 Georgia --- */
+        /* Tech Stack Styles */
+        .sidebar-skills {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        .skill-tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+        }
+        .sidebar-skill-tag {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.75rem;
+            color: #555;
+            background: rgba(255,255,255,0.6);
+            padding: 4px 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.2s;
+            cursor: default;
+        }
+        .sidebar-skill-tag:hover {
+            background: #fff;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        /* Gallery Styles */
+        .sidebar-gallery {
+            margin-top: 25px;
+            width: 100%;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        .gallery-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #888;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Roboto', sans-serif;
+        }
+        .gallery-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .gallery-img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            object-fit: cover;
+        }
+        .gallery-img:hover { transform: translateY(-2px) scale(1.02); }
+
+        /* Main Content Styles */
         .main-content {
             flex: 1;
             padding: 50px 60px;
-            overflow-y: auto; /* 内容溢出时独立滚动 */
-            font-family: 'Roboto', sans-serif; 
+            overflow-y: auto;
+            font-family: 'Roboto', sans-serif;
         }
 
-        section {
-            margin-bottom: 60px;
-        }
+        section { margin-bottom: 50px; }
 
-        /* --- 标题样式：Georgia 字体 + 粉色装饰线 --- */
         .section-title {
-            font-family: 'Georgia', serif; /* 【修改】改为学术衬线体 */
+            font-family: 'Georgia', serif;
             font-size: 1.8rem;
             font-weight: 700;
             color: #2c3e50;
@@ -246,428 +316,265 @@
             display: flex;
             align-items: center;
         }
-        
-        /* 保留：标题后那条灵动的粉色渐变线 */
         .section-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 4px;
+            content: ''; display: block; width: 50px; height: 4px;
             background: linear-gradient(to right, #ff9a9e, #fad0c4);
-            margin-left: 15px;
-            border-radius: 2px;
+            margin-left: 15px; border-radius: 2px;
         }
 
-        p {
-            margin-bottom: 15px;
-            color: #444;
-            font-size: 1.05rem;
-            line-height: 1.7;
-        }
+        p { margin-bottom: 15px; color: #444; font-size: 1.05rem; line-height: 1.7; }
 
-        /* --- News 列表 --- */
-        .news-list {
-            list-style: none;
-        }
+        /* Interest Items */
+        .interest-item { margin-bottom: 25px; padding-left: 15px; border-left: 3px solid #ff9a9e; }
+        .interest-title { font-family: 'Georgia', serif; font-size: 1.3rem; font-weight: 700; color: #333; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
 
-        .news-item {
-            display: flex;
-            margin-bottom: 15px;
-            font-size: 1rem;
-            align-items: baseline;
-        }
+        /* News List */
+        .news-list { list-style: none; }
+        .news-item { display: flex; margin-bottom: 15px; font-size: 1rem; align-items: baseline; }
+        .news-item:hover { background: rgba(255,255,255,0.5); border-radius: 4px; }
+        .news-date { min-width: 100px; font-family: 'Georgia', serif; font-weight: 700; color: var(--text-light); font-size: 0.95rem; }
 
-        .news-item:hover {
-            /* 鼠标悬停时的小交互 */
-            background: rgba(255,255,255,0.5); 
-            border-radius: 4px;
-        }
-
-        .news-date {
-            min-width: 100px;
-            font-family: 'Georgia', serif; /* 【修改】日期也用衬线体 */
-            font-weight: 700;
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-
-        /* --- Projects / Publications 卡片 --- */
+        /* Project Items */
         .pub-item {
-            display: flex;
-            gap: 25px;
-            margin-bottom: 45px;
-            background: rgba(255,255,255,0.5);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.6);
+            display: flex; gap: 25px; margin-bottom: 45px;
+            background: rgba(255,255,255,0.5); padding: 25px;
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.6);
             transition: transform 0.2s, box-shadow 0.2s;
         }
+        .pub-item:hover { background: rgba(255,255,255,0.85); box-shadow: 0 10px 30px rgba(0,0,0,0.05); transform: translateY(-2px); }
 
-        .pub-item:hover {
-            background: rgba(255,255,255,0.85);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transform: translateY(-2px);
-        }
-
-        /* --- 左侧多图堆叠样式 (必须保留) --- */
-        .pub-thumb-stack {
-            width: 240px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            flex-shrink: 0;
-        }
-
-        .stack-img {
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.6);
-            background: #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .stack-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(232, 93, 117, 0.15);
-            z-index: 2;
-        }
-
-        /* --- 单张图片样式 (给智能车用的) --- */
-        .pub-thumb {
-            width: 240px;
-            height: 150px;
-            flex-shrink: 0;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.05);
-            background: #fff;
-        }
+        .pub-thumb-stack { width: 240px; display: flex; flex-direction: column; gap: 15px; flex-shrink: 0; }
+        .stack-img { width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.6); background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s ease; cursor: pointer; }
+        .stack-img:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(232, 93, 117, 0.15); z-index: 2; }
         
-        .pub-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .pub-thumb { width: 240px; height: 150px; flex-shrink: 0; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); background: #fff; }
+        .pub-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- 项目文字详情 --- */
-        .pub-details {
-            flex: 1;
-        }
+        .pub-details { flex: 1; }
+        .pub-title { font-family: 'Georgia', serif; font-size: 1.4rem; font-weight: 700; color: #2c3e50; text-decoration: none; margin-bottom: 8px; display: block; line-height: 1.3; }
+        .pub-title:hover { color: var(--primary-color); text-decoration: underline; }
+        .pub-authors { font-family: 'Georgia', serif; font-size: 0.95rem; color: #666; margin-bottom: 12px; font-style: italic; }
+        .pub-desc { font-size: 0.95rem; color: #555; margin-bottom: 12px; }
+        .pub-desc ul { padding-left: 16px; margin-top: 5px; }
+        .pub-desc li { margin-bottom: 4px; }
 
-        .pub-title {
-            font-family: 'Georgia', serif; /* 【修改】项目标题用衬线体 */
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #2c3e50;
-            text-decoration: none;
-            margin-bottom: 8px;
-            display: block;
-            line-height: 1.3;
-        }
+        .links .tag { display: inline-block; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; background: #fdf2f4; color: #d63384; font-weight: 600; margin-right: 8px; border: 1px solid #f8d7da; }
+        .links a { font-size: 0.9rem; margin-right: 12px; color: var(--link-color); text-decoration: none; font-weight: 500; }
+        .links a:hover { text-decoration: underline; }
 
-        .pub-title:hover {
-            color: var(--primary-color);
-            text-decoration: underline;
-        }
-
-        .pub-authors {
-            font-family: 'Georgia', serif; /* 【修改】作者栏用衬线体 */
-            font-size: 0.95rem;
-            color: #666;
-            margin-bottom: 12px;
-            font-style: italic;
-        }
-
-        .pub-desc {
-            font-size: 0.95rem;
-            color: #555;
-            margin-bottom: 12px;
-        }
-
-        .pub-desc ul {
-            padding-left: 16px;
-            margin-top: 5px;
-        }
-        
-        .pub-desc li {
-            margin-bottom: 4px;
-        }
-
-        .tag {
-            display: inline-block;
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: #fdf2f4;
-            color: #d63384;
-            font-weight: 600;
-            margin-right: 8px;
-            border: 1px solid #f8d7da;
-        }
-
-        .links a {
-            font-size: 0.9rem;
-            margin-right: 12px;
-            color: var(--link-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .links a:hover {
-            text-decoration: underline;
-        }
-
-        /* Research Interests 样式 (新增) */
-        .interest-item {
-            margin-bottom: 25px;
-            padding-left: 15px;
-            border-left: 3px solid #ff9a9e;
-        }
-
-        .interest-title {
-            font-family: 'Georgia', serif; /* 【修改】 */
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* --- 移动端适配 (保留) --- */
+        /* Mobile */
         @media (max-width: 850px) {
-            body { padding: 0; display: block; }
-            .paper-container { 
-                flex-direction: column; 
-                border-radius: 0; 
-                min-height: 100vh;
-                border: none;
-            }
-            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #eee; padding: 40px 20px; }
-            .main-content { padding: 40px 20px; }
+            body { overflow-y: auto; scroll-snap-type: none; height: auto; }
+            section.page-section { height: auto; padding: 40px 0; }
+            .hero-title { font-size: 2.5rem; }
+            .paper-container { flex-direction: column; height: auto; transform: none; width: 100%; border-radius: 0; border: none; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #eee; height: auto; overflow: visible; }
             .pub-item { flex-direction: column; }
-            .pub-thumb { width: 100%; height: auto; aspect-ratio: 16/9; }
-            
-            /* 手机上多图改为横向滑动 */
-            .pub-thumb-stack {
-                width: 100%;
-                flex-direction: row;
-                overflow-x: auto;
-                padding-bottom: 10px;
-            }
-            .stack-img {
-                width: 200px;
-                flex-shrink: 0;
-            }
+            .pub-thumb-stack { width: 100%; flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+            .stack-img { width: 200px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-animation"></div>
+    <div class="bg-fixed"></div>
+    <div class="stars"></div>
 
-    <div class="paper-container">
-        
-        <aside class="sidebar">
-            <img src="avatar.jpg" alt="Yuxuan Xu" class="avatar">
-            
-            <h1 class="name">Yuxuan Xu</h1>
-            
-            <div class="sidebar-subtitle">
-                AI Researcher | Snake Charmer 🐍<br>
-                Graph Whisperer 🕸️
+    <section class="page-section" id="hero">
+        <div class="hero-content">
+            <div class="hero-title">Hello, I'm Yuxuan.</div>
+            <div class="hero-subtitle">Exploring the world through Vision & Code.</div>
+            <div class="scroll-hint">
+                Scroll Down <br> ↓
             </div>
+        </div>
+    </section>
 
-            <div class="contact-list">
-                <a href="mailto:xuyx85@mail2.sysu.edu.cn" class="contact-item">
-                    <span class="icon">📧</span> 
-                    <span>xuyx85@mail2.sysu.edu.cn</span>
-                </a>
-                <div class="contact-item">
-                    <span class="icon">📱</span> 
-                    <span>+86 188-6360-3050</span>
-                </div>
-                <div class="contact-item">
-                    <span class="icon">🏫</span> 
-                    <span>Sun Yat-sen University</span>
-                </div>
-            </div>
-
-            <div class="social-links">
-                <a href="https://github.com/IamJerryXu" target="_blank" class="social-btn">GitHub</a>
-                <a href="#" class="social-btn">Scholar</a>
+    <section class="page-section" id="profile">
+        <div class="paper-container">
+            
+            <aside class="sidebar">
+                <img src="avatar.jpg" alt="Yuxuan Xu" class="avatar">
                 
-                <a href="resume.pdf" target="_blank" class="social-btn" style="color: #d63384; border-color: #d63384; font-weight: bold;">
-                    <span style="font-style: normal; margin-right: 4px;">📄</span>CV
-                </a>
-            </div>
-
-            <div class="sidebar-skills">
-                <div class="gallery-title" style="font-family: 'Roboto', sans-serif;">Tech Stack</div>
-                <div class="skill-tag-container">
-                    <span class="sidebar-skill-tag">Python</span>
-                    <span class="sidebar-skill-tag">C++</span> <span class="sidebar-skill-tag">PyTorch</span>
-                    <span class="sidebar-skill-tag">OpenCV</span>
-                    
-                    <span class="sidebar-skill-tag">MATLAB</span>
-                    <span class="sidebar-skill-tag">LaTeX</span>
-                    <span class="sidebar-skill-tag">Linux</span>
-                    <span class="sidebar-skill-tag">Git</span>
-                </div>
-            </div>
-
-            <div class="sidebar-gallery">
-                <div class="gallery-title" style="font-family: 'Roboto', sans-serif;">Moments</div>
-                <div class="gallery-grid">
-                    <img src="gallery_1.jpg" alt="Life" class="gallery-img">
-                    <img src="gallery_2.jpg" alt="Campus" class="gallery-img">
-                    <img src="gallery_3.jpg" alt="Work" class="gallery-img">
-                </div>
-            </div>
-            
-        </aside>
-
-        <main class="main-content">
-            
-<main class="main-content">
-            
-            <section id="about">
-                <h2 class="section-title">About Me</h2>
-                <p>
-                    I am a senior undergraduate student at <strong>Sun Yat-sen University</strong>, majoring in Intelligent Science and Technology. 
-                    I am currently ranked in the <strong>Top 10%</strong> of my cohort.
-                </p>
-                <p>
-                    My research interests lie in <strong>Computer Vision</strong> and <strong>Generative Models</strong>, specifically focusing on Diffusion Models, Open-Vocabulary Object Detection, and Embodied AI.
-                    I am passionate about building efficient and robust visual systems that can understand the open world.
-                </p>
-            </section>
-
-            <section id="research-interests">
-                <h2 class="section-title">Research Interests</h2>
+                <h1 class="name">Yuxuan Xu</h1>
                 
-                <div class="interest-item">
-                    <h3 class="interest-title">
-                        <span style="font-size: 1.4rem;">🐍</span> Diffusion Models for Image Segmentation
-                    </h3>
-                    <p style="color: #444; line-height: 1.7;">
-                        Currently exploring diffusion-based approaches for image segmentation, with a focus on snake evolution methods. 
-                        Yes, we're making digital snakes evolve—Darwin would be proud, or possibly confused. 
-                        The goal is to develop more robust boundary detection and refinement techniques that actually work in the wild (not just on clean benchmark datasets).
+                <div class="sidebar-subtitle">
+                    AI Researcher | Snake Charmer 🐍<br>
+                    Graph Whisperer 🕸️
+                </div>
+
+                <div class="contact-list">
+                    <a href="mailto:xuyx85@mail2.sysu.edu.cn" class="contact-item">
+                        <span class="icon">📧</span> 
+                        <span>xuyx85@mail2.sysu.edu.cn</span>
+                    </a>
+                    <div class="contact-item">
+                        <span class="icon">📱</span> 
+                        <span>+86 188-6360-3050</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon">🏫</span> 
+                        <span>Sun Yat-sen University</span>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://github.com/IamJerryXu" target="_blank" class="social-btn">GitHub</a>
+                    <a href="#" class="social-btn">Scholar</a>
+                    <a href="resume.pdf" target="_blank" class="social-btn" style="color: #d63384; border-color: #d63384; font-weight: bold;">
+                        <span style="font-style: normal; margin-right: 4px;">📄</span>CV
+                    </a>
+                </div>
+
+                <div class="sidebar-skills">
+                    <div class="gallery-title">Tech Stack</div>
+                    <div class="skill-tag-container">
+                        <span class="sidebar-skill-tag">Python</span>
+                        <span class="sidebar-skill-tag">C++</span>
+                        <span class="sidebar-skill-tag">PyTorch</span>
+                        <span class="sidebar-skill-tag">OpenCV</span>
+                        <span class="sidebar-skill-tag">MATLAB</span>
+                        <span class="sidebar-skill-tag">LaTeX</span>
+                        <span class="sidebar-skill-tag">Linux</span>
+                        <span class="sidebar-skill-tag">Git</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-gallery">
+                    <div class="gallery-title">Moments</div>
+                    <div class="gallery-grid">
+                        <img src="gallery_1.jpg" alt="Life" class="gallery-img">
+                        <img src="gallery_2.jpg" alt="Campus" class="gallery-img">
+                        <img src="gallery_3.jpg" alt="Work" class="gallery-img">
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                
+                <section id="about">
+                    <h2 class="section-title">About Me</h2>
+                    <p>
+                        I am a senior undergraduate student at <strong>Sun Yat-sen University</strong>, majoring in Intelligent Science and Technology. 
+                        I am currently ranked in the <strong>Top 10%</strong> (16/159) of my cohort.
                     </p>
-                </div>
-
-                <div class="interest-item">
-                    <h3 class="interest-title">
-                        <span style="font-size: 1.4rem;">🧠</span> Graph Reinforcement Learning
-                    </h3>
-                    <p style="color: #444; line-height: 1.7;">
-                        Investigating how to make graphs learn through reinforcement learning frameworks. 
-                        Think of it as teaching a network of nodes to make better life choices through trial, error, and a lot of reward shaping. 
-                        The research focuses on policy optimization and representation learning for graph-structured data—because sometimes the world is better represented as a graph than a grid.
+                    <p>
+                        My research interests lie in <strong>Computer Vision</strong> and <strong>Generative Models</strong>, specifically focusing on Diffusion Models, Open-Vocabulary Object Detection, and Embodied AI.
+                        I am passionate about building efficient and robust visual systems that can understand the open world.
                     </p>
-                </div>
-            </section>
-    
-            <section id="news">
-                <h2 class="section-title">News</h2>
-                <ul class="news-list">
-                    <li class="news-item">
-                        <span class="news-date">Dec 2025</span>
-                        <span>Working on a new paper targeting MICCAI 2026.</span>
-                    </li>
-                    <li class="news-item">
-                        <span class="news-date">Nov 2025</span>
-                        <span>Completed the extended research on OV-DINO with LoRA fine-tuning.</span>
-                    </li>
-                    <li class="news-item">
-                        <span class="news-date">August 2025</span>
-                        <span>Started research internship focusing on Multi-modal Large Language Models and Diffusion Models.</span>
-                    </li>
-                </ul>
-            </section>
+                </section>
 
-            <section id="projects">
-                <h2 class="section-title">Selected Projects</h2>
-                
-                <div class="pub-item">
+                <section id="research-interests">
+                    <h2 class="section-title">Research Interests</h2>
                     
-                    <div class="pub-thumb-stack">
-                        <img src="ov-dino.jpg" alt="Framework" class="stack-img">
-                        
-                        <img src="ov-dino_chart.jpg" alt="Analysis" class="stack-img">
-                        
-                        <img src="ov-dino_result.jpg" alt="Visualization" class="stack-img">
+                    <div class="interest-item">
+                        <h3 class="interest-title">
+                            <span style="font-size: 1.4rem;">🐍</span> Diffusion Models for Image Segmentation
+                        </h3>
+                        <p>
+                            Currently exploring diffusion-based approaches for image segmentation, with a focus on snake evolution methods. 
+                            Yes, we're making digital snakes evolve—Darwin would be proud. 
+                            The goal is to develop more robust boundary detection and refinement techniques that actually work in the wild.
+                        </p>
                     </div>
 
-                    <div class="pub-details">
-                        <a href="Xu_OVDINO_Report_2025.pdf" target="_blank" class="pub-title">
-                            Reproduction and Extension of OV-DINO for Open-Vocabulary Detection
-                        </a>
-                        
-                        <div class="pub-authors">
-                            <strong>Sole Author</strong> | Computer Vision Research Project
+                    <div class="interest-item">
+                        <h3 class="interest-title">
+                            <span style="font-size: 1.4rem;">🧠</span> Graph Reinforcement Learning
+                        </h3>
+                        <p>
+                            Investigating how to make graphs learn through reinforcement learning frameworks. 
+                            Think of it as teaching a network of nodes to make better life choices through trial, error, and a lot of reward shaping. 
+                        </p>
+                    </div>
+                </section>
+
+                <section id="news">
+                    <h2 class="section-title">News</h2>
+                    <ul class="news-list">
+                        <li class="news-item">
+                            <span class="news-date">Dec 2025</span>
+                            <span>Working on a new paper targeting MICCAI 2026.</span>
+                        </li>
+                        <li class="news-item">
+                            <span class="news-date">Nov 2025</span>
+                            <span>Completed the extended research on OV-DINO with LoRA fine-tuning.</span>
+                        </li>
+                        <li class="news-item">
+                            <span class="news-date">May 2025</span>
+                            <span>Started research internship focusing on Multi-modal LLMs.</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <section id="projects">
+                    <h2 class="section-title">Selected Projects</h2>
+                    
+                    <div class="pub-item">
+                        <div class="pub-thumb-stack">
+                            <img src="ov-dino.jpg" alt="Framework" class="stack-img">
+                            <img src="ov-dino_chart.jpg" alt="Analysis" class="stack-img">
+                            <img src="ov-dino_result.jpg" alt="Visualization" class="stack-img">
                         </div>
-                        
-                        <div class="pub-desc">
-                            Based on the SOTA detector OV-DINO, I conducted a comprehensive reproduction and extension study:
-                            <ul>
-                                <li><strong>Architecture:</strong> Benchmarked Swin-T/B and ConvNeXt backbones to analyze model capacity vs. alignment.</li>
-                                <li><strong>Efficiency:</strong> Implemented <strong>LoRA</strong> (Low-Rank Adaptation), achieving 98% performance with only <strong>2%</strong> parameters.</li>
-                                <li><strong>Prompt Engineering:</strong> Designed attribute-aware prompts that improved Rare-class AP by <strong>+1.6</strong>.</li>
-                                <li><strong>Application:</strong> Cascaded with SAM for zero-shot instance segmentation.</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="links">
-                            <span class="tag">CV & Multimodal</span>
-                            <a href="https://github.com/IamJerryXu" target="_blank">[Code]</a>
-                            <a href="Xu_OVDINO_Report_2025.pdf" target="_blank">[Full Report PDF]</a>
+                        <div class="pub-details">
+                            <a href="Xu_OVDINO_Report_2025.pdf" target="_blank" class="pub-title">
+                                Reproduction and Extension of OV-DINO for Open-Vocabulary Detection
+                            </a>
+                            <div class="pub-authors">
+                                <strong>Sole Author</strong> | Computer Vision Research Project
+                            </div>
+                            <div class="pub-desc">
+                                Based on the SOTA detector OV-DINO, I conducted a comprehensive reproduction and extension study:
+                                <ul>
+                                    <li><strong>Architecture:</strong> Benchmarked Swin-T/B and ConvNeXt backbones.</li>
+                                    <li><strong>Efficiency:</strong> Implemented <strong>LoRA</strong>, achieving 98% performance with 2% parameters.</li>
+                                    <li><strong>Prompt Engineering:</strong> Designed attribute-aware prompts (Rare-class AP <strong>+1.6</strong>).</li>
+                                    <li><strong>Application:</strong> Cascaded with SAM for zero-shot instance segmentation.</li>
+                                </ul>
+                            </div>
+                            <div class="links">
+                                <span class="tag">CV & Multimodal</span>
+                                <a href="https://github.com/IamJerryXu" target="_blank">[Code]</a>
+                                <a href="Xu_OVDINO_Report_2025.pdf" target="_blank">[Full Report PDF]</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="pub-item">
-                    <div class="pub-thumb">
-                        <img src="smartcar_demo.jpg" alt="Smart Car Prototype" style="object-fit: cover;">
-                    </div>
-                    <div class="pub-details">
-                        <span class="pub-title">Autonomous Racing Car Navigation System</span>
-                        
-                        <div class="pub-authors">
-                            <strong>Team Leader</strong> | National Smart Car Competition
+
+                    <div class="pub-item">
+                        <div class="pub-thumb">
+                            <img src="smartcar_demo.jpg" alt="Smart Car Prototype">
                         </div>
-                        
-                        <div class="pub-desc">
-                            Developed a high-speed autonomous control system using TC264 microcontroller and OpenCV. 
-                            Designed a PID control algorithm for stable lane tracking at 2.5m/s.
-                            Won the <strong>Provincial Second Prize</strong>.
-                        </div>
-                        
-                        <div class="links">
-                            <span class="tag">Robotics</span>
-                            <a href="#">[Demo Video]</a>
+                        <div class="pub-details">
+                            <span class="pub-title">Autonomous Racing Car Navigation System</span>
+                            <div class="pub-authors">
+                                <strong>Team Leader</strong> | National Smart Car Competition
+                            </div>
+                            <div class="pub-desc">
+                                Developed a high-speed autonomous control system using TC264 microcontroller and OpenCV. 
+                                Designed a PID control algorithm for stable lane tracking at 2.5m/s.
+                                Won the <strong>Provincial Second Prize</strong>.
+                            </div>
+                            <div class="links">
+                                <span class="tag">Robotics</span>
+                                <a href="#">[Demo Video]</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </section>
 
-            </section>
+                <section id="honors">
+                    <h2 class="section-title">Honors & Awards</h2>
+                    <ul style="padding-left: 20px; line-height: 1.8; color: #555;">
+                        <li>Provincial Second Prize, China Undergraduate Mathematical Contest in Modeling (2024)</li>
+                        <li>Honorable Mention, MCM/ICM (2024)</li>
+                        <li>Provincial Second Prize, National Smart Car Competition</li>
+                        <li>SYSU Outstanding Student Scholarship (Top 10%)</li>
+                    </ul>
+                </section>
 
-            <section id="honors">
-                <h2 class="section-title">Honors & Awards</h2>
-                <ul style="padding-left: 20px; line-height: 1.8; color: #555;">
-                    <li>Provincial Second Prize, China Undergraduate Mathematical Contest in Modeling (2024)</li>
-                    <li>Honorable Mention, MCM/ICM (2024)</li>
-                    <li>Provincial Second Prize, National Smart Car Competition</li>
-                    <li>SYSU Outstanding Student Scholarship (Top 5%)</li>
-                </ul>
-            </section>
-
-        </main>
-    </div>
+            </main>
+        </div>
+    </section>
 
 </body>
 </html>
