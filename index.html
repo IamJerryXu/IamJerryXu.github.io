@@ -184,33 +184,39 @@
             filter: grayscale(20%); /* 让 emoji 颜色稍微低调一点点，更学术 */
         }
         
-        /* --- 右侧主要内容 --- */
+/* =========================================
+           RIGHT SIDE (MAIN CONTENT) STYLES - MERGED
+           ========================================= */
+
+        /* --- 主容器：正文用易读的 Roboto，标题用学术的 Georgia --- */
         .main-content {
             flex: 1;
-            padding: 60px 60px;
-            overflow-y: auto; /* 如果内容太长，右侧单独滚动 */
+            padding: 50px 60px;
+            overflow-y: auto; /* 内容溢出时独立滚动 */
+            font-family: 'Roboto', sans-serif; 
         }
 
         section {
-            margin-bottom: 50px;
+            margin-bottom: 60px;
         }
 
+        /* --- 标题样式：Georgia 字体 + 粉色装饰线 --- */
         .section-title {
-            font-family: 'Lato', sans-serif;
-            font-size: 1.5rem;
+            font-family: 'Georgia', serif; /* 【修改】改为学术衬线体 */
+            font-size: 1.8rem;
             font-weight: 700;
-            color: #333;
+            color: #2c3e50;
             margin-bottom: 25px;
             display: flex;
             align-items: center;
         }
         
-        /* 标题下的小装饰线 */
+        /* 保留：标题后那条灵动的粉色渐变线 */
         .section-title::after {
             content: '';
             display: block;
-            width: 40px;
-            height: 3px;
+            width: 50px;
+            height: 4px;
             background: linear-gradient(to right, #ff9a9e, #fad0c4);
             margin-left: 15px;
             border-radius: 2px;
@@ -219,51 +225,83 @@
         p {
             margin-bottom: 15px;
             color: #444;
+            font-size: 1.05rem;
+            line-height: 1.7;
         }
 
-        /* News 列表 */
+        /* --- News 列表 --- */
         .news-list {
             list-style: none;
         }
 
         .news-item {
             display: flex;
-            margin-bottom: 12px;
-            font-size: 0.95rem;
-            border-left: 3px solid #eee;
-            padding-left: 15px;
-            transition: border-color 0.3s;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            align-items: baseline;
         }
 
         .news-item:hover {
-            border-left-color: var(--primary-color);
+            /* 鼠标悬停时的小交互 */
+            background: rgba(255,255,255,0.5); 
+            border-radius: 4px;
         }
 
         .news-date {
-            min-width: 90px;
+            min-width: 100px;
+            font-family: 'Georgia', serif; /* 【修改】日期也用衬线体 */
             font-weight: 700;
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
-        /* Project / Publications 样式 */
+        /* --- Projects / Publications 卡片 --- */
         .pub-item {
             display: flex;
             gap: 25px;
-            margin-bottom: 40px;
-            background: rgba(255,255,255,0.4);
-            padding: 20px;
+            margin-bottom: 45px;
+            background: rgba(255,255,255,0.5);
+            padding: 25px;
             border-radius: 12px;
-            transition: transform 0.2s;
+            border: 1px solid rgba(255,255,255,0.6);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .pub-item:hover {
-            background: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.85);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transform: translateY(-2px);
         }
 
+        /* --- 左侧多图堆叠样式 (必须保留) --- */
+        .pub-thumb-stack {
+            width: 240px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .stack-img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.6);
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stack-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(232, 93, 117, 0.15);
+            z-index: 2;
+        }
+
+        /* --- 单张图片样式 (给智能车用的) --- */
         .pub-thumb {
-            width: 220px; /* 图片稍微大一点 */
-            height: 140px;
+            width: 240px;
+            height: 150px;
             flex-shrink: 0;
             border-radius: 8px;
             overflow: hidden;
@@ -274,36 +312,40 @@
         .pub-thumb img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* 保证图表完整显示 */
+            object-fit: cover;
         }
 
+        /* --- 项目文字详情 --- */
         .pub-details {
             flex: 1;
         }
 
         .pub-title {
-            font-size: 1.15rem;
+            font-family: 'Georgia', serif; /* 【修改】项目标题用衬线体 */
+            font-size: 1.4rem;
             font-weight: 700;
-            color: #222;
+            color: #2c3e50;
             text-decoration: none;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             display: block;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
         .pub-title:hover {
-            color: var(--link-color);
+            color: var(--primary-color);
             text-decoration: underline;
         }
 
         .pub-authors {
-            font-size: 0.9rem;
+            font-family: 'Georgia', serif; /* 【修改】作者栏用衬线体 */
+            font-size: 0.95rem;
             color: #666;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-style: italic;
         }
 
         .pub-desc {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #555;
             margin-bottom: 12px;
         }
@@ -322,8 +364,8 @@
             font-size: 0.75rem;
             padding: 3px 8px;
             border-radius: 4px;
-            background: #fdf2f4; /* 淡淡的粉色背景 */
-            color: #d63384;      /* 深粉色文字 */
+            background: #fdf2f4;
+            color: #d63384;
             font-weight: 600;
             margin-right: 8px;
             border: 1px solid #f8d7da;
@@ -341,47 +383,25 @@
             text-decoration: underline;
         }
 
-/* --- 新增：左侧多图竖向堆叠样式 --- */
-        .pub-thumb-stack {
-            width: 240px;  /* 保持宽度固定 */
+        /* Research Interests 样式 (新增) */
+        .interest-item {
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 3px solid #ff9a9e;
+        }
+
+        .interest-title {
+            font-family: 'Georgia', serif; /* 【修改】 */
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
             display: flex;
-            flex-direction: column; /* 竖向排列 */
-            gap: 15px;     /* 图片之间的间距 */
-            flex-shrink: 0; /* 防止被挤压 */
+            align-items: center;
+            gap: 10px;
         }
 
-        .stack-img {
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.6); /* 半透明白边 */
-            background: #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            cursor: pointer; /* 暗示可点击（如果以后想做大图预览） */
-        }
-
-        .stack-img:hover {
-            transform: scale(1.05); /* 悬停轻微放大 */
-            box-shadow: 0 8px 20px rgba(232, 93, 117, 0.15); /* 粉色光晕 */
-            z-index: 2;
-        }
-
-        /* 移动端适配：手机上图片改为横向滑动，或者只显示一张 */
-        @media (max-width: 850px) {
-            .pub-thumb-stack {
-                width: 100%;
-                flex-direction: row; /* 手机上改为横向 */
-                overflow-x: auto;   /* 允许左右滑动 */
-                padding-bottom: 10px;
-            }
-            .stack-img {
-                width: 200px; /* 手机上固定宽度 */
-                flex-shrink: 0;
-            }
-        }
-        
-
-        /* 移动端适配 */
+        /* --- 移动端适配 (保留) --- */
         @media (max-width: 850px) {
             body { padding: 0; display: block; }
             .paper-container { 
@@ -394,6 +414,18 @@
             .main-content { padding: 40px 20px; }
             .pub-item { flex-direction: column; }
             .pub-thumb { width: 100%; height: auto; aspect-ratio: 16/9; }
+            
+            /* 手机上多图改为横向滑动 */
+            .pub-thumb-stack {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            .stack-img {
+                width: 200px;
+                flex-shrink: 0;
+            }
         }
     </style>
 </head>
