@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuxuan Xu | Sun Yat-sen University</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Yuxuan Xu | AI Researcher</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary-color: #2b70c9; /* 学术蓝 */
-            --text-dark: #333333;
-            --text-light: #666666;
-            --bg-color: #ffffff;
-            --sidebar-width: 280px;
+            /* 核心配色：深灰文字，学术蓝作为点缀 */
+            --primary-color: #e85d75; /* 配合粉色背景，用一点柔和的红粉色作为高亮 */
+            --link-color: #2b70c9;    /* 链接依然保持学术蓝，显得专业 */
+            --text-dark: #2c3e50;
+            --text-light: #5f6368;
+            --glass-bg: rgba(255, 255, 255, 0.85); /* 85% 不透明度的白色 */
+            --glass-border: rgba(255, 255, 255, 0.9);
         }
 
         * {
@@ -23,22 +27,57 @@
         body {
             font-family: 'Roboto', sans-serif;
             color: var(--text-dark);
-            background-color: #f9f9f9;
             line-height: 1.6;
-            display: flex;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px; /* 留出边缘让背景露出来 */
         }
 
-        /* --- 侧边栏 (左侧) --- */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: #fff;
-            padding: 40px 30px;
+        /* --- 1. 动态粉嫩背景 --- */
+        .bg-animation {
             position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            border-right: 1px solid #eaeaea;
+            z-index: -1;
+            /* 这里的颜色是：浅粉、蜜桃、淡紫、柔白 */
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #e0c3fc, #fad0c4);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- 2. 悬浮的“玻璃”卡片容器 --- */
+        .paper-container {
+            width: 100%;
+            max-width: 1100px; /* 限制最大宽度，像一张大纸 */
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px); /* 核心：毛玻璃模糊效果 */
+            -webkit-backdrop-filter: blur(20px); /* 兼容 Safari */
+            border-radius: 24px; /* 圆角 */
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); /* 柔和的阴影 */
+            display: flex;
+            overflow: hidden; /* 防止内容溢出圆角 */
+            min-height: 85vh;
+        }
+
+        /* --- 左侧侧边栏 --- */
+        .sidebar {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.5); /* 侧边栏稍微再透一点 */
+            padding: 50px 30px;
             text-align: center;
-            overflow-y: auto;
+            border-right: 1px solid rgba(0,0,0,0.05);
+            flex-shrink: 0;
         }
 
         .avatar {
@@ -47,62 +86,62 @@
             border-radius: 50%;
             object-fit: cover;
             margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 4px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .name {
             font-family: 'Lato', sans-serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 10px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .alias {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 400;
+            margin-bottom: 20px;
+            display: block;
         }
 
         .affiliation {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            margin-bottom: 20px;
-        }
-
-        .contact-info {
             font-size: 0.9rem;
-            margin-bottom: 30px;
-        }
-
-        .contact-info a {
-            color: var(--primary-color);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 5px;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            line-height: 1.5;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
+            margin-top: 20px;
         }
 
-        .social-links a {
+        .social-btn {
             text-decoration: none;
-            color: var(--text-light);
-            font-size: 0.9rem;
-            border: 1px solid #ddd;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: all 0.2s;
-        }
-
-        .social-links a:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        /* --- 主要内容区 (右侧) --- */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            padding: 60px 80px;
+            color: #555;
+            font-size: 0.85rem;
+            padding: 6px 14px;
             background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            color: var(--primary-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* --- 右侧主要内容 --- */
+        .main-content {
             flex: 1;
-            max-width: 1000px; /* 限制最大宽度，保证阅读体验 */
+            padding: 60px 60px;
+            overflow-y: auto; /* 如果内容太长，右侧单独滚动 */
         }
 
         section {
@@ -111,14 +150,31 @@
 
         .section-title {
             font-family: 'Lato', sans-serif;
-            font-size: 1.4rem;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            color: var(--text-dark);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 标题下的小装饰线 */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            margin-left: 15px;
+            border-radius: 2px;
         }
 
-        /* News 样式 */
+        p {
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        /* News 列表 */
         .news-list {
             list-style: none;
         }
@@ -127,41 +183,51 @@
             display: flex;
             margin-bottom: 12px;
             font-size: 0.95rem;
+            border-left: 3px solid #eee;
+            padding-left: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .news-item:hover {
+            border-left-color: var(--primary-color);
         }
 
         .news-date {
-            width: 100px;
+            min-width: 90px;
             font-weight: 700;
             color: var(--text-light);
-            flex-shrink: 0;
+            font-size: 0.9rem;
         }
 
-        /* Publications 样式 */
+        /* Project / Publications 样式 */
         .pub-item {
             display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 25px;
+            margin-bottom: 40px;
+            background: rgba(255,255,255,0.4);
+            padding: 20px;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+
+        .pub-item:hover {
+            background: rgba(255,255,255,0.7);
         }
 
         .pub-thumb {
-            width: 160px;
-            height: 100px;
-            background: #eee; /* 占位符颜色 */
-            border-radius: 4px;
+            width: 220px; /* 图片稍微大一点 */
+            height: 140px;
             flex-shrink: 0;
+            border-radius: 8px;
             overflow: hidden;
-            border: 1px solid #eee;
+            border: 1px solid rgba(0,0,0,0.05);
+            background: #fff;
         }
         
         .pub-thumb img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-        
-        .pub-thumb:hover img {
-            transform: scale(1.05);
+            object-fit: contain; /* 保证图表完整显示 */
         }
 
         .pub-details {
@@ -169,52 +235,57 @@
         }
 
         .pub-title {
+            font-size: 1.15rem;
             font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--text-dark);
+            color: #222;
             text-decoration: none;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             display: block;
+            line-height: 1.4;
         }
 
         .pub-title:hover {
-            color: var(--primary-color);
-        }
-
-        .pub-authors {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            margin-bottom: 5px;
-        }
-
-        .me {
-            font-weight: 700;
-            color: #000;
+            color: var(--link-color);
             text-decoration: underline;
         }
 
-        .pub-venue {
-            font-style: italic;
-            font-size: 0.95rem;
-            color: #444;
-            margin-bottom: 8px;
+        .pub-authors {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .pub-desc {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 12px;
+        }
+
+        .pub-desc ul {
+            padding-left: 16px;
+            margin-top: 5px;
+        }
+        
+        .pub-desc li {
+            margin-bottom: 4px;
         }
 
         .tag {
             display: inline-block;
-            background: #eef4fc;
-            color: var(--primary-color);
             font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-weight: 500;
-            margin-right: 5px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: #fdf2f4; /* 淡淡的粉色背景 */
+            color: #d63384;      /* 深粉色文字 */
+            font-weight: 600;
+            margin-right: 8px;
+            border: 1px solid #f8d7da;
         }
 
         .links a {
-            font-size: 0.85rem;
-            margin-right: 10px;
-            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-right: 12px;
+            color: var(--link-color);
             text-decoration: none;
             font-weight: 500;
         }
@@ -223,147 +294,155 @@
             text-decoration: underline;
         }
 
-        /* 响应式适配 */
-        @media (max-width: 768px) {
-            body {
-                flex-direction: column;
+        /* 移动端适配 */
+        @media (max-width: 850px) {
+            body { padding: 0; display: block; }
+            .paper-container { 
+                flex-direction: column; 
+                border-radius: 0; 
+                min-height: 100vh;
+                border: none;
             }
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                border-right: none;
-                border-bottom: 1px solid #eaeaea;
-            }
-            .main-content {
-                margin-left: 0;
-                padding: 30px 20px;
-            }
-            .pub-item {
-                flex-direction: column;
-            }
-            .pub-thumb {
-                width: 100%; /* 移动端图片全宽 */
-                height: auto;
-                aspect-ratio: 16/9;
-            }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #eee; padding: 40px 20px; }
+            .main-content { padding: 40px 20px; }
+            .pub-item { flex-direction: column; }
+            .pub-thumb { width: 100%; height: auto; aspect-ratio: 16/9; }
         }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <img src="https://via.placeholder.com/300" alt="Yuxuan Xu" class="avatar">
+    <div class="bg-animation"></div>
+
+    <div class="paper-container">
         
-        <h1 class="name">Yuxuan Xu<br><span style="font-size: 0.6em; font-weight: 400;">(Jerry)</span></h1>
-        
-        <div class="affiliation">
-            Undergraduate Student<br>
-            School of Intelligent Systems Engineering<br>
-            Sun Yat-sen University (SYSU)
-        </div>
-
-        <div class="contact-info">
-            <a href="mailto:xuyx85@mail2.sysu.edu.cn">xuyx85@mail2.sysu.edu.cn</a>
-            <p>Guangzhou, China</p>
-        </div>
-
-        <div class="social-links">
-            <a href="https://github.com/IamJerryXu" target="_blank">GitHub</a>
-            <a href="#">Google Scholar</a>
-            <a href="#">Twitter</a>
-        </div>
-    </aside>
-
-    <main class="main-content">
-        
-        <section id="about">
-            <h2 class="section-title">Biography</h2>
-            <p style="margin-bottom: 15px;">
-                I am a senior undergraduate student at <strong>Sun Yat-sen University</strong>, majoring in Intelligent Science and Technology. 
-                My research interests lie in <strong>Computer Vision</strong> and <strong>Generative Models</strong>, specifically focusing on Diffusion Models and Open-Vocabulary Object Detection.
-            </p>
-            <p>
-                Currently, I am working on improving the inference efficiency of diffusion transformers and exploring their applications in embodied AI agents. 
-                I plan to pursue a Ph.D. degree starting in Fall 2026.
-            </p>
-        </section>
-
-        <section id="news">
-            <h2 class="section-title">News</h2>
-            <ul class="news-list">
-                <li class="news-item">
-                    <span class="news-date">Dec 2025</span>
-                    <span>One paper submitted to CVPR 2026. Fingers crossed! 🤞</span>
-                </li>
-                <li class="news-item">
-                    <span class="news-date">Nov 2025</span>
-                    <span>Ranked Top 10% in my major (16/159) at SYSU.</span>
-                </li>
-                <li class="news-item">
-                    <span class="news-date">May 2025</span>
-                    <span>Started my research internship focusing on OV-DINO variants.</span>
-                </li>
-            </ul>
-        </section>
-
-        <section id="publications">
-            <h2 class="section-title">Selected Publications</h2>
+        <aside class="sidebar">
+            <img src="avatar.jpg" alt="Yuxuan Xu" class="avatar">
             
-            <div class="pub-item">
-                <div class="pub-thumb">
-                    <img src="https://via.placeholder.com/320x200/cccccc/ffffff?text=Paper+Image" alt="Paper Image">
-                </div>
-                <div class="pub-details">
-                    <a href="#" class="pub-title">Improved Diffusion Transformers for Open-Vocabulary Detection</a>
-                    <div class="pub-authors">
-                        <span class="me">Yuxuan Xu</span>, Co-author Name, Supervisor Name
-                    </div>
-                    <div class="pub-venue">
-                        Submitted to IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2026
-                    </div>
-                    <div class="links">
-                        <span class="tag">Under Review</span>
-                        <a href="#">[PDF]</a>
-                        <a href="#">[Code]</a>
-                        <a href="#">[Project Page]</a>
-                    </div>
-                </div>
+            <h1 class="name">Yuxuan Xu</h1>
+            <span class="alias">(Jerry)</span>
+            
+            <div class="affiliation">
+                <p><strong>Undergraduate Student</strong></p>
+                <p>School of Intelligent Systems Engineering</p>
+                <p>Sun Yat-sen University (SYSU)</p>
             </div>
 
-            <div class="pub-item">
-                <div class="pub-thumb">
-                     <img src="https://via.placeholder.com/320x200/e0e0e0/ffffff?text=Teaser" alt="Paper Image">
-                </div>
-                <div class="pub-details">
-                    <a href="#" class="pub-title">Analysis of Snake Evolution Algorithms in Noisy Environments</a>
-                    <div class="pub-authors">
-                        Co-author Name, <span class="me">Yuxuan Xu</span>, Supervisor Name
-                    </div>
-                    <div class="pub-venue">
-                        International Conference on Some Cool AI Stuff, 2024
-                    </div>
-                    <div class="links">
-                        <span class="tag">Conference</span>
-                        <a href="#">[PDF]</a>
-                        <a href="#">[Code]</a>
-                    </div>
-                </div>
+            <div style="font-size: 0.9rem; color: #666;">
+                <p>📍 Guangzhou, China</p>
+                <p>📧 xuyx85@mail2.sysu.edu.cn</p>
             </div>
 
-        </section>
+            <div class="social-links">
+                <a href="https://github.com/IamJerryXu" target="_blank" class="social-btn">GitHub</a>
+                <a href="#" class="social-btn">Scholar</a>
+                </div>
+        </aside>
 
-        <section id="honors">
-            <h2 class="section-title">Honors & Awards</h2>
-            <ul style="padding-left: 20px; color: #444;">
-                <li style="margin-bottom: 8px;">Provincial Second Prize, China Undergraduate Mathematical Contest in Modeling (2024)</li>
-                <li style="margin-bottom: 8px;">Honorable Mention, MCM/ICM (2024)</li>
-                <li style="margin-bottom: 8px;">Provincial Second Prize, National Smart Car Competition</li>
-                <li>SYSU Outstanding Student Scholarship (Top 10%)</li>
-            </ul>
-        </section>
+        <main class="main-content">
+            
+            <section id="about">
+                <h2 class="section-title">About Me</h2>
+                <p>
+                    I am a senior undergraduate student at <strong>Sun Yat-sen University</strong>, majoring in Intelligent Science and Technology. 
+                    I am currently ranked in the <strong>Top 10%</strong> (16/159) of my cohort.
+                </p>
+                <p>
+                    My research interests lie in <strong>Computer Vision</strong> and <strong>Generative Models</strong>, specifically focusing on Diffusion Models, Open-Vocabulary Object Detection, and Embodied AI.
+                    I am passionate about building efficient and robust visual systems that can understand the open world.
+                </p>
+            </section>
 
-    </main>
+            <section id="news">
+                <h2 class="section-title">News</h2>
+                <ul class="news-list">
+                    <li class="news-item">
+                        <span class="news-date">Dec 2025</span>
+                        <span>Working on a new paper targeting CVPR 2026.</span>
+                    </li>
+                    <li class="news-item">
+                        <span class="news-date">Nov 2025</span>
+                        <span>Completed the extended research on OV-DINO with LoRA fine-tuning.</span>
+                    </li>
+                    <li class="news-item">
+                        <span class="news-date">May 2025</span>
+                        <span>Started research internship focusing on Multi-modal Large Language Models.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="projects">
+                <h2 class="section-title">Selected Projects</h2>
+                
+                <div class="pub-item">
+                    <div class="pub-thumb">
+                        <img src="ov-dino.jpg" alt="OV-DINO Framework">
+                    </div>
+                    <div class="pub-details">
+                        <a href="Xu_OVDINO_Report_2025.pdf" target="_blank" class="pub-title">
+                            Reproduction and Extension of OV-DINO for Open-Vocabulary Detection
+                        </a>
+                        
+                        <div class="pub-authors">
+                            <strong>Sole Author</strong> | Computer Vision Research Project
+                        </div>
+                        
+                        <div class="pub-desc">
+                            Based on the SOTA detector OV-DINO, I conducted a comprehensive reproduction and extension study:
+                            <ul>
+                                <li><strong>Architecture:</strong> Benchmarked Swin-T/B and ConvNeXt backbones to analyze model capacity vs. alignment.</li>
+                                <li><strong>Efficiency:</strong> Implemented <strong>LoRA</strong> (Low-Rank Adaptation), achieving 98% performance with only <strong>2%</strong> parameters.</li>
+                                <li><strong>Prompt Engineering:</strong> Designed attribute-aware prompts that improved Rare-class AP by <strong>+1.6</strong>.</li>
+                                <li><strong>Application:</strong> Cascaded with SAM for zero-shot instance segmentation.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="links">
+                            <span class="tag">CV & Multimodal</span>
+                            <a href="https://github.com/IamJerryXu" target="_blank">[Code]</a>
+                            <a href="Xu_OVDINO_Report_2025.pdf" target="_blank">[Full Report PDF]</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pub-item">
+                    <div class="pub-thumb">
+                        <img src="https://via.placeholder.com/320x200/ff9a9e/ffffff?text=Smart+Car" alt="Smart Car">
+                    </div>
+                    <div class="pub-details">
+                        <span class="pub-title">Autonomous Racing Car Navigation System</span>
+                        
+                        <div class="pub-authors">
+                            <strong>Team Leader</strong> | National Smart Car Competition
+                        </div>
+                        
+                        <div class="pub-desc">
+                            Developed a high-speed autonomous control system using TC264 microcontroller and OpenCV. 
+                            Designed a PID control algorithm for stable lane tracking at 2.5m/s.
+                            Won the <strong>Provincial Second Prize</strong>.
+                        </div>
+                        
+                        <div class="links">
+                            <span class="tag">Robotics</span>
+                            <a href="#">[Demo Video]</a>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <section id="honors">
+                <h2 class="section-title">Honors & Awards</h2>
+                <ul style="padding-left: 20px; line-height: 1.8; color: #555;">
+                    <li>Provincial Second Prize, China Undergraduate Mathematical Contest in Modeling (2024)</li>
+                    <li>Honorable Mention, MCM/ICM (2024)</li>
+                    <li>Provincial Second Prize, National Smart Car Competition</li>
+                    <li>SYSU Outstanding Student Scholarship (Top 10%)</li>
+                </ul>
+            </section>
+
+        </main>
+    </div>
 
 </body>
 </html>
