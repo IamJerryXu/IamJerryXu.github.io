@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuri Xu | AI Researcher</title>
+    <title>Yuxuan Xu | AI Researcher</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
@@ -30,15 +30,13 @@
             height: 100vh;
         }
 
-        /* --- 1. 背景系统：加速版星辰 + 粉蓝渐变 --- */
+        /* --- 1. 背景系统 --- */
         .bg-fixed {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2;
-            /* 颜色稍微调亮一点，更有活力 */
             background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
             background-size: 400% 400%;
-            /* 速度加快到 6s */
             animation: gradientBG 6s ease infinite; 
         }
 
@@ -48,7 +46,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 星光层：加速闪烁 */
+        /* 星光层 */
         .stars {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -60,7 +58,6 @@
                 radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
                 radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0));
             background-size: 200px 200px;
-            /* 速度加快到 3s */
             animation: twinkle 3s linear infinite;
             opacity: 0.7;
         }
@@ -104,7 +101,7 @@
             font-weight: 300;
             opacity: 0;
             margin-bottom: 40px;
-            animation: fadeInUp 0.8s ease-out 0.3s forwards; /* 延迟0.3秒 */
+            animation: fadeInUp 0.8s ease-out 0.3s forwards;
         }
 
         .scroll-hint {
@@ -130,11 +127,11 @@
             60% {transform: translateX(-50%) translateY(-5px);}
         }
 
-        /* --- 第二屏：Profile Paper --- */
+        /* --- 第二屏：Profile Paper (关键修改处：调大尺寸) --- */
         .paper-container {
-            width: 90%;
-            max-width: 1100px;
-            height: 85vh;
+            width: 95%;        /* 之前是 90% */
+            max-width: 1350px; /* 之前是 1100px -> 加宽 */
+            height: 90vh;      /* 之前是 85vh -> 加高 */
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -144,14 +141,12 @@
             display: flex;
             overflow: hidden;
             
-            /* 关键修改：初始状态 */
+            /* 动画 */
             opacity: 0; 
             transform: translateY(50px) scale(0.95);
-            /* 动画参数：更快的响应时间 0.6s */
             transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        /* JS 控制的激活状态类 */
         .paper-container.active {
             opacity: 1;
             transform: translateY(0) scale(1);
@@ -163,7 +158,7 @@
         
         /* Sidebar */
         .sidebar {
-            width: 300px;
+            width: 320px; /* 侧边栏也稍微宽丢丢 */
             background: rgba(255, 255, 255, 0.5);
             padding: 40px 30px;
             text-align: center;
@@ -174,99 +169,99 @@
         }
 
         .avatar {
-            width: 140px; height: 140px;
+            width: 150px; height: 150px; /* 头像还原稍微大一点 */
             border-radius: 50%; object-fit: cover; margin-bottom: 20px;
             border: 4px solid #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .name {
-            font-family: 'Georgia', serif; font-size: 2rem; font-weight: 700;
+            font-family: 'Georgia', serif; font-size: 2.2rem; font-weight: 700;
             color: #2c3e50; margin-bottom: 8px;
         }
 
         .sidebar-subtitle {
-            font-family: 'Georgia', serif; font-size: 1rem; font-style: italic;
+            font-family: 'Georgia', serif; font-size: 1.1rem; font-style: italic;
             color: #7f8c8d; margin-bottom: 25px; line-height: 1.4;
         }
 
         .contact-list {
-            display: flex; flex-direction: column; gap: 10px; align-items: center;
-            font-size: 0.9rem; color: #444; margin-bottom: 25px;
+            display: flex; flex-direction: column; gap: 12px; align-items: center;
+            font-size: 0.95rem; color: #444; margin-bottom: 25px;
         }
         .contact-item { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
         .contact-item:hover { color: var(--primary-color); text-decoration: underline; }
-        .icon { font-size: 1.1rem; filter: grayscale(20%); }
+        .icon { font-size: 1.2rem; filter: grayscale(20%); }
 
-        .social-links { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
+        .social-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
         .social-btn {
-            text-decoration: none; color: #555; font-size: 0.85rem; padding: 6px 14px;
+            text-decoration: none; color: #555; font-size: 0.9rem; padding: 8px 18px;
             background: #fff; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             transition: all 0.2s ease; font-family: 'Roboto', sans-serif;
         }
         .social-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
 
-        .sidebar-skills { margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.05); }
-        .skill-tag-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+        .sidebar-skills { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
+        .skill-tag-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
         .sidebar-skill-tag {
-            font-family: 'Roboto', sans-serif; font-size: 0.75rem; color: #555;
-            background: rgba(255,255,255,0.6); padding: 4px 8px; border-radius: 10px;
+            font-family: 'Roboto', sans-serif; font-size: 0.8rem; color: #555;
+            background: rgba(255,255,255,0.6); padding: 5px 10px; border-radius: 10px;
             border: 1px solid rgba(0,0,0,0.1); transition: all 0.2s; cursor: default;
         }
         .sidebar-skill-tag:hover { background: #fff; color: var(--primary-color); border-color: var(--primary-color); }
 
-        .sidebar-gallery { margin-top: 25px; width: 100%; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.05); }
+        .sidebar-gallery { margin-top: 25px; width: 100%; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
         .gallery-title {
-            font-size: 0.8rem; font-weight: 700; color: #888; margin-bottom: 10px;
+            font-size: 0.85rem; font-weight: 700; color: #888; margin-bottom: 15px;
             text-transform: uppercase; letter-spacing: 1px; font-family: 'Roboto', sans-serif;
         }
-        .gallery-grid { display: flex; flex-direction: column; gap: 10px; }
+        .gallery-grid { display: flex; flex-direction: column; gap: 15px; }
         .gallery-img { width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: all 0.3s ease; object-fit: cover; }
         .gallery-img:hover { transform: translateY(-2px) scale(1.02); }
 
         /* Main Content */
-        .main-content { flex: 1; padding: 50px 60px; overflow-y: auto; font-family: 'Roboto', sans-serif; }
-        section { margin-bottom: 50px; }
+        .main-content { flex: 1; padding: 60px 80px; overflow-y: auto; font-family: 'Roboto', sans-serif; }
+        section { margin-bottom: 60px; }
 
         .section-title {
-            font-family: 'Georgia', serif; font-size: 1.8rem; font-weight: 700;
-            color: #2c3e50; margin-bottom: 25px; display: flex; align-items: center;
+            font-family: 'Georgia', serif; font-size: 2rem; font-weight: 700;
+            color: #2c3e50; margin-bottom: 30px; display: flex; align-items: center;
         }
         .section-title::after {
-            content: ''; display: block; width: 50px; height: 4px;
+            content: ''; display: block; width: 60px; height: 4px;
             background: linear-gradient(to right, #ff9a9e, #fad0c4);
             margin-left: 15px; border-radius: 2px;
         }
 
-        p { margin-bottom: 15px; color: #444; font-size: 1.05rem; line-height: 1.7; }
-        .interest-item { margin-bottom: 25px; padding-left: 15px; border-left: 3px solid #ff9a9e; }
-        .interest-title { font-family: 'Georgia', serif; font-size: 1.3rem; font-weight: 700; color: #333; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        p { margin-bottom: 20px; color: #444; font-size: 1.1rem; line-height: 1.8; }
+        .interest-item { margin-bottom: 30px; padding-left: 20px; border-left: 4px solid #ff9a9e; }
+        .interest-title { font-family: 'Georgia', serif; font-size: 1.4rem; font-weight: 700; color: #333; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
 
         .news-list { list-style: none; }
-        .news-item { display: flex; margin-bottom: 15px; font-size: 1rem; align-items: baseline; }
+        .news-item { display: flex; margin-bottom: 15px; font-size: 1.05rem; align-items: baseline; }
         .news-item:hover { background: rgba(255,255,255,0.5); border-radius: 4px; }
-        .news-date { min-width: 100px; font-family: 'Georgia', serif; font-weight: 700; color: var(--text-light); font-size: 0.95rem; }
+        .news-date { min-width: 110px; font-family: 'Georgia', serif; font-weight: 700; color: var(--text-light); font-size: 1rem; }
 
         .pub-item {
-            display: flex; gap: 25px; margin-bottom: 45px;
-            background: rgba(255,255,255,0.5); padding: 25px;
-            border-radius: 12px; border: 1px solid rgba(255,255,255,0.6);
+            display: flex; gap: 30px; margin-bottom: 50px;
+            background: rgba(255,255,255,0.5); padding: 30px;
+            border-radius: 16px; border: 1px solid rgba(255,255,255,0.6);
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .pub-item:hover { background: rgba(255,255,255,0.85); box-shadow: 0 10px 30px rgba(0,0,0,0.05); transform: translateY(-2px); }
-        .pub-thumb-stack { width: 240px; display: flex; flex-direction: column; gap: 15px; flex-shrink: 0; }
+        .pub-thumb-stack { width: 260px; display: flex; flex-direction: column; gap: 15px; flex-shrink: 0; }
         .stack-img { width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.6); background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s ease; cursor: pointer; }
         .stack-img:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(232, 93, 117, 0.15); z-index: 2; }
-        .pub-thumb { width: 240px; height: 150px; flex-shrink: 0; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); background: #fff; }
+        .pub-thumb { width: 260px; height: 160px; flex-shrink: 0; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); background: #fff; }
         .pub-thumb img { width: 100%; height: 100%; object-fit: cover; }
         
         .pub-details { flex: 1; }
-        .pub-title { font-family: 'Georgia', serif; font-size: 1.4rem; font-weight: 700; color: #2c3e50; text-decoration: none; margin-bottom: 8px; display: block; line-height: 1.3; }
+        .pub-title { font-family: 'Georgia', serif; font-size: 1.5rem; font-weight: 700; color: #2c3e50; text-decoration: none; margin-bottom: 10px; display: block; line-height: 1.3; }
         .pub-title:hover { color: var(--primary-color); text-decoration: underline; }
-        .pub-authors { font-family: 'Georgia', serif; font-size: 0.95rem; color: #666; margin-bottom: 12px; font-style: italic; }
-        .pub-desc { font-size: 0.95rem; color: #555; margin-bottom: 12px; }
-        .pub-desc ul { padding-left: 16px; margin-top: 5px; }
-        .links .tag { display: inline-block; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; background: #fdf2f4; color: #d63384; font-weight: 600; margin-right: 8px; border: 1px solid #f8d7da; }
-        .links a { font-size: 0.9rem; margin-right: 12px; color: var(--link-color); text-decoration: none; font-weight: 500; }
+        .pub-authors { font-family: 'Georgia', serif; font-size: 1rem; color: #666; margin-bottom: 15px; font-style: italic; }
+        .pub-desc { font-size: 1rem; color: #555; margin-bottom: 15px; }
+        .pub-desc ul { padding-left: 18px; margin-top: 5px; }
+        .links .tag { display: inline-block; font-size: 0.8rem; padding: 4px 10px; border-radius: 6px; background: #fdf2f4; color: #d63384; font-weight: 600; margin-right: 10px; border: 1px solid #f8d7da; }
+        .links a { font-size: 0.95rem; margin-right: 15px; color: var(--link-color); text-decoration: none; font-weight: 500; }
         .links a:hover { text-decoration: underline; }
 
         @media (max-width: 850px) {
@@ -288,7 +283,7 @@
 
     <section class="page-section" id="hero">
         <div class="hero-content">
-            <div class="hero-title">Hello, I'm Yuri Xu.</div>
+            <div class="hero-title">Hello, I'm Yuxuan.</div>
             <div class="hero-subtitle">Exploring the world through Vision & Code.</div>
             <div class="scroll-hint" onclick="document.getElementById('profile').scrollIntoView()">
                 Scroll Down <br> ↓
@@ -300,9 +295,9 @@
         <div class="paper-container">
             
             <aside class="sidebar">
-                <img src="avatar.jpg" alt="Yuri Xu" class="avatar">
+                <img src="avatar.jpg" alt="Yuxuan Xu" class="avatar">
                 
-                <h1 class="name">Yuri Xu</h1>
+                <h1 class="name">Yuxuan Xu</h1>
                 
                 <div class="sidebar-subtitle">
                     AI Researcher | Snake Charmer 🐍<br>
@@ -327,10 +322,7 @@
                 <div class="social-links">
                     <a href="https://github.com/IamJerryXu" target="_blank" class="social-btn">GitHub</a>
                     <a href="#" class="social-btn">Scholar</a>
-                    <a href="resume.pdf" target="_blank" class="social-btn" style="color: #d63384; border-color: #d63384; font-weight: bold;">
-                        <span style="font-style: normal; margin-right: 4px;">📄</span>CV
-                    </a>
-                </div>
+                    </div>
 
                 <div class="sidebar-skills">
                     <div class="gallery-title">Tech Stack</div>
@@ -482,7 +474,6 @@
     </section>
 
     <script>
-        // 当页面向下滚动，元素稍微露头(10%)时，立即触发动画
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
