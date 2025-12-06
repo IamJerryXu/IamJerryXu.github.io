@@ -6,6 +6,8 @@
     <title>Yuxuan Xu | AI Researcher</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+
     
     <style>
         :root {
@@ -35,6 +37,44 @@
             padding: 40px 20px; /* 留出边缘让背景露出来 */
         }
 
+    /* --- 新增：侧边栏底部的图集 --- */
+        .sidebar-gallery {
+            margin-top: 40px;
+            width: 100%;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.05); /* 加一条淡淡的分隔线 */
+        }
+
+        .gallery-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #888;
+            margin-bottom: 15px;
+            text-transform: uppercase; /*以此区分正文标题 */
+            letter-spacing: 1px;
+        }
+
+        .gallery-grid {
+            display: flex;
+            flex-direction: column; /* 竖向排列 */
+            gap: 15px; /* 图片之间的间距 */
+        }
+
+        .gallery-img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            object-fit: cover;
+            /* 如果图片尺寸不一，可以用 aspect-ratio 强制统一，比如 3:2 */
+            /* aspect-ratio: 3/2; */ 
+        }
+
+        .gallery-img:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(232, 93, 117, 0.2); /* 悬停时发一点粉色的光 */
+        }
+        
         /* --- 1. 动态粉嫩背景 --- */
         .bg-animation {
             position: fixed;
@@ -294,6 +334,46 @@
             text-decoration: underline;
         }
 
+/* --- 新增：左侧多图竖向堆叠样式 --- */
+        .pub-thumb-stack {
+            width: 240px;  /* 保持宽度固定 */
+            display: flex;
+            flex-direction: column; /* 竖向排列 */
+            gap: 15px;     /* 图片之间的间距 */
+            flex-shrink: 0; /* 防止被挤压 */
+        }
+
+        .stack-img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.6); /* 半透明白边 */
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer; /* 暗示可点击（如果以后想做大图预览） */
+        }
+
+        .stack-img:hover {
+            transform: scale(1.05); /* 悬停轻微放大 */
+            box-shadow: 0 8px 20px rgba(232, 93, 117, 0.15); /* 粉色光晕 */
+            z-index: 2;
+        }
+
+        /* 移动端适配：手机上图片改为横向滑动，或者只显示一张 */
+        @media (max-width: 850px) {
+            .pub-thumb-stack {
+                width: 100%;
+                flex-direction: row; /* 手机上改为横向 */
+                overflow-x: auto;   /* 允许左右滑动 */
+                padding-bottom: 10px;
+            }
+            .stack-img {
+                width: 200px; /* 手机上固定宽度 */
+                flex-shrink: 0;
+            }
+        }
+        
+
         /* 移动端适配 */
         @media (max-width: 850px) {
             body { padding: 0; display: block; }
@@ -336,7 +416,19 @@
             <div class="social-links">
                 <a href="https://github.com/IamJerryXu" target="_blank" class="social-btn">GitHub</a>
                 <a href="#" class="social-btn">Scholar</a>
+            </div>
+
+            <div class="sidebar-gallery">
+                <div class="gallery-title">Moments</div>
+                <div class="gallery-grid">
+                    <img src="https://via.placeholder.com/300x200/ff9a9e/ffffff?text=Life" alt="Life" class="gallery-img">
+                    
+                    <img src="https://via.placeholder.com/300x200/fecfef/ffffff?text=Campus" alt="Campus" class="gallery-img">
+                    
+                    <img src="https://via.placeholder.com/300x200/a18cd1/ffffff?text=Coding" alt="Work" class="gallery-img">
                 </div>
+            </div>
+            
         </aside>
 
         <main class="main-content">
@@ -403,9 +495,15 @@
                 <h2 class="section-title">Selected Projects</h2>
                 
                 <div class="pub-item">
-                    <div class="pub-thumb">
-                        <img src="ov-dino.jpg" alt="OV-DINO Framework">
+                    
+                    <div class="pub-thumb-stack">
+                        <img src="ov-dino.jpg" alt="Framework" class="stack-img">
+                        
+                        <img src="ov-dino_chart.jpg" alt="Analysis" class="stack-img">
+                        
+                        <img src="ov-dino_result.jpg" alt="Visualization" class="stack-img">
                     </div>
+
                     <div class="pub-details">
                         <a href="Xu_OVDINO_Report_2025.pdf" target="_blank" class="pub-title">
                             Reproduction and Extension of OV-DINO for Open-Vocabulary Detection
@@ -432,7 +530,7 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="pub-item">
                     <div class="pub-thumb">
                         <img src="smartcar_demo.jpg" alt="Smart Car Prototype" style="object-fit: cover;">
