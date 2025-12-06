@@ -111,13 +111,16 @@
         }
 
         /* --- 左侧侧边栏 --- */
+/* --- Sidebar 新样式：学术风格 --- */
         .sidebar {
             width: 300px;
-            background: rgba(255, 255, 255, 0.5); /* 侧边栏稍微再透一点 */
+            background: rgba(255, 255, 255, 0.5); /* 保持半透明 */
             padding: 50px 30px;
             text-align: center;
             border-right: 1px solid rgba(0,0,0,0.05);
             flex-shrink: 0;
+            /* 核心修改：全局改为学术常用的衬线字体 */
+            font-family: 'Georgia', 'Times New Roman', serif; 
         }
 
         .avatar {
@@ -125,58 +128,62 @@
             height: 160px;
             border-radius: 50%;
             object-fit: cover;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border: 4px solid #fff;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
+        /* 名字：加大字号，使用 Georgia 字体 */
         .name {
-            font-family: 'Lato', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-bottom: 5px;
-            color: #333;
+            font-family: 'Georgia', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
         }
 
-        .alias {
-            font-size: 1rem;
-            color: var(--text-light);
-            font-weight: 400;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .affiliation {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin-bottom: 25px;
+        /* 新增：Slogan (Snake Charmer...) 的样式 */
+        .sidebar-subtitle {
+            font-family: 'Georgia', serif;
+            font-size: 1.05rem;
+            font-style: italic; /* 斜体更有书卷气 */
+            color: #7f8c8d;
+            margin-bottom: 30px; /* 拉开与联系方式的距离 */
             line-height: 1.5;
         }
 
-        .social-links {
+        /* 新增：联系方式列表布局 */
+        .contact-list {
             display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 20px;
+            flex-direction: column;
+            gap: 15px; /* 每一行之间的间距 */
+            align-items: center; /* 居中对齐 */
+            font-size: 0.95rem;
+            color: #444;
+            margin-bottom: 30px;
         }
 
-        .social-btn {
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* 图标和文字的间距 */
             text-decoration: none;
-            color: #555;
-            font-size: 0.85rem;
-            padding: 6px 14px;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
+            color: #333;
+            transition: all 0.2s;
         }
 
-        .social-btn:hover {
-            transform: translateY(-2px);
-            color: var(--primary-color);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        .contact-item:hover {
+            color: var(--primary-color); /* 悬停变粉红色 */
+            text-decoration: underline;
         }
 
+        /* Emoji 图标微调 */
+        .icon {
+            font-size: 1.2rem;
+            filter: grayscale(20%); /* 让 emoji 颜色稍微低调一点点，更学术 */
+        }
+        
         /* --- 右侧主要内容 --- */
         .main-content {
             flex: 1;
@@ -400,32 +407,41 @@
             <img src="avatar.jpg" alt="Yuxuan Xu" class="avatar">
             
             <h1 class="name">Yuxuan Xu</h1>
-            <span class="alias">(Jerry)</span>
             
-            <div class="affiliation">
-                <p><strong>Undergraduate Student</strong></p>
-                <p>School of Intelligent Systems Engineering</p>
-                <p>Sun Yat-sen University (SYSU)</p>
+            <div class="sidebar-subtitle">
+                AI Researcher | Snake Charmer 🐍<br>
+                Graph Whisperer 🕸️
             </div>
 
-            <div style="font-size: 0.9rem; color: #666;">
-                <p>📍 Guangzhou, China</p>
-                <p>📧 xuyx85@mail2.sysu.edu.cn</p>
-            </div>
+            <div class="contact-list">
+                
+                <a href="mailto:xuyx85@mail2.sysu.edu.cn" class="contact-item">
+                    <span class="icon">📧</span> 
+                    <span>xuyx85@mail2.sysu.edu.cn</span>
+                </a>
+                
+                <div class="contact-item">
+                    <span class="icon">📱</span> 
+                    <span>+86 188-6360-3050</span>
+                </div>
 
-            <div class="social-links">
-                <a href="https://github.com/IamJerryXu" target="_blank" class="social-btn">GitHub</a>
-                <a href="#" class="social-btn">Scholar</a>
+                <div class="contact-item">
+                    <span class="icon">🏫</span> 
+                    <span>Sun Yat-sen University</span>
+                </div>
+
+                <a href="https://github.com/IamJerryXu" target="_blank" class="contact-item">
+                    <span class="icon">💻</span> 
+                    <span>GitHub Profile</span>
+                </a>
             </div>
 
             <div class="sidebar-gallery">
-                <div class="gallery-title">Moments</div>
+                <div class="gallery-title" style="font-family: 'Roboto', sans-serif;">Moments</div>
                 <div class="gallery-grid">
-                    <img src="https://via.placeholder.com/300x200/ff9a9e/ffffff?text=Life" alt="Life" class="gallery-img">
-                    
-                    <img src="https://via.placeholder.com/300x200/fecfef/ffffff?text=Campus" alt="Campus" class="gallery-img">
-                    
-                    <img src="https://via.placeholder.com/300x200/a18cd1/ffffff?text=Coding" alt="Work" class="gallery-img">
+                    <img src="gallery_1.jpg" alt="Life" class="gallery-img">
+                    <img src="gallery_2.jpg" alt="Campus" class="gallery-img">
+                    <img src="gallery_3.jpg" alt="Work" class="gallery-img">
                 </div>
             </div>
             
