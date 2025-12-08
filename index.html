@@ -168,10 +168,41 @@
             overflow-y: auto;
         }
 
-        .avatar {
-            width: 150px; height: 150px; /* 头像还原稍微大一点 */
-            border-radius: 50%; object-fit: cover; margin-bottom: 20px;
-            border: 4px solid #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+/* --- 头像容器：用于包裹两张图片 --- */
+        .avatar-wrapper {
+            position: relative; /* 关键：让内部的绝对定位图片以此为基准 */
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px; /* 居中 + 底部间距 */
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden; /* 裁剪圆角 */
+            cursor: pointer; /* 鼠标放上去变小手 */
+        }
+
+        /* 图片通用样式 */
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+
+        /* 卡通头像：默认隐藏，绝对定位覆盖在真人头像上 */
+        .avatar-cartoon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0; /* 默认看不见 */
+            transition: opacity 0.6s ease-in-out; /* 0.6秒丝滑过渡 */
+            z-index: 2;
+        }
+
+        /* 鼠标悬停时：卡通头像浮现 */
+        .avatar-wrapper:hover .avatar-cartoon {
+            opacity: 1;
         }
 
         .name {
@@ -295,7 +326,11 @@
         <div class="paper-container">
             
             <aside class="sidebar">
-                <img src="avatar.jpg" alt="Yuri Xu" class="avatar">
+                <div class="avatar-wrapper">
+                    <img src="avatar.jpg" alt="Real Me" class="avatar-img">
+                
+                    <img src="avatar_cartoon.jpg" alt="Cartoon Me" class="avatar-img avatar-cartoon">
+                </div>
                 
                 <h1 class="name">Yuri Xu</h1>
                 
