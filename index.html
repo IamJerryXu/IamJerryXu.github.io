@@ -127,11 +127,11 @@
             60% {transform: translateX(-50%) translateY(-5px);}
         }
 
-        /* --- 第二屏：Profile Paper (关键修改处：调大尺寸) --- */
+        /* --- 第二屏：Profile Paper --- */
         .paper-container {
-            width: 95%;        /* 之前是 90% */
-            max-width: 1350px; /* 之前是 1100px -> 加宽 */
-            height: 90vh;      /* 之前是 85vh -> 加高 */
+            width: 95%;        
+            max-width: 1350px; 
+            height: 90vh;      
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -158,7 +158,7 @@
         
         /* Sidebar */
         .sidebar {
-            width: 320px; /* 侧边栏也稍微宽丢丢 */
+            width: 320px; 
             background: rgba(255, 255, 255, 0.5);
             padding: 40px 30px;
             text-align: center;
@@ -168,39 +168,28 @@
             overflow-y: auto;
         }
 
-/* --- 头像容器：用于包裹两张图片 --- */
+        /* 头像容器 */
         .avatar-wrapper {
-            position: relative; /* 关键：让内部的绝对定位图片以此为基准 */
+            position: relative; 
             width: 150px;
             height: 150px;
-            margin: 0 auto 20px; /* 居中 + 底部间距 */
+            margin: 0 auto 20px; 
             border-radius: 50%;
             border: 4px solid #fff;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            overflow: hidden; /* 裁剪圆角 */
-            cursor: pointer; /* 鼠标放上去变小手 */
+            overflow: hidden; 
+            cursor: pointer; 
         }
 
-        /* 图片通用样式 */
         .avatar-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            display: block;
+            width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;
         }
 
-        /* 卡通头像：默认隐藏，绝对定位覆盖在真人头像上 */
         .avatar-cartoon {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0; /* 默认看不见 */
-            transition: opacity 0.6s ease-in-out; /* 0.6秒丝滑过渡 */
-            z-index: 2;
+            position: absolute; top: 0; left: 0; opacity: 0; 
+            transition: opacity 0.6s ease-in-out; z-index: 2;
         }
 
-        /* 鼠标悬停时：卡通头像浮现 */
         .avatar-wrapper:hover .avatar-cartoon {
             opacity: 1;
         }
@@ -250,7 +239,90 @@
         .gallery-img:hover { transform: translateY(-2px) scale(1.02); }
 
         /* Main Content */
-        .main-content { flex: 1; padding: 60px 80px; overflow-y: auto; font-family: 'Roboto', sans-serif; }
+        /* 改为 flex column 以便放 navbar */
+        .main-content { 
+            flex: 1; padding: 0; 
+            display: flex; flex-direction: column;
+            font-family: 'Roboto', sans-serif; 
+        }
+
+        /* --- 顶部导航栏 (Tabs) --- */
+        .content-nav {
+            padding: 20px 80px 0; /* 这里的 padding-left 对应下面内容的 padding */
+            display: flex;
+            gap: 40px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            background: rgba(255,255,255,0.3); /* 稍微有点背景色 */
+            flex-shrink: 0;
+        }
+
+        .nav-tab {
+            font-family: 'Georgia', serif;
+            font-size: 1.2rem;
+            color: #666;
+            padding-bottom: 15px;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-tab:hover { color: var(--primary-color); }
+
+        .nav-tab.active {
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        /* 选中时的粉色下划线 */
+        .nav-tab.active::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4); border-radius: 3px;
+        }
+
+        /* --- Tab 内容容器 --- */
+        .tab-content {
+            padding: 40px 80px;
+            overflow-y: auto;
+            flex: 1;
+            display: none; /* 默认隐藏 */
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Notes 样式 --- */
+        .note-card {
+            background: #fff; border-radius: 12px; padding: 25px; margin-bottom: 25px;
+            border: 1px solid rgba(0,0,0,0.05); transition: all 0.2s;
+        }
+        .note-card:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .note-title { font-family: 'Georgia', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; color: #333; }
+        .note-meta { font-size: 0.85rem; color: #999; margin-bottom: 12px; display: block;}
+        
+        /* 密码锁样式 */
+        .lock-container {
+            text-align: center; padding: 80px 20px; background: rgba(255,255,255,0.4); border-radius: 16px;
+            margin-top: 20px;
+        }
+        .lock-icon { font-size: 3rem; margin-bottom: 15px; display: block; opacity: 0.6; }
+        .password-input {
+            padding: 10px 15px; border-radius: 8px; border: 1px solid #ddd; outline: none; font-size: 1rem; width: 220px;
+            font-family: 'Roboto', sans-serif;
+        }
+        .unlock-btn {
+            padding: 10px 25px; border-radius: 8px; border: none; 
+            background: linear-gradient(to right, #ff9a9e, #fad0c4); 
+            color: #fff; font-weight: bold;
+            font-size: 1rem; cursor: pointer; margin-left: 10px;
+        }
+        .unlock-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        #private-content { display: none; margin-top: 30px; }
+        .error-msg { color: #e85d75; margin-top: 15px; font-size: 0.9rem; display: none; }
+
+
+        /* 通用 Section 样式 */
         section { margin-bottom: 60px; }
 
         .section-title {
@@ -304,6 +376,8 @@
             .pub-item { flex-direction: column; }
             .pub-thumb-stack { width: 100%; flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
             .stack-img { width: 200px; }
+            .content-nav { padding: 20px 20px 0; gap: 20px; }
+            .tab-content { padding: 30px 20px; }
         }
     </style>
 </head>
@@ -328,7 +402,6 @@
             <aside class="sidebar">
                 <div class="avatar-wrapper">
                     <img src="avatar.jpg" alt="Real Me" class="avatar-img">
-                
                     <img src="avatar_cartoon.jpg" alt="Cartoon Me" class="avatar-img avatar-cartoon">
                 </div>
                 
@@ -341,23 +414,20 @@
 
                 <div class="contact-list">
                     <a href="mailto:xuyx85@mail2.sysu.edu.cn" class="contact-item">
-                        <span class="icon">📧</span> 
-                        <span>xuyx85@mail2.sysu.edu.cn</span>
+                        <span class="icon">📧</span> <span>xuyx85@mail2.sysu.edu.cn</span>
                     </a>
                     <div class="contact-item">
-                        <span class="icon">📱</span> 
-                        <span>+86 188-6360-3050</span>
+                        <span class="icon">📱</span> <span>+86 188-6360-3050</span>
                     </div>
                     <div class="contact-item">
-                        <span class="icon">🏫</span> 
-                        <span>Sun Yat-sen University</span>
+                        <span class="icon">🏫</span> <span>Sun Yat-sen University</span>
                     </div>
                 </div>
 
                 <div class="social-links">
                     <a href="https://github.com/IamJerryXu" target="_blank" class="social-btn">GitHub</a>
                     <a href="#" class="social-btn">Scholar</a>
-                    </div>
+                </div>
 
                 <div class="sidebar-skills">
                     <div class="gallery-title">Tech Stack</div>
@@ -385,133 +455,166 @@
 
             <main class="main-content">
                 
-                <section id="about">
-                    <h2 class="section-title">About Me</h2>
-                    <p>
-                        I am a senior undergraduate student at <strong>Sun Yat-sen University</strong>, majoring in Intelligent Science and Technology. 
-                    </p>
-                    <p>
-                        My research interests lie in <strong>Computer Vision</strong> and <strong>Generative Models</strong>, specifically focusing on Diffusion Models, Open-Vocabulary Object Detection, and Embodied AI.
-                        I am passionate about building efficient and robust visual systems that can understand the open world.
-                    </p>
-                </section>
+                <nav class="content-nav">
+                    <div class="nav-tab active" onclick="switchTab('intro', this)">Introduction</div>
+                    <div class="nav-tab" onclick="switchTab('notes', this)">Notes</div>
+                </nav>
 
-                <section id="research-interests">
-                    <h2 class="section-title">Research Interests</h2>
-                    
-                    <div class="interest-item">
-                        <h3 class="interest-title">
-                            <span style="font-size: 1.4rem;">🐍</span> Diffusion Models for Image Segmentation
-                        </h3>
+                <div id="tab-intro" class="tab-content active">
+                    <section id="about">
+                        <h2 class="section-title">About Me</h2>
                         <p>
-                            Currently exploring diffusion-based approaches for image segmentation, with a focus on snake evolution methods. 
-                            The goal is to develop more robust boundary detection and refinement techniques that actually work in the wild.
+                            I am a senior undergraduate student at <strong>Sun Yat-sen University</strong>, majoring in Intelligent Science and Technology. 
+                            I am currently ranked in the <strong>Top 10%</strong> of my cohort.
                         </p>
-                    </div>
-
-                    <div class="interest-item">
-                        <h3 class="interest-title">
-                            <span style="font-size: 1.4rem;">🧠</span> Graph Reinforcement Learning
-                        </h3>
                         <p>
-                            Investigating how to make graphs learn through reinforcement learning frameworks. 
-                            Think of it as teaching a network of nodes to make better life choices through trial, error, and a lot of reward shaping. 
+                            My research interests lie in <strong>Computer Vision</strong> and <strong>Generative Models</strong>, specifically focusing on Diffusion Models, Open-Vocabulary Object Detection, and Embodied AI.
+                            I am passionate about building efficient and robust visual systems that can understand the open world.
                         </p>
-                    </div>
-                </section>
+                    </section>
 
-                <section id="news">
-                    <h2 class="section-title">News</h2>
-                    <ul class="news-list">
-                        <li class="news-item">
-                            <span class="news-date">Dec 2025</span>
-                            <span>Working on a new paper targeting MICCAI 2026.</span>
-                        </li>
-                        <li class="news-item">
-                            <span class="news-date">Nov 2025</span>
-                            <span>Completed the extended research on OV-DINO with LoRA fine-tuning.</span>
-                        </li>
-                        <li class="news-item">
-                            <span class="news-date">May 2025</span>
-                            <span>Started research internship focusing on Multi-modal LLMs.</span>
-                        </li>
-                    </ul>
-                </section>
+                    <section id="research-interests">
+                        <h2 class="section-title">Research Interests</h2>
+                        <div class="interest-item">
+                            <h3 class="interest-title"><span style="font-size: 1.4rem;">🐍</span> Diffusion Models for Image Segmentation</h3>
+                            <p>Currently exploring diffusion-based approaches for image segmentation, with a focus on snake evolution methods. The goal is to develop more robust boundary detection and refinement techniques that actually work in the wild.</p>
+                        </div>
+                        <div class="interest-item">
+                            <h3 class="interest-title"><span style="font-size: 1.4rem;">🧠</span> Graph Reinforcement Learning</h3>
+                            <p>Investigating how to make graphs learn through reinforcement learning frameworks. Think of it as teaching a network of nodes to make better life choices through trial, error, and a lot of reward shaping.</p>
+                        </div>
+                    </section>
 
-                <section id="projects">
-                    <h2 class="section-title">Selected Projects</h2>
+                    <section id="news">
+                        <h2 class="section-title">News</h2>
+                        <ul class="news-list">
+                            <li class="news-item"><span class="news-date">Dec 2025</span><span>Working on a new paper targeting MICCAI 2026.</span></li>
+                            <li class="news-item"><span class="news-date">Nov 2025</span><span>Completed the extended research on OV-DINO with LoRA fine-tuning.</span></li>
+                            <li class="news-item"><span class="news-date">May 2025</span><span>Started research internship focusing on Multi-modal LLMs.</span></li>
+                        </ul>
+                    </section>
+
+                    <section id="projects">
+                        <h2 class="section-title">Selected Projects</h2>
+                        <div class="pub-item">
+                            <div class="pub-thumb-stack">
+                                <img src="ov-dino.jpg" alt="Framework" class="stack-img">
+                                <img src="ov-dino_chart.jpg" alt="Analysis" class="stack-img">
+                                <img src="ov-dino_result.jpg" alt="Visualization" class="stack-img">
+                            </div>
+                            <div class="pub-details">
+                                <a href="Xu_OVDINO_Report_2025.pdf" target="_blank" class="pub-title">Reproduction and Extension of OV-DINO for Open-Vocabulary Detection</a>
+                                <div class="pub-authors"><strong>Sole Author</strong> | Computer Vision Research Project</div>
+                                <div class="pub-desc">
+                                    Based on the SOTA detector OV-DINO, I conducted a comprehensive reproduction and extension study:
+                                    <ul>
+                                        <li><strong>Architecture:</strong> Benchmarked Swin-T/B and ConvNeXt backbones.</li>
+                                        <li><strong>Efficiency:</strong> Implemented <strong>LoRA</strong>, achieving 98% performance with 2% parameters.</li>
+                                        <li><strong>Prompt Engineering:</strong> Designed attribute-aware prompts (Rare-class AP <strong>+1.6</strong>).</li>
+                                        <li><strong>Application:</strong> Cascaded with SAM for zero-shot instance segmentation.</li>
+                                    </ul>
+                                </div>
+                                <div class="links">
+                                    <span class="tag">CV & Multimodal</span>
+                                    <a href="https://github.com/IamJerryXu/Extended-OV-DINO/" target="_blank">[Code]</a>
+                                    <a href="Xu_OVDINO_Report_2025.pdf" target="_blank">[Full Report PDF]</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pub-item">
+                            <div class="pub-thumb">
+                                <img src="smartcar_demo.jpg" alt="Smart Car Prototype">
+                            </div>
+                            <div class="pub-details">
+                                <span class="pub-title">Autonomous Racing Car Navigation System</span>
+                                <div class="pub-authors"><strong>Team member</strong> | National Smart Car Competition</div>
+                                <div class="pub-desc">
+                                    Developed a high-speed autonomous control system using TC264 microcontroller and OpenCV(use Unet to lane dividers and obstacle avoidance). 
+                                    Designed a PID control algorithm for stable lane tracking with <strong>SunnyHuang</strong>.
+                                    Won the <strong>Provincial Second Prize</strong>.
+                                </div>
+                                <div class="links">
+                                    <span class="tag">Robotics</span>
+                                    <a href="#">[Demo Video]</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="honors">
+                        <h2 class="section-title">Honors & Awards</h2>
+                        <ul style="padding-left: 20px; line-height: 1.8; color: #555;">
+                            <li style="margin-bottom: 5px;">
+                                <strong>GBCESC 2025 Best Paper Award</strong>: "Identifying Critical Nodes with DeepLearning and ReinforcementLearning: A Case Study on Urban Road Networks"
+                            </li>
+                            <li>Provincial Second Prize, China Undergraduate Mathematical Contest (2024)</li>
+                            <li>Meritorious Winner, MCM/ICM (2025)</li>
+                            <li>Provincial Second Prize, National Smart Car Competition</li>
+                            <li>SYSU Outstanding Student Scholarship (Top 5%)</li>
+                        </ul>
+                    </section>
+                </div>
+
+                <div id="tab-notes" class="tab-content">
                     
-                    <div class="pub-item">
-                        <div class="pub-thumb-stack">
-                            <img src="ov-dino.jpg" alt="Framework" class="stack-img">
-                            <img src="ov-dino_chart.jpg" alt="Analysis" class="stack-img">
-                            <img src="ov-dino_result.jpg" alt="Visualization" class="stack-img">
-                        </div>
-                        <div class="pub-details">
-                            <a href="Xu_OVDINO_Report_2025.pdf" target="_blank" class="pub-title">
-                                Reproduction and Extension of OV-DINO for Open-Vocabulary Detection
-                            </a>
-                            <div class="pub-authors">
-                                <strong>Sole Author</strong> | Computer Vision Research Project
-                            </div>
-                            <div class="pub-desc">
-                                Based on the SOTA detector OV-DINO, I conducted a comprehensive reproduction and extension study:
-                                <ul>
-                                    <li><strong>Architecture:</strong> Benchmarked Swin-T/B and ConvNeXt backbones.</li>
-                                    <li><strong>Efficiency:</strong> Implemented <strong>LoRA</strong>, achieving 98% performance with 2% parameters.</li>
-                                    <li><strong>Prompt Engineering:</strong> Designed attribute-aware prompts (Rare-class AP <strong>+1.6</strong>).</li>
-                                    <li><strong>Application:</strong> Cascaded with SAM for zero-shot instance segmentation.</li>
-                                </ul>
-                            </div>
-                            <div class="links">
-                                <span class="tag">CV & Multimodal</span>
-                                <a href="https://github.com/IamJerryXu/Extended-OV-DINO/" target="_blank">[Code]</a>
-                                <a href="Xu_OVDINO_Report_2025.pdf" target="_blank">[Full Report PDF]</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pub-item">
-                        <div class="pub-thumb">
-                            <img src="smartcar_demo.jpg" alt="Smart Car Prototype">
-                        </div>
-                        <div class="pub-details">
-                            <span class="pub-title">Autonomous Racing Car Navigation System</span>
-                            <div class="pub-authors">
-                                <strong>Team member</strong> | National Smart Car Competition
-                            </div>
-                            <div class="pub-desc">
-                                Developed a high-speed autonomous control system using TC264 microcontroller and OpenCV(use Unet to lane dividers and obstacle avoidance). 
-                                Designed a PID control algorithm for stable lane tracking with <strong>SunnyHuang</strong>.
-                                Won the <strong>Provincial Second Prize</strong>.
-                            </div>
-                            <div class="links">
-                                <span class="tag">Robotics</span>
-                                <a href="#">[Demo Video]</a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="honors">
-                    <h2 class="section-title">Honors & Awards</h2>
-                    <ul style="padding-left: 20px; line-height: 1.8; color: #555;">
-                        <li style="margin-bottom: 5px;">
-                            <strong>GBCESC 2025 Best Paper Award</strong>: "Identifying Critical Nodes with DeepLearning and ReinforcementLearning:A Case Study on Urban Road Networks"
-                        </li>
+                    <section>
+                        <h2 class="section-title">📝 Public Notes</h2>
                         
-                        <li>Provincial Second Prize, China Undergraduate Mathematical Contest(2024)</li>
-                        <li>Meritorious Winner, MCM/ICM (2025)</li>
-                        <li>Provincial Second Prize, National Smart Car Competition</li>
-                        <li>SYSU Outstanding Student Scholarship (Top 5%)</li>
-                    </ul>
-                </section>
+                        <div class="note-card">
+                            <div class="note-title">Understanding Diffusion Models</div>
+                            <span class="note-meta">Nov 10, 2025 • Technical Note</span>
+                            <p style="margin-bottom:0; font-size: 0.95rem;">
+                                A deep dive into the mathematics behind DDPM and DDIM. I summarize how the forward and reverse processes work, including the variational lower bound derivation.
+                            </p>
+                        </div>
+
+                        <div class="note-card">
+                            <div class="note-title">Deploying OpenCV on TC264</div>
+                            <span class="note-meta">Aug 15, 2025 • Engineering</span>
+                            <p style="margin-bottom:0; font-size: 0.95rem;">
+                                Notes on cross-compiling OpenCV for the Infineon TriCore architecture. Includes tips on memory management and frame rate optimization for smart cars.
+                            </p>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 class="section-title">🔒 Private Garden</h2>
+                        
+                        <div class="lock-container" id="lock-screen">
+                            <span class="icon lock-icon">🔒</span>
+                            <div style="margin-bottom: 15px; color: #666; font-family: 'Georgia', serif;">
+                                This section is password protected.
+                            </div>
+                            <input type="password" id="password-input" class="password-input" placeholder="Enter Password">
+                            <button class="unlock-btn" onclick="checkPassword()">Unlock</button>
+                            <div class="error-msg" id="error-msg">Incorrect password. Hint: SYSU.</div>
+                        </div>
+
+                        <div id="private-content">
+                            <div class="note-card" style="border-left: 4px solid #a18cd1;">
+                                <div class="note-title">2025 Year End Review</div>
+                                <span class="note-meta">Dec 31, 2025 • Personal</span>
+                                <p style="font-size: 0.95rem;">
+                                    This year has been intense. From debugging the smart car code at 3 AM to finally submitting the GBCESC paper... I learned that research is 90% failure and 10% pure joy.
+                                </p>
+                                <p style="font-size: 0.95rem; margin-top: 10px;">
+                                    <strong>Goals for 2026:</strong><br>
+                                    1. Get a CVPR/ICCV paper accepted.<br>
+                                    2. Enjoy the final year at SYSU.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
 
             </main>
         </div>
     </section>
 
     <script>
+        // 1. 滚动触发动画
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -519,8 +622,52 @@
                 }
             });
         }, { threshold: 0.1 });
-
         observer.observe(document.getElementById('profile'));
+
+        // 2. Tab 切换功能
+        function switchTab(tabId, element) {
+            // 隐藏所有 tab 内容
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            // 移除所有 Nav 的激活状态
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // 激活选中的 Tab 和 Nav
+            document.getElementById('tab-' + tabId).classList.add('active');
+            element.classList.add('active');
+        }
+
+        // 3. 密码锁功能
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('error-msg');
+            const lockScreen = document.getElementById('lock-screen');
+            const content = document.getElementById('private-content');
+
+            // --- 在这里设置你的密码 ---
+            if (input === 'sysu') { 
+                lockScreen.style.display = 'none';
+                content.style.display = 'block';
+                
+                // 简单的淡入效果
+                content.style.opacity = 0;
+                let op = 0.1;
+                let timer = setInterval(function () {
+                    if (op >= 1){
+                        clearInterval(timer);
+                    }
+                    content.style.opacity = op;
+                    op += op * 0.1;
+                }, 30);
+            } else {
+                errorMsg.style.display = 'block';
+                // 简单的错误抖动提示
+                document.getElementById('password-input').style.borderColor = 'red';
+            }
+        }
     </script>
 </body>
 </html>
