@@ -14,370 +14,146 @@
             --link-color: #2b70c9;    
             --text-dark: #2c3e50;
             --text-light: #5f6368;
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.95); /* 稍微不透明一点，防止字看不清 */
             --glass-border: rgba(255, 255, 255, 0.9);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         html { scroll-behavior: smooth; }
         
         body {
             font-family: 'Roboto', sans-serif;
             color: var(--text-dark);
             overflow-y: scroll;
-            scroll-snap-type: y mandatory; /* 滚动捕捉 */
+            scroll-snap-type: y mandatory;
             height: 100vh;
         }
 
-        /* --- 1. 背景系统 --- */
+        /* --- 背景系统 --- */
         .bg-fixed {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
-            background-size: 400% 400%;
-            animation: gradientBG 6s ease infinite; 
+            background-size: 400% 400%; animation: gradientBG 6s ease infinite; 
         }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 星光层 */
         .stars {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background-image: 
-                radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 50px 160px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0));
-            background-size: 200px 200px;
-            animation: twinkle 3s linear infinite;
-            opacity: 0.7;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-image: radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 50px 160px, #fff, rgba(0,0,0,0));
+            background-size: 200px 200px; animation: twinkle 3s linear infinite; opacity: 0.7;
         }
+        @keyframes twinkle { 0% { transform: translateY(0); opacity: 0.7; } 50% { opacity: 1; } 100% { transform: translateY(-200px); opacity: 0.7; } }
 
-        @keyframes twinkle {
-            0% { transform: translateY(0); opacity: 0.7; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-200px); opacity: 0.7; }
-        }
+        section.page-section { height: 100vh; width: 100%; scroll-snap-align: start; display: flex; justify-content: center; align-items: center; position: relative; }
 
-        /* --- 2. 页面容器 --- */
-        section.page-section {
-            height: 100vh;
-            width: 100%;
-            scroll-snap-align: start;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
+        /* Hero */
+        .hero-content { text-align: center; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .hero-title { font-family: 'Playfair Display', serif; font-size: 4.5rem; font-weight: 700; margin-bottom: 20px; font-style: italic; opacity: 0; animation: fadeInUp 0.8s ease-out forwards; }
+        .hero-subtitle { font-size: 1.5rem; font-weight: 300; opacity: 0; margin-bottom: 40px; animation: fadeInUp 0.8s ease-out 0.3s forwards; }
+        .scroll-hint { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite; font-size: 0.9rem; opacity: 0.8; color: #fff; cursor: pointer; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);} 40% {transform: translateX(-50%) translateY(-10px);} 60% {transform: translateX(-50%) translateY(-5px);} }
 
-        /* --- 第一屏：Hero --- */
-        .hero-content {
-            text-align: center;
-            color: #fff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .hero-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            font-style: italic;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            font-weight: 300;
-            opacity: 0;
-            margin-bottom: 40px;
-            animation: fadeInUp 0.8s ease-out 0.3s forwards;
-        }
-
-        .scroll-hint {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-            font-size: 0.9rem;
-            opacity: 0.8;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
-            40% {transform: translateX(-50%) translateY(-10px);}
-            60% {transform: translateX(-50%) translateY(-5px);}
-        }
-
-        /* --- 第二屏：Profile Paper --- */
+        /* Paper Container (加大版) */
         .paper-container {
-            width: 95%;        
-            max-width: 1350px; 
-            height: 90vh;      
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 24px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            display: flex;
-            overflow: hidden;
-            
-            /* 动画 */
-            opacity: 0; 
-            transform: translateY(50px) scale(0.95);
+            width: 95%; max-width: 1400px; height: 92vh; /* 更大更高 */
+            background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px; border: 1px solid var(--glass-border); box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            display: flex; overflow: hidden; opacity: 0; transform: translateY(50px) scale(0.95);
             transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
+        .paper-container.active { opacity: 1; transform: translateY(0) scale(1); }
 
-        .paper-container.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        /* ---------------------------------------------------------
-           内部样式 (Sidebar & Main)
-           --------------------------------------------------------- */
-        
         /* Sidebar */
-        .sidebar {
-            width: 320px; 
-            background: rgba(255, 255, 255, 0.5);
-            padding: 40px 30px;
-            text-align: center;
-            border-right: 1px solid rgba(0,0,0,0.05);
-            flex-shrink: 0;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            overflow-y: auto;
-        }
-
-        /* 头像容器 */
-        .avatar-wrapper {
-            position: relative; 
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 20px; 
-            border-radius: 50%;
-            border: 4px solid #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            overflow: hidden; 
-            cursor: pointer; 
-        }
-
-        .avatar-img {
-            width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;
-        }
-
-        .avatar-cartoon {
-            position: absolute; top: 0; left: 0; opacity: 0; 
-            transition: opacity 0.6s ease-in-out; z-index: 2;
-        }
-
-        .avatar-wrapper:hover .avatar-cartoon {
-            opacity: 1;
-        }
-
-        .name {
-            font-family: 'Georgia', serif; font-size: 2.2rem; font-weight: 700;
-            color: #2c3e50; margin-bottom: 8px;
-        }
-
-        .sidebar-subtitle {
-            font-family: 'Georgia', serif; font-size: 1.1rem; font-style: italic;
-            color: #7f8c8d; margin-bottom: 25px; line-height: 1.4;
-        }
-
-        .contact-list {
-            display: flex; flex-direction: column; gap: 12px; align-items: center;
-            font-size: 0.95rem; color: #444; margin-bottom: 25px;
-        }
-        .contact-item { display: flex; align-items: center; gap: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
-        .contact-item:hover { color: var(--primary-color); text-decoration: underline; }
-        .icon { font-size: 1.2rem; filter: grayscale(20%); }
-
+        .sidebar { width: 340px; background: rgba(255, 255, 255, 0.6); padding: 40px 30px; text-align: center; border-right: 1px solid rgba(0,0,0,0.05); flex-shrink: 0; font-family: 'Georgia', serif; overflow-y: auto; }
+        .avatar-wrapper { position: relative; width: 160px; height: 160px; margin: 0 auto 20px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; cursor: pointer; }
+        .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-cartoon { position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.6s; z-index: 2; }
+        .avatar-wrapper:hover .avatar-cartoon { opacity: 1; }
+        .name { font-family: 'Georgia', serif; font-size: 2.2rem; font-weight: 700; color: #2c3e50; margin-bottom: 8px; }
+        .sidebar-subtitle { font-family: 'Georgia', serif; font-size: 1.1rem; font-style: italic; color: #7f8c8d; margin-bottom: 25px; line-height: 1.4; }
+        .contact-list { display: flex; flex-direction: column; gap: 12px; align-items: center; font-size: 0.95rem; color: #444; margin-bottom: 25px; }
+        .contact-item { text-decoration: none; color: #333; transition: color 0.2s; display: flex; align-items: center; gap: 8px; }
+        .contact-item:hover { color: var(--primary-color); }
         .social-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
-        .social-btn {
-            text-decoration: none; color: #555; font-size: 0.9rem; padding: 8px 18px;
-            background: #fff; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: all 0.2s ease; font-family: 'Roboto', sans-serif;
-        }
+        .social-btn { text-decoration: none; color: #555; font-size: 0.9rem; padding: 8px 18px; background: #fff; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: all 0.2s; font-family: 'Roboto', sans-serif; }
         .social-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-
         .sidebar-skills { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
         .skill-tag-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-        .sidebar-skill-tag {
-            font-family: 'Roboto', sans-serif; font-size: 0.8rem; color: #555;
-            background: rgba(255,255,255,0.6); padding: 5px 10px; border-radius: 10px;
-            border: 1px solid rgba(0,0,0,0.1); transition: all 0.2s; cursor: default;
-        }
-        .sidebar-skill-tag:hover { background: #fff; color: var(--primary-color); border-color: var(--primary-color); }
-
+        .sidebar-skill-tag { font-family: 'Roboto', sans-serif; font-size: 0.8rem; color: #555; background: rgba(255,255,255,0.6); padding: 5px 10px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); cursor: default; }
         .sidebar-gallery { margin-top: 25px; width: 100%; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
-        .gallery-title {
-            font-size: 0.85rem; font-weight: 700; color: #888; margin-bottom: 15px;
-            text-transform: uppercase; letter-spacing: 1px; font-family: 'Roboto', sans-serif;
-        }
+        .gallery-title { font-size: 0.85rem; font-weight: 700; color: #888; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-family: 'Roboto', sans-serif; }
         .gallery-grid { display: flex; flex-direction: column; gap: 15px; }
-        .gallery-img { width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: all 0.3s ease; object-fit: cover; }
+        .gallery-img { width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: transform 0.3s; }
         .gallery-img:hover { transform: translateY(-2px) scale(1.02); }
 
         /* Main Content */
-        /* 改为 flex column 以便放 navbar */
-        .main-content { 
-            flex: 1; padding: 0; 
-            display: flex; flex-direction: column;
-            font-family: 'Roboto', sans-serif; 
-        }
-
-        /* --- 顶部导航栏 (Tabs) --- */
-        .content-nav {
-            padding: 20px 80px 0; /* 这里的 padding-left 对应下面内容的 padding */
-            display: flex;
-            gap: 40px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            background: rgba(255,255,255,0.3); /* 稍微有点背景色 */
-            flex-shrink: 0;
-        }
-
-        .nav-tab {
-            font-family: 'Georgia', serif;
-            font-size: 1.2rem;
-            color: #666;
-            padding-bottom: 15px;
-            cursor: pointer;
-            position: relative;
-            transition: color 0.3s;
-        }
-
+        .main-content { flex: 1; padding: 0; display: flex; flex-direction: column; font-family: 'Roboto', sans-serif; }
+        .content-nav { padding: 25px 80px 0; display: flex; gap: 40px; border-bottom: 1px solid rgba(0,0,0,0.05); background: rgba(255,255,255,0.3); flex-shrink: 0; }
+        .nav-tab { font-family: 'Georgia', serif; font-size: 1.3rem; color: #666; padding-bottom: 15px; cursor: pointer; position: relative; transition: color 0.3s; }
         .nav-tab:hover { color: var(--primary-color); }
-
-        .nav-tab.active {
-            color: #2c3e50;
-            font-weight: 700;
-        }
-
-        /* 选中时的粉色下划线 */
-        .nav-tab.active::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4); border-radius: 3px;
-        }
-
-        /* --- Tab 内容容器 --- */
-        .tab-content {
-            padding: 40px 80px;
-            overflow-y: auto;
-            flex: 1;
-            display: none; /* 默认隐藏 */
-            animation: fadeIn 0.5s ease;
-        }
+        .nav-tab.active { color: #2c3e50; font-weight: 700; }
+        .nav-tab.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(to right, #ff9a9e, #fad0c4); border-radius: 3px; }
         
+        .tab-content { padding: 40px 80px; overflow-y: auto; flex: 1; display: none; animation: fadeIn 0.5s ease; }
         .tab-content.active { display: block; }
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- Notes 样式 --- */
-        .note-card {
-            background: #fff; border-radius: 12px; padding: 25px; margin-bottom: 25px;
-            border: 1px solid rgba(0,0,0,0.05); transition: all 0.2s;
-        }
-        .note-card:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        /* Notes & Lock */
+        .note-card { background: #fff; border-radius: 12px; padding: 25px; margin-bottom: 25px; border: 1px solid rgba(0,0,0,0.05); transition: all 0.2s; cursor: pointer; }
+        .note-card:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-left: 4px solid var(--primary-color); }
         .note-title { font-family: 'Georgia', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; color: #333; }
         .note-meta { font-size: 0.85rem; color: #999; margin-bottom: 12px; display: block;}
-        
-        /* 密码锁样式 */
-        .lock-container {
-            text-align: center; padding: 80px 20px; background: rgba(255,255,255,0.4); border-radius: 16px;
-            margin-top: 20px;
-        }
+
+        .lock-container { text-align: center; padding: 60px 20px; background: rgba(255,255,255,0.6); border-radius: 16px; margin-top: 20px; border: 1px solid rgba(0,0,0,0.05); }
         .lock-icon { font-size: 3rem; margin-bottom: 15px; display: block; opacity: 0.6; }
-        .password-input {
-            padding: 10px 15px; border-radius: 8px; border: 1px solid #ddd; outline: none; font-size: 1rem; width: 220px;
-            font-family: 'Roboto', sans-serif;
-        }
-        .unlock-btn {
-            padding: 10px 25px; border-radius: 8px; border: none; 
-            background: linear-gradient(to right, #ff9a9e, #fad0c4); 
-            color: #fff; font-weight: bold;
-            font-size: 1rem; cursor: pointer; margin-left: 10px;
-        }
-        .unlock-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-        #private-content { display: none; margin-top: 30px; }
-        .error-msg { color: #e85d75; margin-top: 15px; font-size: 0.9rem; display: none; }
+        .password-input { padding: 10px 15px; border-radius: 8px; border: 1px solid #ddd; outline: none; font-size: 1rem; width: 220px; }
+        .unlock-btn { padding: 10px 25px; border-radius: 8px; border: none; background: linear-gradient(to right, #ff9a9e, #fad0c4); color: #fff; font-weight: bold; font-size: 1rem; cursor: pointer; margin-left: 10px; }
+        #private-content { display: none; margin-top: 30px; animation: fadeIn 0.5s; }
+        .error-msg { color: #e85d75; margin-top: 15px; display: none; }
 
-
-        /* 通用 Section 样式 */
+        /* Modal (弹窗) */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 1000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.open { display: flex; opacity: 1; }
+        .modal-content { background: #fff; width: 85%; max-width: 1000px; height: 90vh; border-radius: 20px; padding: 0; overflow: hidden; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.2); transform: translateY(20px); transition: transform 0.3s; display: flex; flex-direction: column; }
+        .modal-overlay.open .modal-content { transform: translateY(0); }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: #555; cursor: pointer; z-index: 20; background: rgba(255,255,255,0.8); border-radius: 50%; width: 40px; height: 40px; line-height: 40px; text-align: center; }
+        .close-btn:hover { color: #e85d75; background: #fff; }
+        #markdown-render { flex: 1; overflow-y: auto; padding: 40px 50px; font-family: 'Georgia', serif; line-height: 1.8; }
+        #markdown-render img { max-width: 100%; border-radius: 8px; margin: 20px 0; }
+        /* 通用样式 */
         section { margin-bottom: 60px; }
-
-        .section-title {
-            font-family: 'Georgia', serif; font-size: 2rem; font-weight: 700;
-            color: #2c3e50; margin-bottom: 30px; display: flex; align-items: center;
-        }
-        .section-title::after {
-            content: ''; display: block; width: 60px; height: 4px;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4);
-            margin-left: 15px; border-radius: 2px;
-        }
-
+        .section-title { font-family: 'Georgia', serif; font-size: 2rem; font-weight: 700; color: #2c3e50; margin-bottom: 30px; display: flex; align-items: center; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: linear-gradient(to right, #ff9a9e, #fad0c4); margin-left: 15px; border-radius: 2px; }
         p { margin-bottom: 20px; color: #444; font-size: 1.1rem; line-height: 1.8; }
         .interest-item { margin-bottom: 30px; padding-left: 20px; border-left: 4px solid #ff9a9e; }
         .interest-title { font-family: 'Georgia', serif; font-size: 1.4rem; font-weight: 700; color: #333; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-
         .news-list { list-style: none; }
         .news-item { display: flex; margin-bottom: 15px; font-size: 1.05rem; align-items: baseline; }
-        .news-item:hover { background: rgba(255,255,255,0.5); border-radius: 4px; }
         .news-date { min-width: 110px; font-family: 'Georgia', serif; font-weight: 700; color: var(--text-light); font-size: 1rem; }
-
-        .pub-item {
-            display: flex; gap: 30px; margin-bottom: 50px;
-            background: rgba(255,255,255,0.5); padding: 30px;
-            border-radius: 16px; border: 1px solid rgba(255,255,255,0.6);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+        .pub-item { display: flex; gap: 30px; margin-bottom: 50px; background: rgba(255,255,255,0.5); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.6); transition: transform 0.2s; }
         .pub-item:hover { background: rgba(255,255,255,0.85); box-shadow: 0 10px 30px rgba(0,0,0,0.05); transform: translateY(-2px); }
         .pub-thumb-stack { width: 260px; display: flex; flex-direction: column; gap: 15px; flex-shrink: 0; }
-        .stack-img { width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.6); background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s ease; cursor: pointer; }
-        .stack-img:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(232, 93, 117, 0.15); z-index: 2; }
-        .pub-thumb { width: 260px; height: 160px; flex-shrink: 0; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); background: #fff; }
+        .stack-img { width: 100%; border-radius: 8px; border: 1px solid rgba(255,255,255,0.6); background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: all 0.3s; }
+        .pub-thumb { width: 260px; height: 160px; flex-shrink: 0; border-radius: 8px; overflow: hidden; background: #fff; }
         .pub-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        
         .pub-details { flex: 1; }
         .pub-title { font-family: 'Georgia', serif; font-size: 1.5rem; font-weight: 700; color: #2c3e50; text-decoration: none; margin-bottom: 10px; display: block; line-height: 1.3; }
         .pub-title:hover { color: var(--primary-color); text-decoration: underline; }
         .pub-authors { font-family: 'Georgia', serif; font-size: 1rem; color: #666; margin-bottom: 15px; font-style: italic; }
         .pub-desc { font-size: 1rem; color: #555; margin-bottom: 15px; }
-        .pub-desc ul { padding-left: 18px; margin-top: 5px; }
         .links .tag { display: inline-block; font-size: 0.8rem; padding: 4px 10px; border-radius: 6px; background: #fdf2f4; color: #d63384; font-weight: 600; margin-right: 10px; border: 1px solid #f8d7da; }
         .links a { font-size: 0.95rem; margin-right: 15px; color: var(--link-color); text-decoration: none; font-weight: 500; }
         .links a:hover { text-decoration: underline; }
 
         @media (max-width: 850px) {
-            body { overflow-y: auto; scroll-snap-type: none; height: auto; }
             section.page-section { height: auto; padding: 40px 0; }
-            .hero-title { font-size: 2.5rem; }
             .paper-container { flex-direction: column; height: auto; transform: none; width: 100%; border-radius: 0; border: none; opacity: 1; }
-            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #eee; height: auto; overflow: visible; }
+            .sidebar { width: 100%; border-right: none; height: auto; }
             .pub-item { flex-direction: column; }
-            .pub-thumb-stack { width: 100%; flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
-            .stack-img { width: 200px; }
             .content-nav { padding: 20px 20px 0; gap: 20px; }
             .tab-content { padding: 30px 20px; }
+            .modal-content { width: 100%; height: 100%; border-radius: 0; }
         }
     </style>
 </head>
@@ -404,45 +180,25 @@
                     <img src="avatar.jpg" alt="Real Me" class="avatar-img">
                     <img src="avatar_cartoon.jpg" alt="Cartoon Me" class="avatar-img avatar-cartoon">
                 </div>
-                
                 <h1 class="name">Yuri Xu</h1>
-                
-                <div class="sidebar-subtitle">
-                    AI Researcher | Snake Charmer 🐍<br>
-                    Graph Whisperer 🕸️
-                </div>
-
+                <div class="sidebar-subtitle">AI Researcher | Snake Charmer 🐍<br>Graph Whisperer 🕸️</div>
                 <div class="contact-list">
-                    <a href="mailto:xuyx85@mail2.sysu.edu.cn" class="contact-item">
-                        <span class="icon">📧</span> <span>xuyx85@mail2.sysu.edu.cn</span>
-                    </a>
-                    <div class="contact-item">
-                        <span class="icon">📱</span> <span>+86 188-6360-3050</span>
-                    </div>
-                    <div class="contact-item">
-                        <span class="icon">🏫</span> <span>Sun Yat-sen University</span>
-                    </div>
+                    <a href="mailto:xuyx85@mail2.sysu.edu.cn" class="contact-item"><span class="icon">📧</span> <span>xuyx85@mail2.sysu.edu.cn</span></a>
+                    <div class="contact-item"><span class="icon">📱</span> <span>+86 188-6360-3050</span></div>
+                    <div class="contact-item"><span class="icon">🏫</span> <span>Sun Yat-sen University</span></div>
                 </div>
-
                 <div class="social-links">
                     <a href="https://github.com/IamJerryXu" target="_blank" class="social-btn">GitHub</a>
                     <a href="#" class="social-btn">Scholar</a>
                 </div>
-
                 <div class="sidebar-skills">
                     <div class="gallery-title">Tech Stack</div>
                     <div class="skill-tag-container">
-                        <span class="sidebar-skill-tag">Python</span>
-                        <span class="sidebar-skill-tag">C++</span>
-                        <span class="sidebar-skill-tag">PyTorch</span>
-                        <span class="sidebar-skill-tag">OpenCV</span>
-                        <span class="sidebar-skill-tag">MATLAB</span>
-                        <span class="sidebar-skill-tag">LaTeX</span>
-                        <span class="sidebar-skill-tag">Linux</span>
-                        <span class="sidebar-skill-tag">Git</span>
+                        <span class="sidebar-skill-tag">Python</span><span class="sidebar-skill-tag">C++</span><span class="sidebar-skill-tag">PyTorch</span>
+                        <span class="sidebar-skill-tag">OpenCV</span><span class="sidebar-skill-tag">MATLAB</span><span class="sidebar-skill-tag">LaTeX</span>
+                        <span class="sidebar-skill-tag">Linux</span><span class="sidebar-skill-tag">Git</span>
                     </div>
                 </div>
-
                 <div class="sidebar-gallery">
                     <div class="gallery-title">Moments</div>
                     <div class="gallery-grid">
@@ -454,7 +210,6 @@
             </aside>
 
             <main class="main-content">
-                
                 <nav class="content-nav">
                     <div class="nav-tab active" onclick="switchTab('intro', this)">Introduction</div>
                     <div class="nav-tab" onclick="switchTab('notes', this)">Notes</div>
@@ -463,25 +218,19 @@
                 <div id="tab-intro" class="tab-content active">
                     <section id="about">
                         <h2 class="section-title">About Me</h2>
-                        <p>
-                            I am a senior undergraduate student at <strong>Sun Yat-sen University</strong>, majoring in Intelligent Science and Technology. 
-                            I am currently ranked in the <strong>Top 10%</strong> of my cohort.
-                        </p>
-                        <p>
-                            My research interests lie in <strong>Computer Vision</strong> and <strong>Generative Models</strong>, specifically focusing on Diffusion Models, Open-Vocabulary Object Detection, and Embodied AI.
-                            I am passionate about building efficient and robust visual systems that can understand the open world.
-                        </p>
+                        <p>I am a senior undergraduate student at <strong>Sun Yat-sen University</strong>, majoring in Intelligent Science and Technology. I am currently ranked in the <strong>Top 10%</strong> of my cohort.</p>
+                        <p>My research interests lie in <strong>Computer Vision</strong> and <strong>Generative Models</strong>, specifically focusing on Diffusion Models, Open-Vocabulary Object Detection, and Embodied AI.</p>
                     </section>
 
                     <section id="research-interests">
                         <h2 class="section-title">Research Interests</h2>
                         <div class="interest-item">
                             <h3 class="interest-title"><span style="font-size: 1.4rem;">🐍</span> Diffusion Models for Image Segmentation</h3>
-                            <p>Currently exploring diffusion-based approaches for image segmentation, with a focus on snake evolution methods. The goal is to develop more robust boundary detection and refinement techniques that actually work in the wild.</p>
+                            <p>Currently exploring diffusion-based approaches for image segmentation, with a focus on snake evolution methods.</p>
                         </div>
                         <div class="interest-item">
                             <h3 class="interest-title"><span style="font-size: 1.4rem;">🧠</span> Graph Reinforcement Learning</h3>
-                            <p>Investigating how to make graphs learn through reinforcement learning frameworks. Think of it as teaching a network of nodes to make better life choices through trial, error, and a lot of reward shaping.</p>
+                            <p>Investigating how to make graphs learn through reinforcement learning frameworks. Focusing on policy optimization for graph-structured data.</p>
                         </div>
                     </section>
 
@@ -511,7 +260,6 @@
                                         <li><strong>Architecture:</strong> Benchmarked Swin-T/B and ConvNeXt backbones.</li>
                                         <li><strong>Efficiency:</strong> Implemented <strong>LoRA</strong>, achieving 98% performance with 2% parameters.</li>
                                         <li><strong>Prompt Engineering:</strong> Designed attribute-aware prompts (Rare-class AP <strong>+1.6</strong>).</li>
-                                        <li><strong>Application:</strong> Cascaded with SAM for zero-shot instance segmentation.</li>
                                     </ul>
                                 </div>
                                 <div class="links">
@@ -530,9 +278,8 @@
                                 <span class="pub-title">Autonomous Racing Car Navigation System</span>
                                 <div class="pub-authors"><strong>Team member</strong> | National Smart Car Competition</div>
                                 <div class="pub-desc">
-                                    Developed a high-speed autonomous control system using TC264 microcontroller and OpenCV(use Unet to lane dividers and obstacle avoidance). 
-                                    Designed a PID control algorithm for stable lane tracking with <strong>SunnyHuang</strong>.
-                                    Won the <strong>Provincial Second Prize</strong>.
+                                    Developed a high-speed autonomous control system using TC264 microcontroller and OpenCV. 
+                                    Designed a PID control algorithm for stable lane tracking with <strong>SunnyHuang</strong>. Won the <strong>Provincial Second Prize</strong>.
                                 </div>
                                 <div class="links">
                                     <span class="tag">Robotics</span>
@@ -545,9 +292,7 @@
                     <section id="honors">
                         <h2 class="section-title">Honors & Awards</h2>
                         <ul style="padding-left: 20px; line-height: 1.8; color: #555;">
-                            <li style="margin-bottom: 5px;">
-                                <strong>GBCESC 2025 Best Paper Award</strong>: "Identifying Critical Nodes with DeepLearning and ReinforcementLearning: A Case Study on Urban Road Networks"
-                            </li>
+                            <li style="margin-bottom: 5px;"><strong>GBCESC 2025 Best Paper Award</strong>: "Identifying Critical Nodes with DeepLearning and ReinforcementLearning: A Case Study on Urban Road Networks"</li>
                             <li>Provincial Second Prize, China Undergraduate Mathematical Contest (2024)</li>
                             <li>Meritorious Winner, MCM/ICM (2025)</li>
                             <li>Provincial Second Prize, National Smart Car Competition</li>
@@ -555,18 +300,17 @@
                         </ul>
                     </section>
                 </div>
+
                 <div id="tab-notes" class="tab-content">
                     <section>
-                        <h2 class="section-title">📝 Public Notes</h2>
-                        
+                        <h2 class="section-title">📝 Public Knowledge Fragments</h2>
                         <div class="note-card" onclick="openNote('notes/knowledge.pdf')">
                             <div class="note-title">Deep Learning Knowledge Fragments</div>
                             <span class="note-meta">Dec 2025 • DL & CV Basics</span>
                             <p style="margin-bottom:0; font-size: 0.95rem;">
-                                A comprehensive summary including ResNet, FPN, Transformer architectures, and PyTorch tricks. (PDF Preview)
+                                A comprehensive summary including ResNet, FPN, Transformer architectures, and PyTorch tricks. (Click to view PDF)
                             </p>
                         </div>
-
                         <div class="note-card" onclick="openNote('notes/opencv.md')">
                             <div class="note-title">Deploying OpenCV on TC264</div>
                             <span class="note-meta">Aug 15, 2025 • Engineering</span>
@@ -577,8 +321,15 @@
                     </section>
 
                     <section>
-                        <h2 class="section-title">🔒 Private Garden</h2>
-                        
+                        <h2 class="section-title">🔒 Private Garden (MFEA Research)</h2>
+                        <div class="lock-container" id="lock-screen">
+                            <span class="icon lock-icon">🔒</span>
+                            <div style="margin-bottom: 15px; color: #666; font-family: 'Georgia', serif;">Private Section. Password Required.</div>
+                            <input type="password" id="password-input" class="password-input" placeholder="Enter Password">
+                            <button class="unlock-btn" onclick="checkPassword()">Unlock</button>
+                            <div class="error-msg" id="error-msg">Incorrect password. Hint: sysu</div>
+                        </div>
+
                         <div id="private-content">
                             <div class="note-card" style="border-left: 4px solid #a18cd1;" onclick="openNote('notes/mfea_roadmap.md')">
                                 <div class="note-title">Research Plan: MFEA + GRPO</div>
@@ -590,16 +341,20 @@
                         </div>
                     </section>
                 </div>
-
-
             </main>
         </div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <div class="modal-overlay" id="note-modal" onclick="closeNote(event)">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeNoteBtn()">&times;</span>
+            <div id="markdown-render">Loading...</div>
+        </div>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        // 1. 滚动触发动画
+        // 1. Scroll Animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -609,7 +364,7 @@
         }, { threshold: 0.1 });
         observer.observe(document.getElementById('profile'));
 
-        // 2. Tab 切换
+        // 2. Tab Switch
         function switchTab(tabId, element) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -617,15 +372,13 @@
             element.classList.add('active');
         }
 
-        // 3. 密码锁
+        // 3. Password Lock (Default: sysu)
         function checkPassword() {
             const input = document.getElementById('password-input').value;
-            // 你的密码
             if (input === 'sysu') { 
                 document.getElementById('lock-screen').style.display = 'none';
                 const content = document.getElementById('private-content');
                 content.style.display = 'block';
-                // 淡入动画
                 setTimeout(() => { content.style.opacity = 1; }, 50);
             } else {
                 document.getElementById('error-msg').style.display = 'block';
@@ -633,52 +386,33 @@
             }
         }
 
-        // 4. 超级笔记加载器 (支持 MD 和 PDF)
+        // 4. Open Note (Supports PDF & MD)
         async function openNote(file) {
             const modal = document.getElementById('note-modal');
             const contentDiv = document.getElementById('markdown-render');
-            
-            // 显示弹窗
             modal.classList.add('open');
-            contentDiv.innerHTML = '<div style="text-align:center; padding:50px; color:#666;">Loading content...</div>';
+            contentDiv.innerHTML = '<div style="text-align:center; padding:50px; color:#666;">Loading...</div>';
 
-            // 判断文件类型
-            const isPdf = file.toLowerCase().endsWith('.pdf');
-
-            if (isPdf) {
-                // --- PDF 模式 ---
-                // 创建一个全屏的 iframe 来显示 PDF
-                contentDiv.innerHTML = `
-                    <iframe src="${file}" 
-                            style="width:100%; height:80vh; border:none; border-radius:8px;" 
-                            frameborder="0">
-                    </iframe>
-                `;
+            if (file.toLowerCase().endsWith('.pdf')) {
+                // PDF Viewer
+                contentDiv.innerHTML = `<iframe src="${file}" style="width:100%; height:100%; border:none;" frameborder="0"></iframe>`;
             } else {
-                // --- Markdown 模式 ---
+                // Markdown Viewer
                 try {
                     const response = await fetch(file);
                     if (!response.ok) throw new Error("File not found");
                     const text = await response.text();
                     contentDiv.innerHTML = marked.parse(text);
                 } catch (error) {
-                    contentDiv.innerHTML = `<p style='color:#e85d75'>Error: ${error.message}. Make sure '${file}' exists in the 'notes' folder.</p>`;
+                    contentDiv.innerHTML = `<p style='color:#e85d75; text-align:center; margin-top:20px;'>Error: File not found.<br>Please ensure <strong>${file}</strong> exists in the <strong>notes</strong> folder.</p>`;
                 }
             }
         }
 
-        function closeNote(event) {
-            if (event.target.id === 'note-modal') {
-                closeNoteBtn();
-            }
-        }
-        
-        function closeNoteBtn() {
-            document.getElementById('note-modal').classList.remove('open');
-            // 清空内容，防止视频/PDF在后台继续占用资源
-            setTimeout(() => {
-                document.getElementById('markdown-render').innerHTML = '';
-            }, 300);
+        function closeNote(event) { if (event.target.id === 'note-modal') closeNoteBtn(); }
+        function closeNoteBtn() { 
+            document.getElementById('note-modal').classList.remove('open'); 
+            setTimeout(() => { document.getElementById('markdown-render').innerHTML = ''; }, 300);
         }
     </script>
 </body>
