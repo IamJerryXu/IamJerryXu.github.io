@@ -555,25 +555,23 @@
                         </ul>
                     </section>
                 </div>
-
                 <div id="tab-notes" class="tab-content">
-                    
                     <section>
                         <h2 class="section-title">📝 Public Notes</h2>
                         
-                        <div class="note-card">
-                            <div class="note-title">Understanding Diffusion Models</div>
-                            <span class="note-meta">Nov 10, 2025 • Technical Note</span>
+                        <div class="note-card" onclick="openNote('notes/knowledge.pdf')">
+                            <div class="note-title">Deep Learning Knowledge Fragments</div>
+                            <span class="note-meta">Dec 2025 • DL & CV Basics</span>
                             <p style="margin-bottom:0; font-size: 0.95rem;">
-                                A deep dive into the mathematics behind DDPM and DDIM. I summarize how the forward and reverse processes work, including the variational lower bound derivation.
+                                A comprehensive summary including ResNet, FPN, Transformer architectures, and PyTorch tricks. (PDF Preview)
                             </p>
                         </div>
 
-                        <div class="note-card">
+                        <div class="note-card" onclick="openNote('notes/opencv.md')">
                             <div class="note-title">Deploying OpenCV on TC264</div>
                             <span class="note-meta">Aug 15, 2025 • Engineering</span>
                             <p style="margin-bottom:0; font-size: 0.95rem;">
-                                Notes on cross-compiling OpenCV for the Infineon TriCore architecture. Includes tips on memory management and frame rate optimization for smart cars.
+                                Notes on cross-compiling OpenCV for the Infineon TriCore architecture.
                             </p>
                         </div>
                     </section>
@@ -581,37 +579,24 @@
                     <section>
                         <h2 class="section-title">🔒 Private Garden</h2>
                         
-                        <div class="lock-container" id="lock-screen">
-                            <span class="icon lock-icon">🔒</span>
-                            <div style="margin-bottom: 15px; color: #666; font-family: 'Georgia', serif;">
-                                This section is password protected.
-                            </div>
-                            <input type="password" id="password-input" class="password-input" placeholder="Enter Password">
-                            <button class="unlock-btn" onclick="checkPassword()">Unlock</button>
-                            <div class="error-msg" id="error-msg">Incorrect password. Hint: SYSU.</div>
-                        </div>
-
                         <div id="private-content">
-                            <div class="note-card" style="border-left: 4px solid #a18cd1;">
-                                <div class="note-title">2025 Year End Review</div>
-                                <span class="note-meta">Dec 31, 2025 • Personal</span>
+                            <div class="note-card" style="border-left: 4px solid #a18cd1;" onclick="openNote('notes/mfea_roadmap.md')">
+                                <div class="note-title">Research Plan: MFEA + GRPO</div>
+                                <span class="note-meta">Dec 10, 2025 • Research Ideas</span>
                                 <p style="font-size: 0.95rem;">
-                                    This year has been intense. From debugging the smart car code at 3 AM to finally submitting the GBCESC paper... I learned that research is 90% failure and 10% pure joy.
-                                </p>
-                                <p style="font-size: 0.95rem; margin-top: 10px;">
-                                    <strong>Goals for 2026:</strong><br>
-                                    1. Get a CVPR/ICCV paper accepted.<br>
-                                    2. Enjoy the final year at SYSU.
+                                    Brainstorming on Manifold Alignment and Discrete Diffusion for Evolutionary RL.
                                 </p>
                             </div>
                         </div>
                     </section>
-
                 </div>
+
 
             </main>
         </div>
     </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script>
         // 1. 滚动触发动画
@@ -624,49 +609,76 @@
         }, { threshold: 0.1 });
         observer.observe(document.getElementById('profile'));
 
-        // 2. Tab 切换功能
+        // 2. Tab 切换
         function switchTab(tabId, element) {
-            // 隐藏所有 tab 内容
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            // 移除所有 Nav 的激活状态
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // 激活选中的 Tab 和 Nav
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             document.getElementById('tab-' + tabId).classList.add('active');
             element.classList.add('active');
         }
 
-        // 3. 密码锁功能
+        // 3. 密码锁
         function checkPassword() {
             const input = document.getElementById('password-input').value;
-            const errorMsg = document.getElementById('error-msg');
-            const lockScreen = document.getElementById('lock-screen');
-            const content = document.getElementById('private-content');
-
-            // --- 在这里设置你的密码 ---
+            // 你的密码
             if (input === 'sysu') { 
-                lockScreen.style.display = 'none';
+                document.getElementById('lock-screen').style.display = 'none';
+                const content = document.getElementById('private-content');
                 content.style.display = 'block';
-                
-                // 简单的淡入效果
-                content.style.opacity = 0;
-                let op = 0.1;
-                let timer = setInterval(function () {
-                    if (op >= 1){
-                        clearInterval(timer);
-                    }
-                    content.style.opacity = op;
-                    op += op * 0.1;
-                }, 30);
+                // 淡入动画
+                setTimeout(() => { content.style.opacity = 1; }, 50);
             } else {
-                errorMsg.style.display = 'block';
-                // 简单的错误抖动提示
-                document.getElementById('password-input').style.borderColor = 'red';
+                document.getElementById('error-msg').style.display = 'block';
+                document.getElementById('password-input').style.borderColor = '#e85d75';
             }
+        }
+
+        // 4. 超级笔记加载器 (支持 MD 和 PDF)
+        async function openNote(file) {
+            const modal = document.getElementById('note-modal');
+            const contentDiv = document.getElementById('markdown-render');
+            
+            // 显示弹窗
+            modal.classList.add('open');
+            contentDiv.innerHTML = '<div style="text-align:center; padding:50px; color:#666;">Loading content...</div>';
+
+            // 判断文件类型
+            const isPdf = file.toLowerCase().endsWith('.pdf');
+
+            if (isPdf) {
+                // --- PDF 模式 ---
+                // 创建一个全屏的 iframe 来显示 PDF
+                contentDiv.innerHTML = `
+                    <iframe src="${file}" 
+                            style="width:100%; height:80vh; border:none; border-radius:8px;" 
+                            frameborder="0">
+                    </iframe>
+                `;
+            } else {
+                // --- Markdown 模式 ---
+                try {
+                    const response = await fetch(file);
+                    if (!response.ok) throw new Error("File not found");
+                    const text = await response.text();
+                    contentDiv.innerHTML = marked.parse(text);
+                } catch (error) {
+                    contentDiv.innerHTML = `<p style='color:#e85d75'>Error: ${error.message}. Make sure '${file}' exists in the 'notes' folder.</p>`;
+                }
+            }
+        }
+
+        function closeNote(event) {
+            if (event.target.id === 'note-modal') {
+                closeNoteBtn();
+            }
+        }
+        
+        function closeNoteBtn() {
+            document.getElementById('note-modal').classList.remove('open');
+            // 清空内容，防止视频/PDF在后台继续占用资源
+            setTimeout(() => {
+                document.getElementById('markdown-render').innerHTML = '';
+            }, 300);
         }
     </script>
 </body>
