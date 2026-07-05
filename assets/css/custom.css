@@ -6,6 +6,51 @@ body.fixed-top-nav {
   padding-bottom: 0;
 }
 
+body,
+.navbar,
+footer,
+.post-title,
+.publications ol.bibliography li .abbr abbr,
+.publications ol.bibliography li .preview,
+.publications ol.bibliography li .links a.btn,
+.bibsearch-form-input,
+code {
+  transition:
+    background-color 720ms ease,
+    border-color 720ms ease,
+    box-shadow 720ms ease,
+    color 720ms ease,
+    filter 720ms ease,
+    text-shadow 720ms ease;
+}
+
+.style-wipe {
+  animation: style-wipe 920ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  clip-path: circle(0 at var(--wipe-x, 50vw) var(--wipe-y, 50vh));
+  inset: 0;
+  opacity: 0.95;
+  pointer-events: none;
+  position: fixed;
+  z-index: 9999;
+}
+
+.style-wipe.to-cartoon {
+  background:
+    radial-gradient(circle at var(--wipe-x, 50vw) var(--wipe-y, 50vh), rgba(255, 247, 202, 0.98) 0 12%, rgba(247, 252, 255, 0.96) 28%, rgba(255, 209, 102, 0.28) 44%, rgba(247, 252, 255, 0) 66%);
+}
+
+.style-wipe.to-normal {
+  background:
+    radial-gradient(circle at var(--wipe-x, 50vw) var(--wipe-y, 50vh), rgba(255, 255, 255, 0.98) 0 14%, rgba(246, 250, 252, 0.92) 30%, rgba(32, 128, 152, 0.13) 47%, rgba(255, 255, 255, 0) 66%);
+}
+
+html.page-morphing .container[role="main"],
+html.page-morphing .navbar,
+html.page-morphing footer {
+  animation: page-style-swap 900ms cubic-bezier(0.18, 0.9, 0.22, 1);
+  transform-origin: center top;
+}
+
 .lang-container {
   align-items: center;
   display: flex;
@@ -62,6 +107,8 @@ body.fixed-top-nav {
   display: block;
   padding: 0;
   position: relative;
+  transform-origin: center;
+  transition: box-shadow 280ms ease, transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
   width: 100%;
 }
 
@@ -86,7 +133,7 @@ body.fixed-top-nav {
   text-shadow: 0 2px 0 #ffffff, 0 0 12px rgba(255, 206, 84, 0.95);
   top: -0.45rem;
   transform: translate(0.35rem, -0.35rem) scale(0.72) rotate(14deg);
-  transition: opacity 180ms ease, transform 220ms ease;
+  transition: opacity 240ms ease, transform 360ms cubic-bezier(0.2, 0.9, 0.2, 1.25);
   z-index: 3;
 }
 
@@ -96,7 +143,7 @@ body.fixed-top-nav {
   inset: 0;
   overflow: hidden;
   position: absolute;
-  transition: opacity 260ms ease, transform 300ms ease;
+  transition: opacity 520ms ease, transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 520ms ease;
 }
 
 .avatar-layer img {
@@ -106,20 +153,22 @@ body.fixed-top-nav {
 }
 
 .avatar-cartoon {
+  filter: saturate(0.88) brightness(1.03);
   opacity: 0;
-  transform: scale(0.985) rotate(-0.8deg);
+  transform: scale(0.94) rotate(-3deg);
 }
 
 .avatar-toggle:hover .avatar-photo,
 .avatar-toggle:focus-visible .avatar-photo,
 html.cartoon-mode .avatar-photo {
   opacity: 0;
-  transform: scale(0.975);
+  transform: scale(0.93) rotate(2.2deg);
 }
 
 .avatar-toggle:hover .avatar-cartoon,
 .avatar-toggle:focus-visible .avatar-cartoon,
 html.cartoon-mode .avatar-cartoon {
+  filter: saturate(1.04) brightness(1);
   opacity: 1;
   transform: scale(1.015) rotate(0.4deg);
 }
@@ -129,6 +178,86 @@ html.cartoon-mode .avatar-cartoon {
 html.cartoon-mode .avatar-toggle::after {
   opacity: 1;
   transform: translate(0, 0) scale(1) rotate(0deg);
+}
+
+html.avatar-morphing .avatar-toggle {
+  animation: avatar-pop 720ms cubic-bezier(0.18, 0.9, 0.22, 1);
+}
+
+html.avatar-morphing .avatar-photo {
+  transition-duration: 640ms;
+}
+
+html.avatar-morphing .avatar-cartoon {
+  transition-duration: 680ms;
+}
+
+html.avatar-morphing .avatar-toggle::after {
+  animation: star-pop 720ms cubic-bezier(0.18, 0.9, 0.22, 1);
+}
+
+@keyframes avatar-pop {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  34% {
+    transform: scale(0.93) rotate(-3deg);
+  }
+  68% {
+    transform: scale(1.045) rotate(1.2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes star-pop {
+  0% {
+    opacity: 0;
+    transform: translate(0.45rem, -0.4rem) scale(0.42) rotate(28deg);
+  }
+  44% {
+    opacity: 1;
+    transform: translate(-0.08rem, 0.04rem) scale(1.26) rotate(-10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes style-wipe {
+  0% {
+    clip-path: circle(0 at var(--wipe-x, 50vw) var(--wipe-y, 50vh));
+    opacity: 0.94;
+  }
+  58% {
+    clip-path: circle(148vmax at var(--wipe-x, 50vw) var(--wipe-y, 50vh));
+    opacity: 0.78;
+  }
+  100% {
+    clip-path: circle(148vmax at var(--wipe-x, 50vw) var(--wipe-y, 50vh));
+    opacity: 0;
+  }
+}
+
+@keyframes page-style-swap {
+  0% {
+    filter: saturate(1) brightness(1);
+    transform: translateY(0) scale(1);
+  }
+  38% {
+    filter: saturate(1.18) brightness(1.04);
+    transform: translateY(2px) scale(0.992);
+  }
+  72% {
+    filter: saturate(1.08) brightness(1.015);
+    transform: translateY(-1px) scale(1.002);
+  }
+  100% {
+    filter: none;
+    transform: translateY(0) scale(1);
+  }
 }
 
 html.cartoon-mode {
