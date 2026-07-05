@@ -1,0 +1,336 @@
+footer.fixed-bottom {
+  position: static;
+}
+
+body.fixed-top-nav {
+  padding-bottom: 0;
+}
+
+.lang-container {
+  align-items: center;
+  display: flex;
+}
+
+.lang-toggle {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--global-text-color);
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  margin: 0 0.25rem;
+  padding: 0.25rem 0.45rem;
+}
+
+.lang-toggle:hover,
+.lang-toggle:focus-visible {
+  color: var(--global-theme-color);
+  outline: none;
+}
+
+.publications ol.bibliography li .preview {
+  width: 100%;
+}
+
+.jerry-title-icon {
+  display: none;
+  height: 0.95em;
+  margin-left: 0.25em;
+  transform: translateY(-0.04em);
+  vertical-align: middle;
+  width: auto;
+}
+
+.navbar-brand.title .jerry-title-icon {
+  height: 1.15em;
+  margin-left: 0.18em;
+}
+
+.avatar-frame {
+  margin: 0;
+}
+
+.avatar-toggle {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+  display: block;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+.avatar-toggle:focus-visible {
+  outline: 3px solid var(--global-theme-color);
+  outline-offset: 5px;
+}
+
+.avatar-toggle::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.avatar-toggle::after {
+  content: "✨";
+  font-size: clamp(1.7rem, 4vw, 2.65rem);
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  right: -0.2rem;
+  text-shadow: 0 2px 0 #ffffff, 0 0 12px rgba(255, 206, 84, 0.95);
+  top: -0.45rem;
+  transform: translate(0.35rem, -0.35rem) scale(0.72) rotate(14deg);
+  transition: opacity 180ms ease, transform 220ms ease;
+  z-index: 3;
+}
+
+.avatar-layer {
+  border-radius: 50%;
+  display: block;
+  inset: 0;
+  overflow: hidden;
+  position: absolute;
+  transition: opacity 260ms ease, transform 300ms ease;
+}
+
+.avatar-layer img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.avatar-cartoon {
+  opacity: 0;
+  transform: scale(0.985) rotate(-0.8deg);
+}
+
+.avatar-toggle:hover .avatar-photo,
+.avatar-toggle:focus-visible .avatar-photo,
+html.cartoon-mode .avatar-photo {
+  opacity: 0;
+  transform: scale(0.975);
+}
+
+.avatar-toggle:hover .avatar-cartoon,
+.avatar-toggle:focus-visible .avatar-cartoon,
+html.cartoon-mode .avatar-cartoon {
+  opacity: 1;
+  transform: scale(1.015) rotate(0.4deg);
+}
+
+.avatar-toggle:hover::after,
+.avatar-toggle:focus-visible::after,
+html.cartoon-mode .avatar-toggle::after {
+  opacity: 1;
+  transform: translate(0, 0) scale(1) rotate(0deg);
+}
+
+html.cartoon-mode {
+  --global-bg-color: #f7fcff;
+  --global-code-bg-color: rgba(255, 190, 73, 0.22);
+  --global-text-color: #1f2c3a;
+  --global-theme-color: #1c8bb8;
+  --global-hover-color: #f47a6d;
+  --global-card-bg-color: #ffffff;
+}
+
+html.cartoon-mode body,
+html.cartoon-mode p,
+html.cartoon-mode h1,
+html.cartoon-mode h2,
+html.cartoon-mode h3,
+html.cartoon-mode h4,
+html.cartoon-mode h5,
+html.cartoon-mode h6,
+html.cartoon-mode div,
+html.cartoon-mode li,
+html.cartoon-mode span,
+html.cartoon-mode strong,
+html.cartoon-mode em,
+html.cartoon-mode a,
+html.cartoon-mode input,
+html.cartoon-mode button {
+  font-family: "Comic Sans MS", "Comic Neue", "Chalkboard SE", "Marker Felt", "Trebuchet MS", cursive, sans-serif;
+}
+
+html.cartoon-mode body {
+  background-color: #f7fcff;
+  background-image:
+    linear-gradient(0deg, rgba(255, 214, 102, 0.11) 0 1px, transparent 1px 18px),
+    linear-gradient(90deg, rgba(122, 201, 167, 0.10) 0 1px, transparent 1px 18px);
+  overflow-x: hidden;
+}
+
+html.cartoon-mode body::before,
+html.cartoon-mode body::after {
+  content: "";
+  bottom: 0;
+  opacity: 0.72;
+  pointer-events: none;
+  position: fixed;
+  top: 56px;
+  width: min(12vw, 136px);
+  z-index: 0;
+}
+
+html.cartoon-mode body::before {
+  background:
+    radial-gradient(circle at 24px 28px, rgba(195, 229, 45, 0.86) 0 8px, transparent 9px),
+    radial-gradient(circle at 58px 86px, rgba(86, 169, 87, 0.62) 0 13px, transparent 14px),
+    radial-gradient(circle at 94px 42px, rgba(255, 214, 102, 0.78) 0 7px, transparent 8px),
+    radial-gradient(circle at 34px 132px, rgba(98, 190, 118, 0.50) 0 11px, transparent 12px),
+    linear-gradient(90deg, rgba(98, 190, 118, 0.18), rgba(247, 252, 255, 0));
+  background-size: 112px 178px, 136px 206px, 128px 190px, 150px 230px, 100% 100%;
+  left: 0;
+  mask-image: linear-gradient(90deg, #000 0 58%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0 58%, transparent 100%);
+  animation: leaf-side-flow 16s linear infinite;
+}
+
+html.cartoon-mode body::after {
+  background:
+    radial-gradient(ellipse at 70% 24px, rgba(50, 174, 230, 0.54) 0 18px, transparent 19px),
+    radial-gradient(ellipse at 44% 98px, rgba(116, 210, 237, 0.42) 0 23px, transparent 24px),
+    radial-gradient(circle at 78% 154px, rgba(255, 214, 102, 0.82) 0 4px, transparent 5px),
+    radial-gradient(circle at 32% 52px, rgba(255, 255, 255, 0.90) 0 5px, transparent 6px),
+    linear-gradient(270deg, rgba(50, 174, 230, 0.18), rgba(247, 252, 255, 0));
+  background-size: 150px 190px, 120px 164px, 96px 156px, 140px 218px, 100% 100%;
+  mask-image: linear-gradient(270deg, #000 0 58%, transparent 100%);
+  -webkit-mask-image: linear-gradient(270deg, #000 0 58%, transparent 100%);
+  right: 0;
+  animation: lake-side-flow 18s linear infinite;
+}
+
+html.cartoon-mode .container,
+html.cartoon-mode footer {
+  position: relative;
+  z-index: 1;
+}
+
+html.cartoon-mode .navbar {
+  background-color: #fff7ca;
+  border-bottom: 2px solid #3aa6c7;
+}
+
+html.cartoon-mode .post-title {
+  color: #183b66;
+  text-shadow: 2px 2px 0 #ffd166;
+}
+
+html.cartoon-mode .jerry-nickname {
+  display: none;
+}
+
+html.cartoon-mode .jerry-title-icon {
+  display: inline-block;
+  height: 1.28em;
+  margin-left: 0.18em;
+  transform: translateY(-0.1em) rotate(-5deg);
+}
+
+html.cartoon-mode code {
+  border: 1px solid rgba(28, 139, 184, 0.25);
+  border-radius: 8px;
+}
+
+html.cartoon-mode .desc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem 0.35rem;
+  line-height: 1.75;
+}
+
+html.cartoon-mode .desc code {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+html.cartoon-mode .publications ol.bibliography li .abbr abbr {
+  background-color: #f47a6d;
+  border: 2px solid #1f2c3a;
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 #ffd166;
+  color: #ffffff !important;
+}
+
+html.cartoon-mode .publications ol.bibliography li .preview,
+html.cartoon-mode .avatar-toggle {
+  border: 2px solid #1f2c3a;
+  box-shadow: 5px 6px 0 rgba(255, 209, 102, 0.82);
+}
+
+html.cartoon-mode .publications ol.bibliography li .links a.btn,
+html.cartoon-mode .lang-toggle,
+html.cartoon-mode .bibsearch-form-input {
+  border: 2px solid #1f2c3a;
+  border-radius: 9px;
+  box-shadow: 3px 3px 0 rgba(122, 201, 167, 0.6);
+}
+
+html.cartoon-mode .lang-toggle {
+  background: #ffffff;
+  color: #1f2c3a;
+}
+
+html.cartoon-mode .publications ol.bibliography li .links a.btn:hover {
+  background: #fff1a8;
+  color: #1f2c3a;
+  text-decoration: none;
+}
+
+@keyframes leaf-side-flow {
+  0% {
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: 0 -178px, 0 -206px, 0 -190px, 0 -230px, 0 0;
+  }
+}
+
+@keyframes lake-side-flow {
+  0% {
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: 0 190px, 0 164px, 0 156px, 0 218px, 0 0;
+  }
+}
+
+@media (max-width: 1120px) {
+  html.cartoon-mode body::before,
+  html.cartoon-mode body::after {
+    opacity: 0.34;
+    width: 54px;
+  }
+}
+
+@media (max-width: 760px), (prefers-reduced-motion: reduce) {
+  html.cartoon-mode body::before,
+  html.cartoon-mode body::after {
+    display: none;
+  }
+}
+
+.profile.float-right {
+  margin-top: 0.15rem;
+  margin-left: 1.35rem;
+  margin-bottom: 0.85rem;
+}
+
+@media (min-width: 576px) {
+  .profile {
+    width: 34%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .profile.float-right {
+    margin: 0.5rem 0 1.25rem;
+  }
+}

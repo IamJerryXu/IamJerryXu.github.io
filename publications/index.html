@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="google-site-verification" content="">
+  <meta name="msvalidate.01" content="">
+  <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Publications | Yongxue Xu</title>
+  <meta name="author" content="Yongxue Xu">
+  <meta name="description" content="Academic homepage of Yongxue Xu.">
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/mdb.min.css">
+  <link defer rel="stylesheet" href="../assets/css/academicons.min.css">
+  <link defer rel="stylesheet" href="../assets/css/scholar-icons.css">
+  <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap">
+  <link defer rel="stylesheet" href="../assets/css/jekyll-pygments-themes-github.css" media="" id="highlight_theme_light">
+  <link rel="shortcut icon" href="../assets/img/blank.jpg">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/custom.css">
+  <link rel="canonical" href="https://IamJerryXu.github.io/publications/">
+  <script src="../assets/js/theme.js"></script>
+  <link defer rel="stylesheet" href="../assets/css/jekyll-pygments-themes-native.css" media="none" id="highlight_theme_dark">
+  <script>initTheme();</script>
+  <script>
+    try {
+      if (localStorage.getItem("jerry-cartoon-mode") === "on") {
+        document.documentElement.classList.add("cartoon-mode");
+      }
+    } catch (e) {}
+  </script>
+</head>
+<body class="fixed-top-nav ">
+<header>
+  <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation">
+    <div class="container">
+      <a class="navbar-brand title font-weight-lighter" href="../index.html"><span data-i18n="name_given">Yongxue Xu</span><span class="jerry-nickname"> (Jerry)</span><img class="jerry-title-icon" src="../assets/img/jerry-icon.svg" alt="" aria-hidden="true"></a>
+      <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+      <div class="collapse navbar-collapse text-right" id="navbarNav">
+        <ul class="navbar-nav ml-auto flex-nowrap">
+          <li class="nav-item "><a class="nav-link" href="../index.html"><span data-i18n="nav_about">About</span> </a></li>
+          <li class="nav-item active"><a class="nav-link" href="index.html"><span data-i18n="nav_publications">Publications</span> <span class="sr-only">(current)</span></a></li>
+          <li class="lang-container">
+            <button id="lang-toggle" class="lang-toggle" type="button" title="Toggle language" aria-label="Toggle language">中文</button>
+          </li>
+          <li class="toggle-container">
+            <button id="light-toggle" title="Change theme">
+              <i class="fa-half-sun-moon" id="light-toggle-system"></i>
+              <i class="fa-solid fa-moon" id="light-toggle-dark"></i>
+              <i class="fa-solid fa-sun" id="light-toggle-light"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <progress id="progress" value="0"><div class="progress-container"><span class="progress-bar"></span></div></progress>
+</header>
+<div class="container mt-5" role="main">
+  <div class="post">
+    <header class="post-header">
+      <h1 class="post-title" data-i18n="publications_title">Publications</h1>
+      <p class="post-description"></p>
+    </header>
+    <article>
+      <p><span data-i18n="publications_overview_prefix">For a more complete overview, please see my</span> <a href="../assets/pdf/Yongxue_Xu_CV.pdf">CV</a>.</p>
+      <p><input type="text" id="bibsearch" spellcheck="false" autocomplete="off" class="search bibsearch-form-input" placeholder="Type to filter" data-i18n-placeholder="search_placeholder"></p>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          var input = document.getElementById("bibsearch");
+          if (!input) return;
+          input.addEventListener("input", function () {
+            var query = input.value.toLowerCase();
+            document.querySelectorAll("ol.bibliography > li").forEach(function (item) {
+              item.classList.toggle("unloaded", query && !item.innerText.toLowerCase().includes(query));
+            });
+            document.querySelectorAll("h2.bibliography").forEach(function (heading) {
+              var list = heading.nextElementSibling;
+              if (!list || !list.matches("ol.bibliography")) return;
+              var items = Array.from(list.children);
+              var allHidden = items.length && items.every(function (item) { return item.classList.contains("unloaded"); });
+              heading.classList.toggle("unloaded", allHidden);
+              list.classList.toggle("unloaded", allHidden);
+            });
+          });
+        });
+      </script>
+      <div class="publications">
+        <h2 class="bibliography">2026</h2>
+        <ol class="bibliography">
+          <li class="publication-item publication-track4d">
+  <div class="row">
+    <div class="col col-sm-3 abbr">
+      <abbr class="badge rounded w-100">NeurIPS</abbr>
+      <figure>
+        <picture>
+          <img src="../assets/img/publication_preview/lmm-track4d-demo.gif" class="preview z-depth-1 rounded" width="100%" height="auto" alt="lmm-track4d-demo.gif" data-zoomable loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+        </picture>
+      </figure>
+    </div>
+    <div id="track4d" class="col-sm-9">
+      <div class="title">LMM-Track4D: Eliciting 4D Dynamic Reasoning in LMMs via Trajectory-Grounded Dialogue</div>
+      <div class="author">Chaoyue Li<sup>*</sup>, <em>Yongxue Xu<sup>*</sup></em>, Jie Feng<sup>*</sup>, and Jiayu Ding <i class="fa-solid fa-circle-info ml-1" data-toggle="popover" data-placement="top" data-html="true" data-i18n-content="track4d_annotation" data-content="* Equal contribution"> </i></div>
+      <div class="periodical"><em>arXiv preprint</em></div>
+      <div class="periodical" data-i18n="track4d_status">Submitted to NeurIPS 2026</div>
+      <div class="periodical" data-i18n="track4d_desc">A trajectory-grounded dialogue benchmark and LMM framework for 4D dynamic reasoning, combining RTGE, a streaming TRK state token, and an OSK-RA decoder for stable 3D trajectory estimation under occlusion and viewpoint variation.</div>
+      <div class="links">
+        <a href="https://arxiv.org/abs/2605.19390" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">arXiv</a>
+        <a class="bibtex btn btn-sm z-depth-0" role="button">Bib</a>
+        <a href="https://github.com/mikubaka88/LMM-Track4D" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">Code</a>
+      </div>
+      <div class="bibtex hidden"><figure class="highlight"><pre><code class="language-bibtex" data-lang="bibtex">@article{li2026lmmtrack4d,
+  title={LMM-Track4D: Eliciting 4D Dynamic Reasoning in LMMs via Trajectory-Grounded Dialogue},
+  author={Li, Chaoyue and Xu, Yongxue and Feng, Jie and Ding, Jiayu},
+  journal={arXiv preprint arXiv:2605.19390},
+  note={Equal contribution: Chaoyue Li, Yongxue Xu, and Jie Feng},
+  year={2026}
+}</code></pre></figure></div>
+    </div>
+  </div>
+</li>
+          <li class="publication-item publication-influence">
+  <div class="row">
+    <div class="col col-sm-3 abbr">
+      <abbr class="badge rounded w-100">TNSE</abbr>
+      <figure>
+        <picture>
+          <img src="../assets/img/publication_preview/influence.png" class="preview z-depth-1 rounded" width="100%" height="auto" alt="influence.png" data-zoomable loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+        </picture>
+      </figure>
+    </div>
+    <div id="influence" class="col-sm-9">
+      <div class="title">Solving the Robust Influence Maximization Problem in Competitive Multilayer Networks via a Diffusion-Aware Role-Guided Evolutionary Approach</div>
+      <div class="author"><em>Yongxue Xu</em>, Ziqian Liu, Yongqing Huang, and Shuai Wang<sup>&dagger;</sup> <i class="fa-solid fa-circle-info ml-1" data-toggle="popover" data-placement="top" data-html="true" data-i18n-content="influence_annotation" data-content="&dagger; Corresponding author"> </i></div>
+      <div class="periodical"><em>IEEE Transactions on Network Science and Engineering</em></div>
+      <div class="periodical" data-i18n="influence_status">Under review</div>
+      <div class="periodical" data-i18n="influence_desc">A diffusion-aware role-guided evolutionary framework for robust competitive influence maximization on heterogeneous multilayer networks.</div>
+      <div class="links">
+        
+        <a class="bibtex btn btn-sm z-depth-0" role="button">Bib</a>
+        
+      </div>
+      <div class="bibtex hidden"><figure class="highlight"><pre><code class="language-bibtex" data-lang="bibtex">@article{xu2026influence,
+  title={Solving the Robust Influence Maximization Problem in Competitive Multilayer Networks via a Diffusion-Aware Role-Guided Evolutionary Approach},
+  author={Xu, Yongxue and Liu, Ziqian and Huang, Yongqing and Wang, Shuai},
+  journal={Under review at IEEE Transactions on Network Science and Engineering},
+  note={Corresponding author: Shuai Wang},
+  year={2026}
+}</code></pre></figure></div>
+    </div>
+  </div>
+</li>
+        </ol>
+        <h2 class="bibliography">2025</h2>
+        <ol class="bibliography"><li class="publication-item publication-road">
+  <div class="row">
+    <div class="col col-sm-3 abbr">
+      <abbr class="badge rounded w-100">GBCESC</abbr>
+      <figure>
+        <picture>
+          <img src="../assets/img/publication_preview/road.png" class="preview z-depth-1 rounded" width="100%" height="auto" alt="road.png" data-zoomable loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();">
+        </picture>
+      </figure>
+    </div>
+    <div id="road" class="col-sm-9">
+      <div class="title">Identifying Critical Nodes with Deep Learning and Reinforcement Learning: A Case Study on Urban Road Networks</div>
+      <div class="author">Zhonghan Liu<sup>*</sup>, <em>Yongxue Xu<sup>*</sup></em>, Wenshuo Liu<sup>*</sup>, Ziqian Liu, Yichen Liu, and Shuai Wang<sup>&dagger;</sup> <i class="fa-solid fa-circle-info ml-1" data-toggle="popover" data-placement="top" data-html="true" data-i18n-content="road_annotation" data-content="* Equal contribution; &dagger; Corresponding author"> </i></div>
+      <div class="periodical"><em>GBCESC 2025</em></div>
+      <div class="periodical" data-i18n="road_status">Best Paper Award</div>
+      <div class="periodical" data-i18n="road_desc">A benchmark of deep learning and reinforcement learning methods for critical node identification on real urban road networks.</div>
+      <div class="links">
+        
+        <a class="bibtex btn btn-sm z-depth-0" role="button">Bib</a>
+        
+      </div>
+      <div class="bibtex hidden"><figure class="highlight"><pre><code class="language-bibtex" data-lang="bibtex">@inproceedings{liu2025criticalnodes,
+  title={Identifying Critical Nodes with Deep Learning and Reinforcement Learning: A Case Study on Urban Road Networks},
+  author={Liu, Zhonghan and Xu, Yongxue and Liu, Wenshuo and Liu, Ziqian and Liu, Yichen and Wang, Shuai},
+  booktitle={GBCESC},
+  note={Best Paper Award. Equal contribution: Zhonghan Liu, Yongxue Xu, and Wenshuo Liu. Corresponding author: Shuai Wang},
+  year={2025}
+}</code></pre></figure></div>
+    </div>
+  </div>
+</li></ol>
+      </div>
+    </article>
+  </div>
+</div>
+<footer class="fixed-bottom" role="contentinfo">
+  <div class="container mt-0">
+    © Copyright 2026 Yongxue Xu. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Last updated: July 06, 2026.
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="../assets/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script>
+<script defer src="../assets/js/masonry.js" type="text/javascript"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+<script defer src="../assets/js/zoom.js"></script>
+<script src="../assets/js/no_defer.js"></script>
+<script defer src="../assets/js/common.js"></script>
+<script defer src="../assets/js/copy_code.js" type="text/javascript"></script>
+<script defer src="../assets/js/jupyter_new_tab.js"></script>
+<script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
+<script async src="https://badge.dimensions.ai/badge.js"></script>
+<script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script>
+<script src="../assets/js/mathjax-setup.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script defer src="../assets/js/google-analytics-setup.js"></script>
+<script defer src="../assets/js/progress-bar.js" type="text/javascript"></script>
+<script src="../assets/js/vanilla-back-to-top.min.js"></script>
+<script>addBackToTop();</script>
+<script>
+  (function () {
+    var translations = {
+      en: {
+        name_given: "Yongxue Xu",
+        nav_about: "About",
+        nav_publications: "Publications",
+        selected_publications: "Selected Publications",
+        publications_title: "Publications",
+        publications_overview_prefix: "For a more complete overview, please see my",
+        search_placeholder: "Type to filter",
+        bio_1: "I am an undergraduate student at <a href=\"https://www.sysu.edu.cn/\" rel=\"external nofollow noopener\" target=\"_blank\">Sun Yat-sen University</a>, majoring in Intelligent Science and Technology in the School of Intelligent Systems Engineering. My current research interests lie in video generation, world models, 4D scene understanding, and world-action models (WAM).",
+        bio_2: "My research journey began in a data structures course, where I was first drawn to the elegance of representing a problem through structure. This taste later led me to graph-based decision problems. In robust competitive influence maximization on multi-layer graph networks and critical node identification in urban road networks, I was interested in how structure shapes behavior: how information propagates across layers, how a few key nodes can change a system, and how a model should make decisions when the topology itself carries most of the meaning. These projects made me care less about isolated predictions and more about the hidden state of a system - the relationships, constraints, and dynamics that make an output meaningful.",
+        bio_3: "Later, when I moved into video instance segmentation and 4D tracking, the same concern reappeared in a more visual form. A mask, trajectory, or generated frame can be plausible at one moment and still fail once the camera moves, an object is occluded, or the scene is revisited. I gradually realized that long-video intelligence is not only a recognition problem; it is a memory problem. <em>Instead of asking only whether a model can render the next frame, I became more interested in whether it can remember that it is still rendering the same world.</em>",
+        bio_4: "This realization led me toward video generation and action world models. I believe the missing piece is not simply a sharper decoder, a longer context window, or a larger generative backbone, but a persistent object-state core: a compact, structured, updatable memory of which entities exist, where they are, how they move, how they relate, and how they should persist through time, occlusion, viewpoint change, and action. A world model that cannot remember is not really modeling a world; it is a renderer with momentum.",
+        bio_5: "More broadly, I want to build models in which perception, prediction, generation, and control become different operations on the same state. Understanding should update the core from new observations; prediction should roll the core forward; generation should render the core into pixels; control should edit the core and make the change stay; and action should write its consequences back into the world. I am currently working closely with collaborators at the EPIC Lab of SJTU SAI, HKUST, ByteDance, Xiangru Huang's Embodied AI Lab at Westlake University, and PKU LumPin Lab on video generation, WAM, and multimodal spatiotemporal understanding projects, where these questions become concrete systems rather than only conceptual interests. My current research is centered on <strong>controllable video generation</strong> and <strong>interactive world models</strong>.",
+        track4d_status: "Submitted to NeurIPS 2026",
+        track4d_desc: "A trajectory-grounded dialogue benchmark and LMM framework for 4D dynamic reasoning, combining RTGE, a streaming TRK state token, and an OSK-RA decoder for stable 3D trajectory estimation under occlusion and viewpoint variation.",
+        track4d_annotation: "* Equal contribution",
+        influence_status: "Under review",
+        influence_desc: "A diffusion-aware role-guided evolutionary framework for robust competitive influence maximization on heterogeneous multilayer networks.",
+        influence_annotation: "&dagger; Corresponding author",
+        road_status: "Best Paper Award",
+        road_desc: "A benchmark of deep learning and reinforcement learning methods for critical node identification on real urban road networks.",
+        road_annotation: "* Equal contribution; &dagger; Corresponding author",
+        page_title_home: "Yongxue Xu (Jerry)",
+        page_title_publications: "Publications | Yongxue Xu"
+      },
+      zh: {
+        name_given: "徐永雪",
+        nav_about: "关于",
+        nav_publications: "论文",
+        selected_publications: "代表论文",
+        publications_title: "论文",
+        publications_overview_prefix: "更完整的信息请见我的",
+        search_placeholder: "输入关键词筛选",
+        bio_1: "我是<a href=\"https://www.sysu.edu.cn/\" rel=\"external nofollow noopener\" target=\"_blank\">中山大学</a>智能科学与技术专业的本科生，所在学院为智能工程学院。目前我的研究兴趣主要集中在 video generation、world models、4D scene understanding 和 world-action models (WAM)。",
+        bio_2: "我的研究兴趣最早来自数据结构这门课。那时我第一次感觉到，用结构去表示问题本身是一件很优雅的事情。后来，这种偏好自然延伸到图上的决策问题：在多层图网络上的鲁棒竞争影响力最大化，以及城市道路网络中的关键节点识别中，我关注的是结构如何塑造行为：信息如何跨层传播，少数关键节点如何改变整个系统，以及当拓扑结构本身承载主要语义时，模型应该如何做决策。这些经历让我逐渐不再只关注孤立预测，而更关心系统背后的隐状态——关系、约束和动态。",
+        bio_3: "后来，当研究转向 video instance segmentation 和 4D tracking 时，同样的问题以更视觉化的形式再次出现。一个 mask、一条 trajectory，或者一帧生成结果，在某个瞬间可以看起来合理，但当相机移动、物体被遮挡，或场景被再次访问时，仍然可能失败。我逐渐意识到，长视频智能不仅是识别问题，更是记忆问题。<em>相比只问模型能否生成下一帧，我更关心它是否记得自己仍在生成同一个世界。</em>",
+        bio_4: "这个认识自然把我带向 video generation 和 action world models。我认为缺失的部分不只是更清晰的 decoder、更长的上下文窗口，或更大的生成 backbone，而是一个持续存在的 object-state core：一种紧凑、结构化、可更新的记忆，用来记录哪些实体存在、它们在哪里、如何运动、如何关联，以及它们如何在时间、遮挡、视角变化和动作之后继续保持一致。一个不能记住世界的 world model，并不真的在建模世界；它更像是带着惯性的渲染器。",
+        bio_5: "更进一步，我希望构建这样的模型：perception、prediction、generation 和 control 都是在同一状态上的不同操作。理解应该用新观测更新这个核心；预测应该让它向前演化；生成应该把它渲染成像素；控制应该修改它，并让修改保持下来；动作则应该把结果重新写回世界。目前我与上海交通大学 SAI 的 EPIC Lab、HKUST、ByteDance、西湖大学黄相如的具身实验室，以及 PKU LumPin Lab（澜谱实验室）保持紧密合作，方向覆盖 video generation、WAM 和多模态时空理解，这些问题也因此从概念兴趣变成了具体系统。我的当前研究集中在 <strong>controllable video generation</strong> 和 <strong>interactive world models</strong>。",
+        track4d_status: "已投稿 NeurIPS 2026",
+        track4d_desc: "一个面向 4D dynamic reasoning 的 trajectory-grounded dialogue benchmark 和 LMM 框架，用于在遮挡和视角变化下保持稳定的 3D trajectory estimation。",
+        track4d_annotation: "* 共同一作",
+        influence_status: "审稿中",
+        influence_desc: "一个面向异构多层网络的 diffusion-aware、role-guided evolutionary framework，用于鲁棒竞争影响力最大化。",
+        influence_annotation: "&dagger; 通讯作者",
+        road_status: "最佳论文奖",
+        road_desc: "基于真实城市道路网络，对 deep learning 和 reinforcement learning 方法在关键节点识别任务中的表现进行系统评测。",
+        road_annotation: "* 共同一作；&dagger; 通讯作者",
+        page_title_home: "徐永雪 (Jerry)",
+        page_title_publications: "论文 | 徐永雪"
+      }
+    };
+
+    function applyLanguage(lang) {
+      var dict = translations[lang] || translations.en;
+      document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+      document.querySelectorAll("[data-i18n]").forEach(function (node) {
+        var key = node.getAttribute("data-i18n");
+        if (Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.innerHTML = dict[key];
+        }
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(function (node) {
+        var key = node.getAttribute("data-i18n-placeholder");
+        if (Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("placeholder", dict[key]);
+        }
+      });
+      document.querySelectorAll("[data-i18n-content]").forEach(function (node) {
+        var key = node.getAttribute("data-i18n-content");
+        if (Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("data-content", dict[key]);
+          if (window.jQuery && window.jQuery(node).data("bs.popover")) {
+            window.jQuery(node).data("bs.popover").config.content = dict[key];
+          }
+        }
+      });
+      document.querySelectorAll("#lang-toggle").forEach(function (button) {
+        button.textContent = lang === "zh" ? "EN" : "中文";
+        button.setAttribute("aria-label", lang === "zh" ? "Switch to English" : "切换到中文");
+        button.setAttribute("title", lang === "zh" ? "Switch to English" : "切换到中文");
+      });
+      document.title = document.getElementById("bibsearch") ? dict.page_title_publications : dict.page_title_home;
+      try {
+        localStorage.setItem("jerry-language", lang);
+      } catch (e) {}
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var lang = "en";
+      try {
+        lang = localStorage.getItem("jerry-language") || "en";
+      } catch (e) {}
+      applyLanguage(lang === "zh" ? "zh" : "en");
+      document.querySelectorAll("#lang-toggle").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var current = document.documentElement.lang === "zh-CN" ? "zh" : "en";
+          applyLanguage(current === "zh" ? "en" : "zh");
+        });
+      });
+    });
+  })();
+</script>
+<script>
+  (function () {
+    var root = document.documentElement;
+    function setCartoonMode(enabled) {
+      root.classList.toggle("cartoon-mode", enabled);
+      try {
+        localStorage.setItem("jerry-cartoon-mode", enabled ? "on" : "off");
+      } catch (e) {}
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+      var avatar = document.querySelector(".avatar-toggle");
+      if (!avatar) return;
+      avatar.addEventListener("click", function () {
+        setCartoonMode(!root.classList.contains("cartoon-mode"));
+      });
+      avatar.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setCartoonMode(!root.classList.contains("cartoon-mode"));
+        }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
