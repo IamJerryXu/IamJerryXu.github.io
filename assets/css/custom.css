@@ -24,24 +24,27 @@ code {
     text-shadow 720ms ease;
 }
 
-.style-wipe {
-  animation: style-wipe 920ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-  clip-path: circle(0 at var(--wipe-x, 50vw) var(--wipe-y, 50vh));
+.style-veil {
+  animation: style-veil 760ms ease forwards;
+  -webkit-backdrop-filter: saturate(112%);
+  backdrop-filter: saturate(112%);
   inset: 0;
-  opacity: 0.95;
+  opacity: 0;
   pointer-events: none;
   position: fixed;
   z-index: 9999;
 }
 
-.style-wipe.to-cartoon {
+.style-veil.to-cartoon {
   background:
-    radial-gradient(circle at var(--wipe-x, 50vw) var(--wipe-y, 50vh), rgba(255, 247, 202, 0.98) 0 12%, rgba(247, 252, 255, 0.96) 28%, rgba(255, 209, 102, 0.28) 44%, rgba(247, 252, 255, 0) 66%);
+    radial-gradient(circle at var(--veil-x, 50vw) var(--veil-y, 50vh), rgba(255, 247, 202, 0.12) 0 18%, rgba(247, 252, 255, 0.08) 36%, rgba(247, 252, 255, 0) 62%),
+    linear-gradient(135deg, rgba(122, 201, 167, 0.04), rgba(255, 214, 102, 0.035), rgba(50, 174, 230, 0.03));
 }
 
-.style-wipe.to-normal {
+.style-veil.to-normal {
   background:
-    radial-gradient(circle at var(--wipe-x, 50vw) var(--wipe-y, 50vh), rgba(255, 255, 255, 0.98) 0 14%, rgba(246, 250, 252, 0.92) 30%, rgba(32, 128, 152, 0.13) 47%, rgba(255, 255, 255, 0) 66%);
+    radial-gradient(circle at var(--veil-x, 50vw) var(--veil-y, 50vh), rgba(255, 255, 255, 0.12) 0 18%, rgba(246, 250, 252, 0.07) 38%, rgba(255, 255, 255, 0) 64%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(28, 139, 184, 0.025));
 }
 
 html.page-morphing .container[role="main"],
@@ -226,17 +229,14 @@ html.avatar-morphing .avatar-toggle::after {
   }
 }
 
-@keyframes style-wipe {
+@keyframes style-veil {
   0% {
-    clip-path: circle(0 at var(--wipe-x, 50vw) var(--wipe-y, 50vh));
-    opacity: 0.94;
+    opacity: 0;
   }
-  58% {
-    clip-path: circle(148vmax at var(--wipe-x, 50vw) var(--wipe-y, 50vh));
-    opacity: 0.78;
+  38% {
+    opacity: 0.2;
   }
   100% {
-    clip-path: circle(148vmax at var(--wipe-x, 50vw) var(--wipe-y, 50vh));
     opacity: 0;
   }
 }
@@ -247,12 +247,12 @@ html.avatar-morphing .avatar-toggle::after {
     transform: translateY(0) scale(1);
   }
   38% {
-    filter: saturate(1.18) brightness(1.04);
-    transform: translateY(2px) scale(0.992);
+    filter: saturate(1.035) brightness(1.004);
+    transform: translateY(1px) scale(0.998);
   }
   72% {
-    filter: saturate(1.08) brightness(1.015);
-    transform: translateY(-1px) scale(1.002);
+    filter: saturate(1.02) brightness(1.002);
+    transform: translateY(0) scale(1.001);
   }
   100% {
     filter: none;

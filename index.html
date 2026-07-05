@@ -337,23 +337,23 @@
 <script>
   (function () {
     var root = document.documentElement;
-    function addStyleWipe(enabled, trigger) {
+    function addStyleVeil(enabled, trigger) {
       if (!document.body || !trigger) return;
       var rect = trigger.getBoundingClientRect();
-      var wipe = document.createElement("div");
-      wipe.className = "style-wipe " + (enabled ? "to-cartoon" : "to-normal");
-      wipe.style.setProperty("--wipe-x", rect.left + rect.width / 2 + "px");
-      wipe.style.setProperty("--wipe-y", rect.top + rect.height / 2 + "px");
-      document.body.appendChild(wipe);
+      var veil = document.createElement("div");
+      veil.className = "style-veil " + (enabled ? "to-cartoon" : "to-normal");
+      veil.style.setProperty("--veil-x", rect.left + rect.width / 2 + "px");
+      veil.style.setProperty("--veil-y", rect.top + rect.height / 2 + "px");
+      document.body.appendChild(veil);
       window.setTimeout(function () {
-        wipe.remove();
-      }, 980);
+        veil.remove();
+      }, 760);
     }
     function setCartoonMode(enabled, trigger) {
       root.classList.remove("avatar-morphing", "page-morphing");
       void root.offsetWidth;
       root.classList.add("avatar-morphing", "page-morphing");
-      addStyleWipe(enabled, trigger);
+      addStyleVeil(enabled, trigger);
       root.classList.toggle("cartoon-mode", enabled);
       try {
         localStorage.setItem("jerry-cartoon-mode", enabled ? "on" : "off");
