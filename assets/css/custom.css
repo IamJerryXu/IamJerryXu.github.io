@@ -47,6 +47,27 @@ code {
     linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(28, 139, 184, 0.025));
 }
 
+.cartoon-decorations {
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.cartoon-float {
+  animation: cartoon-drift linear infinite;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
+  pointer-events: none;
+  position: absolute;
+  top: -42px;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
 html.page-morphing .container[role="main"],
 html.page-morphing .navbar,
 html.page-morphing footer {
@@ -367,6 +388,23 @@ html.avatar-morphing .avatar-toggle::after {
   }
 }
 
+@keyframes cartoon-drift {
+  0% {
+    opacity: 0;
+    transform: translateY(-42px) translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.88;
+  }
+  52% {
+    transform: translateY(50vh) translateX(var(--float-mid-x, 26px)) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(112vh) translateX(var(--float-x, -30px)) rotate(360deg);
+  }
+}
+
 html.cartoon-mode {
   --global-bg-color: #f7fcff;
   --global-code-bg-color: rgba(255, 190, 73, 0.22);
@@ -549,6 +587,10 @@ html.cartoon-mode .publications ol.bibliography li .links a.btn:hover {
 @media (max-width: 760px), (prefers-reduced-motion: reduce) {
   html.cartoon-mode body::before,
   html.cartoon-mode body::after {
+    display: none;
+  }
+
+  .cartoon-decorations {
     display: none;
   }
 }
