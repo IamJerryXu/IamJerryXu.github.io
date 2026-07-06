@@ -555,13 +555,13 @@ html.cartoon-mode .publications ol.bibliography li .links a.btn:hover {
 
 .profile.float-right {
   margin-top: 0.15rem;
-  margin-left: 1.35rem;
+  margin-left: 1rem;
   margin-bottom: 0.85rem;
 }
 
 @media (min-width: 576px) {
   .profile {
-    width: 34%;
+    width: 30%;
   }
 }
 
