@@ -112,7 +112,10 @@ html.page-morphing footer {
 
 .news-item {
   color: var(--global-text-color);
+  column-gap: 0.52rem;
+  display: grid;
   font-size: 0.99rem;
+  grid-template-columns: 7.05rem minmax(0, 1fr);
   letter-spacing: 0.008em;
   line-height: 1.68;
   margin: 0;
@@ -138,18 +141,25 @@ html.page-morphing footer {
   font-size: 0.94em;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.015em;
-  margin-right: 0.58rem;
-  min-width: 6.45rem;
+  margin-right: 0;
+  min-width: 0;
   white-space: nowrap;
 }
 
 .news-text {
   color: var(--global-text-color);
+  display: block;
+  min-width: 0;
 }
 
 @media (max-width: 575.98px) {
   .news-heading {
     font-size: 1.28rem;
+  }
+
+  .news-item {
+    grid-template-columns: 1fr;
+    row-gap: 0.05rem;
   }
 
   .news-date {
@@ -163,6 +173,16 @@ html[lang="zh-CN"] .news-heading,
 html[lang="zh-CN"] .news-list,
 html[lang="zh-CN"] .news-date {
   font-family: "LXGW WenKai TC", "Comic Neue", "PingFang SC", "Microsoft YaHei", cursive, sans-serif;
+}
+
+html[lang="zh-CN"] .news-item {
+  grid-template-columns: 8.3rem minmax(0, 1fr);
+}
+
+@media (max-width: 575.98px) {
+  html[lang="zh-CN"] .news-item {
+    grid-template-columns: 1fr;
+  }
 }
 
 .publications ol.bibliography li .preview {
