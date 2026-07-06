@@ -78,6 +78,74 @@ html.page-morphing footer {
   outline: none;
 }
 
+.news-section {
+  margin: 0.5rem 0 2.25rem;
+}
+
+.news-heading {
+  align-items: center;
+  display: flex;
+  gap: 0.45rem;
+  margin-bottom: 0.8rem;
+}
+
+.news-fire {
+  color: #f36b21;
+  font-size: 0.86em;
+  line-height: 1;
+  transform: translateY(-0.03em);
+}
+
+.news-list {
+  border-left: 2px solid rgba(28, 139, 184, 0.28);
+  list-style: none;
+  margin: 0;
+  padding: 0.05rem 0 0.05rem 1.05rem;
+}
+
+.news-item {
+  display: grid;
+  gap: 0.3rem;
+  grid-template-columns: minmax(8.5rem, 0.24fr) 1fr;
+  line-height: 1.45;
+  margin: 0 0 0.75rem;
+  position: relative;
+}
+
+.news-item:last-child {
+  margin-bottom: 0;
+}
+
+.news-item::before {
+  background: var(--global-theme-color);
+  border: 2px solid var(--global-bg-color);
+  border-radius: 50%;
+  content: "";
+  height: 0.58rem;
+  left: -1.4rem;
+  position: absolute;
+  top: 0.45rem;
+  width: 0.58rem;
+}
+
+.news-date {
+  color: var(--global-theme-color);
+  font-family: var(--global-mono-font, monospace);
+  font-size: 0.86rem;
+  white-space: nowrap;
+}
+
+.news-text {
+  color: var(--global-text-color);
+}
+
+@media (max-width: 575.98px) {
+  .news-item {
+    gap: 0.12rem;
+    grid-template-columns: 1fr;
+  }
+}
+
 .publications ol.bibliography li .preview {
   width: 100%;
 }
