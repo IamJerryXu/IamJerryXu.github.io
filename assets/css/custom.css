@@ -99,6 +99,31 @@ html.page-morphing footer {
   outline: none;
 }
 
+.navbar.navbar-light .navbar-brand.social a .linkedin-mark {
+  align-items: center;
+  border: 0.09em solid currentColor;
+  border-radius: 0.12em;
+  box-sizing: border-box;
+  color: var(--global-text-color);
+  display: inline-flex;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.72em;
+  font-weight: 800;
+  height: 1.16em;
+  justify-content: center;
+  letter-spacing: -0.08em;
+  line-height: 1;
+  margin: 0 0.02em;
+  padding-right: 0.05em;
+  transform: translateY(-0.08em);
+  vertical-align: middle;
+  width: 1.16em;
+}
+
+.navbar.navbar-light .navbar-brand.social a:hover .linkedin-mark {
+  color: var(--global-theme-color);
+}
+
 .news-section {
   margin: 0.2rem 0 2.7rem;
 }
