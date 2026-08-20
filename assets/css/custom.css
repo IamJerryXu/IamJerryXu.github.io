@@ -121,13 +121,17 @@ html.page-morphing footer {
   --fa: "\f08c";
 }
 
+.fa-snowflake {
+  --fa: "\f2dc";
+}
+
 .identity-header {
   margin-bottom: 1.15rem;
 }
 
 .name-title {
   align-items: baseline;
-  column-gap: 0.42rem;
+  column-gap: 0.3rem;
   display: flex;
   flex-wrap: wrap;
   letter-spacing: 0;
@@ -137,10 +141,17 @@ html.page-morphing footer {
 }
 
 .name-title .jerry-nickname {
-  color: var(--global-text-color);
-  font-size: 0.5em;
-  font-weight: 400;
-  opacity: 0.64;
+  color: inherit;
+  font-size: 1em;
+  font-weight: inherit;
+  opacity: 1;
+}
+
+.identity-snow {
+  color: var(--global-theme-color);
+  font-size: 0.43em;
+  opacity: 0.7;
+  transform: translateY(-0.16em) rotate(10deg);
 }
 
 .contact-row {
@@ -148,7 +159,7 @@ html.page-morphing footer {
   display: flex;
   flex-wrap: wrap;
   font-family: "Roboto Mono", Menlo, Consolas, monospace;
-  font-size: 0.91rem;
+  font-size: 0.93rem;
   gap: 0.24rem 0.42rem;
   line-height: 1.55;
   margin: 0;
@@ -172,8 +183,9 @@ html.page-morphing footer {
 }
 
 .contact-separator {
-  color: var(--global-text-color);
-  opacity: 0.4;
+  color: var(--global-theme-color);
+  font-size: 0.56rem;
+  opacity: 0.5;
 }
 
 .news-section {
@@ -314,12 +326,16 @@ html.page-morphing footer {
   }
 
   .name-title {
-    column-gap: 0.3rem;
+    column-gap: 0.24rem;
     margin-bottom: 0.58rem;
   }
 
   .name-title .jerry-nickname {
-    font-size: 0.47em;
+    font-size: 1em;
+  }
+
+  .identity-snow {
+    font-size: 0.38em;
   }
 
   .contact-row {
