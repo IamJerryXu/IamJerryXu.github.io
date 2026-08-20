@@ -2,6 +2,14 @@ footer.fixed-bottom {
   position: static;
 }
 
+:root {
+  --news-method-color: #d33f7f;
+}
+
+html[data-theme="dark"] {
+  --news-method-color: #ff91bc;
+}
+
 body.fixed-top-nav {
   padding-bottom: 0;
 }
@@ -178,14 +186,16 @@ html.page-morphing footer {
 }
 
 .news-method {
-  color: var(--global-theme-color);
+  color: var(--news-method-color);
+  font-family: "Roboto Slab", "LXGW WenKai TC", Georgia, serif;
   font-weight: 700;
 }
 
 .news-birthday {
-  font-family: "Marker Felt", "Chalkboard SE", "Comic Sans MS", "Comic Neue", cursive;
-  font-size: 1.04em;
-  transform: rotate(-0.35deg);
+  font-family: "Comic Neue", "Comic Sans MS", "Chalkboard SE", "Trebuchet MS", cursive;
+  font-size: 1.03em;
+  font-weight: 700;
+  transform: rotate(-0.18deg);
   transform-origin: left center;
 }
 
@@ -224,7 +234,7 @@ html[lang="zh-CN"] .news-item {
 }
 
 html[lang="zh-CN"] .news-birthday {
-  font-family: "Kaiti SC", STKaiti, "LXGW WenKai TC", "Comic Neue", cursive;
+  font-family: "LXGW WenKai TC", "Comic Neue", "Microsoft YaHei", "PingFang SC", sans-serif;
   font-weight: 600;
 }
 
@@ -440,6 +450,7 @@ html.cartoon-mode {
   --global-theme-color: #1c8bb8;
   --global-hover-color: #f47a6d;
   --global-card-bg-color: #ffffff;
+  --news-method-color: #cf3978;
 }
 
 html.cartoon-mode body,
@@ -459,6 +470,25 @@ html.cartoon-mode a,
 html.cartoon-mode input,
 html.cartoon-mode button {
   font-family: "Comic Sans MS", "Comic Neue", "Chalkboard SE", "Marker Felt", "Trebuchet MS", cursive, sans-serif;
+}
+
+html.cartoon-mode .news-method {
+  font-family: "Chalkboard SE", "Marker Felt", "Comic Sans MS", "Comic Neue", cursive;
+  font-weight: 700;
+}
+
+html.cartoon-mode .news-birthday {
+  font-family: "Comic Neue", "Comic Sans MS", "Chalkboard SE", "Trebuchet MS", cursive;
+  font-weight: 700;
+}
+
+html.cartoon-mode[lang="zh-CN"] .news-birthday {
+  font-family: "LXGW WenKai TC", "Comic Neue", "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-weight: 600;
+}
+
+html.cartoon-mode .birthday-devil {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
 }
 
 html.cartoon-mode body {
