@@ -3,11 +3,11 @@ footer.fixed-bottom {
 }
 
 :root {
-  --news-method-color: #d33f7f;
+  --news-method-color: #b45778;
 }
 
 html[data-theme="dark"] {
-  --news-method-color: #ff91bc;
+  --news-method-color: #e39ab4;
 }
 
 body.fixed-top-nav {
@@ -192,9 +192,9 @@ html.page-morphing footer {
 }
 
 .news-birthday {
-  font-family: "Comic Neue", "Comic Sans MS", "Chalkboard SE", "Trebuchet MS", cursive;
+  font-family: "Segoe Print", "Bradley Hand", Noteworthy, "Comic Neue", cursive;
   font-size: 1.03em;
-  font-weight: 700;
+  font-weight: 600;
   transform: rotate(-0.18deg);
   transform-origin: left center;
 }
@@ -234,7 +234,11 @@ html[lang="zh-CN"] .news-item {
 }
 
 html[lang="zh-CN"] .news-birthday {
-  font-family: "LXGW WenKai TC", "Comic Neue", "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-family: "Yuanti SC", YouYuan, "STYuanti-SC-Regular", "LXGW WenKai TC", "Microsoft YaHei", sans-serif;
+  font-weight: 600;
+}
+
+.post article > .clearfix strong {
   font-weight: 600;
 }
 
@@ -450,7 +454,7 @@ html.cartoon-mode {
   --global-theme-color: #1c8bb8;
   --global-hover-color: #f47a6d;
   --global-card-bg-color: #ffffff;
-  --news-method-color: #cf3978;
+  --news-method-color: #b85c7d;
 }
 
 html.cartoon-mode body,
@@ -478,12 +482,12 @@ html.cartoon-mode .news-method {
 }
 
 html.cartoon-mode .news-birthday {
-  font-family: "Comic Neue", "Comic Sans MS", "Chalkboard SE", "Trebuchet MS", cursive;
-  font-weight: 700;
+  font-family: "Segoe Print", "Bradley Hand", Noteworthy, "Comic Neue", cursive;
+  font-weight: 600;
 }
 
 html.cartoon-mode[lang="zh-CN"] .news-birthday {
-  font-family: "LXGW WenKai TC", "Comic Neue", "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-family: "Yuanti SC", YouYuan, "STYuanti-SC-Regular", "LXGW WenKai TC", "Microsoft YaHei", sans-serif;
   font-weight: 600;
 }
 
