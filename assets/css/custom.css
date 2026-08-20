@@ -168,7 +168,7 @@ html.page-morphing footer {
   background-repeat: no-repeat;
   background-size: contain;
   content: "";
-  left: 69%;
+  left: 82%;
   opacity: 0.96;
   pointer-events: none;
   position: absolute;
@@ -463,6 +463,7 @@ html[lang="zh-CN"] .news-birthday {
 }
 
 .post article > .clearfix strong {
+  color: var(--news-method-color);
   font-weight: 500;
 }
 
