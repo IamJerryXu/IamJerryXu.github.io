@@ -36,7 +36,7 @@
   <link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
   <link rel="stylesheet" href="../assets/css/main.css">
-  <link rel="stylesheet" href="../assets/css/custom.css?v=20260821-skier-1">
+  <link rel="stylesheet" href="../assets/css/custom.css?v=20260821-snow-world-2">
   <link rel="canonical" href="https://jerrysnow.me/publications/">
   <script src="../assets/js/theme.js"></script>
   <link defer rel="stylesheet" href="../assets/css/jekyll-pygments-themes-native.css" media="none" id="highlight_theme_dark">
@@ -472,17 +472,19 @@
       layer.className = "cartoon-decorations";
       layer.setAttribute("aria-hidden", "true");
       document.body.appendChild(layer);
-      var emojis = ["🌿", "⭐", "🌸", "☁️", "🍃", "🌻", "✨", "🦋", "🐝", "🍄", "🌈"];
-      for (var i = 0; i < 20; i += 1) {
+      var snowflakes = ["❄", "❅", "❆"];
+      var snowColors = ["#ffffff", "#b7ddeb", "#8ec9e2", "#67adcc"];
+      for (var i = 0; i < 28; i += 1) {
         var drop = document.createElement("span");
         drop.className = "cartoon-float";
-        drop.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        drop.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
         drop.style.left = Math.random() * 100 + "vw";
-        drop.style.animationDuration = 8 + Math.random() * 12 + "s";
-        drop.style.animationDelay = Math.random() * 10 + "s";
-        drop.style.fontSize = 18 + Math.random() * 14 + "px";
-        drop.style.setProperty("--float-x", -34 + Math.random() * 68 + "px");
-        drop.style.setProperty("--float-mid-x", -26 + Math.random() * 52 + "px");
+        drop.style.animationDuration = 10 + Math.random() * 13 + "s";
+        drop.style.animationDelay = -Math.random() * 20 + "s";
+        drop.style.color = snowColors[Math.floor(Math.random() * snowColors.length)];
+        drop.style.fontSize = 14 + Math.random() * 18 + "px";
+        drop.style.setProperty("--float-x", -42 + Math.random() * 84 + "px");
+        drop.style.setProperty("--float-mid-x", -30 + Math.random() * 60 + "px");
         layer.appendChild(drop);
       }
     }

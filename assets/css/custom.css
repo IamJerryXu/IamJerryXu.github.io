@@ -11,17 +11,26 @@ footer.fixed-bottom {
 }
 
 :root {
-  --news-method-color: #c06a8b;
-  --news-method-line-color: rgba(192, 106, 139, 0.38);
+  --news-method-color: #4f8faa;
+  --news-method-line-color: rgba(126, 190, 216, 0.62);
+}
+
+html {
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 html[data-theme="dark"] {
-  --news-method-color: #e5a0b7;
-  --news-method-line-color: rgba(229, 160, 183, 0.5);
+  --news-method-color: #9bd6e9;
+  --news-method-line-color: rgba(155, 214, 233, 0.58);
 }
 
 body.fixed-top-nav {
   padding-bottom: 0;
+}
+
+.publications div.bibtex.hidden {
+  display: none;
 }
 
 body,
@@ -55,8 +64,8 @@ code {
 
 .style-veil.to-cartoon {
   background:
-    radial-gradient(circle at var(--veil-x, 50vw) var(--veil-y, 50vh), rgba(255, 247, 202, 0.12) 0 18%, rgba(247, 252, 255, 0.08) 36%, rgba(247, 252, 255, 0) 62%),
-    linear-gradient(135deg, rgba(122, 201, 167, 0.04), rgba(255, 214, 102, 0.035), rgba(50, 174, 230, 0.03));
+    radial-gradient(circle at var(--veil-x, 50vw) var(--veil-y, 50vh), rgba(255, 255, 255, 0.18) 0 18%, rgba(221, 242, 250, 0.1) 36%, rgba(247, 252, 255, 0) 62%),
+    linear-gradient(135deg, rgba(183, 221, 235, 0.06), rgba(255, 255, 255, 0.045), rgba(80, 165, 203, 0.04));
 }
 
 .style-veil.to-normal {
@@ -73,14 +82,16 @@ code {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 2;
+  z-index: 0;
 }
 
 .cartoon-float {
   animation: cartoon-drift linear infinite;
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
+  filter: drop-shadow(0 1px 1px rgba(44, 110, 142, 0.22));
+  font-family: "Segoe UI Symbol", "Apple Symbols", "Noto Sans Symbols 2", sans-serif !important;
   pointer-events: none;
   position: absolute;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
   top: -42px;
   user-select: none;
   will-change: transform, opacity;
@@ -139,31 +150,46 @@ html.page-morphing footer {
   background-size: 100% 100%;
   bottom: -0.2rem;
   content: "";
-  left: -1.2rem;
-  mix-blend-mode: multiply;
-  opacity: 0.78;
+  left: -2rem;
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 70%, rgba(0, 0, 0, 0.82) 82%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 0%, #000 70%, rgba(0, 0, 0, 0.82) 82%, transparent 100%);
+  opacity: 0.86;
   pointer-events: none;
   position: absolute;
   top: -0.55rem;
-  width: min(46rem, calc(100% + 2.4rem));
+  width: calc(100% + 4rem);
   z-index: -2;
 }
 
 .identity-header::after {
-  aspect-ratio: 390 / 280;
+  aspect-ratio: 898 / 767;
   background-image: url("/assets/img/identity-skier.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
   content: "";
-  left: 18rem;
-  mix-blend-mode: multiply;
+  left: 60%;
   opacity: 0.96;
   pointer-events: none;
   position: absolute;
-  top: -4.3rem;
-  width: 15rem;
+  top: -4.4rem;
+  width: 11.5rem;
   z-index: -1;
+}
+
+html[data-theme="dark"] .identity-header::before {
+  background-image: url("/assets/img/identity-snowfield-dark.webp");
+  bottom: -0.6rem;
+  opacity: 0.78;
+  top: -0.2rem;
+}
+
+html[data-theme="dark"] .identity-header::after {
+  filter: brightness(0.86) saturate(0.92);
+}
+
+html[data-theme="dark"] .contact-row a {
+  color: #7bcbe6;
 }
 
 .name-title {
@@ -369,15 +395,15 @@ html.page-morphing footer {
   }
 
   .identity-header::before {
-    left: -0.9rem;
-    width: calc(100% + 1.8rem);
+    left: 0;
+    width: 100%;
   }
 
   .identity-header::after {
     left: auto;
-    right: -0.9rem;
-    top: -0.25rem;
-    width: 9rem;
+    right: 0;
+    top: 0.1rem;
+    width: 7.8rem;
   }
 
   .name-title {
@@ -647,13 +673,13 @@ html.avatar-morphing .avatar-toggle::after {
 
 html.cartoon-mode {
   --global-bg-color: #f7fcff;
-  --global-code-bg-color: rgba(255, 190, 73, 0.22);
+  --global-code-bg-color: rgba(126, 190, 216, 0.2);
   --global-text-color: #1f2c3a;
   --global-theme-color: #1c8bb8;
-  --global-hover-color: #f47a6d;
+  --global-hover-color: #de6f70;
   --global-card-bg-color: #ffffff;
-  --news-method-color: #c47492;
-  --news-method-line-color: rgba(196, 116, 146, 0.4);
+  --news-method-color: #55a8c9;
+  --news-method-line-color: rgba(113, 193, 222, 0.7);
 }
 
 html.cartoon-mode body,
@@ -691,50 +717,49 @@ html.cartoon-mode .birthday-devil {
 
 html.cartoon-mode body {
   background-color: #f7fcff;
-  background-image:
-    linear-gradient(0deg, rgba(255, 214, 102, 0.11) 0 1px, transparent 1px 18px),
-    linear-gradient(90deg, rgba(122, 201, 167, 0.10) 0 1px, transparent 1px 18px);
+  background-image: none;
   overflow-x: hidden;
 }
 
-html.cartoon-mode body::before,
-html.cartoon-mode body::after {
+html.cartoon-mode body::before {
+  background-image:
+    radial-gradient(ellipse at center, rgba(247, 252, 255, 0.76) 0 34%, rgba(247, 252, 255, 0.34) 62%, rgba(247, 252, 255, 0.08) 100%),
+    url("/assets/img/cartoon-snow-mountains.webp");
+  background-position: center, center bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 100%, cover;
   content: "";
   bottom: 0;
-  opacity: 0.72;
+  left: 0;
+  opacity: 0.86;
   pointer-events: none;
   position: fixed;
+  right: 0;
   top: 56px;
-  width: min(12vw, 136px);
   z-index: 0;
 }
 
-html.cartoon-mode body::before {
-  background:
-    radial-gradient(circle at 24px 28px, rgba(195, 229, 45, 0.86) 0 8px, transparent 9px),
-    radial-gradient(circle at 58px 86px, rgba(86, 169, 87, 0.62) 0 13px, transparent 14px),
-    radial-gradient(circle at 94px 42px, rgba(255, 214, 102, 0.78) 0 7px, transparent 8px),
-    radial-gradient(circle at 34px 132px, rgba(98, 190, 118, 0.50) 0 11px, transparent 12px),
-    linear-gradient(90deg, rgba(98, 190, 118, 0.18), rgba(247, 252, 255, 0));
-  background-size: 112px 178px, 136px 206px, 128px 190px, 150px 230px, 100% 100%;
-  left: 0;
-  mask-image: linear-gradient(90deg, #000 0 58%, transparent 100%);
-  -webkit-mask-image: linear-gradient(90deg, #000 0 58%, transparent 100%);
-  animation: leaf-side-flow 16s linear infinite;
+html.cartoon-mode body::after {
+  display: none;
 }
 
-html.cartoon-mode body::after {
-  background:
-    radial-gradient(ellipse at 70% 24px, rgba(50, 174, 230, 0.54) 0 18px, transparent 19px),
-    radial-gradient(ellipse at 44% 98px, rgba(116, 210, 237, 0.42) 0 23px, transparent 24px),
-    radial-gradient(circle at 78% 154px, rgba(255, 214, 102, 0.82) 0 4px, transparent 5px),
-    radial-gradient(circle at 32% 52px, rgba(255, 255, 255, 0.90) 0 5px, transparent 6px),
-    linear-gradient(270deg, rgba(50, 174, 230, 0.18), rgba(247, 252, 255, 0));
-  background-size: 150px 190px, 120px 164px, 96px 156px, 140px 218px, 100% 100%;
-  mask-image: linear-gradient(270deg, #000 0 58%, transparent 100%);
-  -webkit-mask-image: linear-gradient(270deg, #000 0 58%, transparent 100%);
-  right: 0;
-  animation: lake-side-flow 18s linear infinite;
+html.cartoon-mode .identity-header::before {
+  background-image: url("/assets/img/identity-snowfield.webp");
+  filter: saturate(1.08);
+  opacity: 0.9;
+}
+
+html.cartoon-mode .identity-header::after {
+  filter: brightness(1.03) saturate(1.08);
+  opacity: 1;
+}
+
+@media (min-width: 576px) {
+  html.cartoon-mode .identity-header::after {
+    left: 66%;
+    top: -2.25rem;
+    width: 10.5rem;
+  }
 }
 
 html.cartoon-mode .container,
@@ -744,13 +769,13 @@ html.cartoon-mode footer {
 }
 
 html.cartoon-mode .navbar {
-  background-color: #fff7ca;
-  border-bottom: 2px solid #3aa6c7;
+  background-color: rgba(239, 249, 253, 0.94);
+  border-bottom: 2px solid #67b1d0;
 }
 
 html.cartoon-mode .post-title {
   color: #183b66;
-  text-shadow: 2px 2px 0 #ffd166;
+  text-shadow: 2px 2px 0 #c4e8f4;
 }
 
 html.cartoon-mode .jerry-nickname {
@@ -782,17 +807,17 @@ html.cartoon-mode .desc code {
 }
 
 html.cartoon-mode .publications ol.bibliography li .abbr abbr {
-  background-color: #f47a6d;
+  background-color: #4f9fbe;
   border: 2px solid #1f2c3a;
   border-radius: 10px;
-  box-shadow: 3px 3px 0 #ffd166;
+  box-shadow: 3px 3px 0 #c4e8f4;
   color: #ffffff !important;
 }
 
 html.cartoon-mode .publications ol.bibliography li .preview,
 html.cartoon-mode .avatar-toggle {
   border: 2px solid #1f2c3a;
-  box-shadow: 5px 6px 0 rgba(255, 209, 102, 0.82);
+  box-shadow: 5px 6px 0 rgba(164, 215, 234, 0.82);
 }
 
 html.cartoon-mode .publications ol.bibliography li .links a.btn,
@@ -800,7 +825,7 @@ html.cartoon-mode .lang-toggle,
 html.cartoon-mode .bibsearch-form-input {
   border: 2px solid #1f2c3a;
   border-radius: 9px;
-  box-shadow: 3px 3px 0 rgba(122, 201, 167, 0.6);
+  box-shadow: 3px 3px 0 rgba(129, 194, 219, 0.68);
 }
 
 html.cartoon-mode .lang-toggle {
@@ -809,43 +834,24 @@ html.cartoon-mode .lang-toggle {
 }
 
 html.cartoon-mode .publications ol.bibliography li .links a.btn:hover {
-  background: #fff1a8;
+  background: #dff2f9;
   color: #1f2c3a;
   text-decoration: none;
 }
 
-@keyframes leaf-side-flow {
-  0% {
-    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+@media (max-width: 760px) {
+  html.cartoon-mode body::before {
+    background-position: center, center bottom;
+    background-size: 100% 100%, 160vw auto;
+    opacity: 0.82;
   }
-  100% {
-    background-position: 0 -178px, 0 -206px, 0 -190px, 0 -230px, 0 0;
-  }
-}
 
-@keyframes lake-side-flow {
-  0% {
-    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
-  }
-  100% {
-    background-position: 0 190px, 0 164px, 0 156px, 0 218px, 0 0;
-  }
-}
-
-@media (max-width: 1120px) {
-  html.cartoon-mode body::before,
-  html.cartoon-mode body::after {
-    opacity: 0.34;
-    width: 54px;
-  }
-}
-
-@media (max-width: 760px), (prefers-reduced-motion: reduce) {
-  html.cartoon-mode body::before,
-  html.cartoon-mode body::after {
+  .cartoon-float:nth-child(n + 17) {
     display: none;
   }
+}
 
+@media (prefers-reduced-motion: reduce) {
   .cartoon-decorations {
     display: none;
   }
