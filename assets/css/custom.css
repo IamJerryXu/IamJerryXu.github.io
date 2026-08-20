@@ -126,32 +126,46 @@ html.page-morphing footer {
 }
 
 .identity-header {
+  isolation: isolate;
   margin-bottom: 1.15rem;
+  position: relative;
+}
+
+.identity-header::before {
+  background-image: url("/assets/img/identity-snowfield.webp");
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  bottom: -0.2rem;
+  content: "";
+  left: -1.2rem;
+  mix-blend-mode: multiply;
+  opacity: 0.78;
+  pointer-events: none;
+  position: absolute;
+  top: -0.55rem;
+  width: min(46rem, calc(100% + 2.4rem));
+  z-index: -1;
 }
 
 .identity-divider {
   color: var(--global-theme-color);
   display: block;
-  height: 0.72rem;
-  margin-top: 0.58rem;
-  max-width: 76vw;
-  opacity: 0.64;
+  height: 0.82rem;
+  margin-top: 0.62rem;
+  max-width: 70vw;
+  opacity: 0.5;
   overflow: visible;
-  transform: rotate(-0.22deg);
-  width: 19rem;
+  transform: rotate(-0.12deg);
+  width: 15.5rem;
 }
 
 .identity-divider path {
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
-  stroke-width: 3;
+  stroke-width: 2.25;
   vector-effect: non-scaling-stroke;
-}
-
-.identity-divider .identity-divider-echo {
-  opacity: 0.28;
-  stroke-width: 1.15;
 }
 
 .name-title {
@@ -329,9 +343,9 @@ html.page-morphing footer {
 }
 
 .news-birthday {
-  font-family: "Jerry Birthday", "Comic Neue", cursive;
-  font-size: 1.06em;
-  font-weight: 400;
+  font-family: "Segoe Print", "Jerry Birthday", "Comic Neue", cursive;
+  font-size: 1.03em;
+  font-weight: 600;
   transform: rotate(-0.18deg);
   transform-origin: left center;
 }
@@ -354,6 +368,11 @@ html.page-morphing footer {
 
   .identity-header {
     margin-bottom: 1rem;
+  }
+
+  .identity-header::before {
+    left: -0.9rem;
+    width: calc(100% + 1.8rem);
   }
 
   .name-title {
