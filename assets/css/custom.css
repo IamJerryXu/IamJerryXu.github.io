@@ -82,7 +82,7 @@ code {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 0;
+  z-index: 20;
 }
 
 .cartoon-float {
@@ -144,7 +144,7 @@ html.page-morphing footer {
 }
 
 .identity-header::before {
-  background-image: url("/assets/img/identity-snowfield.webp");
+  background-image: url("/assets/img/identity-snowfield.webp?v=20260821-transparent-2");
   background-position: left bottom;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -168,17 +168,17 @@ html.page-morphing footer {
   background-repeat: no-repeat;
   background-size: contain;
   content: "";
-  left: 60%;
+  left: 69%;
   opacity: 0.96;
   pointer-events: none;
   position: absolute;
-  top: -4.4rem;
-  width: 11.5rem;
+  top: -3rem;
+  width: 9.5rem;
   z-index: -1;
 }
 
 html[data-theme="dark"] .identity-header::before {
-  background-image: url("/assets/img/identity-snowfield-dark.webp");
+  background-image: url("/assets/img/identity-snowfield-dark.webp?v=20260821-transparent-2");
   bottom: -0.6rem;
   opacity: 0.78;
   top: -0.2rem;
@@ -402,8 +402,8 @@ html[data-theme="dark"] .contact-row a {
   .identity-header::after {
     left: auto;
     right: 0;
-    top: 0.1rem;
-    width: 7.8rem;
+    top: 0.35rem;
+    width: 6.8rem;
   }
 
   .name-title {
@@ -724,7 +724,7 @@ html.cartoon-mode body {
 html.cartoon-mode body::before {
   background-image:
     radial-gradient(ellipse at center, rgba(247, 252, 255, 0.76) 0 34%, rgba(247, 252, 255, 0.34) 62%, rgba(247, 252, 255, 0.08) 100%),
-    url("/assets/img/cartoon-snow-mountains.webp");
+    url("/assets/img/cartoon-snow-mountains.webp?v=20260821-snow-world-2");
   background-position: center, center bottom;
   background-repeat: no-repeat;
   background-size: 100% 100%, cover;
@@ -744,7 +744,7 @@ html.cartoon-mode body::after {
 }
 
 html.cartoon-mode .identity-header::before {
-  background-image: url("/assets/img/identity-snowfield.webp");
+  background-image: url("/assets/img/identity-snowfield.webp?v=20260821-transparent-2");
   filter: saturate(1.08);
   opacity: 0.9;
 }
@@ -759,6 +759,14 @@ html.cartoon-mode .identity-header::after {
     left: 66%;
     top: -2.25rem;
     width: 10.5rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  html.cartoon-mode .identity-header::after {
+    right: 0;
+    top: 0.1rem;
+    width: 7.8rem;
   }
 }
 
