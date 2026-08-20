@@ -3,13 +3,13 @@ footer.fixed-bottom {
 }
 
 :root {
-  --news-method-color: #b45778;
-  --news-method-line-color: rgba(180, 87, 120, 0.42);
+  --news-method-color: #c06a8b;
+  --news-method-line-color: rgba(192, 106, 139, 0.38);
 }
 
 html[data-theme="dark"] {
-  --news-method-color: #e39ab4;
-  --news-method-line-color: rgba(227, 154, 180, 0.55);
+  --news-method-color: #e5a0b7;
+  --news-method-line-color: rgba(229, 160, 183, 0.5);
 }
 
 body.fixed-top-nav {
@@ -189,7 +189,6 @@ html.page-morphing footer {
 
 .news-method {
   color: var(--news-method-color);
-  font-family: "Roboto Slab", "LXGW WenKai TC", Georgia, serif;
   font-weight: 700;
   text-decoration-color: var(--news-method-line-color);
   text-decoration-line: underline;
@@ -210,8 +209,8 @@ html.page-morphing footer {
 .birthday-devil {
   display: inline-block;
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
-  font-size: 0.92em;
-  transform: rotate(7deg) translateY(0.03em);
+  font-size: 1.12em;
+  transform: rotate(7deg) translateY(0.07em);
 }
 
 @media (max-width: 575.98px) {
@@ -462,8 +461,8 @@ html.cartoon-mode {
   --global-theme-color: #1c8bb8;
   --global-hover-color: #f47a6d;
   --global-card-bg-color: #ffffff;
-  --news-method-color: #b85c7d;
-  --news-method-line-color: rgba(184, 92, 125, 0.46);
+  --news-method-color: #c47492;
+  --news-method-line-color: rgba(196, 116, 146, 0.4);
 }
 
 html.cartoon-mode body,
@@ -483,11 +482,6 @@ html.cartoon-mode a,
 html.cartoon-mode input,
 html.cartoon-mode button {
   font-family: "Comic Sans MS", "Comic Neue", "Chalkboard SE", "Marker Felt", "Trebuchet MS", cursive, sans-serif;
-}
-
-html.cartoon-mode .news-method {
-  font-family: "Chalkboard SE", "Marker Felt", "Comic Sans MS", "Comic Neue", cursive;
-  font-weight: 700;
 }
 
 html.cartoon-mode .news-birthday {
