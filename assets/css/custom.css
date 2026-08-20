@@ -117,24 +117,48 @@ html.page-morphing footer {
   margin: 0.2rem 0 2.7rem;
 }
 
-.news-heading {
+.news-heading,
+.publications-heading {
   align-items: center;
   display: flex;
   font-family: "Comic Neue", "LXGW WenKai TC", "Roboto Slab", Georgia, serif;
-  font-size: 1.52rem;
   font-weight: 400;
   gap: 0.42rem;
   letter-spacing: 0.01em;
   line-height: 1.28;
+}
+
+.news-heading {
+  font-size: 1.52rem;
   margin: 0 0 0.76rem;
 }
 
+.publications-heading {
+  font-size: 1.38rem;
+  margin: 0 0 0.92rem;
+}
+
+.publications-heading a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.section-heading-icon {
+  display: block;
+  flex: 0 0 auto;
+  height: 1.08em;
+  object-fit: contain;
+  width: 1.08em;
+}
+
 .news-fire {
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
-  font-size: 0.64em;
-  line-height: 1;
-  opacity: 0.86;
-  transform: translateY(-0.04em);
+  height: 1.18em;
+  transform: translateY(-0.02em);
+  width: 1.18em;
+}
+
+.publications-books {
+  transform: translateY(-0.02em);
 }
 
 .news-list {
@@ -218,6 +242,10 @@ html.page-morphing footer {
     font-size: 1.36rem;
   }
 
+  .publications-heading {
+    font-size: 1.27rem;
+  }
+
   .news-item {
     grid-template-columns: 1fr;
     row-gap: 0.05rem;
@@ -231,6 +259,7 @@ html.page-morphing footer {
 }
 
 html[lang="zh-CN"] .news-heading,
+html[lang="zh-CN"] .publications-heading,
 html[lang="zh-CN"] .news-list,
 html[lang="zh-CN"] .news-date {
   font-family: "LXGW WenKai TC", "Comic Neue", "PingFang SC", "Microsoft YaHei", cursive, sans-serif;
