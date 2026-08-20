@@ -1,3 +1,11 @@
+@font-face {
+  font-display: swap;
+  font-family: "Jerry Birthday";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/assets/fonts/kalam-latin.woff2") format("woff2");
+}
+
 footer.fixed-bottom {
   position: static;
 }
@@ -113,6 +121,61 @@ html.page-morphing footer {
   --fa: "\f08c";
 }
 
+.identity-header {
+  margin-bottom: 1.15rem;
+}
+
+.name-title {
+  align-items: baseline;
+  column-gap: 0.42rem;
+  display: flex;
+  flex-wrap: wrap;
+  letter-spacing: 0;
+  line-height: 1.08;
+  margin-bottom: 0.52rem;
+  row-gap: 0.08rem;
+}
+
+.name-title .jerry-nickname {
+  color: var(--global-text-color);
+  font-size: 0.5em;
+  font-weight: 400;
+  opacity: 0.64;
+}
+
+.contact-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: "Roboto Mono", Menlo, Consolas, monospace;
+  font-size: 0.91rem;
+  gap: 0.24rem 0.42rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.contact-email {
+  color: var(--global-theme-color);
+  text-decoration: none;
+  text-underline-offset: 0.18em;
+}
+
+.contact-email:hover,
+.contact-email:focus-visible {
+  color: var(--global-hover-color);
+  text-decoration: underline;
+}
+
+.contact-email:focus-visible {
+  outline: 2px solid rgba(38, 139, 168, 0.38);
+  outline-offset: 3px;
+}
+
+.contact-separator {
+  color: var(--global-text-color);
+  opacity: 0.4;
+}
+
 .news-section {
   margin: 0.2rem 0 2.7rem;
 }
@@ -134,7 +197,7 @@ html.page-morphing footer {
 }
 
 .publications-heading {
-  font-size: 1.38rem;
+  font-size: 1.56rem;
   margin: 0 0 0.92rem;
 }
 
@@ -223,9 +286,9 @@ html.page-morphing footer {
 }
 
 .news-birthday {
-  font-family: "Segoe Print", "Bradley Hand", Noteworthy, "Comic Neue", cursive;
-  font-size: 1.03em;
-  font-weight: 600;
+  font-family: "Jerry Birthday", "Comic Neue", cursive;
+  font-size: 1.06em;
+  font-weight: 400;
   transform: rotate(-0.18deg);
   transform-origin: left center;
 }
@@ -243,7 +306,35 @@ html.page-morphing footer {
   }
 
   .publications-heading {
-    font-size: 1.27rem;
+    font-size: 1.4rem;
+  }
+
+  .identity-header {
+    margin-bottom: 1rem;
+  }
+
+  .name-title {
+    column-gap: 0.3rem;
+    margin-bottom: 0.58rem;
+  }
+
+  .name-title .jerry-nickname {
+    font-size: 0.47em;
+  }
+
+  .contact-row {
+    align-items: flex-start;
+    flex-direction: column;
+    font-size: 0.84rem;
+    gap: 0.16rem;
+  }
+
+  .contact-email {
+    overflow-wrap: anywhere;
+  }
+
+  .contact-separator {
+    display: none;
   }
 
   .news-item {
