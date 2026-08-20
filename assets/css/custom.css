@@ -129,10 +129,37 @@ html.page-morphing footer {
   margin-bottom: 1.15rem;
 }
 
+.identity-divider {
+  color: var(--global-theme-color);
+  display: block;
+  height: 0.72rem;
+  margin-top: 0.58rem;
+  max-width: 76vw;
+  opacity: 0.64;
+  overflow: visible;
+  transform: rotate(-0.22deg);
+  width: 19rem;
+}
+
+.identity-divider path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.identity-divider .identity-divider-echo {
+  opacity: 0.28;
+  stroke-width: 1.15;
+}
+
 .name-title {
   align-items: baseline;
   column-gap: 0.3rem;
   display: flex;
+  font-family: "Jerry Birthday", "LXGW WenKai TC", "Comic Neue", cursive;
+  font-weight: 400;
   flex-wrap: wrap;
   letter-spacing: 0;
   line-height: 1.08;
@@ -149,8 +176,8 @@ html.page-morphing footer {
 
 .identity-snow {
   color: var(--global-theme-color);
-  font-size: 0.43em;
-  opacity: 0.7;
+  font-size: 0.5em;
+  opacity: 0.74;
   transform: translateY(-0.16em) rotate(10deg);
 }
 
@@ -184,8 +211,12 @@ html.page-morphing footer {
 
 .contact-separator {
   color: var(--global-theme-color);
-  font-size: 0.56rem;
-  opacity: 0.5;
+  font-size: 0.64rem;
+  opacity: 0.54;
+}
+
+.bio-copy {
+  font-size: 1.025rem;
 }
 
 .news-section {
@@ -335,7 +366,7 @@ html.page-morphing footer {
   }
 
   .identity-snow {
-    font-size: 0.38em;
+    font-size: 0.44em;
   }
 
   .contact-row {
