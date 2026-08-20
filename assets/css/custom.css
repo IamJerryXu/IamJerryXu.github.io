@@ -128,6 +128,7 @@ html.page-morphing footer {
 .identity-header {
   isolation: isolate;
   margin-bottom: 1.15rem;
+  padding-bottom: 1rem;
   position: relative;
 }
 
@@ -145,27 +146,24 @@ html.page-morphing footer {
   position: absolute;
   top: -0.55rem;
   width: min(46rem, calc(100% + 2.4rem));
+  z-index: -2;
+}
+
+.identity-header::after {
+  aspect-ratio: 390 / 280;
+  background-image: url("/assets/img/identity-skier.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  left: 18rem;
+  mix-blend-mode: multiply;
+  opacity: 0.96;
+  pointer-events: none;
+  position: absolute;
+  top: -4.3rem;
+  width: 15rem;
   z-index: -1;
-}
-
-.identity-divider {
-  color: var(--global-theme-color);
-  display: block;
-  height: 0.82rem;
-  margin-top: 0.62rem;
-  max-width: 70vw;
-  opacity: 0.5;
-  overflow: visible;
-  transform: rotate(-0.12deg);
-  width: 15.5rem;
-}
-
-.identity-divider path {
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-width: 2.25;
-  vector-effect: non-scaling-stroke;
 }
 
 .name-title {
@@ -373,6 +371,13 @@ html.page-morphing footer {
   .identity-header::before {
     left: -0.9rem;
     width: calc(100% + 1.8rem);
+  }
+
+  .identity-header::after {
+    left: auto;
+    right: -0.9rem;
+    top: -0.25rem;
+    width: 9rem;
   }
 
   .name-title {
