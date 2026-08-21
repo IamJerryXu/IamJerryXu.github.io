@@ -594,8 +594,9 @@ html[lang="zh-CN"] .news-birthday {
 
 .selected-publications ol.bibliography li .title,
 .publications-archive ol.bibliography li .title {
-  color: var(--snow-ink);
-  font-weight: 600;
+  color: var(--snow-accent-deep);
+  font-weight: 500;
+  letter-spacing: 0;
 }
 
 .selected-publications ol.bibliography li .links a.btn,
