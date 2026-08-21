@@ -59,6 +59,14 @@ footer {
   z-index: 1;
 }
 
+.medium-zoom-overlay {
+  z-index: 2000 !important;
+}
+
+.medium-zoom-image--opened {
+  z-index: 2001 !important;
+}
+
 .publications div.bibtex.hidden {
   display: none;
 }
