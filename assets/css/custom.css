@@ -13,6 +13,12 @@ footer.fixed-bottom {
 :root {
   --news-method-color: #4f8faa;
   --news-method-line-color: rgba(126, 190, 216, 0.62);
+  --snow-accent-deep: #357a94;
+  --snow-accent-mid: #5ba6c2;
+  --snow-accent-soft: #9ccddd;
+  --snow-accent-pale: rgba(226, 243, 249, 0.78);
+  --snow-ink: #31566a;
+  --snow-line: #70b2ca;
 }
 
 html {
@@ -23,6 +29,12 @@ html {
 html[data-theme="dark"] {
   --news-method-color: #9bd6e9;
   --news-method-line-color: rgba(155, 214, 233, 0.58);
+  --snow-accent-deep: #70b9d2;
+  --snow-accent-mid: #8ccce1;
+  --snow-accent-soft: #b4deeb;
+  --snow-accent-pale: rgba(48, 76, 90, 0.46);
+  --snow-ink: #d7edf5;
+  --snow-line: #83c4db;
 }
 
 body.fixed-top-nav {
@@ -316,13 +328,59 @@ html[data-theme="dark"] .contact-row a {
 }
 
 .publications-heading {
+  color: var(--snow-ink);
   font-size: 1.56rem;
-  margin: 0 0 0.92rem;
+  margin: 0 0 0.95rem;
+  max-width: 100%;
+  padding-bottom: 0.42rem;
+  position: relative;
+  width: fit-content;
 }
 
 .publications-heading a {
-  color: inherit;
+  color: var(--snow-ink);
   text-decoration: none;
+}
+
+.publications-heading a:hover,
+.publications-heading a:focus-visible {
+  color: var(--snow-accent-deep);
+  text-decoration: none;
+}
+
+.publications-heading a::after {
+  color: var(--snow-accent-mid);
+  content: "\2744";
+  display: inline-block;
+  font-family: "Segoe UI Symbol", "Apple Symbols", sans-serif;
+  font-size: 0.48em;
+  margin-left: 0.42rem;
+  opacity: 0.82;
+  transform: translateY(-0.34em) rotate(11deg);
+}
+
+.publications-heading::after,
+.selected-publications ol.bibliography > li::after,
+.publications-archive h2.bibliography::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201000%2018'%20preserveAspectRatio='none'%3E%3Cpath%20d='M2%208%20C110%202%20220%2013%20330%208%20S550%203%20665%209%20S885%2013%20998%207'%20fill='none'%20stroke='black'%20stroke-width='2.4'%20stroke-linecap='round'/%3E%3Cpath%20d='M3%2012%20C130%208%20240%2015%20360%2011%20S610%208%20735%2012%20S910%2015%20997%2011'%20fill='none'%20stroke='black'%20stroke-width='1.1'%20stroke-linecap='round'%20opacity='.65'/%3E%3C/svg%3E");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  background-color: var(--snow-line);
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201000%2018'%20preserveAspectRatio='none'%3E%3Cpath%20d='M2%208%20C110%202%20220%2013%20330%208%20S550%203%20665%209%20S885%2013%20998%207'%20fill='none'%20stroke='black'%20stroke-width='2.4'%20stroke-linecap='round'/%3E%3Cpath%20d='M3%2012%20C130%208%20240%2015%20360%2011%20S610%208%20735%2012%20S910%2015%20997%2011'%20fill='none'%20stroke='black'%20stroke-width='1.1'%20stroke-linecap='round'%20opacity='.65'/%3E%3C/svg%3E");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
+.publications-heading::after {
+  bottom: 0;
+  content: "";
+  height: 0.46rem;
+  left: 1.85rem;
+  opacity: 0.82;
+  position: absolute;
+  right: 0.08rem;
 }
 
 .section-heading-icon {
@@ -513,6 +571,145 @@ html[lang="zh-CN"] .news-birthday {
 
 .publications ol.bibliography li .preview {
   width: 100%;
+}
+
+.selected-publications ol.bibliography {
+  margin-top: 0.1rem;
+}
+
+.selected-publications ol.bibliography > li {
+  border-radius: 6px;
+  isolation: isolate;
+  margin-bottom: 0.72rem;
+  padding: 0.65rem 0.48rem 1.08rem;
+  position: relative;
+  transition: background-color 220ms ease, transform 220ms ease;
+}
+
+.selected-publications ol.bibliography > li::before {
+  background: linear-gradient(90deg, var(--snow-accent-pale), rgba(255, 255, 255, 0) 84%);
+  border-radius: 6px;
+  bottom: 0.38rem;
+  content: "";
+  inset: 0 0 0.38rem;
+  opacity: 0.38;
+  position: absolute;
+  transition: opacity 220ms ease;
+  z-index: -1;
+}
+
+.selected-publications ol.bibliography > li::after {
+  bottom: 0.05rem;
+  content: "";
+  height: 0.5rem;
+  left: 0.42rem;
+  opacity: 0.5;
+  position: absolute;
+  right: 0.42rem;
+}
+
+.selected-publications ol.bibliography > li:hover {
+  transform: translateY(-1px);
+}
+
+.selected-publications ol.bibliography > li:hover::before {
+  opacity: 0.62;
+}
+
+.selected-publications ol.bibliography > li > .row {
+  position: relative;
+  z-index: 1;
+}
+
+.selected-publications ol.bibliography li .abbr abbr,
+.publications-archive ol.bibliography li .abbr abbr {
+  background: linear-gradient(96deg, var(--snow-accent-deep), var(--snow-accent-mid)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(45, 99, 120, 0.2);
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.selected-publications ol.bibliography li .abbr abbr::after,
+.publications-archive ol.bibliography li .abbr abbr::after {
+  content: "  \2744";
+  font-family: "Segoe UI Symbol", "Apple Symbols", sans-serif;
+  font-size: 0.68em;
+  opacity: 0.7;
+}
+
+.selected-publications ol.bibliography li .preview,
+.publications-archive ol.bibliography li .preview {
+  border: 1px solid rgba(92, 157, 182, 0.34);
+  box-shadow: 0 5px 12px rgba(40, 81, 98, 0.18);
+}
+
+.selected-publications ol.bibliography li .title,
+.publications-archive ol.bibliography li .title {
+  color: var(--snow-ink);
+  font-weight: 600;
+}
+
+.selected-publications ol.bibliography li .links a.btn,
+.publications-archive ol.bibliography li .links a.btn {
+  background: rgba(239, 249, 253, 0.48);
+  border-color: var(--snow-accent-mid);
+  color: var(--snow-ink);
+}
+
+.selected-publications ol.bibliography li .links a.btn:hover,
+.publications-archive ol.bibliography li .links a.btn:hover {
+  background: var(--snow-accent-pale);
+  border-color: var(--snow-accent-deep);
+  color: var(--snow-accent-deep);
+}
+
+.publications-archive h2.bibliography {
+  align-items: center;
+  border: 0;
+  color: var(--snow-accent-deep);
+  display: flex;
+  font-family: "Jerry Birthday", "Comic Neue", "Segoe Print", cursive;
+  font-size: 2.12rem;
+  font-weight: 400;
+  gap: 0.62rem;
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 2.35rem 0 1.12rem;
+  padding: 0;
+  text-align: right;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.92), 0 0 10px rgba(220, 241, 248, 0.82);
+}
+
+.publications-archive h2.bibliography::before {
+  content: "";
+  flex: 1 1 auto;
+  height: 0.78rem;
+  opacity: 0.9;
+  transform: rotate(-0.12deg);
+}
+
+.publications-archive h2.bibliography::after {
+  color: var(--snow-accent-mid);
+  content: "\2744";
+  font-family: "Segoe UI Symbol", "Apple Symbols", sans-serif;
+  font-size: 0.5em;
+  opacity: 0.76;
+  transform: translateY(-0.2em) rotate(9deg);
+}
+
+html[data-theme="dark"] .selected-publications ol.bibliography > li::before {
+  background: linear-gradient(90deg, rgba(45, 76, 91, 0.52), rgba(28, 28, 29, 0) 84%);
+}
+
+html[data-theme="dark"] .publications-archive h2.bibliography {
+  text-shadow: 0 1px 0 rgba(9, 18, 24, 0.9), 0 0 12px rgba(91, 166, 194, 0.28);
+}
+
+html[data-theme="dark"] .selected-publications ol.bibliography li .links a.btn,
+html[data-theme="dark"] .publications-archive ol.bibliography li .links a.btn {
+  background: rgba(37, 60, 72, 0.55);
 }
 
 .jerry-title-icon {
