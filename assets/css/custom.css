@@ -608,14 +608,14 @@ html[lang="zh-CN"] .news-birthday {
 
 .selected-publications ol.bibliography li .abbr abbr::before,
 .publications-archive ol.bibliography li .abbr abbr::before {
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 56' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M2 28L12 22L22 24L34 18L46 20L60 14L76 17L92 11L110 15L130 10L151 14L173 8L196 12L220 7L245 11L270 6L296 10L323 5L350 8L398 3L380 16L360 23L340 28L320 33L299 37L277 39L255 41L233 44L210 45L188 47L166 48L145 50L124 49L103 51L84 49L66 51L51 47L37 50L26 45L16 47L8 41L2 42Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 56' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M4 15L20 12L40 14L60 11L80 13L100 10L120 12L140 9L160 11L180 8L200 10L220 7L240 9L260 6L280 8L300 5L320 7L340 4L360 6L380 3L398 5L398 33L380 31L360 34L340 32L320 35L300 33L280 36L260 34L240 37L220 35L200 38L180 36L160 39L140 37L120 40L100 38L80 41L60 39L40 42L20 40L4 43Q0 30 4 15Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
   background:
-    repeating-linear-gradient(108deg, transparent 0 9px, rgba(255, 255, 255, 0.2) 9px 11px, transparent 11px 17px),
+    repeating-linear-gradient(108deg, transparent 0 10px, rgba(255, 255, 255, 0.13) 10px 11.5px, transparent 11.5px 18px),
     linear-gradient(101deg, var(--snow-accent-deep) 0%, var(--snow-accent-mid) 70%, var(--snow-accent-soft) 100%);
   content: "";
   filter: drop-shadow(0 4px 5px rgba(45, 99, 120, 0.2));
   inset: -0.04rem -0.12rem 0.06rem;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 56' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M2 28L12 22L22 24L34 18L46 20L60 14L76 17L92 11L110 15L130 10L151 14L173 8L196 12L220 7L245 11L270 6L296 10L323 5L350 8L398 3L380 16L360 23L340 28L320 33L299 37L277 39L255 41L233 44L210 45L188 47L166 48L145 50L124 49L103 51L84 49L66 51L51 47L37 50L26 45L16 47L8 41L2 42Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 56' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M4 15L20 12L40 14L60 11L80 13L100 10L120 12L140 9L160 11L180 8L200 10L220 7L240 9L260 6L280 8L300 5L320 7L340 4L360 6L380 3L398 5L398 33L380 31L360 34L340 32L320 35L300 33L280 36L260 34L240 37L220 35L200 38L180 36L160 39L140 37L120 40L100 38L80 41L60 39L40 42L20 40L4 43Q0 30 4 15Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
   position: absolute;
   transform: rotate(-0.45deg);
   z-index: -1;
@@ -624,7 +624,7 @@ html[lang="zh-CN"] .news-birthday {
 .selected-publications ol.bibliography li .abbr abbr::after,
 .publications-archive ol.bibliography li .abbr abbr::after {
   border-bottom: 2px solid rgba(91, 166, 194, 0.82);
-  border-radius: 0 0 58% 42%;
+  border-radius: 0;
   bottom: -0.03rem;
   box-shadow: 0 4px 0 rgba(156, 205, 221, 0.48);
   content: "";
@@ -634,7 +634,7 @@ html[lang="zh-CN"] .news-birthday {
   pointer-events: none;
   position: absolute;
   right: -2%;
-  transform: rotate(0.75deg) skewX(-8deg);
+  transform: rotate(-1.25deg);
   z-index: -2;
 }
 
@@ -1061,7 +1061,7 @@ html.cartoon-mode .publications ol.bibliography li .abbr abbr {
 
 html.cartoon-mode .publications ol.bibliography li .abbr abbr::before {
   background:
-    repeating-linear-gradient(108deg, transparent 0 9px, rgba(255, 255, 255, 0.22) 9px 11px, transparent 11px 17px),
+    repeating-linear-gradient(108deg, transparent 0 10px, rgba(255, 255, 255, 0.15) 10px 11.5px, transparent 11.5px 18px),
     linear-gradient(101deg, #3f8eaf 0%, #66b7d4 68%, #a8dceb 100%);
   filter: drop-shadow(3px 4px 0 rgba(164, 215, 234, 0.72));
 }
