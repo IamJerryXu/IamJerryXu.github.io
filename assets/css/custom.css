@@ -346,8 +346,7 @@ html[data-theme="dark"] .contact-row a {
   text-decoration: none;
 }
 
-.selected-publications ol.bibliography > li::after,
-.publications-archive h2.bibliography::before {
+.selected-publications ol.bibliography > li::after {
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201000%2018'%20preserveAspectRatio='none'%3E%3Cpath%20d='M2%208%20C110%202%20220%2013%20330%208%20S550%203%20665%209%20S885%2013%20998%207'%20fill='none'%20stroke='black'%20stroke-width='2.4'%20stroke-linecap='round'/%3E%3Cpath%20d='M3%2012%20C130%208%20240%2015%20360%2011%20S610%208%20735%2012%20S910%2015%20997%2011'%20fill='none'%20stroke='black'%20stroke-width='1.1'%20stroke-linecap='round'%20opacity='.65'/%3E%3C/svg%3E");
   -webkit-mask-position: center;
   -webkit-mask-repeat: no-repeat;
@@ -653,20 +652,20 @@ html[lang="zh-CN"] .news-birthday {
 }
 
 .publications-archive h2.bibliography::before {
+  background: var(--snow-line);
   content: "";
   flex: 1 1 auto;
-  height: 0.78rem;
-  opacity: 0.9;
-  transform: rotate(-0.12deg);
+  height: 2px;
+  opacity: 0.72;
 }
 
 .publications-archive h2.bibliography::after {
   color: var(--snow-accent-mid);
   content: "\2744";
   font-family: "Segoe UI Symbol", "Apple Symbols", sans-serif;
-  font-size: 0.5em;
-  opacity: 0.76;
-  transform: translateY(-0.2em) rotate(9deg);
+  font-size: 0.82em;
+  opacity: 0.72;
+  transform: translateY(-0.08em) rotate(9deg);
 }
 
 html[data-theme="dark"] .selected-publications ol.bibliography > li::before {
