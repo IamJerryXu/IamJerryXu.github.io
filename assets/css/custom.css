@@ -608,16 +608,16 @@ html[lang="zh-CN"] .news-birthday {
 
 .selected-publications ol.bibliography li .abbr abbr::before,
 .publications-archive ol.bibliography li .abbr abbr::before {
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 56' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M4 15L20 12L40 14L60 11L80 13L100 10L120 12L140 9L160 11L180 8L200 10L220 7L240 9L260 6L280 8L300 5L320 7L340 4L360 6L380 3L398 5L398 33L380 31L360 34L340 32L320 35L300 33L280 36L260 34L240 37L220 35L200 38L180 36L160 39L140 37L120 40L100 38L80 41L60 39L40 42L20 40L4 43Q0 30 4 15Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 56' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M4 14L20 11L40 13L60 11L80 13L100 11L120 13L140 11L160 13L180 11L200 13L220 11L240 13L260 11L280 13L300 11L320 13L340 11L360 13L380 11L398 13L398 41L380 39L360 41L340 39L320 41L300 39L280 41L260 39L240 41L220 39L200 41L180 39L160 41L140 39L120 41L100 39L80 41L60 39L40 41L20 39L4 42Q0 28 4 14Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
   background:
     repeating-linear-gradient(108deg, transparent 0 10px, rgba(255, 255, 255, 0.13) 10px 11.5px, transparent 11.5px 18px),
     linear-gradient(101deg, var(--snow-accent-deep) 0%, var(--snow-accent-mid) 70%, var(--snow-accent-soft) 100%);
   content: "";
   filter: drop-shadow(0 4px 5px rgba(45, 99, 120, 0.2));
   inset: -0.04rem -0.12rem 0.06rem;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 56' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M4 15L20 12L40 14L60 11L80 13L100 10L120 12L140 9L160 11L180 8L200 10L220 7L240 9L260 6L280 8L300 5L320 7L340 4L360 6L380 3L398 5L398 33L380 31L360 34L340 32L320 35L300 33L280 36L260 34L240 37L220 35L200 38L180 36L160 39L140 37L120 40L100 38L80 41L60 39L40 42L20 40L4 43Q0 30 4 15Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 56' preserveAspectRatio='none'%3E%3Cpath fill='black' d='M4 14L20 11L40 13L60 11L80 13L100 11L120 13L140 11L160 13L180 11L200 13L220 11L240 13L260 11L280 13L300 11L320 13L340 11L360 13L380 11L398 13L398 41L380 39L360 41L340 39L320 41L300 39L280 41L260 39L240 41L220 39L200 41L180 39L160 41L140 39L120 41L100 39L80 41L60 39L40 41L20 39L4 42Q0 28 4 14Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
   position: absolute;
-  transform: rotate(-0.45deg);
+  transform: none;
   z-index: -1;
 }
 
@@ -634,7 +634,7 @@ html[lang="zh-CN"] .news-birthday {
   pointer-events: none;
   position: absolute;
   right: -2%;
-  transform: rotate(-1.25deg);
+  transform: none;
   z-index: -2;
 }
 
