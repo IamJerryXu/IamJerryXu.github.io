@@ -31,7 +31,7 @@ body.fixed-top-nav {
 
 body::before {
   background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 255, 255, 0.86) 42%, rgba(255, 255, 255, 0.92) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.82) 42%, rgba(255, 255, 255, 0.89) 100%),
     url("/assets/img/real-snow-mountains.webp?v=20260821-real-snow-1");
   background-position: center, center center;
   background-repeat: no-repeat;
@@ -48,7 +48,7 @@ body::before {
 
 html[data-theme="dark"] body::before {
   background-image:
-    linear-gradient(180deg, rgba(18, 24, 31, 0.76) 0%, rgba(18, 24, 31, 0.88) 44%, rgba(18, 24, 31, 0.93) 100%),
+    linear-gradient(180deg, rgba(18, 24, 31, 0.72) 0%, rgba(18, 24, 31, 0.84) 44%, rgba(18, 24, 31, 0.90) 100%),
     url("/assets/img/real-snow-mountains.webp?v=20260821-real-snow-1");
   filter: brightness(0.76) saturate(0.72);
 }
@@ -493,7 +493,7 @@ html[lang="zh-CN"] .news-birthday {
 }
 
 .post article > .clearfix strong {
-  color: var(--news-method-color);
+  color: #55a8c9;
   font-weight: 500;
 }
 
