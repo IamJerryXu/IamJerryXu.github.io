@@ -538,7 +538,34 @@ html[lang="zh-CN"] .news-birthday {
   font-weight: 500;
 }
 
+.bio-copy [data-i18n="bio_1"] strong {
+  color: #55a8c9;
+  font-weight: 650;
+}
+
+.inkmind-logo {
+  display: inline-block;
+  width: clamp(7rem, 10vw, 9rem);
+  height: auto;
+  margin: 0 0.15em;
+  vertical-align: -0.22em;
+}
+
+.inkmind-contact {
+  font-weight: 600;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.13em;
+}
+
+html[data-theme="dark"] .inkmind-logo {
+  filter: invert(1);
+}
+
 @media (max-width: 575.98px) {
+  .inkmind-logo {
+    width: 7.2rem;
+  }
+
   html[lang="zh-CN"] .news-item {
     grid-template-columns: 1fr;
   }
@@ -629,7 +656,7 @@ html[lang="zh-CN"] .news-birthday {
 .selected-publications ol.bibliography li .abbr figure,
 .publications-archive ol.bibliography li .abbr figure {
   isolation: isolate;
-  margin: 0.38rem 0 0;
+  margin: 0.14rem 0 0;
   position: relative;
 }
 
