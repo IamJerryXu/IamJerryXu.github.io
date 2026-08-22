@@ -622,6 +622,233 @@ html[lang="zh-CN"] .bio-copy [data-i18n="bio_1"] strong {
   text-decoration-color: currentColor;
 }
 
+.internship-callout {
+  align-items: center;
+  background: linear-gradient(100deg, rgba(100, 183, 216, 0.2), rgba(206, 234, 245, 0.1) 72%, transparent 100%);
+  border-left: 3px solid rgba(65, 151, 185, 0.72);
+  border-radius: 0 6px 6px 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin: 0.45rem 0 2.15rem;
+  padding: 0.75rem 0.82rem 0.78rem 0.8rem;
+}
+
+.internship-copy {
+  align-items: center;
+  display: flex;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.internship-callout h3 {
+  color: #267c9d;
+  font-family: "Jerry Contact", "Nunito", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
+  margin: 0 0 0.18rem;
+}
+
+.internship-callout p {
+  color: #48636d;
+  font-size: 0.86em;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.internship-snow {
+  color: #55a8c9;
+  flex: 0 0 auto;
+  font-size: 1.55rem;
+  line-height: 1;
+  text-shadow: 0 0 0.55rem rgba(85, 168, 201, 0.3);
+}
+
+.internship-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.48rem;
+}
+
+.internship-action {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(54, 133, 164, 0.34);
+  border-radius: 50%;
+  color: #287f9f;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.05rem;
+  height: 2.45rem;
+  justify-content: center;
+  padding: 0;
+  text-decoration: none;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  width: 2.45rem;
+}
+
+.internship-action:hover,
+.internship-action:focus-visible {
+  background: #ffffff;
+  border-color: currentColor;
+  color: #176a89;
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.internship-wechat {
+  color: #169b62;
+}
+
+.internship-wechat img {
+  display: block;
+  height: 1.08rem;
+  width: 1.08rem;
+}
+
+.internship-wechat:hover,
+.internship-wechat:focus-visible {
+  color: #0a7f4c;
+}
+
+html[data-theme="dark"] .internship-callout {
+  background: linear-gradient(100deg, rgba(68, 143, 173, 0.25), rgba(52, 98, 119, 0.1) 72%, transparent 100%);
+  border-left-color: rgba(114, 198, 229, 0.72);
+}
+
+html[data-theme="dark"] .internship-callout h3,
+html[data-theme="dark"] .internship-snow {
+  color: #72c6e5;
+}
+
+html[data-theme="dark"] .internship-callout p {
+  color: #c4d6dd;
+}
+
+html[data-theme="dark"] .internship-action {
+  background: rgba(18, 29, 35, 0.56);
+  border-color: rgba(114, 198, 229, 0.38);
+  color: #72c6e5;
+}
+
+html[data-theme="dark"] .internship-wechat {
+  color: #58d69b;
+}
+
+html.cartoon-mode .internship-callout {
+  background: linear-gradient(100deg, rgba(111, 196, 231, 0.23), rgba(210, 239, 250, 0.1) 74%, transparent 100%);
+  font-family: "Comic Sans MS", "Comic Neue", cursive;
+}
+
+html.cartoon-mode .internship-callout h3 {
+  font-family: "Comic Sans MS", "Comic Neue", cursive;
+}
+
+.wechat-dialog {
+  background: rgba(248, 252, 254, 0.98);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: 0 1.2rem 3rem rgba(15, 41, 54, 0.3);
+  color: #172a33;
+  max-height: calc(100vh - 2rem);
+  max-width: calc(100vw - 2rem);
+  padding: 0;
+  width: 25rem;
+}
+
+.wechat-dialog::backdrop {
+  backdrop-filter: blur(4px);
+  background: rgba(9, 25, 34, 0.58);
+}
+
+.wechat-dialog-inner {
+  padding: 1.2rem 1.2rem 1rem;
+  position: relative;
+  text-align: center;
+}
+
+.wechat-dialog h3 {
+  color: #267c9d;
+  font-family: "Jerry Contact", "Nunito", sans-serif;
+  font-size: 1.28rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin: 0 2.5rem 0.8rem;
+}
+
+.wechat-card {
+  background: #ffffff;
+  border-radius: 6px;
+  display: block;
+  height: auto;
+  margin: 0 auto 0.72rem;
+  max-height: calc(100vh - 9rem);
+  max-width: 100%;
+  object-fit: contain;
+  width: 21rem;
+}
+
+.wechat-dialog p {
+  color: #526973;
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.wechat-close {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  color: #607780;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.05rem;
+  height: 2.15rem;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  right: 0.65rem;
+  top: 0.58rem;
+  width: 2.15rem;
+}
+
+.wechat-close:hover,
+.wechat-close:focus-visible {
+  background: rgba(67, 143, 173, 0.12);
+  color: #267c9d;
+  outline: none;
+}
+
+.wechat-close span {
+  font-size: 1.45rem;
+  line-height: 1;
+  transform: translateY(-0.04rem);
+}
+
+html[data-theme="dark"] .wechat-dialog {
+  background: rgba(29, 39, 45, 0.98);
+  color: #eef7fa;
+}
+
+html[data-theme="dark"] .wechat-dialog h3 {
+  color: #72c6e5;
+}
+
+html[data-theme="dark"] .wechat-dialog p {
+  color: #c4d6dd;
+}
+
+html[data-theme="dark"] .wechat-close {
+  color: #c4d6dd;
+}
+
+html.cartoon-mode .wechat-dialog,
+html.cartoon-mode .wechat-dialog h3 {
+  font-family: "Comic Sans MS", "Comic Neue", cursive;
+}
+
 html[data-theme="dark"] .inkmind-logo {
   filter: invert(1);
 }
@@ -629,6 +856,33 @@ html[data-theme="dark"] .inkmind-logo {
 @media (max-width: 575.98px) {
   .inkmind-logo {
     width: 7.2rem;
+  }
+
+  .internship-callout {
+    gap: 0.68rem;
+    grid-template-columns: 1fr;
+    margin-bottom: 1.65rem;
+    padding: 0.7rem 0.68rem 0.74rem;
+  }
+
+  .internship-actions {
+    margin-left: 2.25rem;
+  }
+
+  .internship-callout h3 {
+    font-size: 0.96rem;
+  }
+
+  .internship-callout p {
+    font-size: 0.82em;
+  }
+
+  .wechat-dialog-inner {
+    padding: 1rem 0.85rem 0.85rem;
+  }
+
+  .wechat-card {
+    width: min(100%, 19rem);
   }
 
   html[lang="zh-CN"] .news-item {
