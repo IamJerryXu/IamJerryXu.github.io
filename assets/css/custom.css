@@ -55,15 +55,11 @@ html[data-theme="dark"] {
 
 body.fixed-top-nav {
   padding-bottom: 0;
+  transition: background-color 1100ms ease;
 }
 
-body::before {
-  background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.82) 42%, rgba(255, 255, 255, 0.89) 100%),
-    url("/assets/img/real-snow-mountains.webp?v=20260821-real-snow-1");
-  background-position: center, center center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%, cover;
+body::before,
+body::after {
   bottom: 0;
   content: "";
   left: 0;
@@ -71,14 +67,49 @@ body::before {
   position: fixed;
   right: 0;
   top: 56px;
+  transform: scale(1);
+  transform-origin: center center;
+  transition:
+    opacity 1120ms cubic-bezier(0.22, 0.72, 0.24, 1),
+    filter 1120ms ease,
+    transform 1120ms cubic-bezier(0.22, 0.72, 0.24, 1);
   z-index: 0;
 }
 
-html[data-theme="dark"] body::before {
+body::before {
+  background-image: url("/assets/img/real-snow-mountains.webp?v=20260821-real-snow-1");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: brightness(1.04) saturate(0.82) contrast(0.96);
+  opacity: 0.34;
+}
+
+body::after {
   background-image:
-    linear-gradient(180deg, rgba(18, 24, 31, 0.72) 0%, rgba(18, 24, 31, 0.84) 44%, rgba(18, 24, 31, 0.90) 100%),
-    url("/assets/img/real-snow-mountains.webp?v=20260821-real-snow-1");
-  filter: brightness(0.76) saturate(0.72);
+    radial-gradient(ellipse at center, rgba(247, 252, 255, 0.76) 0 34%, rgba(247, 252, 255, 0.34) 62%, rgba(247, 252, 255, 0.08) 100%),
+    url("/assets/img/cartoon-snow-mountains.webp?v=20260821-snow-world-2");
+  background-position: center, center bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 100%, cover;
+  filter: brightness(1) saturate(1);
+  opacity: 0;
+  transform: scale(1.012);
+}
+
+html[data-theme="dark"] body::before {
+  filter: brightness(0.54) saturate(0.58) contrast(1.08);
+  opacity: 0.4;
+}
+
+html[data-theme="dark"] body::after {
+  filter: brightness(0.5) saturate(0.68) contrast(1.06);
+}
+
+html.transition body::before,
+html.transition body::after {
+  transition-duration: 1120ms !important;
+  transition-property: opacity, filter, transform !important;
 }
 
 .container[role="main"],
@@ -1019,6 +1050,18 @@ html.cartoon-mode {
   --news-method-line-color: rgba(113, 193, 222, 0.7);
 }
 
+html[data-theme="dark"].cartoon-mode {
+  --global-bg-color: #151d24;
+  --global-code-bg-color: rgba(83, 145, 169, 0.24);
+  --global-text-color: #e5f0f5;
+  --global-text-color-light: #aac5d0;
+  --global-theme-color: #78c7e2;
+  --global-hover-color: #a6dcef;
+  --global-card-bg-color: #1d2931;
+  --news-method-color: #8dd1e7;
+  --news-method-line-color: rgba(141, 209, 231, 0.62);
+}
+
 html.cartoon-mode body,
 html.cartoon-mode p,
 html.cartoon-mode h1,
@@ -1059,25 +1102,32 @@ html.cartoon-mode body {
 }
 
 html.cartoon-mode body::before {
-  background-image:
-    radial-gradient(ellipse at center, rgba(247, 252, 255, 0.76) 0 34%, rgba(247, 252, 255, 0.34) 62%, rgba(247, 252, 255, 0.08) 100%),
-    url("/assets/img/cartoon-snow-mountains.webp?v=20260821-snow-world-2");
-  background-position: center, center bottom;
-  background-repeat: no-repeat;
-  background-size: 100% 100%, cover;
-  content: "";
-  bottom: 0;
-  left: 0;
-  opacity: 0.86;
-  pointer-events: none;
-  position: fixed;
-  right: 0;
-  top: 56px;
-  z-index: 0;
+  opacity: 0;
+  transform: scale(1.012);
 }
 
 html.cartoon-mode body::after {
-  display: none;
+  opacity: 0.86;
+  transform: scale(1);
+}
+
+html[data-theme="dark"].cartoon-mode body {
+  background-color: #151d24;
+}
+
+html[data-theme="dark"].cartoon-mode body::after {
+  filter: brightness(0.5) saturate(0.68) contrast(1.06);
+  opacity: 0.52;
+}
+
+html[data-theme="dark"].cartoon-mode .identity-header::before {
+  background-image: url("/assets/img/identity-snowfield-dark.webp?v=20260821-transparent-2");
+  filter: saturate(0.82) brightness(0.78);
+  opacity: 0.72;
+}
+
+html[data-theme="dark"].cartoon-mode .identity-header::after {
+  filter: brightness(0.82) saturate(0.9);
 }
 
 html.cartoon-mode .identity-header::before {
@@ -1118,9 +1168,19 @@ html.cartoon-mode .navbar {
   border-bottom: 2px solid #67b1d0;
 }
 
+html[data-theme="dark"].cartoon-mode .navbar {
+  background-color: rgba(20, 29, 36, 0.94);
+  border-bottom-color: #559bb6;
+}
+
 html.cartoon-mode .post-title {
   color: #183b66;
   text-shadow: 2px 2px 0 #c4e8f4;
+}
+
+html[data-theme="dark"].cartoon-mode .post-title {
+  color: #e5f0f5;
+  text-shadow: 2px 2px 0 rgba(50, 105, 128, 0.62);
 }
 
 html.cartoon-mode .jerry-nickname {
@@ -1191,6 +1251,20 @@ html.cartoon-mode .lang-toggle {
   color: #1f2c3a;
 }
 
+html[data-theme="dark"].cartoon-mode .lang-toggle {
+  background: #1d2931;
+  border-color: #a8d7e7;
+  color: #e5f0f5;
+}
+
+html[data-theme="dark"].cartoon-mode .publications ol.bibliography li .preview,
+html[data-theme="dark"].cartoon-mode .avatar-toggle,
+html[data-theme="dark"].cartoon-mode .publications ol.bibliography li .links a.btn,
+html[data-theme="dark"].cartoon-mode .bibsearch-form-input {
+  border-color: #a8d7e7;
+  color: #e5f0f5;
+}
+
 html.cartoon-mode .publications ol.bibliography li .links a.btn:hover {
   background: #dff2f9;
   color: #1f2c3a;
@@ -1198,10 +1272,17 @@ html.cartoon-mode .publications ol.bibliography li .links a.btn:hover {
 }
 
 @media (max-width: 760px) {
-  html.cartoon-mode body::before {
+  body::after {
     background-position: center, center bottom;
     background-size: 100% 100%, 160vw auto;
+  }
+
+  html.cartoon-mode body::after {
     opacity: 0.82;
+  }
+
+  html[data-theme="dark"].cartoon-mode body::after {
+    opacity: 0.5;
   }
 
   .cartoon-float:nth-child(n + 17) {
@@ -1210,6 +1291,11 @@ html.cartoon-mode .publications ol.bibliography li .links a.btn:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after {
+    transition: none;
+  }
+
   .cartoon-decorations {
     display: none;
   }
