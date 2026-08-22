@@ -14,6 +14,14 @@
   src: url("/assets/fonts/caveat-latin.woff2") format("woff2");
 }
 
+@font-face {
+  font-display: swap;
+  font-family: "Jerry Contact";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/assets/fonts/nunito-700-latin.woff2") format("woff2");
+}
+
 footer.fixed-bottom {
   position: static;
 }
@@ -552,9 +560,9 @@ html[lang="zh-CN"] .news-birthday {
 }
 
 .bio-copy .inkmind-contact {
-  font-family: inherit;
-  font-size: 1em;
-  font-weight: 650;
+  font-family: "Jerry Contact", "Nunito", sans-serif;
+  font-size: 1.14em;
+  font-weight: 700;
   color: #287f9f;
   letter-spacing: 0;
   line-height: inherit;
