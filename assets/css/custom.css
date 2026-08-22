@@ -82,7 +82,7 @@ body::before {
   background-repeat: no-repeat;
   background-size: cover;
   filter: brightness(1.04) saturate(0.82) contrast(0.96);
-  opacity: 0.34;
+  opacity: 0.26;
 }
 
 body::after {
@@ -574,12 +574,20 @@ html[lang="zh-CN"] .news-birthday {
 
 .post article > .clearfix strong {
   color: #55a8c9;
-  font-weight: 500;
+  font-style: italic;
+  font-weight: 400;
 }
 
 .bio-copy [data-i18n="bio_1"] strong {
   color: #55a8c9;
-  font-weight: 650;
+  font-style: italic;
+  font-weight: 400;
+}
+
+html[lang="zh-CN"] .post article > .clearfix strong,
+html[lang="zh-CN"] .bio-copy [data-i18n="bio_1"] strong {
+  font-style: normal;
+  font-weight: 400;
 }
 
 .inkmind-logo {
