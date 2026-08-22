@@ -551,8 +551,13 @@ html[lang="zh-CN"] .news-birthday {
   vertical-align: -0.22em;
 }
 
-.inkmind-contact {
+.bio-copy .inkmind-contact {
+  font-family: "Jerry Birthday Mac", "Jerry Birthday", "Segoe Print", cursive;
+  font-size: 1.18em;
   font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1;
+  text-decoration: none;
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.13em;
 }
