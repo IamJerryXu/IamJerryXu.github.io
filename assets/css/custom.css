@@ -552,14 +552,23 @@ html[lang="zh-CN"] .news-birthday {
 }
 
 .bio-copy .inkmind-contact {
-  font-family: "Jerry Birthday Mac", "Jerry Birthday", "Segoe Print", cursive;
-  font-size: 1.18em;
-  font-weight: 600;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 650;
+  color: #287f9f;
   letter-spacing: 0;
-  line-height: 1;
-  text-decoration: none;
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.13em;
+  line-height: inherit;
+  text-decoration-line: underline;
+  text-decoration-color: rgba(40, 127, 159, 0.38);
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.16em;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.bio-copy .inkmind-contact:hover,
+.bio-copy .inkmind-contact:focus-visible {
+  color: #176a89;
+  text-decoration-color: currentColor;
 }
 
 html[data-theme="dark"] .inkmind-logo {
