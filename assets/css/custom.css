@@ -656,8 +656,22 @@ html[data-theme="dark"] .inkmind-logo {
 .selected-publications ol.bibliography li .abbr figure,
 .publications-archive ol.bibliography li .abbr figure {
   isolation: isolate;
-  margin: 0.14rem 0 0;
+  margin: -0.55rem 0 0;
   position: relative;
+}
+
+@media (min-width: 576px) {
+  .selected-publications ol.bibliography li .abbr,
+  .publications-archive ol.bibliography li .abbr {
+    flex: 0 0 28.5%;
+    max-width: 28.5%;
+  }
+
+  .selected-publications ol.bibliography li .abbr + [id],
+  .publications-archive ol.bibliography li .abbr + [id] {
+    flex: 0 0 71.5%;
+    max-width: 71.5%;
+  }
 }
 
 .selected-publications ol.bibliography li .abbr figure::before,
