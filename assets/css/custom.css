@@ -559,6 +559,10 @@ html[lang="zh-CN"] .news-birthday {
   vertical-align: -0.22em;
 }
 
+.inkmind-membership {
+  white-space: nowrap;
+}
+
 .bio-copy .inkmind-contact {
   font-family: "Jerry Contact", "Nunito", sans-serif;
   font-size: 1.14em;
