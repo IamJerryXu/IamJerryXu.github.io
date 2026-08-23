@@ -36,7 +36,7 @@
   <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/custom.css?v=20260823-internship-focus-41">
+  <link rel="stylesheet" href="assets/css/custom.css?v=20260823-nav-controls-44">
   <link rel="canonical" href="https://jerrysnow.me/">
   <script src="assets/js/theme.js"></script>
   <link defer rel="stylesheet" href="assets/css/jekyll-pygments-themes-native.css" media="none" id="highlight_theme_dark">
@@ -59,6 +59,7 @@
     <div class="container">
       <div class="navbar-brand social">
         <a href="mailto:jiangjiangcheng753@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        <button class="navbar-social-wechat wechat-open" type="button" aria-label="Open Jerry's WeChat card" title="WeChat"><img src="assets/img/weixin.svg" alt="" aria-hidden="true"></button>
         <a href="assets/pdf/Yongxue_Xu_CV.pdf" title="Cv pdf"><i class="ai ai-cv"></i></a>
         <a href="https://github.com/IamJerryXu" title="Github username" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-github"></i></a>
         <a href="https://www.linkedin.com/in/%E6%B0%B8%E9%9B%AA-%E5%BE%90-6340a4415/" title="LinkedIn" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
@@ -78,11 +79,19 @@
             <button id="lang-toggle" class="lang-toggle" type="button" title="Toggle language" aria-label="Toggle language">中文</button>
           </li>
           <li class="toggle-container">
-            <button id="light-toggle" title="Change theme">
-              <i class="fa-half-sun-moon" id="light-toggle-system"></i>
-              <i class="fa-solid fa-moon" id="light-toggle-dark"></i>
-              <i class="fa-solid fa-sun" id="light-toggle-light"></i>
-            </button>
+            <div class="theme-control">
+              <span class="theme-side-icon theme-day-icon" aria-hidden="true">
+                <i class="fa-solid fa-sun theme-sun"></i>
+                <i class="fa-solid fa-snowflake theme-snowflake"></i>
+              </span>
+              <button id="light-toggle" class="theme-switch" type="button" role="switch" aria-checked="false" title="Change theme" aria-label="Change theme">
+                <span class="theme-switch-knob" aria-hidden="true"></span>
+                <i class="fa-half-sun-moon theme-legacy-icon" id="light-toggle-system"></i>
+                <i class="fa-solid fa-moon theme-legacy-icon" id="light-toggle-dark"></i>
+                <i class="fa-solid fa-sun theme-legacy-icon" id="light-toggle-light"></i>
+              </button>
+              <i class="fa-solid fa-moon theme-side-icon theme-night-icon" aria-hidden="true"></i>
+            </div>
           </li>
         </ul>
       </div>
@@ -134,7 +143,7 @@
         </div>
         <div class="internship-actions" aria-label="Contact Jerry">
           <a class="internship-action internship-email" href="mailto:jiangjiangcheng753@gmail.com" aria-label="Email Jerry" title="Email Jerry"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
-          <button class="internship-action internship-wechat" id="wechat-open" type="button" aria-label="Open Jerry's WeChat card" title="WeChat"><img src="assets/img/weixin.svg" alt="" aria-hidden="true"></button>
+          <button class="internship-action internship-wechat wechat-open" id="wechat-open" type="button" aria-label="Open Jerry's WeChat card" title="WeChat"><img src="assets/img/weixin.svg" alt="" aria-hidden="true"></button>
         </div>
       </aside>
       <dialog class="wechat-dialog" id="wechat-dialog" aria-labelledby="wechat-title">
@@ -148,12 +157,14 @@
       <script>
         document.addEventListener("DOMContentLoaded", function () {
           var dialog = document.getElementById("wechat-dialog");
-          var openButton = document.getElementById("wechat-open");
+          var openButtons = document.querySelectorAll(".wechat-open");
           var closeButton = document.getElementById("wechat-close");
-          if (!dialog || !openButton || !closeButton) return;
-          openButton.addEventListener("click", function () {
-            if (typeof dialog.showModal === "function") dialog.showModal();
-            else dialog.setAttribute("open", "");
+          if (!dialog || !openButtons.length || !closeButton) return;
+          openButtons.forEach(function (openButton) {
+            openButton.addEventListener("click", function () {
+              if (typeof dialog.showModal === "function") dialog.showModal();
+              else dialog.setAttribute("open", "");
+            });
           });
           closeButton.addEventListener("click", function () {
             if (typeof dialog.close === "function") dialog.close();
@@ -540,6 +551,28 @@
           applyLanguage(current === "zh" ? "en" : "zh");
         });
       });
+
+      var themeToggle = document.getElementById("light-toggle");
+      if (themeToggle) {
+        var syncThemeToggle = function () {
+          var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+          themeToggle.setAttribute("aria-checked", isDark ? "true" : "false");
+          themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+          themeToggle.setAttribute("title", isDark ? "Switch to light mode" : "Switch to dark mode");
+        };
+        themeToggle.addEventListener("click", function (event) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          var nextTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+          setThemeSetting(nextTheme);
+          syncThemeToggle();
+        }, true);
+        new MutationObserver(syncThemeToggle).observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["data-theme"]
+        });
+        syncThemeToggle();
+      }
     });
   })();
 </script>

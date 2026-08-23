@@ -204,6 +204,47 @@ html.page-morphing footer {
 .lang-container {
   align-items: center;
   display: flex;
+  justify-content: center;
+}
+
+.navbar-social-wechat {
+  appearance: none;
+  align-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  height: 1.75rem;
+  justify-content: center;
+  margin: 0 0.08rem;
+  padding: 0;
+  transform: translateY(-0.05rem);
+  vertical-align: middle;
+  width: 1.75rem;
+}
+
+.navbar-social-wechat img {
+  display: block;
+  filter: brightness(0);
+  height: 1.55rem !important;
+  margin: 0 !important;
+  transition: filter 200ms ease, opacity 200ms ease, transform 200ms ease;
+  width: 1.55rem !important;
+}
+
+.navbar-social-wechat:hover img,
+.navbar-social-wechat:focus-visible img {
+  opacity: 0.66;
+  transform: translateY(-1px);
+}
+
+html[data-theme="dark"] .navbar-social-wechat img {
+  filter: brightness(0) invert(1);
+}
+
+.navbar-social-wechat:focus-visible {
+  outline: 2px solid rgba(46, 139, 173, 0.52);
+  outline-offset: 2px;
 }
 
 .lang-toggle {
@@ -223,6 +264,198 @@ html.page-morphing footer {
 .lang-toggle:focus-visible {
   color: var(--global-theme-color);
   outline: none;
+}
+
+.toggle-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-left: 0.15rem;
+}
+
+.theme-control {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.34rem;
+  height: 2rem;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.theme-side-icon {
+  align-items: center;
+  color: #6f8791;
+  display: inline-flex;
+  font-size: 0.82rem;
+  height: 1rem;
+  justify-content: center;
+  line-height: 1;
+  transition: color 260ms ease, opacity 260ms ease, transform 260ms ease;
+  width: 1rem;
+}
+
+.theme-day-icon {
+  color: #3f8eaa;
+}
+
+.theme-night-icon {
+  opacity: 0.48;
+}
+
+.theme-snowflake {
+  display: none;
+}
+
+#light-toggle.theme-switch {
+  appearance: none;
+  background: rgba(117, 176, 199, 0.23);
+  border: 1px solid rgba(68, 135, 160, 0.2);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 2px rgba(42, 95, 116, 0.12);
+  cursor: pointer;
+  display: inline-block;
+  height: 1.42rem;
+  padding: 0;
+  position: relative;
+  transform: none !important;
+  transition: background-color 320ms ease, border-color 320ms ease, box-shadow 320ms ease;
+  width: 2.72rem;
+}
+
+#light-toggle .theme-switch-knob {
+  background: #2c879f;
+  border: 1px solid rgba(32, 107, 129, 0.16);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(37, 82, 99, 0.24);
+  display: block;
+  height: 1.08rem;
+  left: 0.12rem;
+  position: absolute;
+  top: 0.1rem;
+  transform: translateX(0);
+  transition: background-color 320ms ease, box-shadow 320ms ease, transform 360ms cubic-bezier(0.22, 0.9, 0.26, 1);
+  width: 1.08rem;
+}
+
+html[data-theme="dark"] #light-toggle .theme-switch-knob {
+  background: #dbeef5;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.38);
+  transform: translateX(1.28rem);
+}
+
+html[data-theme="dark"] #light-toggle.theme-switch {
+  background: rgba(65, 94, 110, 0.72);
+  border-color: rgba(151, 198, 216, 0.32);
+}
+
+html[data-theme="dark"] .theme-day-icon {
+  color: #8299a3;
+  opacity: 0.48;
+}
+
+html[data-theme="dark"] .theme-night-icon {
+  color: #b8ddea;
+  opacity: 1;
+}
+
+#light-toggle.theme-switch:hover,
+#light-toggle.theme-switch:focus-visible {
+  border-color: rgba(46, 139, 173, 0.72);
+  box-shadow: 0 0 0 3px rgba(93, 174, 204, 0.14), inset 0 1px 2px rgba(42, 95, 116, 0.12);
+  outline: none;
+}
+
+#light-toggle .theme-legacy-icon {
+  display: none !important;
+}
+
+html.cartoon-mode .theme-sun {
+  display: none;
+}
+
+html.cartoon-mode .theme-snowflake {
+  display: inline-block;
+}
+
+html.cartoon-mode .theme-day-icon {
+  color: #58a9c8;
+  filter: drop-shadow(1px 1px 0 rgba(255, 255, 255, 0.92));
+  font-size: 0.94rem;
+  transform: rotate(-8deg);
+}
+
+html.cartoon-mode #light-toggle.theme-switch {
+  background:
+    radial-gradient(circle at 22% 35%, rgba(255, 255, 255, 0.9) 0 0.08rem, transparent 0.1rem),
+    radial-gradient(circle at 68% 68%, rgba(255, 255, 255, 0.78) 0 0.07rem, transparent 0.09rem),
+    #ccebf6;
+  border: 2px solid #4f9fbd;
+  border-radius: 48% 52% 45% 55% / 55% 46% 54% 45%;
+  box-shadow: 2px 2px 0 rgba(121, 187, 211, 0.48);
+}
+
+html.cartoon-mode #light-toggle .theme-switch-knob {
+  background: #fbfeff;
+  border: 1px solid #6bb4cf;
+  box-shadow: 1px 1px 0 rgba(64, 133, 159, 0.35);
+  height: 1rem;
+  left: 0.1rem;
+  top: 0.09rem;
+  width: 1rem;
+}
+
+html.cartoon-mode #light-toggle .theme-switch-knob::after {
+  color: #5faeca;
+  content: "❄";
+  font-family: "Segoe UI Symbol", "Apple Symbols", sans-serif !important;
+  font-size: 0.54rem;
+  left: 50%;
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+html[data-theme="dark"].cartoon-mode #light-toggle.theme-switch {
+  background:
+    radial-gradient(circle at 22% 35%, rgba(211, 238, 248, 0.7) 0 0.08rem, transparent 0.1rem),
+    radial-gradient(circle at 68% 68%, rgba(211, 238, 248, 0.58) 0 0.07rem, transparent 0.09rem),
+    #355d70;
+  border-color: #8ac8dd;
+  box-shadow: 2px 2px 0 rgba(33, 72, 88, 0.72);
+}
+
+html[data-theme="dark"].cartoon-mode #light-toggle .theme-switch-knob {
+  transform: translateX(1.28rem);
+}
+
+html.cartoon-mode .theme-night-icon {
+  transform: rotate(7deg);
+}
+
+@media (max-width: 575.98px) {
+  #navbarNav .navbar-nav {
+    align-items: flex-end;
+    width: 100%;
+  }
+
+  #navbarNav .lang-container,
+  #navbarNav .toggle-container {
+    justify-content: flex-end;
+    margin-left: 0;
+    min-height: 2.25rem;
+    width: 100%;
+  }
+
+  #navbarNav .lang-toggle {
+    margin: 0;
+    padding: 0.35rem 0;
+    text-align: right;
+  }
+
+  #navbarNav .theme-control {
+    justify-content: flex-end;
+  }
 }
 
 .fa-linkedin {

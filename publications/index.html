@@ -36,7 +36,7 @@
   <link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
   <link rel="stylesheet" href="../assets/css/main.css">
-  <link rel="stylesheet" href="../assets/css/custom.css?v=20260823-internship-focus-41">
+  <link rel="stylesheet" href="../assets/css/custom.css?v=20260823-nav-controls-44">
   <link rel="canonical" href="https://jerrysnow.me/publications/">
   <script src="../assets/js/theme.js"></script>
   <link defer rel="stylesheet" href="../assets/css/jekyll-pygments-themes-native.css" media="none" id="highlight_theme_dark">
@@ -72,11 +72,19 @@
             <button id="lang-toggle" class="lang-toggle" type="button" title="Toggle language" aria-label="Toggle language">中文</button>
           </li>
           <li class="toggle-container">
-            <button id="light-toggle" title="Change theme">
-              <i class="fa-half-sun-moon" id="light-toggle-system"></i>
-              <i class="fa-solid fa-moon" id="light-toggle-dark"></i>
-              <i class="fa-solid fa-sun" id="light-toggle-light"></i>
-            </button>
+            <div class="theme-control">
+              <span class="theme-side-icon theme-day-icon" aria-hidden="true">
+                <i class="fa-solid fa-sun theme-sun"></i>
+                <i class="fa-solid fa-snowflake theme-snowflake"></i>
+              </span>
+              <button id="light-toggle" class="theme-switch" type="button" role="switch" aria-checked="false" title="Change theme" aria-label="Change theme">
+                <span class="theme-switch-knob" aria-hidden="true"></span>
+                <i class="fa-half-sun-moon theme-legacy-icon" id="light-toggle-system"></i>
+                <i class="fa-solid fa-moon theme-legacy-icon" id="light-toggle-dark"></i>
+                <i class="fa-solid fa-sun theme-legacy-icon" id="light-toggle-light"></i>
+              </button>
+              <i class="fa-solid fa-moon theme-side-icon theme-night-icon" aria-hidden="true"></i>
+            </div>
           </li>
         </ul>
       </div>
@@ -458,6 +466,28 @@
           applyLanguage(current === "zh" ? "en" : "zh");
         });
       });
+
+      var themeToggle = document.getElementById("light-toggle");
+      if (themeToggle) {
+        var syncThemeToggle = function () {
+          var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+          themeToggle.setAttribute("aria-checked", isDark ? "true" : "false");
+          themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+          themeToggle.setAttribute("title", isDark ? "Switch to light mode" : "Switch to dark mode");
+        };
+        themeToggle.addEventListener("click", function (event) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          var nextTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+          setThemeSetting(nextTheme);
+          syncThemeToggle();
+        }, true);
+        new MutationObserver(syncThemeToggle).observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["data-theme"]
+        });
+        syncThemeToggle();
+      }
     });
   })();
 </script>
