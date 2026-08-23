@@ -1082,6 +1082,189 @@ html.cartoon-mode .wechat-dialog h3 {
   font-family: "Comic Sans MS", "Comic Neue", cursive;
 }
 
+.cartoon-photo-easter-egg {
+  display: none;
+  justify-content: center;
+  margin: 1.25rem auto 3.25rem;
+  min-height: 3.4rem;
+  position: relative;
+}
+
+html.cartoon-mode .cartoon-photo-easter-egg {
+  align-items: center;
+  display: flex;
+}
+
+html.cartoon-mode .cartoon-photo-easter-egg::before,
+html.cartoon-mode .cartoon-photo-easter-egg::after {
+  border-top: 2px dashed rgba(83, 162, 193, 0.46);
+  content: "";
+  flex: 0 1 7.5rem;
+  margin: 0 0.75rem;
+}
+
+.cartoon-photo-open {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: #3d99bd;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 2rem;
+  height: 3.2rem;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  text-shadow: 2px 3px 0 rgba(181, 223, 239, 0.78);
+  transform: rotate(-8deg);
+  transition: color 180ms ease, transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1.2);
+  width: 3.2rem;
+}
+
+.cartoon-photo-open::after {
+  color: #e18b8b;
+  content: "?";
+  font-family: "Comic Sans MS", "Comic Neue", cursive;
+  font-size: 0.72rem;
+  font-weight: 700;
+  position: absolute;
+  right: 0.1rem;
+  top: 0.05rem;
+}
+
+.cartoon-photo-open:hover,
+.cartoon-photo-open:focus-visible {
+  color: #1b7fa7;
+  outline: none;
+  transform: rotate(7deg) scale(1.14);
+}
+
+.cartoon-photo-dialog {
+  background: transparent;
+  border: 0;
+  max-height: calc(100vh - 1.5rem);
+  max-width: calc(100vw - 1.5rem);
+  overflow: visible;
+  padding: 0;
+  width: min(29rem, calc(100vw - 2rem));
+}
+
+.cartoon-photo-dialog::backdrop {
+  backdrop-filter: blur(5px);
+  background: rgba(13, 34, 46, 0.62);
+}
+
+.cartoon-photo-dialog[open] .cartoon-photo-postcard {
+  animation: postcard-arrive 430ms cubic-bezier(0.18, 0.86, 0.3, 1.12) both;
+}
+
+.cartoon-photo-postcard {
+  background: #fffefa;
+  border: 2px solid #203444;
+  box-shadow: 9px 11px 0 rgba(112, 186, 215, 0.74), 0 1.2rem 3rem rgba(8, 29, 40, 0.28);
+  padding: 0.72rem 0.72rem 0.82rem;
+  position: relative;
+  transform: rotate(-1.2deg);
+}
+
+.cartoon-photo-postcard::before {
+  background: rgba(194, 227, 239, 0.78);
+  content: "";
+  height: 1.2rem;
+  left: 50%;
+  position: absolute;
+  top: -0.6rem;
+  transform: translateX(-50%) rotate(1deg);
+  width: 5.4rem;
+  z-index: 2;
+}
+
+.cartoon-photo-postcard img {
+  display: block;
+  height: min(68vh, 38rem);
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+}
+
+.cartoon-photo-postcard p {
+  color: #25475a;
+  font-family: "Comic Sans MS", "Comic Neue", "Chalkboard SE", cursive;
+  font-size: 1rem;
+  line-height: 1.35;
+  margin: 0.72rem 1.8rem 0.08rem 0.35rem;
+  text-align: center;
+}
+
+.cartoon-photo-close {
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid #203444;
+  border-radius: 50%;
+  color: #203444;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.35rem;
+  height: 2.25rem;
+  justify-content: center;
+  padding: 0 0 0.1rem;
+  position: absolute;
+  right: -0.75rem;
+  top: -0.75rem;
+  transform: rotate(5deg);
+  width: 2.25rem;
+  z-index: 4;
+}
+
+.cartoon-photo-close:hover,
+.cartoon-photo-close:focus-visible {
+  background: #dff3fa;
+  outline: none;
+  transform: rotate(-5deg) scale(1.06);
+}
+
+html[data-theme="dark"].cartoon-mode .cartoon-photo-open {
+  color: #82d0e8;
+  text-shadow: 2px 3px 0 rgba(43, 94, 114, 0.74);
+}
+
+@keyframes postcard-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(1.8rem) rotate(-4deg) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(-1.2deg) scale(1);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .cartoon-photo-easter-egg {
+    margin-bottom: 2.5rem;
+  }
+
+  .cartoon-photo-postcard {
+    box-shadow: 6px 8px 0 rgba(112, 186, 215, 0.74), 0 1rem 2rem rgba(8, 29, 40, 0.28);
+    padding: 0.5rem 0.5rem 0.68rem;
+  }
+
+  .cartoon-photo-postcard img {
+    height: min(67vh, 31rem);
+  }
+
+  .cartoon-photo-postcard p {
+    font-size: 0.9rem;
+    margin-top: 0.58rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cartoon-photo-dialog[open] .cartoon-photo-postcard {
+    animation: none;
+  }
+}
+
 html[data-theme="dark"] .inkmind-logo {
   filter: invert(1);
 }

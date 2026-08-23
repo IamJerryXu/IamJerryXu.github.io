@@ -36,7 +36,7 @@
   <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/custom.css?v=20260823-nav-controls-44">
+  <link rel="stylesheet" href="assets/css/custom.css?v=20260823-cartoon-postcard-45">
   <link rel="canonical" href="https://jerrysnow.me/">
   <script src="assets/js/theme.js"></script>
   <link defer rel="stylesheet" href="assets/css/jekyll-pygments-themes-native.css" media="none" id="highlight_theme_dark">
@@ -367,6 +367,18 @@
 </li>
         </ol>
       </div>
+      <section class="cartoon-photo-easter-egg" aria-label="Cartoon mode easter egg">
+        <button class="cartoon-photo-open" id="cartoon-photo-open" type="button" aria-label="Open the hidden beach postcard" title="A little summer in the Snowhouse">
+          <i class="fa-solid fa-snowflake" aria-hidden="true"></i>
+        </button>
+      </section>
+      <dialog class="cartoon-photo-dialog" id="cartoon-photo-dialog" aria-labelledby="cartoon-photo-caption">
+        <div class="cartoon-photo-postcard">
+          <button class="cartoon-photo-close" id="cartoon-photo-close" type="button" aria-label="Close the beach postcard" title="Close"><span aria-hidden="true">×</span></button>
+          <img src="assets/img/jerry-beach-easter-egg.jpg" alt="Jerry at the seaside" loading="lazy">
+          <p id="cartoon-photo-caption" data-i18n="cartoon_photo_caption">A little piece of summer, hidden in the Snowhouse.</p>
+        </div>
+      </dialog>
     </article>
   </div>
 </div>
@@ -432,6 +444,7 @@
         internship_focus: "Especially interested in multimodal foundation models for video understanding, generation, and world modeling.",
         wechat_title: "Connect on WeChat",
         wechat_hint: "Scan the code to add Jerry on WeChat.",
+        cartoon_photo_caption: "A little piece of summer, hidden in the Snowhouse.",
         posreasoner_venue: "Preprint",
         posreasoner_desc: "A plug-and-play framework that reasons over persistent object states to preserve identities through occlusion, reappearance, and interactions between similar instances in long-term video segmentation.",
         posreasoner_annotation: "* Equal contribution; &dagger; Corresponding author",
@@ -483,6 +496,7 @@
         internship_focus: "尤其热衷于探索面向视频理解与生成及世界模型的多模态基础模型。",
         wechat_title: "添加微信",
         wechat_hint: "扫描二维码，添加 Jerry 为好友。",
+        cartoon_photo_caption: "Snowhouse 里藏着一小块夏天。",
         posreasoner_venue: "预印本",
         posreasoner_desc: "一个面向长期视频分割的即插即用框架，通过持久对象状态推理，在遮挡、重现及相似实例交互中保持身份一致性。",
         posreasoner_annotation: "* 共同一作；&dagger; 通讯作者",
@@ -624,6 +638,10 @@
       root.classList.add("avatar-morphing", "page-morphing");
       addStyleVeil(enabled, trigger);
       root.classList.toggle("cartoon-mode", enabled);
+      if (!enabled) {
+        var photoDialog = document.getElementById("cartoon-photo-dialog");
+        if (photoDialog && photoDialog.open && typeof photoDialog.close === "function") photoDialog.close();
+      }
       if (enabled) {
         spawnCartoonDecorations();
       } else {
@@ -651,6 +669,26 @@
           setCartoonMode(!root.classList.contains("cartoon-mode"), avatar);
         }
       });
+
+      var photoDialog = document.getElementById("cartoon-photo-dialog");
+      var photoOpen = document.getElementById("cartoon-photo-open");
+      var photoClose = document.getElementById("cartoon-photo-close");
+      if (photoDialog && photoOpen && photoClose) {
+        photoOpen.addEventListener("click", function () {
+          if (!root.classList.contains("cartoon-mode")) return;
+          if (typeof photoDialog.showModal === "function") photoDialog.showModal();
+          else photoDialog.setAttribute("open", "");
+        });
+        photoClose.addEventListener("click", function () {
+          if (typeof photoDialog.close === "function") photoDialog.close();
+          else photoDialog.removeAttribute("open");
+        });
+        photoDialog.addEventListener("click", function (event) {
+          if (event.target !== photoDialog) return;
+          if (typeof photoDialog.close === "function") photoDialog.close();
+          else photoDialog.removeAttribute("open");
+        });
+      }
     });
   })();
 </script>
