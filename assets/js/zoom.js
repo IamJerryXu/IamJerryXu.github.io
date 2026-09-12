@@ -1,14 +1,14 @@
 $(document).ready(function () {
   var style = document.createElement("style");
   style.textContent = [
-    ".figure-viewer{padding:8px;margin:auto;width:max-content;max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);overflow:auto;border:2px solid var(--global-theme-color);border-radius:8px;background:var(--global-bg-color);color:var(--global-text-color);box-shadow:0 12px 48px #0005}",
+    ".figure-viewer{padding:8px;margin:auto;width:max-content;max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);overflow:auto;border:3px solid var(--global-theme-color);border-radius:8px;background:var(--global-bg-color);color:var(--global-text-color);box-shadow:0 12px 48px #0005}",
     ".figure-viewer::backdrop{background:rgba(15,25,30,.65);backdrop-filter:blur(5px)}",
     ".figure-viewer[open]{animation:figure-appear .2s ease-out}",
-    ".figure-viewer-bar{display:flex;align-items:center;gap:8px;height:44px;padding:0 0 6px}",
+    ".figure-viewer-bar{display:flex;align-items:center;gap:8px;height:48px;padding:0 0 6px;border-bottom:1px solid var(--global-theme-color);margin-bottom:8px}",
     ".figure-viewer-title{font-size:16px;font-weight:500;color:var(--global-theme-color);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:calc(100vw - 150px)}",
-    ".figure-viewer-action{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;flex:0 0 38px;padding:0;border:1px solid transparent;border-radius:4px;background:transparent;color:var(--global-theme-color);font-size:20px;cursor:pointer}",
+    ".figure-viewer-action{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;flex:0 0 38px;padding:0;border:1px solid currentColor;border-radius:4px;background:var(--global-bg-color);color:var(--global-theme-color);font-size:26px;font-family:Arial,sans-serif;line-height:1;cursor:pointer}",
     ".figure-viewer-action:hover,.figure-viewer-action:focus-visible{border-color:currentColor;background:var(--global-code-bg-color);outline:2px solid transparent;text-decoration:none}",
-    ".figure-viewer-image{display:block;width:auto;height:auto;max-width:calc(100vw - 52px);max-height:calc(100dvh - 96px);object-fit:contain;margin:auto;background:white;border-radius:3px}",
+    ".figure-viewer-image{display:block;width:auto;height:auto;max-width:calc(100vw - 52px);max-height:calc(100dvh - 114px);object-fit:contain;margin:auto;background:white;border-radius:3px}",
     ".cartoon-mode .figure-viewer{border-style:dashed;box-shadow:5px 5px 0 var(--global-theme-color)}",
     "[data-zoomable]{cursor:zoom-in}",
     "@keyframes figure-appear{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}",
@@ -19,7 +19,7 @@ $(document).ready(function () {
   var dialog = document.createElement("dialog");
   dialog.className = "figure-viewer";
   dialog.setAttribute("aria-labelledby", "figure-viewer-title");
-  dialog.innerHTML = '<div class="figure-viewer-bar"><span class="figure-viewer-title" id="figure-viewer-title"></span><a class="figure-viewer-action figure-viewer-original" target="_blank" rel="noopener"><i class="fa-solid fa-up-right-and-down-left-from-center" aria-hidden="true"></i></a><button type="button" class="figure-viewer-action figure-viewer-close" autofocus><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><img class="figure-viewer-image">';
+  dialog.innerHTML = '<div class="figure-viewer-bar"><span class="figure-viewer-title" id="figure-viewer-title"></span><a class="figure-viewer-action figure-viewer-original" target="_blank" rel="noopener"><span aria-hidden="true">&#8599;</span></a><button type="button" class="figure-viewer-action figure-viewer-close" autofocus><span aria-hidden="true">&times;</span></button></div><img class="figure-viewer-image">';
   document.body.appendChild(dialog);
   var picture = dialog.querySelector("img");
   var title = dialog.querySelector(".figure-viewer-title");
