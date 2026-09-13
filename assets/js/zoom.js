@@ -27,6 +27,7 @@ $(document).ready(function () {
   var original = dialog.querySelector("a");
   var opener;
   var previousOverflow;
+  var imageRequest = 0;
   close.addEventListener("click", function () { dialog.close(); });
   var backdropDown = false;
   function outside(event) {
@@ -36,6 +37,7 @@ $(document).ready(function () {
   dialog.addEventListener("pointerdown", function (event) { backdropDown = outside(event); });
   dialog.addEventListener("click", function (event) { if (backdropDown && outside(event)) dialog.close(); });
   dialog.addEventListener("close", function () {
+    imageRequest++;
     document.body.style.overflow = previousOverflow;
     if (opener) opener.focus({ preventScroll: true });
   });
@@ -53,10 +55,28 @@ $(document).ready(function () {
       original.title = chinese ? "查看原图" : "Open full-size image";
       original.setAttribute("aria-label", original.title);
       title.textContent = thumbnail.alt;
-      picture.alt = thumbnail.alt;
-      picture.onerror = function () { picture.onerror = null; picture.src = thumbnail.currentSrc || thumbnail.src; };
-      picture.src = thumbnail.dataset.zoomSrc || thumbnail.currentSrc || thumbnail.src;
-      original.href = picture.src;
+      var request = ++imageRequest;
+      var preview = new Image();
+      preview.className = "figure-viewer-image";
+      preview.alt = thumbnail.alt;
+      preview.src = thumbnail.currentSrc || thumbnail.src;
+      var fullSource = thumbnail.dataset.zoomSrc || preview.src;
+      // A fresh element cannot retain the previous figure while loading.
+      picture.replaceWith(preview);
+      picture = preview;
+      original.href = fullSource;
+      if (fullSource !== preview.src) {
+        var full = new Image();
+        full.className = preview.className;
+        full.alt = preview.alt;
+        full.onload = async function () {
+          try { await full.decode(); } catch (_) { return; }
+          if (request !== imageRequest || !dialog.open) return;
+          picture.replaceWith(full);
+          picture = full;
+        };
+        full.src = fullSource;
+      }
       previousOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
       dialog.showModal();
