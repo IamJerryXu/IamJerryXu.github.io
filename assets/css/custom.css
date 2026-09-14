@@ -1,5 +1,21 @@
 @font-face {
   font-display: swap;
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/assets/fonts/lora-500.ttf") format("truetype");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Lora";
+  font-style: italic;
+  font-weight: 400;
+  src: url("/assets/fonts/lora-400-italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-display: swap;
   font-family: "Jerry Birthday";
   font-style: normal;
   font-weight: 400;
@@ -524,22 +540,24 @@ html[data-theme="dark"] .contact-row a {
 
 .name-title {
   align-items: baseline;
-  column-gap: 0.3rem;
+  column-gap: 0.65rem;
   display: flex;
-  font-family: "Jerry Birthday", "LXGW WenKai TC", "Comic Neue", cursive;
-  font-weight: 400;
+  font-family: "Lora", "LXGW WenKai TC", Georgia, serif;
+  font-size: 42px;
+  font-weight: 500;
   flex-wrap: wrap;
   letter-spacing: 0;
-  line-height: 1.08;
+  line-height: 1.3;
   margin-bottom: 0.52rem;
   row-gap: 0.08rem;
 }
 
 .name-title .jerry-nickname {
   color: inherit;
-  font-size: 1em;
-  font-weight: inherit;
-  opacity: 1;
+  font-size: 0.64em;
+  font-style: italic;
+  font-weight: 400;
+  opacity: 0.8;
 }
 
 .identity-snow {
@@ -755,7 +773,7 @@ html.mac-platform[lang="en"] .news-birthday {
   }
 
   .name-title .jerry-nickname {
-    font-size: 1em;
+    font-size: 0.64em;
   }
 
   .identity-snow {
