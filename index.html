@@ -190,11 +190,15 @@
         <h2 id="news-heading" class="news-heading"><img class="section-heading-icon news-fire" src="assets/img/news-fire.svg" alt="" aria-hidden="true"><span data-i18n="news_title">News</span></h2>
         <ol class="news-list">
           <li class="news-item">
+            <time class="news-date" datetime="2026-09-24" data-i18n="news_date_last">Sep 24, 2026</time>
+            <span class="news-text" data-i18n="news_text_last">We release <span class='news-method'>LaST</span>, using fixed-size object memory to preserve geometry and appearance when objects reappear after occlusion or leaving the view in long-video generation.</span>
+          </li>
+          <li class="news-item">
             <time class="news-date" datetime="2026-09-20" data-i18n="news_date_trace">Sep 20, 2026</time>
             <span class="news-text" data-i18n="news_text_trace">We release <span class='news-method'>TRACE</span>, using typed references for conversational humanoid motion editing that changes targeted components while preserving the rest of the motion.</span>
           </li>
           <li class="news-item">
-            <time class="news-date" datetime="2026-08-13" data-i18n="news_date_1">Aug 13, 2026</time>
+            <time class="news-date" datetime="2026-09-12" data-i18n="news_date_1">Sep 12, 2026</time>
             <span class="news-text" data-i18n="news_text_1">We release <span class="news-method">EviGDA</span>, extending graph domain adaptation beyond representation learning by combining complementary experts with entropy-aware evidence fusion.</span>
           </li>
           <li class="news-item">
@@ -218,6 +222,28 @@
       <h2 class="publications-heading"><img class="section-heading-icon publications-books" src="assets/img/publications-books.svg" alt="" aria-hidden="true"><a href="publications/index.html"><span data-i18n="selected_publications">Selected Publications</span></a></h2>
       <div class="publications selected-publications">
         <ol class="bibliography">
+          <li class="publication-item publication-last">
+  <div class="row">
+    <div class="col col-sm-3 abbr">
+      <abbr class="badge rounded w-100">LaST</abbr>
+      <figure><picture>
+        <img src="assets/img/publication_preview/last.png" data-zoom-src="assets/img/publication_preview/last.png" class="preview z-depth-1 rounded" width="100%" height="auto" alt="LaST: learning persistent object memory from future observations and guiding video generation" data-zoomable loading="eager">
+      </picture></figure>
+    </div>
+    <div id="last" class="col-sm-9">
+      <div class="title">LaST: Latent State Tracking for Persistent Object Memory in Video World Models</div>
+      <div class="author"><em>Yongxue Xu</em> and Harry Yang<sup>&dagger;</sup> <i class="fa-solid fa-circle-info ml-1" data-toggle="popover" data-placement="top" data-html="true" data-i18n-content="last_annotation" data-content="&dagger; Corresponding author"> </i></div>
+      <div class="periodical"><em data-i18n="last_status">Submitted to ICLR 2027</em></div>
+      <div class="links"><a class="bibtex btn btn-sm z-depth-0" role="button">Bib</a></div>
+      <div class="bibtex hidden"><figure class="highlight"><pre><code class="language-bibtex" data-lang="bibtex">@misc{xu2026last,
+  title={LaST: Latent State Tracking for Persistent Object Memory in Video World Models},
+  author={Xu, Yongxue and Yang, Harry},
+  year={2026},
+  note={Submitted to ICLR 2027. Corresponding author: Harry Yang}
+}</code></pre></figure></div>
+    </div>
+  </div>
+</li>
           <li class="publication-item publication-trace">
   <div class="row">
     <div class="col col-sm-3 abbr">
@@ -449,9 +475,11 @@
         nav_publications: "Publications",
         selected_publications: "Selected Publications",
         news_title: "News",
+        news_date_last: "Sep 24, 2026",
+        news_text_last: "We release <span class='news-method'>LaST</span>, using fixed-size object memory to preserve geometry and appearance when objects reappear after occlusion or leaving the view in long-video generation.",
         news_date_trace: "Sep 20, 2026",
         news_text_trace: "We release <span class='news-method'>TRACE</span>, using typed references for conversational humanoid motion editing that changes targeted components while preserving the rest of the motion.",
-        news_date_1: "Aug 13, 2026",
+        news_date_1: "Sep 12, 2026",
         news_text_1: "We release <span class='news-method'>EviGDA</span>, extending graph domain adaptation beyond representation learning by combining complementary experts with entropy-aware evidence fusion.",
         news_date_2: "Jul 30, 2026",
         news_text_2: "We release <span class='news-method'>POSReasoner</span>, reasoning over persistent object states to preserve identities through occlusion, reappearance, and similar-instance interactions.",
@@ -479,6 +507,9 @@
         posreasoner_venue: "Submitted to AAAI 2027",
         posreasoner_desc: "A plug-and-play framework that reasons over persistent object states to preserve identities through occlusion, reappearance, and interactions between similar instances in long-term video segmentation.",
         posreasoner_annotation: "* Equal contribution; &dagger; Corresponding author",
+        last_status: "Submitted to ICLR 2027",
+        last_desc: "A fixed-size scene and object memory for long-video generation that preserves geometry and appearance when objects reappear after occlusion or leaving the view, guiding a frozen generator without caching the full history.",
+        last_annotation: "&dagger; Corresponding author",
         trace_status: "Submitted to ICLR 2027",
         trace_desc: "A conversational framework for editing humanoid motion with typed references, enabling instructions such as “jump higher” to change targeted motion components while preserving the rest of the reference motion.",
         trace_annotation: "* Equal contribution: Zejian Kang, Yifu Luo, and Boyang Shen",
@@ -504,9 +535,11 @@
         nav_publications: "论文",
         selected_publications: "代表论文",
         news_title: "动态",
+        news_date_last: "2026 年 9 月 24 日",
+        news_text_last: "我们发布了 <span class='news-method'>LaST</span>，通过固定大小的对象记忆，在长视频生成中保持对象遮挡或离开视野后重现时的几何与外观一致性。",
         news_date_trace: "2026 年 9 月 20 日",
         news_text_trace: "我们发布了 <span class='news-method'>TRACE</span>，通过类型化参照进行对话式人形动作编辑，修改目标动作部分并保留其余动作。",
-        news_date_1: "2026 年 8 月 13 日",
+        news_date_1: "2026 年 9 月 12 日",
         news_text_1: "我们发布了 <span class='news-method'>EviGDA</span>，通过图结构专家与特征专家、熵感知对齐和训练后证据融合，将图领域适应延伸到预测层面。",
         news_date_2: "2026 年 7 月 30 日",
         news_text_2: "我们发布了 <span class='news-method'>POSReasoner</span>，通过持久对象状态推理，在遮挡、重现和相似实例交互中保持身份一致性。",
@@ -534,6 +567,9 @@
         posreasoner_venue: "已投稿 AAAI 2027",
         posreasoner_desc: "一个面向长期视频分割的即插即用框架，通过持久对象状态推理，在遮挡、重现及相似实例交互中保持身份一致性。",
         posreasoner_annotation: "* 共同一作；&dagger; 通讯作者",
+        last_status: "已投稿 ICLR 2027",
+        last_desc: "面向长视频生成，以固定大小的场景与对象记忆保存几何和外观，使对象在遮挡或离开视野后重现时保持一致，并在无需缓存完整历史的情况下引导冻结的生成模型。",
+        last_annotation: "&dagger; 通讯作者",
         trace_status: "已投稿 ICLR 2027",
         trace_desc: "面向人形动作的对话式编辑框架，通过类型化参照理解“跳得更高”等指令，修改目标动作部分，同时保留参考动作中的其他内容。",
         trace_annotation: "* 共同一作：Zejian Kang、Yifu Luo 和 Boyang Shen",
