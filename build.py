@@ -64,7 +64,7 @@ body=f'''<!doctype html>
 <li><a href="cv/zh/" target="_blank" rel="noopener" lang="zh-CN">{icon('cv')}中文简历</a></li>
 <li><button id="wechat-open" type="button" aria-haspopup="dialog" aria-controls="wechat-dialog"><img class="contact-icon" src="assets/wechat.svg" alt="" aria-hidden="true">{tr('WeChat','微信')}</button></li>
 <li><a href="https://xhslink.cn/o/60IapESrKEh" target="_blank" rel="noopener noreferrer"><img class="contact-icon" src="assets/rednote.svg" alt="" aria-hidden="true">{tr('Rednote','小红书')}</a></li>
-</ul></div></div></aside>
+</ul><a class="profile-inkmind" href="https://inkmind-ai.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit InkMind.AI"><img src="assets/inkmind-logo.webp" alt="InkMind.AI" width="720" height="109"></a></div></div></aside>
 <main class="page" id="content"><div class="page__inner-wrap"><div class="page__content">
 <section id="about" aria-label="About Me"><p>{' '.join(tr(x[0],x[1]) for x in D['bio'])} {tr('I welcome research collaborations and internship opportunities in multimodal foundation models. Feel free to <a href="mailto:jiangjiangcheng753@gmail.com">contact me</a>.','欢迎多模态基础模型方向的科研合作与实习交流，欢迎通过<a href="mailto:jiangjiangcheng753@gmail.com">邮件联系我</a>。')}</p></section>
 <section id="news"><h2>🔥 {tr('News','动态')}</h2><ul class="news-list">{''.join(news(n) for n in D['news'])}</ul></section>

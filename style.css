@@ -50,12 +50,12 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
   .sidebar .research-interests{width:100%;line-height:1.5}
 }
 
-/* A little breathing room between profile sections, without stretching the sidebar. */
+/* Reserve space for InkMind while keeping the profile compact. */
 @media(min-width:925px){
-  .sidebar{--profile-space:clamp(0px,calc((100dvh - 650px)*.12),12px)}
-  .sidebar .author__name{margin-top:calc(10px + var(--profile-space))}
-  .sidebar .author__bio{margin-bottom:calc(12px + var(--profile-space))}
-  .sidebar .research-interests{margin-bottom:calc(18px + var(--profile-space))}
+  .sidebar{padding-top:0;--profile-space:clamp(0px,calc((100dvh - 650px)*.03),3px)}
+  .sidebar .author__name{margin-top:calc(8px + var(--profile-space))}
+  .sidebar .author__bio{margin-bottom:calc(10px + var(--profile-space))}
+  .sidebar .research-interests{margin-bottom:calc(14px + var(--profile-space))}
 }
 #evigda .figure-button img{box-sizing:border-box;padding:6px;background:#fff}
 
@@ -92,3 +92,9 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 @media(hover:hover){.portrait-toggle:hover .portrait-sparkle{opacity:1;transform:rotate(0) scale(1.08)}}
 @media(max-width:540px){.portrait-sparkle{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.author__avatar .portrait-frame img,.portrait-sparkle{transition:none}}
+
+/* The original InkMind wordmark sits below the contact links. */
+.profile-inkmind{display:block;width:160px;max-width:100%;margin:16px 0 0;padding:4px 0;line-height:0}
+.profile-inkmind img{display:block;width:100%;height:auto}
+.profile-inkmind:hover{opacity:.75}
+@media(max-width:924px){.profile-inkmind{width:145px;margin-top:14px}}
