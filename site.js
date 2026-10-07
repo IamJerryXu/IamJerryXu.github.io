@@ -102,3 +102,27 @@ wechatDialog.addEventListener('click', event => {
   if (event.target === wechatDialog && (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom)) wechatDialog.close();
 });
 wechatDialog.addEventListener('close', () => wechatButton.focus({preventScroll:true}));
+
+const portraitToggle = document.querySelector('.portrait-toggle');
+if (portraitToggle) {
+  let pinned = false;
+  let preview = false;
+  const renderPortrait = () => {
+    portraitToggle.classList.toggle('is-memoji', pinned || preview);
+    portraitToggle.setAttribute('aria-pressed', String(pinned));
+  };
+  portraitToggle.addEventListener('pointerenter', event => {
+    if (event.pointerType !== 'mouse' || !matchMedia('(hover: hover)').matches) return;
+    preview = true;
+    renderPortrait();
+  });
+  portraitToggle.addEventListener('pointerleave', () => {
+    preview = false;
+    renderPortrait();
+  });
+  portraitToggle.addEventListener('click', () => {
+    pinned = !pinned;
+    preview = false;
+    renderPortrait();
+  });
+}
