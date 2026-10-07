@@ -82,6 +82,7 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 .portrait-toggle{position:relative;display:block;appearance:none;padding:0;border:0;border-radius:50%;background:transparent;line-height:0;isolation:isolate;touch-action:manipulation}
 .author__avatar .portrait-frame{display:block;position:relative}
 .author__avatar .portrait-frame img{position:absolute;inset:0;transition:opacity 260ms ease}
+.author__avatar .portrait-frame img.portrait--photo{transform:translateY(9%)}
 .author__avatar .portrait-frame img.portrait--memoji{transform:none;object-fit:cover;object-position:center center;opacity:0}
 .portrait-toggle.is-memoji .portrait--photo{opacity:0}
 .author__avatar .portrait-toggle.is-memoji img.portrait--memoji{opacity:1}
