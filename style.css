@@ -82,9 +82,11 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 .portrait-toggle{position:relative;display:block;appearance:none;padding:0;border:0;border-radius:50%;background:transparent;line-height:0;isolation:isolate;touch-action:manipulation}
 .author__avatar .portrait-frame{display:block;position:relative}
 .author__avatar .portrait-frame img{position:absolute;inset:0;transition:opacity 260ms ease}
-.author__avatar .portrait-frame img.portrait--photo{object-fit:contain;object-position:center bottom;transform:translateY(1px) scale(.84);transform-origin:center bottom}
+/* Keep the original photo intact; generated fabric is confined to the bottom edge. */
+.author__avatar .portrait-frame img.portrait--photo{inset:auto auto 5% 10%;width:80%;height:auto;object-fit:contain;transform:none}
+.author__avatar .portrait-frame img.portrait--extension{inset:92% auto auto 10%;width:80%;height:auto;transform:none;mask-image:linear-gradient(to bottom,transparent,#000 18%);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 18%)}
 .author__avatar .portrait-frame img.portrait--memoji{transform:none;object-fit:cover;object-position:center center;opacity:0}
-.portrait-toggle.is-memoji .portrait--photo{opacity:0}
+.portrait-toggle.is-memoji .portrait--photo,.portrait-toggle.is-memoji .portrait--extension{opacity:0}
 .author__avatar .portrait-toggle.is-memoji img.portrait--memoji{opacity:1}
 .portrait-sparkle{position:absolute;top:0;right:0;z-index:1;font-size:23px;line-height:1;pointer-events:none;opacity:.8;transform:rotate(8deg) scale(.9);text-shadow:0 1px 3px #fff;transition:transform 260ms ease,opacity 260ms ease}
 .portrait-toggle.is-memoji .portrait-sparkle{opacity:1;transform:rotate(0) scale(1.12)}
