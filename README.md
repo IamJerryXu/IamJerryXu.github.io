@@ -1,21 +1,8 @@
-# Yongxue Xu Academic Website
+# Yongxue Xu — Homepage
 
-This is a static GitHub Pages-ready academic website using the same public al-folio structure and visual style as NoRealBlank/norealblank.github.io, with Yongxue Xu's own content and files.
+Primary homepage: https://jerrysnow.me/
+Previous design: https://jerrysnow.me/academic-homepage/
 
-## Publish
+Edit `content.json` and run `python3 build.py` before publishing. Appearance and interactions live in `style.css` and `site.js`; images and CVs live in `assets/`.
 
-1. Create a repository named `IamJerryXu.github.io`.
-2. Upload the contents of this folder to the repository root.
-3. Open `https://IamJerryXu.github.io/`.
-
-The site is static. It does not require a Jekyll build step.
-
-## Local preview
-
-Open this folder through a local server instead of opening the HTML file directly:
-
-```bash
-python3 -m http.server 8026 --directory .
-```
-
-Then visit `http://127.0.0.1:8026/`.
+GitHub Pages publishes the root of `main`. Keep `CNAME` set to `jerrysnow.me`.

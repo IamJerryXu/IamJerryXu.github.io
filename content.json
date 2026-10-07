@@ -1,0 +1,193 @@
+{
+  "bio": [
+    [
+      "I am an undergraduate student at <a href=\"https://www.sysu.edu.cn/\" target=\"_blank\" rel=\"noopener\">Sun Yat-sen University</a>, majoring in Intelligent Science and Technology. My research focuses on <strong>video generation, world models, and multimodal spatiotemporal understanding</strong>.",
+      "我是<a href=\"https://www.sysu.edu.cn/\" target=\"_blank\" rel=\"noopener\">中山大学</a>智能科学与技术专业本科生，研究兴趣主要集中在<strong>视频生成、世界模型与多模态时空理解</strong>。"
+    ],
+    [
+      "My research began with graph learning and has grown toward video and 4D scenes. I am particularly interested in how models represent objects, maintain their states over time, and use generation to understand and interact with the world.",
+      "我的研究从图学习出发，逐渐延伸到视频与 4D 场景。我关注模型如何表示对象、持续维护对象状态，以及如何通过生成来理解世界并与之交互。"
+    ],
+    [
+      "I collaborate with researchers at <strong>HKUST, Shanghai Jiao Tong University, and Westlake University</strong> on video generation and world-action modeling. I am also part of <strong>InkMind.AI</strong>, where we explore multimodal understanding and generation, along with tools and workflows for AI-assisted research.",
+      "目前，我与<strong>香港科技大学、上海交通大学和西湖大学</strong>的研究者合作，开展视频生成与世界-动作模型研究。我也是 <strong>InkMind.AI</strong> 的一员，与伙伴们共同探索多模态理解与生成，以及 AI 辅助科研工具与工作流。"
+    ]
+  ],
+  "news": [
+    [
+      "2026-09-24",
+      "We release <a href=\"#last\">LaST</a>, preserving object geometry and appearance across occlusion and reappearance in long-video generation.",
+      "我们发布了 <a href=\"#last\">LaST</a>，在长视频生成中保持对象遮挡或离开视野后重现时的几何与外观一致性。"
+    ],
+    [
+      "2026-09-20",
+      "We release <a href=\"#trace\">TRACE</a> for conversational humanoid motion editing with typed references.",
+      "我们发布了 <a href=\"#trace\">TRACE</a>，通过类型化参照实现对话式人形动作编辑。"
+    ],
+    [
+      "2026-09-12",
+      "We release <a href=\"#evigda\">EviGDA</a>, exploring complementary evidence beyond representation learning for graph domain adaptation.",
+      "我们发布了 <a href=\"#evigda\">EviGDA</a>，通过互补证据融合，将图领域适应延伸到表示学习之外。"
+    ],
+    [
+      "2026-09-09",
+      "We release <a href=\"https://github.com/IamJerryXu/AstraDraw\" target=\"_blank\" rel=\"noopener noreferrer\">AstraDraw</a> for editable research figures with GPT-6 Astra—<strong>nearly 150 GitHub stars</strong> 🎉🎉!",
+      "我们发布了 <a href=\"https://github.com/IamJerryXu/AstraDraw\" target=\"_blank\" rel=\"noopener noreferrer\">AstraDraw</a>，面向 GPT-6 Astra 的可编辑科研绘图工作流，已收获<strong>近 150 GitHub stars</strong> 🎉🎉！"
+    ],
+    [
+      "2026-07-30",
+      "We release <a href=\"#posreasoner\">POSReasoner</a> for persistent object-state reasoning in video instance segmentation.",
+      "我们发布了 <a href=\"#posreasoner\">POSReasoner</a>，通过持久对象状态推理改善视频实例分割中的身份保持。"
+    ],
+    [
+      "2026-06-25",
+      "We release <a href=\"#influence\">DRCIM-ML</a> for robust competitive influence maximization in multilayer networks.",
+      "我们发布了 <a href=\"#influence\">DRCIM-ML</a>，研究多层网络中的鲁棒竞争影响力最大化。"
+    ],
+    [
+      "2026-05-05",
+      "We release <a href=\"#track4d\">LMM-Track4D</a> for 4D dynamic reasoning through trajectory-grounded dialogue.",
+      "我们发布了 <a href=\"#track4d\">LMM-Track4D</a>，通过轨迹对话实现 4D 动态推理。"
+    ],
+    [
+      "2025-11-04",
+      "Our work on <a href=\"#road\">critical-node identification</a> receives the <strong>GBCESC 2025 Best Paper Award</strong>.",
+      "我们的<a href=\"#road\">关键节点识别</a>研究获得 <strong>GBCESC 2025 最佳论文奖</strong>。"
+    ]
+  ],
+  "papers": [
+    {
+      "id": "last",
+      "short": "LaST",
+      "title": "LaST: Latent State Tracking for Persistent Object Memory in Video World Models",
+      "authors": "<strong>Yongxue Xu</strong> and Harry Yang<sup>&dagger;</sup>",
+      "bib": "@misc{xu2026last,\n  title={LaST: Latent State Tracking for Persistent Object Memory in Video World Models},\n  author={Xu, Yongxue and Yang, Harry},\n  year={2026},\n  note={Submitted to ICLR 2027. Corresponding author: Harry Yang}\n}",
+      "links": [],
+      "image": "last-demo.png",
+      "venue": "Submitted to ICLR 2027",
+      "venue_zh": "已投稿 ICLR 2027"
+    },
+    {
+      "id": "trace",
+      "short": "TRACE",
+      "title": "TRACE: Typed Reference-Aware Conversational Editing for Humanoid Motion Diffusion",
+      "authors": "Zejian Kang<sup>*</sup>, Yifu Luo<sup>*</sup>, Boyang Shen<sup>*</sup>, Jingxuan Li, Zekai Chen, Shi Zekun, <strong>Yongxue Xu</strong>, Zhenyu Hou, Bingqian Wu, Shaolei Zhang, Wentao Yang, and Xiangru Huang",
+      "bib": "@misc{kang2026trace,\n  title={TRACE: Typed Reference-Aware Conversational Editing for Humanoid Motion Diffusion},\n  author={Kang, Zejian and Luo, Yifu and Shen, Boyang and Li, Jingxuan and Chen, Zekai and {Shi Zekun} and Xu, Yongxue and Hou, Zhenyu and Wu, Bingqian and Zhang, Shaolei and Yang, Wentao and Huang, Xiangru},\n  year={2026},\n  note={Submitted to ICLR 2027. Equal contribution: Zejian Kang, Yifu Luo, and Boyang Shen}\n}",
+      "links": [],
+      "image": "trace.png",
+      "venue": "Submitted to ICLR 2027",
+      "venue_zh": "已投稿 ICLR 2027"
+    },
+    {
+      "id": "evigda",
+      "short": "EviGDA",
+      "title": "Graph Domain Adaptation Does Not End with Representation Learning",
+      "authors": "Ziqian Liu<sup>*</sup>, <strong>Yongxue Xu<sup>*</sup></strong>, Enze Zhang, Jiaqi Zhang, Hao Wang, and Maolin Wang<sup>&dagger;</sup>",
+      "bib": "@article{liu2026evigda,\n  title={Graph Domain Adaptation Does Not End with Representation Learning},\n  author={Liu, Ziqian and Xu, Yongxue and Zhang, Enze and Zhang, Jiaqi and Wang, Hao and Wang, Maolin},\n  journal={arXiv preprint arXiv:2609.25692},\n  url={https://arxiv.org/abs/2609.25692},\n  note={Submitted to ICLR 2027. Equal contribution: Ziqian Liu and Yongxue Xu. Corresponding author: Maolin Wang},\n  year={2026}\n}",
+      "links": [
+        [
+          "arXiv",
+          "https://arxiv.org/abs/2609.25692"
+        ]
+      ],
+      "image": "evigda-overview.png",
+      "venue": "Submitted to ICLR 2027",
+      "venue_zh": "已投稿 ICLR 2027"
+    },
+    {
+      "id": "posreasoner",
+      "short": "POSReasoner",
+      "title": "Learning to Reason with Persistent Object States for Video Instance Segmentation",
+      "authors": "<strong>Yongxue Xu<sup>*</sup></strong>, Boxue Yang<sup>*</sup>, Ziqian Liu, Shaoqiu Zhang, Rui Qian, and Haopeng Chen<sup>&dagger;</sup>",
+      "bib": "@article{xu2026posreasoner,\n  title={Learning to Reason with Persistent Object States for Video Instance Segmentation},\n  author={Xu, Yongxue and Yang, Boxue and Liu, Ziqian and Zhang, Shaoqiu and Qian, Rui and Chen, Haopeng},\n  journal={arXiv preprint arXiv:2609.35539},\n  url={https://arxiv.org/abs/2609.35539},\n  note={Submitted to AAAI 2027. Equal contribution: Yongxue Xu and Boxue Yang. Corresponding author: Haopeng Chen},\n  year={2026}\n}",
+      "links": [
+        [
+          "arXiv",
+          "https://arxiv.org/abs/2609.35539"
+        ]
+      ],
+      "image": "posreasoner.png",
+      "venue": "Submitted to AAAI 2027",
+      "venue_zh": "已投稿 AAAI 2027"
+    },
+    {
+      "id": "influence",
+      "short": "DRCIM-ML",
+      "title": "Solving the Robust Influence Maximization Problem in Competitive Multilayer Networks via a Diffusion-Aware Role-Guided Evolutionary Approach",
+      "authors": "<strong>Yongxue Xu</strong>, Ziqian Liu, Yongqing Huang, and Shuai Wang<sup>&dagger;</sup>",
+      "bib": "@article{xu2026influence,\n  title={Solving the Robust Influence Maximization Problem in Competitive Multilayer Networks via a Diffusion-Aware Role-Guided Evolutionary Approach},\n  author={Xu, Yongxue and Liu, Ziqian and Huang, Yongqing and Wang, Shuai},\n  journal={Under review at IEEE Transactions on Network Science and Engineering},\n  note={Corresponding author: Shuai Wang},\n  year={2026}\n}",
+      "links": [],
+      "image": "influence.png",
+      "venue": "IEEE Transactions on Network Science and Engineering · Under review",
+      "venue_zh": "IEEE Transactions on Network Science and Engineering · 审稿中"
+    },
+    {
+      "id": "track4d",
+      "short": "LMM-Track4D",
+      "title": "LMM-Track4D: Eliciting 4D Dynamic Reasoning in LMMs via Trajectory-Grounded Dialogue",
+      "authors": "Chaoyue Li<sup>*</sup>, <strong>Yongxue Xu<sup>*</sup></strong>, Jie Feng<sup>*</sup>, and Jiayu Ding<sup>&dagger;</sup>",
+      "bib": "@article{li2026lmmtrack4d,\n  title={LMM-Track4D: Eliciting 4D Dynamic Reasoning in LMMs via Trajectory-Grounded Dialogue},\n  author={Li, Chaoyue and Xu, Yongxue and Feng, Jie and Ding, Jiayu},\n  journal={arXiv preprint arXiv:2605.19390},\n  note={Equal contribution: Chaoyue Li, Yongxue Xu, and Jie Feng. Corresponding author: Jiayu Ding},\n  year={2026}\n}",
+      "links": [
+        [
+          "arXiv",
+          "https://arxiv.org/abs/2605.19390"
+        ],
+        [
+          "Code",
+          "https://github.com/mikubaka88/LMM-Track4D"
+        ]
+      ],
+      "image": "lmm-track4d-figure1.webp",
+      "venue": "Submitted to NeurIPS 2026",
+      "venue_zh": "已投稿 NeurIPS 2026"
+    },
+    {
+      "id": "road",
+      "short": "Critical-node identification",
+      "title": "Identifying Critical Nodes with Deep Learning and Reinforcement Learning: A Case Study on Urban Road Networks",
+      "authors": "Zhonghan Liu, Wenshuo Liu, <strong>Yongxue Xu</strong>, Ziqian Liu, Yichen Liu, and Shuai Wang<sup>&dagger;</sup>",
+      "bib": "@inproceedings{liu2025criticalnodes,\n  title={Identifying Critical Nodes with Deep Learning and Reinforcement Learning: A Case Study on Urban Road Networks},\n  author={Liu, Zhonghan and Liu, Wenshuo and Xu, Yongxue and Liu, Ziqian and Liu, Yichen and Wang, Shuai},\n  booktitle={GBCESC},\n  note={Best Paper Award. Corresponding author: Shuai Wang},\n  year={2025}\n}",
+      "links": [],
+      "image": "road.png",
+      "venue": "GBCESC 2025",
+      "venue_zh": "GBCESC 2025"
+    }
+  ],
+  "honors": [
+    [
+      "Best Paper Award, GBCESC",
+      "GBCESC 最佳论文奖",
+      "2025"
+    ],
+    [
+      "First-Class Scholarship, Sun Yat-sen University",
+      "中山大学一等奖学金",
+      "2024–2025"
+    ],
+    [
+      "Honorable Mention, Mathematical Contest in Modeling (MCM)",
+      "美国大学生数学建模竞赛（MCM）Honorable Mention",
+      "2025"
+    ],
+    [
+      "Second Prize, National College Student Smart Car Competition, South China",
+      "全国大学生智能汽车竞赛华南赛区二等奖",
+      "2025"
+    ],
+    [
+      "Second Prize, Chinese Mathematics Competitions, Guangdong Division",
+      "全国大学生数学竞赛广东赛区二等奖",
+      "2024"
+    ]
+  ],
+  "internships": [
+    {
+      "period_en": "2026.06 – Present",
+      "period_zh": "2026.06 – 至今",
+      "title_en": "Research Intern, <a href=\"https://sysu-hcp.net/\" target=\"_blank\" rel=\"noopener noreferrer\">HCP Lab</a>, Prof. <a href=\"https://scholar.google.com/citations?user=voxznZAAAAAJ&amp;hl=en\" target=\"_blank\" rel=\"noopener noreferrer\">Xiaodan Liang</a>’s Group",
+      "title_zh": "科研实习生，<a href=\"https://sysu-hcp.net/\" target=\"_blank\" rel=\"noopener noreferrer\">HCP 实验室</a>，<a href=\"https://scholar.google.com/citations?user=voxznZAAAAAJ&amp;hl=en\" target=\"_blank\" rel=\"noopener noreferrer\">梁小丹</a>老师课题组",
+      "description_en": "Research on embodied world-action models (WAMs), with a focus on learning from failures and long-horizon robotic tasks.",
+      "description_zh": "研究具身世界-动作模型（WAM），关注从失败经历中学习与长程机器人任务。"
+    }
+  ]
+}
