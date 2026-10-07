@@ -108,7 +108,8 @@
       ],
       "image": "posreasoner.png",
       "venue": "Submitted to AAAI 2027",
-      "venue_zh": "已投稿 AAAI 2027"
+      "venue_zh": "已投稿 AAAI 2027",
+      "image_full": "img/publication_preview/posreasoner-full.png"
     },
     {
       "id": "influence",
@@ -119,7 +120,8 @@
       "links": [],
       "image": "influence.png",
       "venue": "IEEE Transactions on Network Science and Engineering · Under review",
-      "venue_zh": "IEEE Transactions on Network Science and Engineering · 审稿中"
+      "venue_zh": "IEEE Transactions on Network Science and Engineering · 审稿中",
+      "image_full": "img/publication_preview/influence-full.webp"
     },
     {
       "id": "track4d",
@@ -139,7 +141,8 @@
       ],
       "image": "lmm-track4d-figure1.webp",
       "venue": "Submitted to NeurIPS 2026",
-      "venue_zh": "已投稿 NeurIPS 2026"
+      "venue_zh": "已投稿 NeurIPS 2026",
+      "image_full": "img/publication_preview/lmm-track4d-figure1-full.webp"
     },
     {
       "id": "road",
@@ -150,7 +153,8 @@
       "links": [],
       "image": "road.png",
       "venue": "GBCESC 2025",
-      "venue_zh": "GBCESC 2025"
+      "venue_zh": "GBCESC 2025",
+      "image_full": "img/publication_preview/road-full.webp"
     }
   ],
   "honors": [

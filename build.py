@@ -1,6 +1,6 @@
 """Render a portable, static academic homepage from content.json."""
 from pathlib import Path
-import json,html,hashlib
+import json,html,hashlib,re
 ROOT=Path(__file__).parent
 D=json.loads((ROOT/'content.json').read_text())
 e=html.escape
@@ -18,7 +18,7 @@ def paper(p):
  title=e(p['title'])
  if p['links']:title=f'<a href="{e(p["links"][0][1])}" target="_blank" rel="noopener noreferrer">{title}</a>'
  return f'''<article class="paper" id="{p['id']}">
- <button class="figure-button" type="button" data-figure="assets/{p['image']}" data-caption="{e(p['title'])}" aria-label="Enlarge figure: {e(p['short'])}"><img src="assets/{p['image']}" alt="{e(p['short'])} overview" loading="lazy" width="192" height="132"></button>
+ <button class="figure-button" type="button" data-figure="assets/{p.get('image_full',p['image'])}" data-caption="{e(p['title'])}" aria-label="Enlarge figure: {e(p['short'])}"><img src="assets/{p['image']}" alt="{e(p['short'])} overview" loading="lazy" width="192" height="132"></button>
  <div class="paper-body"><h3>{title}</h3><p class="authors">{p['authors']}</p><p class="venue">{tr(p['venue'],p['venue_zh'])}{('<span class="award"> · '+tr('Best Paper Award','最佳论文奖')+'</span>') if p['id']=='road' else ''}</p>
  <div class="paper-links">{links}<details class="citation"><summary>[BibTeX]</summary><div class="citation-content"><button type="button" class="copy-bib">{tr('Copy citation','复制引用')}</button><pre>{e(p['bib'])}</pre><span class="copy-status" role="status"></span></div></details></div></div></article>'''
 nav=''.join(f'<a href="#{id}">'+tr(en,zh)+'</a>' for id,en,zh in [('about','About','关于'),('news','News','动态'),('publications','Publications','论文'),('education','Education','教育'),('honors','Honors','荣誉')])
@@ -60,8 +60,8 @@ body=f'''<!doctype html>
 <li><a href="https://scholar.google.com/citations?user=8PtwUrkAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar">{icon('scholar')}Scholar</a></li>
 <li><a href="https://github.com/IamJerryXu" target="_blank" rel="noopener">{icon('github')}GitHub</a></li>
 <li><a href="https://www.linkedin.com/in/%E6%B0%B8%E9%9B%AA-%E5%BE%90-6340a4415/" target="_blank" rel="noopener">{icon('linkedin')}LinkedIn</a></li>
-<li><a href="assets/Yongxue_Xu_CV_EN.pdf" target="_blank" rel="noopener">{icon('cv')}CV (EN)</a></li>
-<li><a href="assets/Yongxue_Xu_CV_ZH.pdf" target="_blank" rel="noopener" lang="zh-CN">{icon('cv')}中文简历</a></li>
+<li><a href="cv/en/" target="_blank" rel="noopener">{icon('cv')}CV (EN)</a></li>
+<li><a href="cv/zh/" target="_blank" rel="noopener" lang="zh-CN">{icon('cv')}中文简历</a></li>
 <li><button id="wechat-open" type="button" aria-haspopup="dialog" aria-controls="wechat-dialog"><img class="contact-icon" src="assets/wechat.svg" alt="" aria-hidden="true">{tr('WeChat','微信')}</button></li>
 <li><a href="https://xhslink.cn/o/60IapESrKEh" target="_blank" rel="noopener noreferrer"><img class="contact-icon" src="assets/rednote.svg" alt="" aria-hidden="true">{tr('Rednote','小红书')}</a></li>
 </ul></div></div></aside>
@@ -73,8 +73,22 @@ body=f'''<!doctype html>
 <section id="education"><h2>📖 {tr('Education','教育经历')}</h2><div class="education-row"><div><strong>{tr('Sun Yat-sen University','中山大学')}</strong><p>{tr('B.Eng. in Intelligent Science and Technology (in progress)','智能科学与技术 · 工学学士（在读）')}</p><p>{tr('School of Intelligent Systems Engineering','智能工程学院')}</p></div><span class="date">2023.09 – 2027.06<br><small>{tr('(expected)','（预计）')}</small></span></div></section>
 <section id="internships"><h2>💻 {tr('Internships','实习经历')}</h2><ul class="internship-list">{''.join(internship(n) for n in D['internships'])}</ul></section>
 </div></div></main></div>
-<dialog id="figure-dialog" aria-labelledby="figure-caption"><button class="close-figure" type="button" aria-label="Close figure">×</button><img id="figure-full" alt=""><p id="figure-caption"></p></dialog>
+<dialog id="figure-dialog" aria-labelledby="figure-caption"><button class="close-figure" type="button" aria-label="Close figure">×</button><img id="figure-full" alt=""><p id="figure-caption"></p><p id="figure-status" role="status"></p><a id="figure-original" target="_blank" rel="noopener">{tr("Open full-size image","查看原尺寸图片")}</a></dialog>
 <dialog id="wechat-dialog" aria-labelledby="wechat-title"><button id="wechat-close" type="button" aria-label="Close WeChat QR code">×</button><h2 id="wechat-title">{tr('Connect on WeChat','添加微信')}</h2><img src="assets/wechat-card.webp" alt="Yongxue Xu's WeChat QR code" width="720" height="917"><p>{tr('Scan the QR code to add me on WeChat.','扫描二维码，添加我的微信。')}</p></dialog>
 </body></html>'''
 (ROOT/'index.html').write_text(body)
 print('Rendered index.html with',len(D['papers']),'publications and',len(D['news']),'news entries.')
+
+# Only the current homepage belongs in search results. The ignored archive
+# directory is a separate site's local preview and must never be modified here.
+for page in ROOT.rglob('*.html'):
+ if page == ROOT/'index.html' or page.relative_to(ROOT).parts[0] in {'.git', 'academic-homepage'}:
+  continue
+ source = page.read_text()
+ robots = '<meta name="robots" content="noindex, follow">'
+ pattern = r'<meta\s+[^>]*name=[\"\']robots[\"\'][^>]*>'
+ if re.search(pattern, source, flags=re.I):
+  source = re.sub(pattern, robots, source, flags=re.I)
+ else:
+  source = re.sub(r'</head>', robots + '</head>', source, count=1, flags=re.I)
+ page.write_text(source)

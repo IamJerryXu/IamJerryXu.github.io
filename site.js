@@ -13,21 +13,59 @@ try { rememberedLanguage = localStorage.getItem('academic-language') === 'zh' ? 
 setLanguage(rememberedLanguage);
 languageButton.addEventListener('click', () => setLanguage(document.documentElement.lang === 'en' ? 'zh' : 'en'));
 const dialog = document.querySelector('#figure-dialog');
-const fullFigure = document.querySelector('#figure-full');
+let fullFigure = document.querySelector('#figure-full');
 let lastFigureButton = null;
+let figureRequest = 0;
+const figureStatus = document.querySelector('#figure-status');
+const originalLink = document.querySelector('#figure-original');
 document.querySelectorAll('[data-figure]').forEach(button => button.addEventListener('click', () => {
+  const request = ++figureRequest;
   lastFigureButton = button;
-  fullFigure.src = button.dataset.figure;
-  fullFigure.alt = button.dataset.caption;
+  const thumbnail = button.querySelector('img');
+  // A fresh image node prevents the browser from painting the previous figure
+  // while the newly selected image is still loading.
+  const preview = new Image();
+  preview.id = 'figure-full';
+  preview.alt = button.dataset.caption;
+  preview.src = thumbnail.currentSrc || thumbnail.src;
+  fullFigure.replaceWith(preview);
+  fullFigure = preview;
   document.querySelector('#figure-caption').textContent = button.dataset.caption;
+  originalLink.href = button.dataset.figure;
+  figureStatus.textContent = '';
   dialog.showModal();
+  if (new URL(button.dataset.figure, document.baseURI).href === preview.src) return;
+  figureStatus.textContent = document.documentElement.lang === 'en' ? 'Loading full-size image…' : '正在加载高清图…';
+  const highResolution = new Image();
+  highResolution.src = button.dataset.figure;
+  highResolution.decode().then(() => {
+    if (request !== figureRequest || !dialog.open || fullFigure !== preview) return;
+    highResolution.id = 'figure-full';
+    highResolution.alt = preview.alt;
+    preview.replaceWith(highResolution);
+    fullFigure = highResolution;
+    figureStatus.textContent = '';
+  }).catch(() => {
+    if (request !== figureRequest || !dialog.open) return;
+    figureStatus.textContent = document.documentElement.lang === 'en' ? 'Full-size image could not load. Preview shown.' : '高清图暂时无法加载，当前显示预览图。';
+  });
 }));
-document.querySelector('.close-figure').addEventListener('click', () => dialog.close());
+function closeFigure() {
+  ++figureRequest;
+  dialog.close();
+}
+document.querySelector('.close-figure').addEventListener('click', closeFigure);
 dialog.addEventListener('click', event => {
   const r = dialog.getBoundingClientRect();
-  if (event.target === dialog && (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom)) dialog.close();
+  if (event.target === dialog && (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom)) closeFigure();
 });
-dialog.addEventListener('close', () => lastFigureButton?.focus({preventScroll:true}));
+dialog.addEventListener('cancel', () => { ++figureRequest; });
+dialog.addEventListener('close', () => {
+  if (dialog.open) return;
+  ++figureRequest;
+  figureStatus.textContent = '';
+  lastFigureButton?.focus({preventScroll:true});
+});
 document.querySelectorAll('.copy-bib').forEach(button => button.addEventListener('click', async () => {
   const block = button.closest('.citation-content');
   try {
