@@ -77,3 +77,7 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 #figure-status{font-size:13px;text-align:center;margin:6px 0;color:#72797f}
 #figure-status:empty{display:none}
 #figure-original{display:block;text-align:center;font-size:13px;margin-top:7px;color:#346888}
+
+.author__avatar .portrait-frame img.portrait--memoji{transform:none;object-fit:cover;object-position:center center}
+
+.author__avatar .portrait-frame:has(.portrait--memoji){padding:0}
