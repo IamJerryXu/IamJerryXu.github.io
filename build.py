@@ -33,8 +33,22 @@ def icon(name):
  if name=='pin':
   return '<svg class="contact-icon" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com - Icons licensed CC BY 4.0: https://creativecommons.org/licenses/by/4.0/ --><path d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0z"/></svg>'
  return '<svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+icons[name]+'</svg>'
+SITE_URL = 'https://jerrysnow.me/'
+SITE_TITLE = 'Yongxue Xu - Homepage'
+SITE_DESCRIPTION = 'Yongxue Xu, undergraduate at Sun Yat-sen University. Research in video generation, world models, and multimodal spatiotemporal understanding.'
+SITE_SCHEMA = json.dumps({'@context':'https://schema.org','@type':'WebSite','@id':SITE_URL+'#website','url':SITE_URL,'name':'Yongxue Xu','alternateName':['Yongxue Xu Homepage','徐永雪']}, ensure_ascii=False)
 body=f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Yongxue Xu - Homepage</title><meta name="description" content="Yongxue Xu, undergraduate at Sun Yat-sen University. Research in video generation, world models, and multimodal spatiotemporal understanding."><meta name="theme-color" content="#ffffff"><meta property="og:title" content="Yongxue Xu | 徐永雪"><meta property="og:description" content="Video generation · World models · 4D understanding"><meta property="og:type" content="website"><link rel="icon" href="data:,"><link rel="stylesheet" href="morin-base.css?v={hashlib.sha256((ROOT/'morin-base.css').read_bytes()).hexdigest()[:12]}"><link rel="stylesheet" href="style.css?v={hashlib.sha256((ROOT/'style.css').read_bytes()).hexdigest()[:12]}"><script src="site.js?v={hashlib.sha256((ROOT/'site.js').read_bytes()).hexdigest()[:12]}" defer></script></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{SITE_TITLE}</title>
+<meta name="description" content="{e(SITE_DESCRIPTION,quote=True)}">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="{SITE_URL}">
+<meta property="og:title" content="{SITE_TITLE}">
+<meta property="og:description" content="{e(SITE_DESCRIPTION,quote=True)}">
+<meta property="og:site_name" content="Yongxue Xu">
+<meta property="og:url" content="{SITE_URL}">
+<meta property="og:type" content="website">
+<script type="application/ld+json">{SITE_SCHEMA}</script>
+<link rel="icon" href="data:,"><link rel="stylesheet" href="morin-base.css?v={hashlib.sha256((ROOT/'morin-base.css').read_bytes()).hexdigest()[:12]}"><link rel="stylesheet" href="style.css?v={hashlib.sha256((ROOT/'style.css').read_bytes()).hexdigest()[:12]}"><script src="site.js?v={hashlib.sha256((ROOT/'site.js').read_bytes()).hexdigest()[:12]}" defer></script></head>
 <body><a class="skip-link" href="#content">Skip to content</a>
 <div class="masthead"><div class="masthead__inner-wrap"><nav class="greedy-nav" aria-label="Main navigation"><ul class="visible-links"><li class="masthead__menu-item"><a href="#about">{tr('Homepage','主页')}</a></li>{''.join('<li class="masthead__menu-item"><a href="#'+i+'">'+tr(en,zh)+'</a></li>' for i,en,zh in [('about','About Me','关于我'),('news','News','动态'),('publications','Publications','论文'),('honors','Honors and Awards','荣誉与奖项'),('education','Education','教育经历'),('internships','Internships','实习经历')])}</ul></nav><button id="language" type="button" aria-label="切换到中文">中文</button></div></div>
 <div id="main"><aside class="sidebar sticky" aria-label="Profile"><div class="profile_box"><div class="author__avatar"><div class="portrait-frame"><img class="portrait" src="assets/portrait-cv.png" alt="Yongxue Xu" width="163" height="221" fetchpriority="high"></div></div>
