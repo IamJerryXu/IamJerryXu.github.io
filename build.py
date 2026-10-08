@@ -37,8 +37,15 @@ SITE_URL = 'https://jerrysnow.me/'
 SITE_TITLE = 'Yongxue Xu - Homepage'
 SITE_DESCRIPTION = 'Yongxue Xu, undergraduate at Sun Yat-sen University. Research in video generation, world models, and multimodal spatiotemporal understanding.'
 SITE_SCHEMA = json.dumps({'@context':'https://schema.org','@type':'WebSite','@id':SITE_URL+'#website','url':SITE_URL,'name':'Yongxue Xu','alternateName':['Yongxue Xu Homepage','徐永雪']}, ensure_ascii=False)
+def university_badge(key, name):
+ asset = ROOT / 'assets' / 'universities' / (key + '.svg')
+ if not asset.exists():
+  asset = asset.with_suffix('.png')
+ url = asset.relative_to(ROOT).as_posix()
+ version = hashlib.sha256(asset.read_bytes()).hexdigest()[:12]
+ return f'<span class="portrait-university portrait-university--{key}" title="{name}"><img src="{url}?v={version}" alt="" width="96" height="96"></span>'
 university_badges = ''.join(
- f'<span class="portrait-university portrait-university--{key}" title="{name}"><img src="assets/universities/{key}.png?v={hashlib.sha256((ROOT / "assets" / "universities" / (key + ".png")).read_bytes()).hexdigest()[:12]}" alt="" width="96" height="96"></span>'
+ university_badge(key, name)
  for key, name in [('sjtu','上海交通大学 · Shanghai Jiao Tong University'), ('westlake','西湖大学 · Westlake University'), ('sysu','中山大学 · Sun Yat-sen University'), ('hkust','香港科技大学 · HKUST')]
 )
 body=f'''<!doctype html>
