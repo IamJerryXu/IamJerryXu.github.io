@@ -95,30 +95,46 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 @media(prefers-reduced-motion:reduce){.author__avatar .portrait-frame img,.portrait-sparkle{transition:none}}
 
 /* Keep the original portrait anchor; only the decorative marks extend outward. */
-.author__avatar .portrait-toggle{--badge-left:max(-48px,calc((925px - 100vw)/2 - 15px))}
-@media(min-width:1280px){.author__avatar .portrait-toggle{--badge-left:max(-48px,calc((1280px - 100vw)/2 - 15px))}}
+.author__avatar .portrait-toggle{--badge-left:max(-60px,calc((925px - 100vw)/2 - 11px))}
+@media(min-width:1280px){.author__avatar .portrait-toggle{--badge-left:max(-60px,calc((1280px - 100vw)/2 - 11px))}}
 .portrait-universities{position:absolute;inset:0;pointer-events:none;opacity:0;visibility:hidden;transition:opacity 220ms ease,visibility 220ms ease}
 .portrait-toggle[aria-pressed="true"] .portrait-universities{opacity:1;visibility:visible}
-.portrait-university{position:absolute;display:flex;align-items:center;justify-content:center;width:40px;height:40px;transform:translateY(-50%)}
-.portrait-university--sjtu{left:var(--badge-left);top:28%}
-.portrait-university--westlake{left:var(--badge-left);top:74%}
-.portrait-university--sysu{right:-48px;top:28%}
-.portrait-university--hkust{right:-48px;top:74%;height:50px}
+.portrait-university{position:absolute;display:flex;align-items:center;justify-content:center;width:48px;height:48px;transform:translateY(-50%)}
+.portrait-university--sjtu{left:var(--badge-left);top:28%;--emblem-delay:0ms;--float-duration:4.8s;--float-phase:-.8s}
+.portrait-university--westlake{left:var(--badge-left);top:74%;--emblem-delay:90ms;--float-duration:5.6s;--float-phase:-2.4s}
+.portrait-university--sysu{right:-60px;top:28%;--emblem-delay:45ms;--float-duration:5.2s;--float-phase:-1.6s}
+.portrait-university--hkust{right:-60px;top:74%;height:60px;--emblem-delay:135ms;--float-duration:6s;--float-phase:-3.2s}
 .author__avatar .portrait-university img{display:block;width:100%;height:100%;min-width:0;max-width:none;padding:0;border:0;border-radius:0;background:transparent;object-fit:contain}
+.portrait-toggle[aria-pressed="true"] .portrait-university{animation:emblem-appear 520ms cubic-bezier(.2,.75,.3,1) var(--emblem-delay) both}
+.portrait-toggle[aria-pressed="true"] .portrait-university img{animation:emblem-float var(--float-duration) ease-in-out var(--float-phase) infinite}
+@keyframes emblem-appear{
+  0%{opacity:0;transform:translateY(calc(-50% + 7px)) scale(.72)}
+  70%{opacity:1;transform:translateY(calc(-50% - 1px)) scale(1.04)}
+  100%{opacity:1;transform:translateY(-50%) scale(1)}
+}
+@keyframes emblem-float{
+  0%,100%{transform:translateY(1px) rotate(-1.5deg)}
+  50%{transform:translateY(-3px) rotate(1.5deg)}
+}
+/* When the page is close to the viewport edge, use the oval's empty corners. */
+@media(min-width:925px) and (max-width:1015px),(min-width:1280px) and (max-width:1370px){
+  .portrait-university--sjtu{top:6%;width:40px;height:40px}
+  .portrait-university--westlake{top:86%;width:40px;height:40px}
+}
 @media(max-width:924px){
-  .portrait-university{width:32px;height:34px}
+  .portrait-university{width:36px;height:38px}
   .portrait-university--sjtu{left:-12px;top:7%}
   .portrait-university--westlake{left:-12px;top:93%}
   .portrait-university--sysu{right:-12px;top:7%}
-  .portrait-university--hkust{right:-12px;top:93%;height:46px}
+  .portrait-university--hkust{right:-12px;top:93%;height:50px}
   .portrait-toggle[aria-pressed="true"] .portrait-sparkle{right:37px;top:-10px}
 }
 @media(max-width:540px){
-  .portrait-university{width:28px;height:32px}
-  .portrait-university--hkust{height:42px}
+  .portrait-university{width:32px;height:36px}
+  .portrait-university--hkust{height:46px}
   .portrait-toggle[aria-pressed="true"] .portrait-sparkle{right:33px}
 }
-@media(prefers-reduced-motion:reduce){.portrait-universities{transition:none}}
+@media(prefers-reduced-motion:reduce){.portrait-universities{transition:none}.portrait-university,.portrait-university img{animation:none!important}}
 
 /* The original InkMind wordmark sits below the contact links. */
 .profile-inkmind{display:block;width:160px;max-width:100%;margin:16px 0 0;padding:4px 0;line-height:0}
