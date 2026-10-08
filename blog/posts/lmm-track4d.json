@@ -1,0 +1,125 @@
+{
+  "slug": "lmm-track4d",
+  "title_en": "LMM-Track4D: keeping track of a moving world",
+  "title_zh": "LMM-Track4D：跟上一个不断变化的世界",
+  "summary_en": "What happens when a video question becomes a conversation? Keeping track of the same person takes geometry, motion, and a little memory.",
+  "summary_zh": "当视频问答变成一段连续的对话，模型怎样才能一直跟住同一个人？这需要空间、运动，以及能够延续的状态。",
+  "intro_en": "Imagine watching a basketball clip. You ask which player took the shot, then follow up: “Where did he move next?” That tiny word, “he,” asks quite a lot of a model. It needs to carry a person, a place, and a moment from one answer into the next.",
+  "intro_zh": "想象你正在看一段篮球视频。你问谁刚才投了篮，又接着问：“他后来往哪儿走了？”一个很短的“他”，其实给模型出了道难题：上一轮说的是谁、当时在哪儿、后面发生了什么，都得接得上。",
+  "updated": "2026-10-08",
+  "category_en": "Research notes",
+  "category_zh": "研究笔记",
+  "sections": [
+    {
+      "id": "one-more-question",
+      "title_en": "One more question",
+      "title_zh": "再追问一句",
+      "blocks": [
+        {
+          "type": "p",
+          "en": "That first answer might only need one frame. Now let the player slip behind someone else, or switch to another camera. “He” still means the same person. The model has to carry that connection through the change, even when a fresh look at the image would leave it unsure.",
+          "zh": "回答第一句，也许只需要看清一帧。接下来，让球员走到别人身后，或者把画面切到另一台相机。“他”指的仍然是刚才那个人。即使新的画面单独拿出来不太好认，模型也得把这条联系接住。"
+        },
+        {
+          "type": "p",
+          "en": "This is the problem behind <strong>LMM-Track4D</strong>. The “4D” here means three-dimensional space evolving over time. The project asks how a large multimodal model can answer questions about a moving scene while maintaining a consistent account of the objects in it.",
+          "zh": "<strong>LMM-Track4D</strong> 研究的就是这个问题。这里的“4D”指三维空间随时间发生的变化：当场景一直在动，模型能不能一边回答问题，一边持续记录其中物体的状态？"
+        }
+      ]
+    },
+    {
+      "id": "a-path-to-check",
+      "title_en": "A path we can check",
+      "title_zh": "让回答有一条可核对的路径",
+      "blocks": [
+        {
+          "type": "p",
+          "en": "LMM-Track4D pairs ordinary answers with <strong>structured 3D trajectories</strong> when the question calls for them. A trajectory ties positions to time. Instead of leaving the whole answer inside a sentence, it gives us a path that can be compared with the scene.",
+          "zh": "当问题需要时，LMM-Track4D 会在文字回答之外给出<strong>结构化的三维轨迹</strong>。轨迹把位置和时间对应起来。这样，回答里就有了一条可以与实际场景核对的路径。"
+        },
+        {
+          "type": "p",
+          "en": "That changes what we can ask of the model. “He moved across the court” is easy to read, but leaves plenty unspecified. A sequence of positions lets us examine which target was followed, which part of the clip the answer covers, and whether the movement stays coherent.",
+          "zh": "这也改变了我们检查回答的方式。“他穿过了球场”很容易理解，却省略了不少信息。有了按时间排列的位置，才能进一步看清：跟踪的是哪个目标，回答覆盖了哪一段视频，前后的运动是否连贯。"
+        },
+        {
+          "type": "p",
+          "en": "The task supports an entire short clip or a requested segment of a longer clip. That distinction matters in a conversation: a follow-up can narrow the time window without changing the person we are talking about.",
+          "zh": "任务既支持整段短视频，也支持长视频中指定的一个片段。对连续对话来说，这个区别很实用：追问可以缩小时间范围，却不该把讨论的对象也一起弄丢。"
+        },
+        {
+          "type": "figure",
+          "src": "/assets/img/publication_preview/lmm-track4d-figure1-full.webp",
+          "width": 2400,
+          "height": 1350,
+          "href": "https://github.com/mikubaka88/LMM-Track4D/blob/main/assets/task.png",
+          "alt_en": "LMM-Track4D overview showing geometry encoding, persistent tracking state, trajectory decoding, and examples of multi-turn tracking, occlusion, and identity continuity.",
+          "alt_zh": "LMM-Track4D 总览，展示几何编码、持续跟踪状态、轨迹解码，以及多轮追踪、遮挡和身份连续性的任务示例。",
+          "caption_en": "The project overview: geometry, persistent state, and trajectory decoding support questions about an evolving scene.",
+          "caption_zh": "项目总览：通过几何信息、持续状态与轨迹解码，回答有关动态场景的问题。"
+        }
+      ]
+    },
+    {
+      "id": "carrying-state",
+      "title_en": "Carrying the scene forward",
+      "title_zh": "把场景状态接着传下去",
+      "blocks": [
+        {
+          "type": "p",
+          "en": "Start with the camera. A player can move left in the image because they ran, because the camera moved, or both. <strong>Ray–Time Geometry Encoding (RTGE)</strong> adds geometry and time to the visual representation, giving the model more than image position to work with.",
+          "zh": "先看相机。一名球员在画面里向左移动，可能是他跑了，也可能是相机动了，或者两者都在动。<strong>Ray–Time Geometry Encoding（RTGE）</strong>把几何与时间信息加入视觉表示，让模型判断运动时，多一些画面位置之外的依据。"
+        },
+        {
+          "type": "p",
+          "en": "Then we need somewhere to keep track of the player. The persistent <strong>TRK state token</strong> carries dynamic information from one turn to the next. Think of a small working note beside the video: who we are following, and what has happened to them so far. In the model, this “note” is a learned representation.",
+          "zh": "接下来，还得有个地方记住这名球员。持续传递的 <strong>TRK 状态 token</strong> 负责把动态信息从上一轮带到下一轮。可以想象看视频时，手边放着一张小便笺：我们在跟谁，刚才发生了什么。在模型里，这张“便笺”是一组学习得到的表示。"
+        },
+        {
+          "type": "p",
+          "en": "When the question asks for a path, <strong>OSK-RA</strong> decodes structured 3D trajectories from this representation, conditioned on the query. We can now look at where the answer goes, as well as read what it says.",
+          "zh": "当问题需要一条运动路径时，<strong>OSK-RA</strong> 会根据问题，从这些表示中解码出结构化三维轨迹。于是，除了读回答，我们还能看看它指向的路径。"
+        }
+      ]
+    },
+    {
+      "id": "testing-continuity",
+      "title_en": "Testing continuity",
+      "title_zh": "怎样检查它有没有跟丢",
+      "blocks": [
+        {
+          "type": "p",
+          "en": "<strong>Track4D-Bench</strong> gives us 526 clip-level dialogue samples, pairing questions and answers with trajectory supervision. That lets us check the words against the motion: a fluent answer still has a path to account for.",
+          "zh": "<strong>Track4D-Bench</strong> 包含 526 个视频片段级对话样本，把问答和轨迹监督放在一起。这样，文字可以和运动对照着看：回答再流畅，也得交代清楚那条路径。"
+        },
+        {
+          "type": "p",
+          "en": "The evaluated baselines give us a comparison, and the reported results improve on them. But the questions are easier to picture than a table of scores: after a follow-up, are we still tracking the same person? Through an occlusion, does the path stay coherent? When the viewpoint changes, can we connect the two observations?",
+          "zh": "论文报告了相对所评测基线的改进。不过，比起一张分数表，这几个问题更容易让人抓住重点：追问以后，跟的还是同一个人吗？经过遮挡，路径还连得上吗？换了视角，两次观察还能对应起来吗？"
+        },
+        {
+          "type": "p",
+          "en": "There are practical constraints, too. The formulation uses camera geometry and time information, and the paper notes that it still relies on structured supervision. The scale of the benchmark, the length of the temporal window, and the openness of the conversation remain limited. These details matter if you are wondering how directly the method transfers to a video from your phone.",
+          "zh": "实际使用还有一些条件。方法需要相机几何与时间信息，论文也明确指出，当前设定仍依赖结构化监督，数据规模、时间跨度和对话的开放程度都有局限。如果你在想能不能直接拿一段手机视频来用，这些条件就很关键。"
+        }
+      ]
+    },
+    {
+      "id": "explore-the-project",
+      "title_en": "Explore the project",
+      "title_zh": "继续看看项目",
+      "blocks": [
+        {
+          "type": "p",
+          "en": "The public repository currently contains the overview and visual demonstrations. Code, data, checkpoints, and reproduction materials are listed as coming soon. For now, the demo is the clearest way to see what this form of dialogue looks like; it is not yet a complete recipe for reproducing the experiments.",
+          "zh": "公开仓库目前提供项目介绍与可视化演示，代码、数据、模型权重和复现材料仍标注为待发布。现阶段，演示能帮助理解这种对话长什么样，但还不足以让读者完整复现实验。"
+        },
+        {
+          "type": "p",
+          "en": "You can read the <a href=\"https://arxiv.org/abs/2605.19390\" target=\"_blank\" rel=\"noopener noreferrer\">paper on arXiv</a> or explore the <a href=\"https://github.com/mikubaka88/LMM-Track4D\" target=\"_blank\" rel=\"noopener noreferrer\">project repository and demos</a>. The repository is also where future code and data releases will be announced.",
+          "zh": "可以阅读 <a href=\"https://arxiv.org/abs/2605.19390\" target=\"_blank\" rel=\"noopener noreferrer\">arXiv 论文</a>，或到 <a href=\"https://github.com/mikubaka88/LMM-Track4D\" target=\"_blank\" rel=\"noopener noreferrer\">项目仓库查看介绍与演示</a>。后续代码和数据的发布信息也以仓库为准。"
+        }
+      ]
+    }
+  ]
+}

@@ -4,9 +4,17 @@ from datetime import date
 
 def render_blog(root, tr, theme_init, theme_button):
     note = json.loads((root/'blog/posts.json').read_text())
-    updated = date.fromisoformat(note["updated"])
-    updated_en = updated.strftime("%B ") + str(updated.day) + updated.strftime(", %Y")
-    updated_zh = f"{updated.year}年{updated.month}月{updated.day}日"
+    note.update(slug='astradraw', category_en='Project notes', category_zh='项目笔记',
+                intro_en=note['paragraphs'][0]['en'], intro_zh=note['paragraphs'][0]['zh'])
+    research_posts = [json.loads(path.read_text()) for path in sorted((root/'blog/posts').glob('*.json'))]
+    posts = research_posts + [note]
+    import re
+    for post in posts:
+        if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', post['slug']):
+            raise ValueError('Invalid article slug')
+        date.fromisoformat(post['updated'])
+    if len({post['slug'] for post in posts}) != len(posts):
+        raise ValueError('Article slugs must be unique')
     def asset(path):
         return '/' + path + '?v=' + hashlib.sha256((root/path).read_bytes()).hexdigest()[:12]
     portrait=asset('assets/blog-character-seated-v1.webp')
@@ -32,7 +40,7 @@ def render_blog(root, tr, theme_init, theme_button):
     search_cloud=(root/'blog/clouds/search-bottom-cloud.svg').read_text()
     search_dialog=f'''<dialog id="site-search" aria-labelledby="search-heading"><div class="search-heading"><h2 id="search-heading">{tr('Search','搜索')}</h2><button id="search-close" type="button" aria-label="Close search">×</button></div><label class="visually-hidden" for="site-search-input">{tr('Search articles and research','搜索文章与研究')}</label><input id="site-search-input" type="search" autocomplete="off" placeholder="AstraDraw, world models…"><div id="search-results" aria-live="polite"></div><p id="search-empty" hidden>{tr('No results. Try another keyword.','没有找到结果，试试其他关键词。')}</p><p class="search-hint">{tr('Articles and publications on this site','搜索本站文章与论文')}<kbd>Esc</kbd></p><div class="search-cloud">{search_cloud}</div></dialog>'''
     def navigation(prefix):
-        categories=f'<a href="/blog/">{tr("All articles","全部文章")}</a><a href="/blog/astradraw/">{tr("Project notes","项目笔记")}</a>'
+        categories=f'<a href="/blog/">{tr("All articles","全部文章")}</a><a href="/blog/#research">{tr("Research notes","研究笔记")}</a><a href="/blog/#project-notes">{tr("Project notes","项目笔记")}</a>'
         projects='<a href="https://github.com/IamJerryXu/AstraDraw" target="_blank" rel="noopener noreferrer">AstraDraw ↗</a><a href="https://inkmind-ai.com/" target="_blank" rel="noopener noreferrer">InkMind ↗</a>'
         goodies=f'<a href="/blog/#rainbow" data-open-rainbow>{tr("Interactive rainbow","互动彩虹")}</a><a href="/blog/feed.xml">{tr("RSS feed","RSS 订阅")}</a>'
         about=f'<p>{tr("I’m Yongxue, an undergraduate at Sun Yat-sen University working on video generation and world models.","我是永雪，中山大学本科生，研究视频生成与世界模型。")}</p><a href="mailto:jiangjiangcheng753@gmail.com">{tr("Say hello","联系我")} ↗</a>'
@@ -67,7 +75,7 @@ def render_blog(root, tr, theme_init, theme_button):
 <p class="footer-greeting">{tr('Thanks for stopping by.','谢谢你来逛逛。')}</p>
 <div class="footer-follow"><p>{tr('Open to research collaborations and interesting projects.','欢迎交流科研合作和有趣的项目。')}</p><a class="footer-subscribe" href="mailto:jiangjiangcheng753@gmail.com">{tr('Get in touch','联系我')} <span aria-hidden="true">↗</span></a></div></div>
 <div class="footer-directory"><div class="footer-columns">
-<section><h2>{tr('Browse','内容')}</h2><a href="/blog/">{tr('All articles','全部文章')}</a><a href="/blog/astradraw/">{tr('Project notes','项目笔记')}</a><a href="/blog/#rainbow" data-open-rainbow>{tr('Interactive rainbow','互动彩虹')}</a></section>
+<section><h2>{tr('Browse','内容')}</h2><a href="/blog/">{tr('All articles','全部文章')}</a><a href="/blog/#research">{tr('Research notes','研究笔记')}</a><a href="/blog/astradraw/">{tr('Project notes','项目笔记')}</a><a href="/blog/#rainbow" data-open-rainbow>{tr('Interactive rainbow','互动彩虹')}</a></section>
 <section><h2>{tr('Projects','项目')}</h2><a href="https://github.com/IamJerryXu/AstraDraw" target="_blank" rel="noopener noreferrer">AstraDraw ↗</a><a href="https://inkmind-ai.com/" target="_blank" rel="noopener noreferrer">InkMind ↗</a></section>
 <section><h2>{tr('General','更多')}</h2><a href="/">{tr('Homepage','学术主页')} ↗</a><a href="https://scholar.google.com/citations?user=8PtwUrkAAAAJ&amp;hl=en">Scholar ↗</a><a href="mailto:jiangjiangcheng753@gmail.com">{tr('Contact','联系我')} ↗</a></section>
 </div><div class="footer-social-links">{footer_tools}{social_links}</div></div></div>
@@ -76,14 +84,60 @@ def render_blog(root, tr, theme_init, theme_button):
         canonical='https://jerrysnow.me/'+path
         return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} — Yongxue Xu</title><meta name="description" content="{html.escape(description,quote=True)}"><meta name="robots" content="noindex, follow"><meta name="theme-color" content="#ffffff"><script>{theme_init}</script><link rel="canonical" href="{canonical}"><link rel="icon" href="data:,"><link rel="preload" href="{asset('blog/fonts/wotfard-regular.woff2')}" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="{asset('blog/blog.css')}"><link rel="stylesheet" href="{asset('blog/icons.css')}"><link rel="stylesheet" href="{asset('blog/interactions.css')}"><link rel="stylesheet" href="{asset('blog/panel-motion.css')}"><link rel="stylesheet" href="{asset('blog/navigation.css')}"><link rel="stylesheet" href="{asset('blog/footer.css')}"><link rel="stylesheet" href="{asset('blog/article-components.css')}"><link rel="stylesheet" href="{asset('blog/reactions.css')}"><link rel="stylesheet" href="{asset('blog/link-motion.css')}"><link rel="stylesheet" href="{asset('blog/article-meta.css')}"><script src="{asset('blog/blog.js')}" defer></script><script src="{asset('blog/reading.js')}" defer></script><script src="{asset('blog/tools.js')}" defer></script><script src="{asset('blog/icons.js')}" defer></script><script src="{asset('blog/interactions.js')}" defer></script><script src="{asset('blog/panel-motion.js')}" defer></script><script src="{asset('blog/navigation.js')}" defer></script><script src="{asset('blog/reactions.js')}" defer></script><script src="{asset('blog/link-motion.js')}" defer></script><script src="{asset('blog/article-meta.js')}" defer></script><script src="{asset('blog/page-hits.js')}" defer></script><link rel="alternate" type="application/rss+xml" title="Yongxue Xu — Blog" href="/blog/feed.xml"></head><body id="top" class="{'blog-home' if home else 'blog-article'}"><a class="skip-link" href="#content">Skip to content</a>{header}{search_dialog}{scene if home else hero}<main class="{'blog-layout' if home else 'article-main'}" id="content">{main}</main>{footer}</body></html>'''
-    index=f'''<div class="writing"><h2 class="section-label">{tr('ARTICLES AND NOTES','文章与手记')}</h2><article class="post"><h3><a href="astradraw/">{tr(note['title_en'],note['title_zh'])}</a></h3><p class="post-summary">{tr(note['summary_en'],note['summary_zh'])}</p><p>{tr(note['paragraphs'][0]['en'],note['paragraphs'][0]['zh'])}</p><a class="read-link" href="astradraw/">{tr('Read more','阅读全文')}<svg class="read-arrows" viewBox="0 0 36 12" aria-hidden="true"><path class="read-arrow-first" d="M.75 6h10.5M6 .75 11.25 6 6 11.25"/><path class="read-arrow-extra read-arrow-extra--1" d="M15 10L19.5 5.5L15 1"/><path class="read-arrow-extra read-arrow-extra--2" d="M23 10L27.5 5.5L23 1"/><path class="read-arrow-extra read-arrow-extra--3" d="M31 10L35.5 5.5L31 1"/></svg></a></article></div><aside class="blog-aside"><section><h2 class="section-label">{tr('LINKS','链接')}</h2><div class="topic-pills"><a href="/#publications">{tr('Publications','论文')}</a><a href="https://github.com/IamJerryXu">GitHub ↗</a></div></section><section class="elsewhere"><h2 class="section-label">{tr('PROJECTS','项目')}</h2><a href="https://github.com/IamJerryXu/AstraDraw" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">→</span><span>AstraDraw</span></a><a href="https://inkmind-ai.com/" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">→</span><span>InkMind</span></a></section></aside>'''
+    def post_card(post, anchor):
+        return f'''<article class="post" id="{anchor}"><h3><a href="{post['slug']}/">{tr(post['title_en'],post['title_zh'])}</a></h3><p class="post-summary">{tr(post['summary_en'],post['summary_zh'])}</p><p>{tr(post['intro_en'],post['intro_zh'])}</p><a class="read-link" href="{post['slug']}/">{tr('Read more','阅读全文')}<svg class="read-arrows" viewBox="0 0 36 12" aria-hidden="true"><path class="read-arrow-first" d="M.75 6h10.5M6 .75 11.25 6 6 11.25"/><path class="read-arrow-extra read-arrow-extra--1" d="M15 10L19.5 5.5L15 1"/><path class="read-arrow-extra read-arrow-extra--2" d="M23 10L27.5 5.5L23 1"/><path class="read-arrow-extra read-arrow-extra--3" d="M31 10L35.5 5.5L31 1"/></svg></a></article>'''
+    cards = ''.join(post_card(post, 'research' if i == 0 and research_posts else 'project-notes' if post['slug'] == 'astradraw' else 'post-'+post['slug']) for i,post in enumerate(posts))
+    index=f'''<div class="writing"><h2 class="section-label">{tr('ARTICLES AND NOTES','文章与手记')}</h2>{cards}</div><aside class="blog-aside"><section><h2 class="section-label">{tr('LINKS','链接')}</h2><div class="topic-pills"><a href="/#publications">{tr('Publications','论文')}</a><a href="https://github.com/IamJerryXu">GitHub ↗</a></div></section><section class="elsewhere"><h2 class="section-label">{tr('PROJECTS','项目')}</h2><a href="https://github.com/IamJerryXu/AstraDraw" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">→</span><span>AstraDraw</span></a><a href="https://inkmind-ai.com/" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">→</span><span>InkMind</span></a></section></aside>'''
     sections=[('references','Start with references','准备参考'),('editable','An editable figure','可编辑的图'),('revisions','Revise one part at a time','局部修改'),('get-started','Try AstraDraw','开始使用')]
-    toc_links=f'<a href="#introduction">{tr("Introduction","引言")}</a>'+''.join(f'<a href="#{anchor}">{tr(en,zh)}</a>' for anchor,en,zh in sections)
-    def heading(i):
-        anchor,en,zh=sections[i]
+    def section_heading(anchor,en,zh):
         return f'<h2 id="{anchor}"><a class="heading-anchor" href="#{anchor}" aria-label="Link to section"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8h20"/><path d="M2 16h20"/><path d="M10 2 6 22"/><path d="M18 2 14 22"/></svg></a>{tr(en,zh)}</h2>'
-    hero=f'''<section class="article-hero"><div class="article-hero-inner"><h1 class="article-title">{tr(note['title_en'],note['title_zh'])}</h1><div class="article-meta"><span>{tr('Filed under','分类：')} <a href="/blog/">{tr('Project notes','项目笔记')}</a><span class="article-meta-separator" aria-hidden="true"> · </span></span><span>{tr('Last updated on','最后更新于')} <time datetime="{updated.isoformat()}">{tr(updated_en,updated_zh)}</time></span></div></div><div class="article-cloud-window">{cloud_svg('article-hero-clouds.svg','source-article-cloud')}</div></section>'''
-    article=f'''<article class="article-body">
+    def heading(i):
+        return section_heading(*sections[i])
+    def render_article(post, body_html, article_sections):
+        updated = date.fromisoformat(post['updated'])
+        updated_en = updated.strftime('%B ') + str(updated.day) + updated.strftime(', %Y')
+        updated_zh = f'{updated.year}年{updated.month}月{updated.day}日'
+        toc_links = f'<a href="#introduction">{tr("Introduction","引言")}</a>' + ''.join(
+            f'<a href="#{anchor}">{tr(en,zh)}</a>' for anchor,en,zh in article_sections)
+        hero=f'''<section class="article-hero"><div class="article-hero-inner"><h1 class="article-title">{tr(post['title_en'],post['title_zh'])}</h1><div class="article-meta"><span>{tr('Filed under','分类：')} <a href="/blog/">{tr(post['category_en'],post['category_zh'])}</a><span class="article-meta-separator" aria-hidden="true"> · </span></span><span>{tr('Last updated on','最后更新于')} <time datetime="{updated.isoformat()}">{tr(updated_en,updated_zh)}</time></span></div></div><div class="article-cloud-window">{cloud_svg('article-hero-clouds.svg','source-article-cloud')}</div></section>'''
+        article=f'''<article class="article-body">{body_html}
+<div class="article-end-meta">
+<div class="article-updated"><h3 class="article-meta-label">{tr('Last updated on','最后更新于')}</h3><time class="article-updated-date" datetime="{updated.isoformat()}">{tr(updated_en,updated_zh)}</time></div>
+<div class="article-hit-meta"><h3 class="article-meta-label">{tr('# of hits','访问次数')}</h3><div class="article-hit-slot" data-hits=""></div></div>
+</div>
+<div class="article-reactions article-reactions--mobile" data-reaction-key="{post['slug']}"></div>
+</article>
+<aside class="article-sidebar">
+<nav class="article-toc" aria-label="On this page">
+<h2>{tr('TABLE OF CONTENTS','本文目录')}</h2>{toc_links}<div class="article-reactions article-reactions--desktop" data-reaction-key="{post['slug']}"></div></nav>
+</aside>'''
+        destination = root/'blog'/post['slug']
+        destination.mkdir(parents=True, exist_ok=True)
+        (destination/'index.html').write_text(page(post['title_en'],post['summary_en'],article,'blog/'+post['slug']+'/',hero=hero))
+
+    def render_blocks(blocks):
+        rendered = []
+        for block in blocks:
+            kind = block['type']
+            if kind == 'p':
+                rendered.append('<p>'+tr(block['en'],block['zh'])+'</p>')
+            elif kind == 'note':
+                rendered.append('<aside class="article-note"><strong>'+tr(block['title_en'],block['title_zh'])+'</strong><p>'+tr(block['en'],block['zh'])+'</p></aside>')
+            elif kind == 'figure':
+                src = block['src'].lstrip('/')
+                if not src.startswith('assets/') or '..' in src.split('/'):
+                    raise ValueError('Article figures must use local assets')
+                url = asset(src)
+                alt = html.escape(block['alt_en'],quote=True)
+                width, height = int(block['width']), int(block['height'])
+                if width <= 0 or height <= 0:
+                    raise ValueError('Figure dimensions must be positive')
+                rendered.append(f'<figure class="article-figure"><a href="{url}" target="_blank" rel="noopener noreferrer"><img src="{url}" alt="{alt}" data-alt-en="{alt}" data-alt-zh="{html.escape(block["alt_zh"],quote=True)}" width="{width}" height="{height}" loading="lazy" decoding="async"></a><figcaption>{tr(block["caption_en"],block["caption_zh"])}</figcaption></figure>')
+            else:
+                raise ValueError('Unknown article block: '+kind)
+        return '\n'.join(rendered)
+
+    article_content=f'''
 <p class="article-intro" id="introduction">{tr(note['paragraphs'][0]['en'],note['paragraphs'][0]['zh'])}</p>
 {heading(0)}<p>{tr('AstraDraw uses a paper to understand the method, and reference figures to understand the visual style. Put the references in a PowerPoint file and note what you want to borrow: a layout, a color palette, an arrow, or a legend.','AstraDraw 用论文理解方法，用参考图理解画法。把喜欢的图放进一个 PPT，标出想参考的部分：布局、配色、箭头，或者图例。')}</p>
 <p>{tr('You can give Astra the local file paths. The repository also includes a shared reference library and example assets if you do not have your own collection yet.','可以直接把本地路径交给 Astra。还没有自己的素材库，也可以从仓库里的公开参考与示例素材开始。')}</p>{heading(1)}<p>{tr('After choosing a direction, the workflow produces a PowerPoint file and a preview. Text, arrows, and layout can then be adjusted in the editable version. This is one of the examples included in the repository.','确定画法后，再生成 PowerPoint 和预览图。文字、箭头和布局可以在可编辑版本中继续调整。下面是仓库中提供的一个示例。')}</p>
@@ -103,24 +157,26 @@ def render_blog(root, tr, theme_init, theme_button):
 <a href="https://github.com/IamJerryXu/AstraDraw#selected-edit">{tr('See the before-and-after example','查看修改前后的对比')} ↗</a>
 </p>{heading(3)}<p>{tr('The repository contains the setup instructions, reference materials, sample figures, and editable files. Start with your paper and a few references, then revise the result where it needs work.','仓库中有使用说明、参考素材、示例图和可编辑文件。准备好论文与几张参考图，就可以开始，再根据结果逐处修改。')}</p>
 <p>{tr('Source and setup instructions:','来源与使用说明：')} <a href="{note['source_url']}" target="_blank" rel="noopener noreferrer">AstraDraw README</a>. {tr('Example file:','示例文件：')} <a href="https://github.com/IamJerryXu/AstraDraw/blob/main/output/paper-method/method.pptx">{tr('Editable PowerPoint','可编辑 PowerPoint')}</a>.</p>
-<div class="article-end-meta">
-<div class="article-updated"><h3 class="article-meta-label">{tr('Last updated on','最后更新于')}</h3><time class="article-updated-date" datetime="{updated.isoformat()}">{tr(updated_en,updated_zh)}</time></div>
-<div class="article-hit-meta"><h3 class="article-meta-label">{tr('# of hits','访问次数')}</h3><div class="article-hit-slot" data-hits=""></div></div>
-</div>
-<div class="article-reactions article-reactions--mobile" data-reaction-key="astradraw"></div>
-</article>
-<aside class="article-sidebar">
-<nav class="article-toc" aria-label="On this page">
-<h2>{tr('TABLE OF CONTENTS','本文目录')}</h2>{toc_links}<div class="article-reactions article-reactions--desktop" data-reaction-key="astradraw"></div></nav>
-</aside>'''
-    (root/'blog/index.html').write_text(page('Blog','Notes on research, making things, and following curiosity.',index,'blog/',True))
-    (root/'blog/astradraw/index.html').write_text(page(note['title_en'],note['summary_en'],article,'blog/astradraw/',hero=hero))
+'''
 
-    search_entries=[dict(title_en=note['title_en'],title_zh=note['title_zh'],summary_en=note['summary_en'],summary_zh=note['summary_zh'],url='/blog/astradraw/')]
+    (root/'blog/index.html').write_text(page('Blog','Notes on research, making things, and following curiosity.',index,'blog/',True))
+    render_article(note, article_content, sections)
+    for post in research_posts:
+        article_sections = [(section['id'],section['title_en'],section['title_zh']) for section in post['sections']]
+        section_ids = [item[0] for item in article_sections]
+        if len(set(section_ids)) != len(section_ids) or 'introduction' in section_ids or not all(re.fullmatch(r'[a-z0-9-]+', key) for key in section_ids):
+            raise ValueError('Article section IDs must be unique, valid anchors')
+        body_html = f'<p class="article-intro" id="introduction">{tr(post["intro_en"],post["intro_zh"])}</p>'
+        for section in post['sections']:
+            body_html += section_heading(section['id'],section['title_en'],section['title_zh']) + render_blocks(section['blocks'])
+        render_article(post,body_html,article_sections)
+
+    search_entries=[dict(title_en=post['title_en'],title_zh=post['title_zh'],summary_en=post['summary_en'],summary_zh=post['summary_zh'],url='/blog/'+post['slug']+'/') for post in posts]
     content=json.loads((root/'content.json').read_text())
     for paper in content['papers']:
         search_entries.append(dict(title_en=paper['title'],title_zh=paper['title'],summary_en=paper['venue'],summary_zh=paper.get('venue_zh',paper['venue']),url='/#'+paper['id']))
     (root/'blog/search-index.json').write_text(json.dumps(search_entries,ensure_ascii=False,indent=2)+'\n')
     from xml.sax.saxutils import escape
-    rss=f'''<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Yongxue Xu — Blog</title><link>https://jerrysnow.me/blog/</link><description>Project notes and research by Yongxue Xu.</description><language>en</language><atom:link href="https://jerrysnow.me/blog/feed.xml" rel="self" type="application/rss+xml"/><item><title>{escape(note['title_en'])}</title><link>https://jerrysnow.me/blog/astradraw/</link><guid isPermaLink="true">https://jerrysnow.me/blog/astradraw/</guid><description>{escape(note['summary_en'])}</description></item></channel></rss>'''
+    items = ''.join(f'<item><title>{escape(post["title_en"])}</title><link>https://jerrysnow.me/blog/{post["slug"]}/</link><guid isPermaLink="true">https://jerrysnow.me/blog/{post["slug"]}/</guid><description>{escape(post["summary_en"])}</description></item>' for post in posts)
+    rss=f'''<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Yongxue Xu — Blog</title><link>https://jerrysnow.me/blog/</link><description>Project notes and research by Yongxue Xu.</description><language>en</language><atom:link href="https://jerrysnow.me/blog/feed.xml" rel="self" type="application/rss+xml"/>{items}</channel></rss>'''
     (root/'blog/feed.xml').write_text(rss)

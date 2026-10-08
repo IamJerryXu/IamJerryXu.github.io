@@ -1,0 +1,127 @@
+{
+  "slug": "posreasoner",
+  "title_en": "POSReasoner: when an object comes back",
+  "title_zh": "POSReasoner：看不见，不等于该忘记",
+  "summary_en": "Keeping track of an object means deciding which observations to trust—and when to leave its memory alone.",
+  "summary_zh": "持续跟住一个目标，需要判断眼前的证据是否可信，也需要知道什么时候该保留原来的记忆。",
+  "intro_en": "Picture a sheep walking behind another sheep. For a moment, the one you were following disappears. Then a white, woolly shape comes back into view. Is that your sheep? A video segmentation model needs to answer this question while also drawing its outline. POSReasoner looks at what happens between those two jobs: deciding whether a new observation should change what the model remembers.",
+  "intro_zh": "想象一只羊走到了另一只羊身后。你正跟着看的那只，短暂地消失了。等一团白色的身影重新出现，它还是刚才那只羊吗？视频分割模型既要画出轮廓，也要认清前后是不是同一个目标。POSReasoner 关注的，就是这两件事之间的一步：眼前的新观察，是否足以改写模型对它的记忆？",
+  "updated": "2026-10-08",
+  "category_en": "Research notes",
+  "category_zh": "研究笔记",
+  "sections": [
+    {
+      "id": "a-good-mask-isnt-enough",
+      "title_en": "A good outline can still belong to the wrong object",
+      "title_zh": "轮廓画对了，也可能认错对象",
+      "blocks": [
+        {
+          "type": "p",
+          "en": "A mask tells us which pixels belong to an object. Across a video, we also need a stable identity: this mask and that earlier mask belong to the <em>same</em> sheep. A neatly drawn outline is not much comfort if it has quietly switched to the sheep next door.",
+          "zh": "分割掩码告诉我们，哪些像素属于一个目标。但看一段视频时，还需要一条稳定的身份线索：这一帧和前面那一帧，圈出来的是<em>同一只</em>羊。轮廓再准确，如果悄悄换成了旁边那只，跟踪还是出了错。"
+        },
+        {
+          "type": "p",
+          "en": "The trouble can outlast the frame where it started. If an ambiguous observation is accepted and written into memory, later observations are compared against that mistake. The model now has the wrong evidence helping it make its next decision. Occlusion makes this particularly awkward: the least reliable moment can become the moment that changes the record.",
+          "zh": "更麻烦的是，错误不一定只停留在当前这一帧。如果一次含糊的匹配被写进记忆，后续判断就会以这段错误记录为依据。遮挡恰好容易制造这种情况：画面最不清楚的时候，反而可能成为记忆被改写的时候。"
+        }
+      ]
+    },
+    {
+      "id": "keep-a-state",
+      "title_en": "Keep a record beyond the current frame",
+      "title_zh": "让状态跨过看不见的时刻",
+      "blocks": [
+        {
+          "type": "p",
+          "en": "POSReasoner gives each object a persistent state. Along with identity information, that state carries confidence and absence history. The current image is therefore one source of evidence, rather than the only evidence used to decide whether to keep its state.",
+          "zh": "POSReasoner 为每个对象保留一份持续存在的状态，其中包含身份信息、置信度和缺席历史。于是，当前画面只是判断的一个依据，不再独自决定这个对象是否还值得被记住。"
+        },
+        {
+          "type": "p",
+          "en": "This makes a useful distinction possible. “I cannot see it right now” need not mean “forget what we knew about it.” When the object returns, its new observation can be checked against the surviving state. Keeping that history does not prove the match is correct; it gives the model something better to consult than a single uncertain frame.",
+          "zh": "这让两件原本容易混在一起的事分开了：“现在看不见它”，不等于“应该忘掉它”。等对象重新出现，新观察还能与之前保留下来的状态比较。当然，保留历史并不能保证认对；它只是让模型在犹豫时，不必只依赖眼前这一帧。"
+        },
+        {
+          "type": "figure",
+          "src": "/assets/img/publication_preview/posreasoner-full.webp",
+          "width": 1600,
+          "height": 914,
+          "href": "https://github.com/IamJerryXu/POSReasoner/blob/main/assets/posreasoner-teaser.jpg",
+          "alt_en": "POSReasoner examples with sheep, fish, basketball players, and elephants, illustrating identity tracking and object reactivation.",
+          "alt_zh": "POSReasoner 的羊群、鱼群、篮球运动员和大象示例，展示身份跟踪与目标重新激活。",
+          "caption_en": "Examples from POSReasoner: identity tracking in crowded scenes and among similar objects, followed by long-term object reactivation. Yellow marks the reference object; teal shows predicted masks.",
+          "caption_zh": "POSReasoner 的示例：拥挤场景和相似目标中的身份跟踪，以及长时间缺席后的目标重新激活。黄色标记参考目标，青色表示预测掩码。"
+        }
+      ]
+    },
+    {
+      "id": "propose-then-verify",
+      "title_en": "Make a suggestion. Then check it.",
+      "title_zh": "先提议，再核验",
+      "blocks": [
+        {
+          "type": "p",
+          "en": "The method separates this decision into two steps: <strong>Propose</strong> and <strong>Verify</strong>. Propose forms provisional associations between persistent states and current observations. These are suggestions, not updates that have already been committed to memory.",
+          "zh": "方法把这个决策分成两步：<strong>Propose（提议）</strong>与<strong>Verify（核验）</strong>。提议阶段，在已有状态与当前观察之间建立暂时的对应关系。此时得到的只是候选匹配，还没有把它当成事实写入记忆。"
+        },
+        {
+          "type": "p",
+          "en": "Verify revisits those associations using object history, predicted presence, and competition between identities. That last part matters. Two similar objects may both appear to match the same candidate when considered separately. Their claims need to be considered together. A sparse state–observation graph gives the reasoner a way to exchange this information without treating every possible connection as equally relevant.",
+          "zh": "核验阶段结合历史、对目标是否在场的预测，以及不同身份之间的竞争，重新检查这些对应关系。竞争关系尤其重要：两个相似对象单独去找匹配，都可能看中同一个候选。把它们放在一起考虑，才能处理这种冲突。稀疏的状态—观察图，用来组织这些相关信息。"
+        }
+      ]
+    },
+    {
+      "id": "write-back",
+      "title_en": "An update is a decision, too",
+      "title_zh": "写进记忆，也需要作出判断",
+      "blocks": [
+        {
+          "type": "p",
+          "en": "After verification, the system can retain, update, reactivate, or suppress a state. A learned gate also controls how much evidence is written back. So choosing an association and deciding what to remember are related decisions, but they are not collapsed into one automatic step.",
+          "zh": "核验之后，系统可以保留、更新、重新激活或抑制一个状态。同时，一个学习得到的门控机制控制证据写回的程度。找到一个对应关系，与决定把什么存进记忆，是相关但并不等同的两件事。"
+        },
+        {
+          "type": "p",
+          "en": "Go back to the sheep. A weak glimpse need not replace a useful history immediately. A later, better-supported observation can provide grounds to reactivate the state. Only the verified transition is carried into the persistent state used for subsequent frames.",
+          "zh": "回到那只羊：一个不太可靠的侧影，不必立刻覆盖之前有用的记录。后面出现更充分的证据时，再据此重新激活状态。只有经过核验的转移，才会进入后续帧使用的持续状态。"
+        }
+      ]
+    },
+    {
+      "id": "what-the-experiments-check",
+      "title_en": "What the comparison actually tests",
+      "title_zh": "实验比较的是什么",
+      "blocks": [
+        {
+          "type": "p",
+          "en": "To test this, we keep the underlying segmentation model frozen. The paired comparisons use the same host checkpoint, candidate masks, input resolution, and evaluator. The trainable part is POSReasoner, learned from standard video annotations. Keeping the rest fixed helps us see what changes when we change the state decisions.",
+          "zh": "测试时，底层分割模型保持冻结。成对比较使用相同的模型权重、候选掩码、输入分辨率和评测工具；参与训练的是 POSReasoner，使用的也是常规视频标注。把其余条件固定下来，才更容易看清改变状态决策之后，结果有什么变化。"
+        },
+        {
+          "type": "p",
+          "en": "The reported experiments cover video instance segmentation and long-term video object segmentation, including OVIS, YouTube-VIS, and LVOS. Improvements appear across multiple hosts, particularly around occlusion and reappearance. Those are the moments to look for in the examples: not just a clean outline, but the right object after a gap.",
+          "zh": "公开实验覆盖视频实例分割和长时视频目标分割，包括 OVIS、YouTube-VIS 和 LVOS。多种基础模型都获得了改善，遮挡与重新出现的情形尤其值得关注。看示例时，不妨留意这些时刻：除了轮廓是否清楚，中间消失过一次之后，找到的还是不是原来那个目标。"
+        }
+      ]
+    },
+    {
+      "id": "limits-and-code",
+      "title_en": "What it can—and cannot—remember",
+      "title_zh": "记忆能帮忙，也有边界",
+      "blocks": [
+        {
+          "type": "p",
+          "en": "There is still a segmentation model underneath. POSReasoner reasons over the evidence that model supplies; it is not a promise to recover any object from any disappearance. If the available observations remain ambiguous, retaining a state does not magically reveal the correct identity. Verification is learned, too, and can make mistakes.",
+          "zh": "底层分割模型仍然很重要。POSReasoner 依靠它提供的证据作判断，并不意味着对象无论消失多久、以什么方式出现，都能被找回来。如果观察始终含糊，保留状态也不会自动给出正确身份。核验机制同样是学习得到的，也可能出错。"
+        },
+        {
+          "type": "p",
+          "en": "You can read the <a href=\"https://arxiv.org/abs/2609.35539\" target=\"_blank\" rel=\"noopener noreferrer\">paper on arXiv</a> or explore the <a href=\"https://github.com/IamJerryXu/POSReasoner\" target=\"_blank\" rel=\"noopener noreferrer\">public repository</a>. If you want to run it, start with the reproduction guide: datasets, host checkpoints, prediction exports, and trained reasoner weights are not bundled. The code makes the steps inspectable, but those external artifacts still need to be prepared.",
+          "zh": "进一步可以读 <a href=\"https://arxiv.org/abs/2609.35539\" target=\"_blank\" rel=\"noopener noreferrer\">arXiv 论文</a>，或查看<a href=\"https://github.com/IamJerryXu/POSReasoner\" target=\"_blank\" rel=\"noopener noreferrer\">公开仓库</a>。准备运行时，建议从复现指南开始：仓库并不附带数据集、基础模型权重、导出的预测结果和已训练的推理模块权重，这些材料仍需另行准备。"
+        }
+      ]
+    }
+  ]
+}

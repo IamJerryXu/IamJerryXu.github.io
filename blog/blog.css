@@ -70,3 +70,7 @@ footer.site-footer{position:relative;isolation:isolate;overflow:clip;display:blo
 @media(prefers-reduced-motion:reduce){.scene-portrait .character-layer,.footer-peek .character-layer{transition:none}}
 
 .read-link:hover .read-arrow-first{transition-duration:0ms}.read-arrow-extra--1{transition-delay:0ms}.read-arrow-extra--2{transition-delay:125ms}.read-arrow-extra--3{transition-delay:250ms}
+
+/* Separate real articles while retaining the open reading-list layout. */
+.post + .post{margin-top:64px}
+.post[id]{scroll-margin-top:112px}

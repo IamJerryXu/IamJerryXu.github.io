@@ -32,6 +32,7 @@ function setLanguage(language) {
   const isChinese = language === 'zh';
   document.documentElement.lang = isChinese ? 'zh-CN' : 'en';
   document.querySelectorAll('[data-en][data-zh]').forEach(el => { el.innerHTML = el.dataset[language]; });
+  document.querySelectorAll('[data-alt-en][data-alt-zh]').forEach(el => { el.alt = el.dataset[isChinese ? 'altZh' : 'altEn']; });
   languageButton.textContent = isChinese ? 'EN' : '中文';
   languageButton.setAttribute('aria-label', isChinese ? 'Switch to English' : '切换到中文');
   updateThemeLabel();
