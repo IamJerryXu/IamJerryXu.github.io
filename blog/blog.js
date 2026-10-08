@@ -47,13 +47,20 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
   const button = document.querySelector('.menu-toggle');
   const menu = document.querySelector('#mobile-menu');
   if (!button || !menu) return;
+  let menuCloseTimer;
   function setOpen(open, restoreFocus = false) {
+    clearTimeout(menuCloseTimer);
+    menu.classList.remove('is-closing');
     button.setAttribute('aria-expanded', String(open));
-    menu.hidden = !open;
+    if(open) menu.hidden=false;
+    else if(!menu.hidden&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+      menu.classList.add('is-closing');
+      menuCloseTimer=setTimeout(()=>{menu.hidden=true;menu.classList.remove('is-closing');},300);
+    }else menu.hidden=true;
     if (restoreFocus) button.focus();
   }
   setOpen(false);
-  button.addEventListener('click', () => setOpen(menu.hidden));
+  button.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') !== 'true'));
   menu.addEventListener('click', event => {
     if (event.target.closest('a')) setOpen(false);
   });
@@ -84,19 +91,24 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
   const smooth = {x: 500, y: 260, vx: 0, vy: 0};
   const marks = [];
   let colors = [], frame = 0, last = 0, introStart = null, introFinished = motion.matches;
-  const storageKey = 'blog-rainbow-settings';
-  const defaults = Object.freeze({motion: 65, rows: 10, length: 26, width: 10, spacing: 16, palette: 'auto'});
-  const bounds = {motion: [0, 100], rows: [3, 14], length: [8, 40], width: [2, 14], spacing: [10, 24]};
-  const inputs = Object.fromEntries(Object.keys(defaults).map(key => [key, document.querySelector(`#rainbow-${key}`)]));
+  // Public reference behavior was audited read-only. Preferences belong only to this browser.
+  const storageKey = 'blog-rainbow-console-v1';
+  const defaults = Object.freeze({density: 55, rows: 10, length: .25, width: 0, shape: 'line', linecap: 'round'});
+  const bounds = {density: [0, 100], rows: [3, 10], length: [-1, 1], width: [-1, 1]};
+  const inputs = {density: document.querySelector('#rainbow-density'), rows: document.querySelector('#rainbow-rows')};
+  const pad = document.querySelector('#rainbow-segment-pad');
+  const handle = document.querySelector('#rainbow-segment-handle');
   let config = {...defaults}, blend = 0, blendVelocity = 0;
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   function sanitize(key, value) {
-    if (key === 'palette') return ['auto', 'spectrum', 'cool'].includes(value) ? value : defaults.palette;
+    if (key === 'shape') return ['line', 'circle'].includes(value) ? value : defaults.shape;
+    if (key === 'linecap') return ['round', 'square'].includes(value) ? value : defaults.linecap;
     if ((typeof value !== 'number' && typeof value !== 'string') || value === '' || !Number.isFinite(Number(value))) return defaults[key];
-    return Math.round(Math.max(bounds[key][0], Math.min(bounds[key][1], Number(value))));
+    const number = clamp(Number(value), ...bounds[key]);
+    return key === 'density' || key === 'rows' ? Math.round(number) : number;
   }
   try {
-    const raw = localStorage.getItem(storageKey);
-    const saved = raw === null ? {motion: localStorage.getItem('blog-rainbow-motion') ?? defaults.motion} : JSON.parse(raw);
+    const saved = JSON.parse(localStorage.getItem(storageKey));
     if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
       for (const key of Object.keys(defaults)) config[key] = sanitize(key, saved[key] ?? defaults[key]);
     }
@@ -104,8 +116,17 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
   function syncControls() {
     for (const [key, input] of Object.entries(inputs)) {
       if (input) input.value = String(config[key]);
-      const output = document.querySelector(`#rainbow-${key}-value`);
-      if (output) output.textContent = String(config[key]) + (key === 'motion' ? '%' : '');
+    }
+    for (const key of ['shape', 'linecap']) {
+      document.querySelectorAll(`input[name="rainbow-${key}"]`).forEach(input => { input.checked = input.value === config[key]; });
+    }
+    if (handle) {
+      handle.style.left = `${(config.length + 1) * 50}%`;
+      handle.style.top = `${(config.width + 1) * 50}%`;
+      const chinese = document.documentElement.lang.startsWith('zh');
+      const length = (22 + 18 * config.length).toFixed(1);
+      const thickness = (config.shape === 'line' ? 10 - 8 * config.width : 13.5 - 11.5 * config.width).toFixed(1);
+      handle.setAttribute('aria-label', chinese ? `线段长度 ${length}，粗细 ${thickness}。使用方向键调整。` : `Segment length ${length}, width ${thickness}. Use arrow keys to adjust.`);
     }
   }
   function saveConfig() {
@@ -113,33 +134,45 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
   }
   function buildMarks() {
     marks.length = 0;
+    const densityStep = 450 - config.density * 3.35;
+    const centerY = height * (1.2 + (config.rows - 3) / 7 * .125);
     for (let row = 0; row < config.rows; row++) {
-      // Keep the rainbow centred when its row count or spacing changes.
-      const radius = 470.875 + (row - (config.rows - 1) / 2) * config.spacing;
-      const count = Math.round(Math.PI * radius / 65);
-      for (let i = 0; i <= count; i++) {
-        const arc = Math.PI + i / count * Math.PI;
-        marks.push({
-          x: width / 2 + Math.cos(arc) * radius,
-          y: height * 1.325 + Math.sin(arc) * radius,
-          base: arc + Math.PI / 2,
-          progress: i / count,
-          row
-        });
+      const radius = width * .4 + row * 15.75;
+      const angleStep = densityStep / (2 * Math.PI * radius);
+      for (let arc = Math.PI; arc < Math.PI * 2; arc += angleStep) {
+        marks.push({x: width / 2 + Math.cos(arc) * radius, y: centerY + Math.sin(arc) * radius,
+          base: arc + Math.PI / 2, progress: (arc - Math.PI) / Math.PI, row});
       }
     }
   }
+  function updateConfig(changes) {
+    for (const [key, value] of Object.entries(changes)) config[key] = sanitize(key, value);
+    syncControls(); saveConfig(); buildMarks(); renderColors();
+  }
   syncControls();
   buildMarks();
-  function setControls(open, restoreFocus = false) {
+  let closeTimer;
+  function setControls(open, restoreFocus = false, animateClose = false) {
     if (!settings || !controls) return;
-    controls.hidden = !open;
+    clearTimeout(closeTimer);
+    controls.classList.remove('is-closing');
+    if(!open && animateClose && !motion.matches){
+      controls.classList.add('is-closing');
+      closeTimer=setTimeout(()=>{controls.hidden=true;controls.classList.remove('is-closing');},300);
+    } else controls.hidden = !open;
     settings.setAttribute('aria-expanded', String(open));
-    if (restoreFocus) settings.focus();
+    pointer.active = false;
+    if (open) {
+      syncControls();
+      document.querySelector('#rainbow-close')?.focus({preventScroll: true});
+    }
+    if (restoreFocus) settings.focus({preventScroll: true});
+    wake();
   }
   if (settings && controls) {
     setControls(false);
-    settings.addEventListener('click', () => setControls(controls.hidden));
+    settings.addEventListener('click', () => setControls(settings.getAttribute('aria-expanded') !== 'true'));
+    document.querySelector('#rainbow-close')?.addEventListener('click', () => setControls(false, true, true));
     document.addEventListener('click', event => {
       if (!controls.hidden && !controls.contains(event.target) && !settings.contains(event.target)) setControls(false);
     });
@@ -147,31 +180,49 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
       if (event.key === 'Escape' && !controls.hidden) setControls(false, true);
     });
   }
-  for (const [key, input] of Object.entries(inputs)) {
-    input?.addEventListener(key === 'palette' ? 'change' : 'input', () => {
-      config[key] = sanitize(key, input.value);
-      syncControls();
-      saveConfig();
-      if (key === 'rows' || key === 'spacing') buildMarks();
-      if (key === 'rows' || key === 'palette') renderColors();
-      wake();
+  for (const [key, input] of Object.entries(inputs)) input?.addEventListener('input', () => updateConfig({[key]: input.value}));
+  for (const key of ['shape', 'linecap']) {
+    document.querySelectorAll(`input[name="rainbow-${key}"]`).forEach(input => {
+      input.addEventListener('change', () => { if (input.checked) updateConfig({[key]: input.value}); });
     });
   }
-  reset?.addEventListener('click', () => {
-    config = {...defaults};
-    syncControls();
-    saveConfig();
-    buildMarks();
-    renderColors();
+  function updatePad(event) {
+    const box = pad.getBoundingClientRect();
+    updateConfig({length: (event.clientX - box.left) / box.width * 2 - 1, width: (event.clientY - box.top) / box.height * 2 - 1});
+  }
+  if (pad && handle) {
+    let dragPointer = null;
+    pad.addEventListener('pointerdown', event => {
+      if (event.button !== 0) return;
+      event.preventDefault();
+      dragPointer = event.pointerId;
+      pad.setPointerCapture(event.pointerId);
+      pad.dataset.dragging = 'true';
+      handle.focus({preventScroll: true});
+      updatePad(event);
+    });
+    pad.addEventListener('pointermove', event => { if (event.pointerId === dragPointer) updatePad(event); });
+    const stopDragging = () => { dragPointer = null; delete pad.dataset.dragging; };
+    pad.addEventListener('pointerup', stopDragging);
+    pad.addEventListener('pointercancel', stopDragging);
+    pad.addEventListener('lostpointercapture', stopDragging);
+    handle.addEventListener('keydown', event => {
+      const directions = {ArrowLeft: ['length', -.05], ArrowRight: ['length', .05], ArrowUp: ['width', -.05], ArrowDown: ['width', .05]};
+      const delta = directions[event.key];
+      if (!delta) return;
+      event.preventDefault();
+      updateConfig({[delta[0]]: Math.round((config[delta[0]] + delta[1]) * 100) / 100});
+    });
+  }
+  reset?.addEventListener('click', () => updateConfig(defaults));
+  document.querySelector('#rainbow-random')?.addEventListener('click', () => {
+    updateConfig({density: (1 + Math.floor(Math.random() * 10)) * 10, rows: 3 + Math.floor(Math.random() * 8),
+      length: Math.random() * 2 - 1, width: Math.random() * 2 - 1,
+      shape: Math.random() < .5 ? 'line' : 'circle', linecap: Math.random() < .5 ? 'round' : 'square'});
   });
   function renderColors() {
     const styles = getComputedStyle(document.documentElement);
-    const palettes = {
-      auto: Array.from({length: 10}, (_, i) => styles.getPropertyValue(`--rainbow-${i + 1}`).trim()),
-      spectrum: ['#ff406e', '#ff753e', '#ffba4b', '#e9db49', '#8bd271', '#39bab5', '#3884ef', '#6e61f5', '#a24de6', '#cc58b5'],
-      cool: ['#62d4e5', '#45bce6', '#389fdf', '#3684dc', '#4269db', '#5d53d6', '#7844cd', '#903ec4', '#aa41b8', '#bf4ca8']
-    };
-    const palette = palettes[config.palette];
+    const palette = Array.from({length: 10}, (_, i) => styles.getPropertyValue(`--rainbow-${i + 1}`).trim());
     colors = Array.from({length: config.rows}, (_, row) => {
       const index = row / (config.rows - 1) * (palette.length - 1);
       const lo = Math.floor(index), hi = Math.ceil(index), fraction = index - lo;
@@ -203,7 +254,7 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
     if (introStart === null) introStart = now;
     const progress = introFinished ? 1 : Math.min(1, (now - introStart) / 2000);
     if (progress === 1) introFinished = true;
-    const targetBlend = pointer.active && !motion.matches ? config.motion / 100 : 0;
+    const targetBlend = pointer.active && !motion.matches ? 1 : 0;
     if (motion.matches) {
       blend = 0; blendVelocity = 0; introFinished = true;
     } else {
@@ -214,15 +265,28 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
       blend += blendVelocity * dt;
     }
     ctx.clearRect(0, 0, width, height);
-    ctx.lineCap = 'square';
-    ctx.lineWidth = config.width;
+    ctx.lineCap = config.linecap;
+    ctx.lineWidth = config.shape === 'line' ? 10 - 8 * config.width : 13.5 - 11.5 * config.width;
+    const segmentLength = 22 + 18 * config.length;
     for (const mark of marks) {
       if (!introFinished && mark.progress > progress) continue;
       let delta = Math.atan2(smooth.y - mark.y, smooth.x - mark.x) - mark.base;
       // A straight mark has no arrowhead, so take the nearest equivalent angle.
       delta = (((delta + Math.PI / 2) % Math.PI + Math.PI) % Math.PI) - Math.PI / 2;
-      const angle = mark.base + delta * blend;
-      const dx = Math.cos(angle) * config.length / 2, dy = Math.sin(angle) * config.length / 2;
+      let angle = mark.base + delta * blend;
+      let halfLength = segmentLength / 2;
+      if (config.shape === 'circle') {
+        // Classic art uses near-zero strokes (dots) away from the pointer,
+        // stretching radially inside a 300px neighbourhood.
+        const editing = controls && !controls.hidden && !motion.matches;
+        const px = editing ? width * .2 : smooth.x;
+        const py = editing ? height * .5 : smooth.y;
+        const distance = Math.hypot(mark.x - px, mark.y - py);
+        const influence = (editing ? 1 : blend) * clamp(1 - distance / 300, 0, 1);
+        angle = Math.atan2(mark.y - py, mark.x - px);
+        halfLength = .01 + halfLength * influence;
+      }
+      const dx = Math.cos(angle) * halfLength, dy = Math.sin(angle) * halfLength;
       ctx.strokeStyle = colors[mark.row] || '#686dc3';
       ctx.beginPath();
       ctx.moveTo(mark.x - dx, mark.y - dy);
@@ -239,7 +303,7 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
     if (!frame && desktop.matches && !document.hidden) frame = requestAnimationFrame(draw);
   }
   art.addEventListener('pointermove', event => {
-    if (event.pointerType === 'touch' || motion.matches || !desktop.matches) return;
+    if (event.pointerType === 'touch' || motion.matches || !desktop.matches || (controls && !controls.hidden)) return;
     const rect = canvas.getBoundingClientRect();
     pointer.x = (event.clientX - rect.left) * width / rect.width;
     pointer.y = (event.clientY - rect.top) * height / rect.height;
@@ -263,6 +327,7 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
   });
   new ResizeObserver(resize).observe(art);
   new MutationObserver(renderColors).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+  new MutationObserver(syncControls).observe(document.documentElement, {attributes: true, attributeFilter: ['lang']});
   renderColors();
   resize();
 })();

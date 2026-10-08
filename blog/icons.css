@@ -1,0 +1,21 @@
+/* Standard 24-unit outline geometry; custom motion follows the observed controls. */
+[data-icon-ready]>.j-icon{display:block;width:20px;height:20px;min-width:20px;flex:none;overflow:visible;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transform-origin:center;transition:none!important}
+[data-icon-ready=search]>.j-icon{transform-origin:45.833333% 45.833333%}
+[data-icon-ready] .speaker-body{transform-origin:30% center}
+[data-icon-ready] .speaker-shift,[data-icon-ready] .sound-wave-inner,[data-icon-ready] .sound-wave-outer{transform-origin:center;transition:none}
+.header-actions [data-icon-ready]>.j-icon{width:20px;height:20px}
+.footer-social-links{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.footer-social-links [data-icon-ready]{display:flex;align-items:center;justify-content:center;width:32px;height:32px;min-width:32px;padding:0;border:0;border-radius:50%;background:none;color:#294e60;position:relative;text-decoration:none;transform:none;transition:color 150ms;outline-offset:3px}
+.footer-social-links [data-icon-ready]::before{content:"";position:absolute;inset:-4px}
+.footer-social-links [data-icon-ready]:hover{color:#142c3d}
+html[data-theme=dark] .footer-social-links [data-icon-ready]{color:#b8d5e7}
+html[data-theme=dark] .footer-social-links [data-icon-ready]:hover{color:#eff8ff}
+@media(prefers-reduced-motion:reduce){[data-icon-ready],[data-icon-ready] *{transition:none!important;animation:none!important}}
+/* Each control nudges its own drawing; its clickable area stays in place. */
+.icon-button[data-icon-ready]:hover{transform:none}
+[data-icon-ready] .search-shine{opacity:0;transition:opacity 0ms}
+html[data-theme=dark] [data-icon-ready] .search-shine{opacity:.5;transition:opacity 500ms 400ms}
+@keyframes blog-sun-ray-enter{from{transform:scale(0)}to{transform:scale(1)}}
+@media(prefers-reduced-motion:no-preference){
+.theme-rays-enter .theme-dots circle{transform-origin:12px 12px;animation:blog-sun-ray-enter 500ms cubic-bezier(.07,.7,.35,1.35) var(--ray-delay) backwards}
+}

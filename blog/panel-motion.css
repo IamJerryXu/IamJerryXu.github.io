@@ -1,0 +1,23 @@
+/* Instrument-panel shutters. They never intercept pointer or keyboard input. */
+#rainbow-controls .panel-motion-host{position:relative}
+#rainbow-controls .panel-motion-layer{position:absolute;inset:0;z-index:4;overflow:hidden;overflow:clip;border-radius:3px;pointer-events:none;user-select:none}
+#rainbow-controls .panel-motion-layer *{pointer-events:none}
+#rainbow-controls .panel-motion-shadow{position:absolute;inset:0;background:#0c0f12;animation:panel-shadow-out 900ms ease var(--panel-stage-delay,0ms) both}
+#rainbow-controls .panel-motion-cover{position:absolute;left:0;right:0;height:50%;background:#fff;outline:1px solid #9198a1;animation:panel-cover-open 400ms cubic-bezier(.44,.22,.9,.7) var(--panel-stage-delay,0ms) both}
+#rainbow-controls .panel-motion-cover--top{top:0;--panel-slide-y:calc(-100% - 2px)}
+#rainbow-controls .panel-motion-cover--bottom{bottom:0;--panel-slide-y:calc(100% + 2px)}
+#rainbow-controls .panel-motion-doors{--panel-door-curve:cubic-bezier(.66,0,.31,1.01)}
+#rainbow-controls .panel-motion-doors>.panel-motion-shadow{animation-duration:1200ms;animation-delay:700ms}
+#rainbow-controls .panel-motion-door-wrapper{position:absolute;top:0;bottom:0;width:calc(50% - 1px);overflow:hidden;overflow:clip;animation:panel-door-open 700ms var(--panel-door-curve) 700ms both}
+#rainbow-controls .panel-motion-door-wrapper--left{left:0;--panel-slide-x:calc(-50% - 2px)}
+#rainbow-controls .panel-motion-door-wrapper--right{right:0;--panel-slide-x:calc(50% + 2px)}
+#rainbow-controls .panel-motion-door{position:absolute;top:0;bottom:0;width:50%;background:#fff;outline:1px solid #9198a1}
+#rainbow-controls .panel-motion-door--inner{animation:panel-door-open 500ms var(--panel-door-curve) 400ms both}
+#rainbow-controls .panel-motion-door-wrapper--left .panel-motion-door--inner{left:50%;border-radius:0 4px 4px 0;--panel-slide-x:calc(-100% - 2px)}
+#rainbow-controls .panel-motion-door-wrapper--right .panel-motion-door--inner{right:50%;border-radius:4px 0 0 4px;--panel-slide-x:calc(100% + 2px)}
+#rainbow-controls .panel-motion-door-wrapper--left .panel-motion-door--outer{left:0;border-radius:0 6px 6px 0;box-shadow:1px 0 2px #0003,2px 0 4px #0003}
+#rainbow-controls .panel-motion-door-wrapper--right .panel-motion-door--outer{right:0;border-radius:6px 0 0 6px;box-shadow:-1px 0 2px #0003,-2px 0 4px #0003}
+@keyframes panel-shadow-out{to{opacity:0}}
+@keyframes panel-cover-open{to{transform:translateY(var(--panel-slide-y))}}
+@keyframes panel-door-open{to{transform:translateX(var(--panel-slide-x))}}
+@media(prefers-reduced-motion:reduce){#rainbow-controls .panel-motion-layer{display:none}}

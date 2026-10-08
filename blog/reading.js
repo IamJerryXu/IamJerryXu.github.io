@@ -32,13 +32,14 @@
   function tick(now) {
     frame = 0;
     const dt = Math.min((now - (last || now - 16.7))/1000, .032);last=now;
-    velocity += ((target-offset)*160 - velocity*25)*dt;offset += velocity*dt;
+    velocity += ((target-offset)*160 - velocity*32)*dt;offset += velocity*dt;
     paint();
     if(Math.abs(target-offset)>.08 || Math.abs(velocity)>.08) frame=requestAnimationFrame(tick);
     else {offset=target;last=0;paint();}
   }
   function update() {
     target = ratio < .2 ? -226 : ratio < .5 ? -150 : -82;
+    character.classList.toggle('is-happy', ratio >= .5);
     if (reduced.matches || !visibleSize.matches || document.hidden) {
       cancelAnimationFrame(frame);frame=0;last=0;velocity=0;
       offset = reduced.matches ? -82 : target;paint();return;
@@ -47,4 +48,17 @@
   }
   new IntersectionObserver(entries => {ratio=entries[0].intersectionRatio;update();},{threshold:[0,.2,.5,1]}).observe(footer);
   reduced.addEventListener('change',update);visibleSize.addEventListener('change',update);document.addEventListener('visibilitychange',update);paint();
+})();
+
+// Reference interaction: Random gives the character a brief, reversible smile.
+(() => {
+  const character = document.querySelector('.scene-portrait');
+  const random = document.querySelector('#rainbow-random');
+  if (!character || !random) return;
+  let moodTimer;
+  random.addEventListener('click', () => {
+    clearTimeout(moodTimer);
+    character.classList.add('is-happy');
+    moodTimer = setTimeout(() => character.classList.remove('is-happy'), 800);
+  });
 })();
