@@ -108,7 +108,7 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 .portrait-toggle[aria-pressed="true"] .portrait-university{animation:emblem-appear 520ms cubic-bezier(.2,.75,.3,1) var(--emblem-delay) both}
 .portrait-toggle[aria-pressed="true"] .portrait-university img{will-change:transform;animation:emblem-float-y var(--float-duration) cubic-bezier(.45,0,.55,1) var(--float-phase) infinite}
 .portrait-toggle[aria-pressed="true"] .portrait-university--westlake img,
-.portrait-toggle[aria-pressed="true"] .portrait-university--hkust img{animation-name:emblem-float-x}
+.portrait-toggle[aria-pressed="true"] .portrait-university--hkust img{animation-name:emblem-sway;transform-origin:center center}
 @keyframes emblem-appear{
   0%{opacity:0;transform:translateY(calc(-50% + 7px))}
   70%{opacity:1;transform:translateY(calc(-50% - 1px))}
@@ -118,9 +118,9 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
   0%,100%{transform:translate3d(0,2px,0)}
   50%{transform:translate3d(0,-2px,0)}
 }
-@keyframes emblem-float-x{
-  0%,100%{transform:translate3d(-3px,0,0)}
-  50%{transform:translate3d(3px,0,0)}
+@keyframes emblem-sway{
+  0%,100%{transform:translate3d(0,2px,0) rotate(-5deg)}
+  50%{transform:translate3d(0,-2px,0) rotate(5deg)}
 }
 /* When the page is close to the viewport edge, use the oval's empty corners. */
 @media(min-width:925px) and (max-width:1015px),(min-width:1280px) and (max-width:1370px){
