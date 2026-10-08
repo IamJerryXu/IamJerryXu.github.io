@@ -65,7 +65,7 @@ def render_blog(root, tr, theme_init, theme_button):
 <div class="footer-inner">
 <div class="footer-identity"><a class="identity" href="/blog/"><span>Yongxue</span>{star}<span>Xu</span></a>
 <p class="footer-greeting">{tr('Thanks for stopping by.','谢谢你来逛逛。')}</p>
-<div class="footer-follow"><p>{tr('Follow new articles and project notes.','通过 RSS 关注新文章和项目笔记。')}</p><a class="footer-subscribe" href="/blog/feed.xml">{tr('Subscribe via RSS','RSS 订阅')} <span aria-hidden="true">↗</span></a></div></div>
+<div class="footer-follow"><p>{tr('Open to research collaborations and interesting projects.','欢迎交流科研合作和有趣的项目。')}</p><a class="footer-subscribe" href="mailto:jiangjiangcheng753@gmail.com">{tr('Get in touch','联系我')} <span aria-hidden="true">↗</span></a></div></div>
 <div class="footer-directory"><div class="footer-columns">
 <section><h2>{tr('Browse','内容')}</h2><a href="/blog/">{tr('All articles','全部文章')}</a><a href="/blog/astradraw/">{tr('Project notes','项目笔记')}</a><a href="/blog/#rainbow" data-open-rainbow>{tr('Interactive rainbow','互动彩虹')}</a></section>
 <section><h2>{tr('Projects','项目')}</h2><a href="https://github.com/IamJerryXu/AstraDraw" target="_blank" rel="noopener noreferrer">AstraDraw ↗</a><a href="https://inkmind-ai.com/" target="_blank" rel="noopener noreferrer">InkMind ↗</a></section>
