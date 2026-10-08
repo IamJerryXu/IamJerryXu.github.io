@@ -6,7 +6,8 @@ def render_blog(root, tr, theme_init, theme_button):
     def asset(path):
         return '/' + path + '?v=' + hashlib.sha256((root/path).read_bytes()).hexdigest()[:12]
     portrait=asset('assets/blog-character-seated-v1.webp')
-    star='<svg class="name-mark" viewBox="0 0 18 38" aria-hidden="true"><path class="name-mark-y" d="M3.4 3.6c1.1 2.2 2.1 4.6 3.3 6.1m0 0c1.7-2.3 3.5-4.7 5.2-7m-5.2 7c.3 1.6.6 3.2 1.1 4.8"/><path class="name-mark-x" d="M5 27.2c2.3 2 4.1 4.7 6.3 7.1m-.1-7.6c-1.8 2.6-3.6 4.9-6 7.2"/></svg>'
+    star='<svg class="name-mark" viewBox="0 0 18 38" aria-hidden="true"><path class="name-mark-upper" d="M2.8 5.4C4 7.6 4.5 10.2 6.2 11.1C7.1 11.6 8.1 8.1 8.6 6.8L13.6 9.8C13.8 7.2 12.8 4.8 11.9 2"/><path class="name-mark-lower" d="M5.5 33.4C7.1 31.2 8.2 28.8 8.5 26.3C9.1 29 10.3 31.1 12.1 32.5"/></svg>'
+
 
 
     gear='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m9 3-.6 2.4-2 .9L4 5.6 2 9l1.8 1.7v2.6L2 15l2 3.4 2.4-.7 2 .9L9 21h4l.6-2.4 2-.9 2.4.7 2-3.4-1.8-1.7v-2.6L20 9l-2-3.4-2.4.7-2-.9L13 3Z"/><circle cx="11" cy="12" r="3"/></svg>'
