@@ -4,31 +4,10 @@
   if (!scene) return;
   const toggle = scene.querySelector('.portrait-toggle');
   const universities = scene.querySelector('.portrait-universities');
-  const schools = [...universities.querySelectorAll('button')];
-  const emblemDialog = document.querySelector('#profile-emblem-dialog');
-  const closeEmblem = emblemDialog.querySelector('.profile-emblem-close');
-  let emblemImage = emblemDialog.querySelector('img');
-  let lastEmblem = null;
+  const schools = [...universities.querySelectorAll('a')];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let pinned = false, preview = false, inView = true;
   const chinese = () => document.documentElement.lang.startsWith('zh');
-  function openEmblem(school) {
-    lastEmblem = school;
-    // A new image node prevents the previously opened emblem from flashing.
-    const image = new Image();
-    image.id = 'profile-emblem-full';
-    image.src = school.querySelector('img').src;
-    image.alt = school.dataset[chinese() ? 'schoolZh' : 'schoolEn'];
-    emblemImage.replaceWith(image);
-    emblemImage = image;
-    emblemDialog.showModal();
-  }
-  closeEmblem.addEventListener('click', () => emblemDialog.close());
-  emblemDialog.addEventListener('click', event => {
-    const r = emblemDialog.getBoundingClientRect();
-    if (event.target === emblemDialog && (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom)) emblemDialog.close();
-  });
-  emblemDialog.addEventListener('close', () => lastEmblem?.focus({preventScroll:true}));
   function render() {
     toggle.classList.toggle('is-memoji', pinned || preview);
     toggle.setAttribute('aria-pressed', String(pinned));
@@ -40,10 +19,8 @@
     universities.setAttribute('aria-hidden', String(!pinned));
     schools.forEach(school => {
       school.tabIndex = pinned ? 0 : -1;
-      school.setAttribute('aria-label', `${school.dataset[chinese() ? 'schoolZh' : 'schoolEn']}${chinese() ? '，放大校徽' : ', enlarge emblem'}`);
+      school.setAttribute('aria-label', `${school.dataset[chinese() ? 'schoolZh' : 'schoolEn']}${chinese() ? '，打开学校官网（新窗口）' : ', open university website (new tab)'}`);
     });
-    emblemDialog.setAttribute('aria-label', chinese() ? '校徽大图' : 'University emblem');
-    closeEmblem.setAttribute('aria-label', chinese() ? '关闭校徽大图' : 'Close emblem');
   }
   toggle.addEventListener('pointerenter', event => {
     if (event.pointerType === 'mouse' && matchMedia('(hover:hover)').matches) { preview = true; render(); }
@@ -68,7 +45,6 @@
     };
     state.reset = () => { cancelAnimationFrame(state.frame);state.frame=0;state.time=0;state.x=state.y=state.vx=state.vy=state.tx=state.ty=0;draw(); };
     const target = (x,y) => { if(reduced.matches||document.hidden||!inView){state.reset();return;}state.tx=x;state.ty=y;if(!state.frame)state.frame=requestAnimationFrame(tick); };
-    school.addEventListener('click', () => openEmblem(school));
     school.addEventListener('pointermove', e => {if(e.pointerType!=='mouse')return;const r=school.getBoundingClientRect();target((e.clientX-r.x-r.width/2)/r.width*5,(e.clientY-r.y-r.height/2)/r.height*5);});
     school.addEventListener('pointerleave', () => target(0,0));
     return state;

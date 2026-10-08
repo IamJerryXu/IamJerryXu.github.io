@@ -9,14 +9,14 @@
 .portrait-scene.is-expanded .portrait-hint{visibility:hidden}
 .portrait-scene.is-expanded .portrait-universities{opacity:1;visibility:visible}
 .portrait-universities{z-index:3}
-.portrait-university{appearance:none;padding:0;border:0;background:transparent;cursor:zoom-in;pointer-events:none;border-radius:50%;text-decoration:none!important;outline-offset:5px;touch-action:manipulation;--badge-x:0px;--badge-y:0px}
+.portrait-university{appearance:none;padding:0;border:0;background:transparent;cursor:pointer;pointer-events:none;border-radius:50%;text-decoration:none!important;outline-offset:5px;touch-action:manipulation;--badge-x:0px;--badge-y:0px}
 .portrait-scene.is-expanded .portrait-university{pointer-events:auto;animation:profile-badge-enter 540ms cubic-bezier(.2,.85,.25,1.16) var(--emblem-delay) both}
 .badge-response,.badge-float{display:block;width:100%;height:100%}
 .badge-response{transform:translate(var(--badge-x),var(--badge-y));transition:filter 220ms;will-change:auto}
 .badge-float{animation:emblem-float-y var(--float-duration) cubic-bezier(.45,0,.55,1) var(--float-phase) infinite}
 .portrait-university--westlake .badge-float,.portrait-university--hkust .badge-float{animation-name:emblem-sway}
 .author__avatar .portrait-university img{transition:scale 240ms cubic-bezier(.2,.8,.3,1),filter 240ms;filter:drop-shadow(0 2px 2px #203c4c08)}
-.portrait-university:hover img,.portrait-university:focus-visible img{scale:1.08;filter:drop-shadow(0 4px 5px #203c4c20)}
+.portrait-university:hover img,.portrait-university:focus-visible img{scale:1.16;filter:drop-shadow(0 4px 5px #203c4c20)}
 .portrait-university:active img{scale:1.01}
 .portrait-scene:not(.is-expanded) .badge-float,.portrait-scene.is-paused .badge-float{animation-play-state:paused}
 @keyframes profile-badge-enter{from{opacity:0;transform:translateY(calc(-50% + 6px)) scale(.86)}to{opacity:1;transform:translateY(-50%) scale(1)}}
@@ -42,17 +42,4 @@ html[data-theme=dark] .portrait-university--westlake .badge-float::before,html[d
 .portrait-hint-orbit circle:nth-child(4){fill:#b4a0bf;transition-delay:105ms}
 .portrait-toggle:hover~.portrait-hint .portrait-hint-orbit,.portrait-toggle:focus-visible~.portrait-hint .portrait-hint-orbit{rotate:0deg}
 .portrait-toggle:hover~.portrait-hint circle,.portrait-toggle:focus-visible~.portrait-hint circle{scale:1}
-#profile-emblem-dialog{box-sizing:border-box;width:min(400px,calc(100vw - 48px),calc(100dvh - 48px));max-width:none;max-height:none;aspect-ratio:1;margin:auto;padding:54px;border:1px solid #e3e8ec;border-radius:28px;background:#fff;color:#536775;box-shadow:0 24px 100px #0b18232b;overflow:visible}
-#profile-emblem-dialog[open]{animation:profile-emblem-in 260ms cubic-bezier(.2,.8,.3,1) both}
-#profile-emblem-dialog::backdrop{background:#1b283d6b;backdrop-filter:blur(5px);animation:profile-backdrop-in 200ms ease both}
-#profile-emblem-full{display:block;width:100%;height:100%;object-fit:contain}
-.profile-emblem-close{display:grid;place-items:center;position:absolute;top:10px;right:10px;width:36px;height:36px;padding:8px;border:0;border-radius:50%;background:transparent;color:inherit;transition:background 180ms,rotate 220ms}
-.profile-emblem-close svg{width:20px;height:20px}
-.profile-emblem-close:hover{background:#edf1f4;rotate:90deg}
-html[data-theme=dark] #profile-emblem-dialog{background:#f4f6f8;border-color:#dce2e7;box-shadow:0 24px 100px #0006}
-html[data-theme=dark] #profile-emblem-dialog::backdrop{background:#070c16a6}
-@keyframes profile-emblem-in{from{opacity:0;transform:translateY(5px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes profile-backdrop-in{from{opacity:0}to{opacity:1}}
-@media(max-width:540px){.portrait-hint{gap:4px}.portrait-hint-orbit{width:11px;height:11px}#profile-emblem-dialog{padding:44px;border-radius:24px}}
-@media(prefers-reduced-motion:reduce){#profile-emblem-dialog[open],#profile-emblem-dialog::backdrop{animation:none}.profile-emblem-close{transition:none}}
-@media print{#profile-emblem-dialog{display:none!important}}
+@media(max-width:540px){.portrait-hint{gap:4px}.portrait-hint-orbit{width:11px;height:11px}}
