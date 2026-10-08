@@ -1,0 +1,22 @@
+Wotfard
+webfont license
+
+thin, extralight, light, regular, medium,
+semibold, bold & italics
+                                   webfont: for your website or web application
+
+by downloading and/or installing   this font family can be embed into one (1) website (unlimited
+atipo® fonts you agree to the      pageviews) so that it can be displayed on any browser. this license does
+following user license terms:      not need to be renewed. the fonts are provided in woff, woff2, eot
+                                   and ttf formats.
+
+                                   not allowed:
+                                   _ no desktop installation allowed.
+                                   _ developers need a desktop license to work with the fonts on
+                                     their computers.
+
+
+                                   other licenses (app, game, enterprise, educational, etc)
+
+                                   please get in contact with us: info@atipo.es
+
