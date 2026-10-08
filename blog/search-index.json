@@ -1,0 +1,58 @@
+[
+  {
+    "title_en": "AstraDraw: from references to editable figures",
+    "title_zh": "AstraDraw：从参考图到可编辑的科研图",
+    "summary_en": "A workflow for drawing research figures with Astra and refining them in PowerPoint.",
+    "summary_zh": "用 Astra 画科研图，再在 PowerPoint 里继续修改。",
+    "url": "/blog/astradraw/"
+  },
+  {
+    "title_en": "LaST: Latent State Tracking for Persistent Object Memory in Video World Models",
+    "title_zh": "LaST: Latent State Tracking for Persistent Object Memory in Video World Models",
+    "summary_en": "Submitted to ICLR 2027",
+    "summary_zh": "已投稿 ICLR 2027",
+    "url": "/#last"
+  },
+  {
+    "title_en": "TRACE: Typed Reference-Aware Conversational Editing for Humanoid Motion Diffusion",
+    "title_zh": "TRACE: Typed Reference-Aware Conversational Editing for Humanoid Motion Diffusion",
+    "summary_en": "Submitted to ICLR 2027",
+    "summary_zh": "已投稿 ICLR 2027",
+    "url": "/#trace"
+  },
+  {
+    "title_en": "Graph Domain Adaptation Does Not End with Representation Learning",
+    "title_zh": "Graph Domain Adaptation Does Not End with Representation Learning",
+    "summary_en": "Submitted to ICLR 2027",
+    "summary_zh": "已投稿 ICLR 2027",
+    "url": "/#evigda"
+  },
+  {
+    "title_en": "Learning to Reason with Persistent Object States for Video Instance Segmentation",
+    "title_zh": "Learning to Reason with Persistent Object States for Video Instance Segmentation",
+    "summary_en": "Submitted to AAAI 2027",
+    "summary_zh": "已投稿 AAAI 2027",
+    "url": "/#posreasoner"
+  },
+  {
+    "title_en": "Solving the Robust Influence Maximization Problem in Competitive Multilayer Networks via a Diffusion-Aware Role-Guided Evolutionary Approach",
+    "title_zh": "Solving the Robust Influence Maximization Problem in Competitive Multilayer Networks via a Diffusion-Aware Role-Guided Evolutionary Approach",
+    "summary_en": "IEEE Transactions on Network Science and Engineering · Under review",
+    "summary_zh": "IEEE Transactions on Network Science and Engineering · 审稿中",
+    "url": "/#influence"
+  },
+  {
+    "title_en": "LMM-Track4D: Eliciting 4D Dynamic Reasoning in LMMs via Trajectory-Grounded Dialogue",
+    "title_zh": "LMM-Track4D: Eliciting 4D Dynamic Reasoning in LMMs via Trajectory-Grounded Dialogue",
+    "summary_en": "Submitted to NeurIPS 2026",
+    "summary_zh": "已投稿 NeurIPS 2026",
+    "url": "/#track4d"
+  },
+  {
+    "title_en": "Identifying Critical Nodes with Deep Learning and Reinforcement Learning: A Case Study on Urban Road Networks",
+    "title_zh": "Identifying Critical Nodes with Deep Learning and Reinforcement Learning: A Case Study on Urban Road Networks",
+    "summary_en": "GBCESC 2025",
+    "summary_zh": "GBCESC 2025",
+    "url": "/#road"
+  }
+]

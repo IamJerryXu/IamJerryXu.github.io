@@ -78,34 +78,59 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
   const desktop = matchMedia('(min-width: 768px)');
   const settings = document.querySelector('.rainbow-settings');
   const controls = document.querySelector('#rainbow-controls');
-  const intensity = document.querySelector('#rainbow-motion');
   const reset = document.querySelector('#rainbow-reset');
   const width = 1000, height = 520;
   const pointer = {x: 500, y: 260, active: false};
   const smooth = {x: 500, y: 260, vx: 0, vy: 0};
   const marks = [];
   let colors = [], frame = 0, last = 0, introStart = null, introFinished = motion.matches;
-  let strength = .65, blend = 0, blendVelocity = 0;
+  const storageKey = 'blog-rainbow-settings';
+  const defaults = Object.freeze({motion: 65, rows: 10, length: 26, width: 10, spacing: 16, palette: 'auto'});
+  const bounds = {motion: [0, 100], rows: [3, 14], length: [8, 40], width: [2, 14], spacing: [10, 24]};
+  const inputs = Object.fromEntries(Object.keys(defaults).map(key => [key, document.querySelector(`#rainbow-${key}`)]));
+  let config = {...defaults}, blend = 0, blendVelocity = 0;
+  function sanitize(key, value) {
+    if (key === 'palette') return ['auto', 'spectrum', 'cool'].includes(value) ? value : defaults.palette;
+    if ((typeof value !== 'number' && typeof value !== 'string') || value === '' || !Number.isFinite(Number(value))) return defaults[key];
+    return Math.round(Math.max(bounds[key][0], Math.min(bounds[key][1], Number(value))));
+  }
   try {
-    const stored = localStorage.getItem('blog-rainbow-motion');
-    if (stored !== null && Number.isFinite(Number(stored))) strength = Math.max(0, Math.min(1, Number(stored) / 100));
+    const raw = localStorage.getItem(storageKey);
+    const saved = raw === null ? {motion: localStorage.getItem('blog-rainbow-motion') ?? defaults.motion} : JSON.parse(raw);
+    if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
+      for (const key of Object.keys(defaults)) config[key] = sanitize(key, saved[key] ?? defaults[key]);
+    }
   } catch {}
-  if (intensity) intensity.value = String(Math.round(strength * 100));
-
-  for (let row = 0; row < 10; row++) {
-    const radius = 400 + row * 15.75;
-    const count = Math.round(Math.PI * radius / 65);
-    for (let i = 0; i <= count; i++) {
-      const arc = Math.PI + i / count * Math.PI;
-      marks.push({
-        x: width / 2 + Math.cos(arc) * radius,
-        y: height * 1.325 + Math.sin(arc) * radius,
-        base: arc + Math.PI / 2,
-        progress: i / count,
-        row
-      });
+  function syncControls() {
+    for (const [key, input] of Object.entries(inputs)) {
+      if (input) input.value = String(config[key]);
+      const output = document.querySelector(`#rainbow-${key}-value`);
+      if (output) output.textContent = String(config[key]) + (key === 'motion' ? '%' : '');
     }
   }
+  function saveConfig() {
+    try { localStorage.setItem(storageKey, JSON.stringify(config)); } catch {}
+  }
+  function buildMarks() {
+    marks.length = 0;
+    for (let row = 0; row < config.rows; row++) {
+      // Keep the rainbow centred when its row count or spacing changes.
+      const radius = 470.875 + (row - (config.rows - 1) / 2) * config.spacing;
+      const count = Math.round(Math.PI * radius / 65);
+      for (let i = 0; i <= count; i++) {
+        const arc = Math.PI + i / count * Math.PI;
+        marks.push({
+          x: width / 2 + Math.cos(arc) * radius,
+          y: height * 1.325 + Math.sin(arc) * radius,
+          base: arc + Math.PI / 2,
+          progress: i / count,
+          row
+        });
+      }
+    }
+  }
+  syncControls();
+  buildMarks();
   function setControls(open, restoreFocus = false) {
     if (!settings || !controls) return;
     controls.hidden = !open;
@@ -122,17 +147,39 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
       if (event.key === 'Escape' && !controls.hidden) setControls(false, true);
     });
   }
-  function updateStrength(value) {
-    strength = Math.max(0, Math.min(1, Number(value) / 100));
-    if (intensity) intensity.value = String(Math.round(strength * 100));
-    try { localStorage.setItem('blog-rainbow-motion', String(Math.round(strength * 100))); } catch {}
-    wake();
+  for (const [key, input] of Object.entries(inputs)) {
+    input?.addEventListener(key === 'palette' ? 'change' : 'input', () => {
+      config[key] = sanitize(key, input.value);
+      syncControls();
+      saveConfig();
+      if (key === 'rows' || key === 'spacing') buildMarks();
+      if (key === 'rows' || key === 'palette') renderColors();
+      wake();
+    });
   }
-  intensity?.addEventListener('input', () => updateStrength(intensity.value));
-  reset?.addEventListener('click', () => updateStrength(65));
+  reset?.addEventListener('click', () => {
+    config = {...defaults};
+    syncControls();
+    saveConfig();
+    buildMarks();
+    renderColors();
+  });
   function renderColors() {
     const styles = getComputedStyle(document.documentElement);
-    colors = Array.from({length: 10}, (_, i) => styles.getPropertyValue(`--rainbow-${i + 1}`).trim());
+    const palettes = {
+      auto: Array.from({length: 10}, (_, i) => styles.getPropertyValue(`--rainbow-${i + 1}`).trim()),
+      spectrum: ['#ff406e', '#ff753e', '#ffba4b', '#e9db49', '#8bd271', '#39bab5', '#3884ef', '#6e61f5', '#a24de6', '#cc58b5'],
+      cool: ['#62d4e5', '#45bce6', '#389fdf', '#3684dc', '#4269db', '#5d53d6', '#7844cd', '#903ec4', '#aa41b8', '#bf4ca8']
+    };
+    const palette = palettes[config.palette];
+    colors = Array.from({length: config.rows}, (_, row) => {
+      const index = row / (config.rows - 1) * (palette.length - 1);
+      const lo = Math.floor(index), hi = Math.ceil(index), fraction = index - lo;
+      // CSS palettes use hex colours; interpolate rather than repeating rows.
+      const parse = hex => hex.match(/^#[0-9a-f]{6}$/i) ? [1, 3, 5].map(start => parseInt(hex.slice(start, start + 2), 16)) : null;
+      const a = parse(palette[lo]), b = parse(palette[hi]);
+      return a && b ? `rgb(${a.map((channel, i) => Math.round(channel + (b[i] - channel) * fraction)).join(',')})` : palette[Math.round(index)];
+    });
     wake();
   }
   function resize() {
@@ -156,7 +203,7 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
     if (introStart === null) introStart = now;
     const progress = introFinished ? 1 : Math.min(1, (now - introStart) / 2000);
     if (progress === 1) introFinished = true;
-    const targetBlend = pointer.active && !motion.matches ? strength : 0;
+    const targetBlend = pointer.active && !motion.matches ? config.motion / 100 : 0;
     if (motion.matches) {
       blend = 0; blendVelocity = 0; introFinished = true;
     } else {
@@ -168,14 +215,14 @@ languageButton.addEventListener('click', () => setLanguage(document.documentElem
     }
     ctx.clearRect(0, 0, width, height);
     ctx.lineCap = 'square';
-    ctx.lineWidth = 10;
+    ctx.lineWidth = config.width;
     for (const mark of marks) {
       if (!introFinished && mark.progress > progress) continue;
       let delta = Math.atan2(smooth.y - mark.y, smooth.x - mark.x) - mark.base;
       // A straight mark has no arrowhead, so take the nearest equivalent angle.
       delta = (((delta + Math.PI / 2) % Math.PI + Math.PI) % Math.PI) - Math.PI / 2;
       const angle = mark.base + delta * blend;
-      const dx = Math.cos(angle) * 13.25, dy = Math.sin(angle) * 13.25;
+      const dx = Math.cos(angle) * config.length / 2, dy = Math.sin(angle) * config.length / 2;
       ctx.strokeStyle = colors[mark.row] || '#686dc3';
       ctx.beginPath();
       ctx.moveTo(mark.x - dx, mark.y - dy);

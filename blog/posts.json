@@ -1,8 +1,8 @@
 {
-  "title_en": "Research figures you can keep editing",
-  "title_zh": "让科研图可以继续修改",
-  "summary_en": "A short introduction to AstraDraw: references, editable figures, and small, deliberate revisions.",
-  "summary_zh": "从参考图到可编辑 PPT，再到局部修改：AstraDraw 的绘图思路。",
+  "title_en": "AstraDraw: from references to editable figures",
+  "title_zh": "AstraDraw：从参考图到可编辑的科研图",
+  "summary_en": "A workflow for drawing research figures with Astra and refining them in PowerPoint.",
+  "summary_zh": "用 Astra 画科研图，再在 PowerPoint 里继续修改。",
   "paragraphs": [
     {
       "en": "A research figure rarely ends with its first draft. Labels move, arrows change, and the layout needs to work at paper size. Keeping these parts editable makes room for the next revision.",
