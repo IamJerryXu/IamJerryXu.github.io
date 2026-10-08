@@ -147,3 +147,70 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 .profile-inkmind img{display:block;width:100%;height:auto}
 .profile-inkmind:hover{opacity:.75}
 @media(max-width:924px){.profile-inkmind{width:145px;margin-top:14px}}
+
+/* A compact theme control sits beside the language switch. */
+html{color-scheme:light}
+#theme-toggle{display:inline-flex;align-items:center;justify-content:center;flex:0 0 34px;width:34px;height:34px;padding:7px;border:0;border-radius:50%;background:transparent;color:#7a8288;line-height:1;touch-action:manipulation}
+#theme-toggle:hover{color:#346888;background:rgba(52,104,136,.07)}
+#theme-toggle svg{display:block;width:20px;height:20px;flex-shrink:0}
+#theme-toggle .theme-icon--sun{display:none}
+html[data-theme="dark"] #theme-toggle .theme-icon--moon{display:none}
+html[data-theme="dark"] #theme-toggle .theme-icon--sun{display:block}
+@media(max-width:540px){#theme-toggle{flex-basis:32px;width:32px;height:32px;padding:6px}}
+
+/* Change the page surfaces and typography, leaving photographic content intact. */
+@media screen{
+  html[data-theme="dark"]{color-scheme:dark;background:#1c1d20}
+  html[data-theme="dark"] body,
+  html[data-theme="dark"] .masthead,
+  html[data-theme="dark"] .greedy-nav{background:#1c1d20;color:#dedfe2}
+  html[data-theme="dark"] .masthead,
+  html[data-theme="dark"] .page__content section h2,
+  html[data-theme="dark"] .page__content h1,
+  html[data-theme="dark"] footer{border-color:#35383d}
+  html[data-theme="dark"] a{color:#91b9d8}
+  html[data-theme="dark"] .greedy-nav a,
+  html[data-theme="dark"] #language,
+  html[data-theme="dark"] #theme-toggle{color:#b8bdc5}
+  html[data-theme="dark"] .greedy-nav a:hover,
+  html[data-theme="dark"] #language:hover,
+  html[data-theme="dark"] #theme-toggle:hover{color:#eef0f4}
+  html[data-theme="dark"] #theme-toggle:hover{background:rgba(255,255,255,.07)}
+  html[data-theme="dark"] .greedy-nav .visible-links a:before{background:#818b97}
+  html[data-theme="dark"] .author__urls{background:transparent;border-color:#35383d}
+  html[data-theme="dark"] .author__urls a{color:inherit}
+  html[data-theme="dark"] .paper{color:#dedfe2}
+  html[data-theme="dark"] .page__content a,
+  html[data-theme="dark"] .page__content .paper-links a,
+  html[data-theme="dark"] .paper .citation summary,
+  html[data-theme="dark"] #figure-original{color:#91b9d8}
+  html[data-theme="dark"] .page__content .paper h3 a,
+  html[data-theme="dark"] .page__content .news-list a{color:inherit}
+  html[data-theme="dark"] .page__content .news-list a:hover{color:#91b9d8}
+  html[data-theme="dark"] .page__content #about p.contact-note,
+  html[data-theme="dark"] .page__content .publication-note,
+  html[data-theme="dark"] .date small,
+  html[data-theme="dark"] .honors-list time,
+  html[data-theme="dark"] footer,
+  html[data-theme="dark"] .copy-status,
+  html[data-theme="dark"] #figure-status{color:#a5adb7}
+  html[data-theme="dark"] .award{color:#e8a18b}
+  html[data-theme="dark"] .citation-content{background:#25272c;border-color:#41454d}
+  html[data-theme="dark"] .citation pre{color:#dedfe2;background:none}
+  html[data-theme="dark"] .copy-bib{background:#30333a;border-color:#626b77;color:#e4e7eb}
+  html[data-theme="dark"] .copy-bib:hover{background:#3a3e47}
+  html[data-theme="dark"] #figure-dialog,
+  html[data-theme="dark"] #wechat-dialog{background:#25272c;color:#dedfe2;border-color:#535a65}
+  html[data-theme="dark"] .close-figure{color:inherit}
+  html[data-theme="dark"] #figure-dialog::backdrop,
+  html[data-theme="dark"] #wechat-dialog::backdrop{background:rgba(0,0,0,.75)}
+  html[data-theme="dark"] .skip-link{background:#25272c;color:#e4e7eb}
+  html[data-theme="dark"] a:focus-visible,
+  html[data-theme="dark"] button:focus-visible,
+  html[data-theme="dark"] summary:focus-visible{outline-color:#91b9d8}
+  html[data-theme="dark"] .figure-button img{box-shadow:3px 3px 9px rgba(0,0,0,.45)}
+  html[data-theme="dark"] .profile-inkmind img{filter:invert(1)}
+  html[data-theme="dark"] img.contact-icon{filter:invert(1) grayscale(1)}
+  html[data-theme="dark"] ::selection{background:#4b627a;color:#fff}
+}
+@media print{#theme-toggle{display:none}html[data-theme="dark"]{color-scheme:light}}

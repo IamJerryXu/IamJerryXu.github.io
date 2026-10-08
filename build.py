@@ -62,10 +62,19 @@ university_badges = ''.join(
  university_badge(key, name)
  for key, name in [('sjtu','上海交通大学 · Shanghai Jiao Tong University'), ('westlake','西湖大学 · Westlake University'), ('sysu','中山大学 · Sun Yat-sen University'), ('hkust','香港科技大学 · HKUST')]
 )
+THEME_INIT = """(() => {
+ let theme;
+ try { theme = localStorage.getItem('academic-theme'); } catch {}
+ if (theme !== 'light' && theme !== 'dark') theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+ document.documentElement.dataset.theme = theme;
+ document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#1c1d20' : '#ffffff';
+})();"""
+THEME_BUTTON = '<button id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode"><svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.9 13a9 9 0 0 1-9.9-9.9A9 9 0 1 0 20.9 13Z"/></svg><svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button>'
 body=f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{SITE_TITLE}</title>
 <meta name="description" content="{e(SITE_DESCRIPTION,quote=True)}">
 <meta name="theme-color" content="#ffffff">
+<script>{THEME_INIT}</script>
 <link rel="canonical" href="{SITE_URL}">
 <meta property="og:title" content="{SITE_TITLE}">
 <meta property="og:description" content="{e(SITE_DESCRIPTION,quote=True)}">
@@ -75,7 +84,7 @@ body=f'''<!doctype html>
 <script type="application/ld+json">{SITE_SCHEMA}</script>
 <link rel="icon" href="data:,"><link rel="stylesheet" href="morin-base.css?v={hashlib.sha256((ROOT/'morin-base.css').read_bytes()).hexdigest()[:12]}"><link rel="stylesheet" href="style.css?v={hashlib.sha256((ROOT/'style.css').read_bytes()).hexdigest()[:12]}"><script src="site.js?v={hashlib.sha256((ROOT/'site.js').read_bytes()).hexdigest()[:12]}" defer></script></head>
 <body><a class="skip-link" href="#content">Skip to content</a>
-<div class="masthead"><div class="masthead__inner-wrap"><nav class="greedy-nav" aria-label="Main navigation"><ul class="visible-links"><li class="masthead__menu-item"><a href="#about">{tr('Homepage','主页')}</a></li>{''.join('<li class="masthead__menu-item"><a href="#'+i+'">'+tr(en,zh)+'</a></li>' for i,en,zh in [('about','About Me','关于我'),('news','News','动态'),('publications','Publications','论文'),('honors','Honors and Awards','荣誉与奖项'),('education','Education','教育经历'),('internships','Internships','实习经历')])}</ul></nav><button id="language" type="button" aria-label="切换到中文">中文</button></div></div>
+<div class="masthead"><div class="masthead__inner-wrap"><nav class="greedy-nav" aria-label="Main navigation"><ul class="visible-links"><li class="masthead__menu-item"><a href="#about">{tr('Homepage','主页')}</a></li>{''.join('<li class="masthead__menu-item"><a href="#'+i+'">'+tr(en,zh)+'</a></li>' for i,en,zh in [('about','About Me','关于我'),('news','News','动态'),('publications','Publications','论文'),('honors','Honors and Awards','荣誉与奖项'),('education','Education','教育经历'),('internships','Internships','实习经历')])}</ul></nav>{THEME_BUTTON}<button id="language" type="button" aria-label="切换到中文">中文</button></div></div>
 <div id="main"><aside class="sidebar sticky" aria-label="Profile"><div class="profile_box"><div class="author__avatar"><button class="portrait-toggle" type="button" aria-label="Toggle emoji portrait" aria-pressed="false" title="Toggle emoji portrait"><span class="portrait-frame"><img class="portrait portrait--photo" {preview_attrs("portraits", "portrait-cv.png", PORTRAIT_SIZES)} alt="Yongxue Xu" fetchpriority="high" decoding="async"><img class="portrait portrait--extension" {preview_attrs("portraits", "portrait-shirt-extension-v1.png", PORTRAIT_SIZES)} alt="" aria-hidden="true" decoding="async"><img class="portrait portrait--memoji" {preview_attrs("portraits", "portrait-memoji-v1.png", PORTRAIT_SIZES)} alt="" aria-hidden="true" decoding="async"></span><span class="portrait-sparkle" aria-hidden="true">✨</span><span class="portrait-universities" aria-hidden="true">{university_badges}</span></button></div>
 <div class="author__content"><h1 class="author__name">Yongxue Xu</h1><p class="author__bio">{tr('Undergraduate Student','本科生')}</p></div>
 <div class="author__urls-wrapper"><p class="research-interests">{tr('Research interests span 4D scene understanding, video generation, world models, and world&#8209;action models.','研究兴趣涵盖 4D 场景理解、视频生成、世界模型与世界-动作模型。')}</p><ul class="author__urls social-icons">
