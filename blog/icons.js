@@ -114,11 +114,13 @@
           }
           model.soundEnabled = enabled;
         }
-        animator.set({rotate:[boop&&!enabled?-10:0,300,15],inner:[boop&&enabled?1.5:0,300,15],outer:[boop&&enabled?2:0,300,15,50]},initial);
+        animator.set({rotate:[boop&&!enabled?-10:0,300,10],inner:[boop&&enabled?1.5:0,300,10],outer:[boop&&enabled?2:0,300,10,50]},initial);
       }
       if (type === 'theme') {
         const dark = root.dataset.theme === 'dark';
-        animator.set({rotate:[dark?(boop?28:40):90,160,30],radius:[dark?9.5:boop?4:6,boop?300:160,boop?20:30],cut:[dark?4:-4,160,30],envelope:[dark?10.5:7,160,30],dots:[dark?0:1,210,20],orbit:[boop?9:10,300,20]},initial);
+        if(model.lastTheme !== dark){model.themeTransitionUntil=initial?0:performance.now()+500;model.lastTheme=dark;}
+        const transitioning=performance.now()<model.themeTransitionUntil;
+        animator.set({rotate:[dark?(boop?28:40):90,transitioning?160:300,transitioning?30:10],radius:[dark?9.5:boop?4:6,boop&&!transitioning?300:160,boop&&!transitioning?20:30],cut:[dark?4:-4,160,30],envelope:[dark?10.5:7,160,30],dots:[dark?0:1,210,20],orbit:[boop?9:10,300,10]},initial);
       }
     };
     const end = () => { clearTimeout(model.timer); model.booped=false; model.update(); };
@@ -140,6 +142,23 @@
     }
     models.push(model);
   }
+  // The small external-link mark has its own 150ms boop, independent of toolbar icons.
+  document.querySelectorAll('.nav-panel a[href]').forEach(link => {
+    if(!link.textContent.includes('↗') && link.target !== '_blank')return;
+    const walker=document.createTreeWalker(link,NodeFilter.SHOW_TEXT);
+    let textNode;while((textNode=walker.nextNode()))if(textNode.nodeValue.includes('↗'))textNode.nodeValue=textNode.nodeValue.replace(/\s*↗/g,'');
+    const mask=`menu-external-${++uniqueId}`;
+    link.insertAdjacentHTML('beforeend',`<svg class="menu-external-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><mask id="${mask}"><rect width="24" height="24" fill="white" stroke="none"/><rect x="10" y="0" width="16" height="14" fill="black" stroke="none"/></mask><rect x="3" y="6" width="15" height="15" rx="2" mask="url(#${mask})"/><path class="menu-external-arrow" d="M10 14L20 4h-6h6v6"/></svg>`);
+    const arrow=link.querySelector('.menu-external-arrow');
+    const model={button:link,type:'external',booped:false,timer:0};
+    const animator=spring(v=>arrow.setAttribute('d',`M10 14L${v.end} ${24-v.end}h-6h6v6`));
+    model.update=(initial=false)=>animator.set({end:[model.booped&&!reduce.matches?21:20,300,10]},initial);
+    const end=()=>{clearTimeout(model.timer);model.booped=false;model.update();};
+    const start=()=>{if(reduce.matches)return;clearTimeout(model.timer);model.booped=true;model.update();model.timer=setTimeout(end,150);};
+    link.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch')start();});
+    link.addEventListener('pointerleave',end);link.addEventListener('focus',()=>{if(link.matches(':focus-visible'))start();});link.addEventListener('blur',end);
+    model.update(true);models.push(model);
+  });
   const header = {search:document.querySelector('#search-toggle'),sound:document.querySelector('#sound-toggle'),theme:document.querySelector('#theme-toggle')};
   Object.entries(header).forEach(([type,button])=>mount(button,type));
   const labels = {'RSS':'rss','Google Scholar':'scholar','GitHub':'github','LinkedIn':'linkedin'};

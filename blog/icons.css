@@ -19,3 +19,8 @@ html[data-theme=dark] [data-icon-ready] .search-shine{opacity:.5;transition:opac
 @media(prefers-reduced-motion:no-preference){
 .theme-rays-enter .theme-dots circle{transform-origin:12px 12px;animation:blog-sun-ray-enter 500ms cubic-bezier(.07,.7,.35,1.35) var(--ray-delay) backwards}
 }
+.menu-external-icon{display:inline-block;width:.7em;height:.7em;margin-left:.2em;vertical-align:baseline;transform:translateY(.0625rem);overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.7;transition:opacity 200ms;pointer-events:none}
+.nav-panel a:hover .menu-external-icon,.nav-panel a:focus-visible .menu-external-icon{opacity:1}
+.menu-external-arrow{transition:stroke 250ms}
+.nav-panel a:hover .menu-external-arrow,.nav-panel a:focus-visible .menu-external-arrow{stroke:var(--blue)}
+@media(prefers-reduced-motion:reduce){.menu-external-icon,.menu-external-arrow{transition:none!important}}

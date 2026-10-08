@@ -1,0 +1,23 @@
+.article-end-meta{display:flex;justify-content:space-between;gap:48px;padding-top:72px}
+.article-updated{display:flex;flex-direction:column;flex:2 1}
+.article-end-meta .article-meta-label{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:13px;line-height:1.5;font-weight:300;font-style:italic;-webkit-font-smoothing:subpixel-antialiased;color:var(--muted);margin:0;letter-spacing:0;-webkit-text-stroke:0}
+.article-updated .article-meta-label{margin-left:1px}
+.article-updated-date{font-size:18px;line-height:27px;font-weight:500;margin-top:5.2px}
+.article-hit-meta{display:flex;flex-direction:column;min-height:72px;text-align:right;min-width:90px}
+.article-hit-slot{position:relative;isolation:isolate;height:38px;margin-top:5px;--hit-bg:hsl(213 80% 95%);--hit-active:#4a5882;--hit-inactive:#d1ddeb}
+html[data-theme=dark] .article-hit-slot{--hit-bg:hsl(210 15% 6%);--hit-active:#a5b3c0;--hit-inactive:#243142}
+.article-hit-display{position:absolute;top:0;right:-8px;display:block;border:0;border-radius:2px;padding:0;background:transparent;color:inherit;cursor:pointer;font:inherit;line-height:0}
+.article-hit-display svg{display:block;max-width:none;overflow:visible}
+.article-hit-display:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.hit-counter-face{fill:var(--hit-bg)}
+.hit-segment-background{fill:var(--hit-inactive)}
+.hit-segment-active{fill:var(--hit-active);opacity:0;transition:opacity 250ms}
+.hit-segment-active[data-lit=true]{opacity:1}
+.hit-counter-bevel{opacity:0}
+.hit-counter-glow{fill:#76ff03;filter:blur(2px);opacity:0}
+.article-hit-display[data-is-on=true]{--hit-bg:#222;--hit-active:#76ff03;--hit-inactive:#315324}
+.article-hit-display[data-is-on=true] .hit-counter-bevel{opacity:1}
+.article-hit-display[data-is-on=true] .hit-counter-glow{opacity:.5}
+.article-hit-unknown{display:block;color:var(--muted);font-size:18px;line-height:27px}
+@media(max-width:563px){.article-end-meta .article-meta-label{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.hit-segment-active{transition:none}}

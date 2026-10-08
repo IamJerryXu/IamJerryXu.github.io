@@ -135,6 +135,12 @@
       // An unavailable audio device must never affect navigation or controls.
     }
   }
+  // The article counter shares the existing sound preference and playback lifecycle.
+  document.addEventListener('blog:counter-sound', event => {
+    const kind = event.detail?.kind;
+    if (kind === 'stop') stopSound('counter');
+    else if (['down', 'on', 'off'].includes(kind)) playSound(kind, {group: 'counter'});
+  });
   soundButton?.addEventListener('click', () => {
     soundEnabled = !soundEnabled;
     soundRevision++;

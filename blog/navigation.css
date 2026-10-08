@@ -45,3 +45,12 @@ html[data-theme=dark] .nav-panel{box-shadow:0 2px 8px #0004,0 16px 32px #0004}
 @keyframes nav-shell-enter{from{transform:translateY(-8px);opacity:0}to{transform:translateY(0);opacity:1}}
 @supports not (transition-timing-function:linear(0,1)){.nav-shell{--nav-travel:cubic-bezier(.31,.15,.11,.99)}}
 @media(prefers-reduced-motion:reduce){.nav-shell,.nav-shell-tip,.nav-shell .nav-shell-content,.nav-shell.is-entering .nav-shell-surface,.nav-shell.is-closing .nav-shell-surface{animation:none;transition:none}}
+/* The reference tip is a spring-shaped Bezier cap, rather than a rotated square. */
+.nav-shell-tip{top:-11.5px;left:calc(var(--nav-tip-x,50%) - 16px);width:32px;height:12px;transform:none;border:0;border-radius:0;background:none;overflow:visible;color:var(--bg);transform-origin:50% 100%}
+.nav-shell-tip path{fill:currentColor;stroke:none}
+.nav-shell.is-entering .nav-shell-clip{animation:nav-content-enter 200ms 100ms backwards}
+@keyframes nav-content-enter{from{opacity:0}to{opacity:1}}
+html[data-theme=dark] .nav-shell .nav-shell-content{box-shadow:none}
+@media(prefers-reduced-motion:reduce){.nav-shell.is-entering .nav-shell-clip{animation:none}}
+/* On first mount the clipper supplies the fade; crossfade delays apply only when travelling. */
+.nav-shell.is-entering .nav-shell-content[data-active=true]{transition:none}

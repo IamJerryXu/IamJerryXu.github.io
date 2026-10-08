@@ -7,9 +7,36 @@
   let current = null, closingTimer = 0;
   const shell = document.createElement('div');
   shell.className = 'nav-shell'; shell.hidden = true;
-  shell.innerHTML = '<div class="nav-shell-surface"><span class="nav-shell-tip" aria-hidden="true"></span><div class="nav-shell-clip"></div></div>';
+  shell.innerHTML = '<div class="nav-shell-surface"><svg class="nav-shell-tip" width="32" height="12" viewBox="0 0 32 12" aria-hidden="true"><path/></svg><div class="nav-shell-clip"></div></div>';
   document.body.append(shell);
   const clip = shell.querySelector('.nav-shell-clip');
+  const tipPath = shell.querySelector('.nav-shell-tip path');
+  const tip = {value:0,velocity:0,target:0,frame:0,last:0,timer:0};
+  function drawTip() {
+    const p=tip.value,y=6*(1-p);
+    tipPath.setAttribute('d',`M0 12 C${8*p} 12 9.6 ${y} 16 ${y} C22.4 ${y} ${32-8*p} 12 32 12 Z`);
+  }
+  function tickTip(now) {
+    tip.frame=0;
+    const dt=Math.min((now-(tip.last||now-16.67))/1000,.032);tip.last=now;
+    tip.velocity+=((tip.target-tip.value)*300-tip.velocity*18)*dt;
+    tip.value+=tip.velocity*dt;
+    if(Math.abs(tip.target-tip.value)<.001&&Math.abs(tip.velocity)<.001){tip.value=tip.target;tip.velocity=0;tip.last=0;}
+    else tip.frame=requestAnimationFrame(tickTip);
+    drawTip();
+  }
+  function targetTip(value,instant=false) {
+    tip.target=value;
+    if(instant||reduced.matches){cancelAnimationFrame(tip.frame);tip.frame=0;tip.last=0;tip.value=value;tip.velocity=0;drawTip();}
+    else if(!tip.frame)tip.frame=requestAnimationFrame(tickTip);
+  }
+  function revealTip(travel) {
+    clearTimeout(tip.timer);
+    if(reduced.matches){targetTip(1,true);return;}
+    targetTip(0,!travel);
+    tip.timer=setTimeout(()=>targetTip(1),travel?150:100);
+  }
+  drawTip();
   const isDesktop = item => desktop.matches && !item.mobile;
   const links = item => [...item.panel.querySelectorAll('a[href],button:not([disabled])')].filter(el=>getComputedStyle(el).display!=='none');
   function hidePanel(item) {
@@ -26,6 +53,7 @@
   function close(restore = false) {
     if (!current) return;
     const item=current; current=null;
+    clearTimeout(tip.timer);cancelAnimationFrame(tip.frame);tip.frame=0;tip.last=0;tip.velocity=0;tip.target=tip.value;
     deactivate(item,isDesktop(item));
     if (!shell.hidden) {
       shell.classList.add('is-closing');
@@ -58,6 +86,7 @@
     if(isDesktop(item)){
       shell.hidden=false;
       position(item,!travel);
+      revealTip(travel);
       if(!travel){
         shell.classList.remove('is-entering'); void shell.offsetWidth; shell.classList.add('is-entering');
       }else shell.classList.remove('is-entering');
@@ -108,7 +137,7 @@
   document.addEventListener('focusin',event=>{if(outside(event.target))close();});
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&current){event.preventDefault();close(true);}});
   desktop.addEventListener('change',()=>{close();shell.hidden=true;items.forEach(hidePanel);});
-  reduced.addEventListener('change',()=>{if(reduced.matches){items.filter(item=>item!==current).forEach(hidePanel);if(!current)shell.hidden=true;}});
+  reduced.addEventListener('change',()=>{if(reduced.matches){clearTimeout(tip.timer);targetTip(current?1:0,true);items.filter(item=>item!==current).forEach(hidePanel);if(!current)shell.hidden=true;}});
   addEventListener('resize',()=>{if(current&&isDesktop(current))position(current,true);},{passive:true});
   addEventListener('scroll',()=>{if(current&&isDesktop(current))close();},{passive:true});
   const mobile=document.querySelector('#mobile-menu');
