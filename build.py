@@ -51,16 +51,19 @@ SITE_URL = 'https://jerrysnow.me/'
 SITE_TITLE = 'Yongxue Xu - Homepage'
 SITE_DESCRIPTION = 'Yongxue Xu, undergraduate at Sun Yat-sen University. Research in video generation, world models, and multimodal spatiotemporal understanding.'
 SITE_SCHEMA = json.dumps({'@context':'https://schema.org','@type':'WebSite','@id':SITE_URL+'#website','url':SITE_URL,'name':'Yongxue Xu','alternateName':['Yongxue Xu Homepage','徐永雪']}, ensure_ascii=False)
-def university_badge(key, name):
+def university_badge(key, name, name_zh, url):
  asset = ROOT / 'assets' / 'universities' / (key + '.svg')
  if not asset.exists():
   asset = asset.with_suffix('.png')
- url = asset.relative_to(ROOT).as_posix()
+ image_url = asset.relative_to(ROOT).as_posix()
  version = hashlib.sha256(asset.read_bytes()).hexdigest()[:12]
- return f'<span class="portrait-university portrait-university--{key}" title="{name}"><img src="{url}?v={version}" alt="" width="96" height="96"></span>'
+ return f'<a class="portrait-university portrait-university--{key}" href="{url}" target="_blank" rel="noopener noreferrer" aria-label="{name}" data-school-en="{name}" data-school-zh="{name_zh}" aria-describedby="profile-school-tooltip" tabindex="-1"><span class="badge-response"><span class="badge-float"><img src="{image_url}?v={version}" alt="" width="96" height="96"></span></span></a>'
 university_badges = ''.join(
- university_badge(key, name)
- for key, name in [('sjtu','上海交通大学 · Shanghai Jiao Tong University'), ('westlake','西湖大学 · Westlake University'), ('sysu','中山大学 · Sun Yat-sen University'), ('hkust','香港科技大学 · HKUST')]
+ university_badge(*school) for school in [
+ ('sjtu','Shanghai Jiao Tong University','上海交通大学','https://www.sjtu.edu.cn/'),
+ ('westlake','Westlake University','西湖大学','https://www.westlake.edu.cn/'),
+ ('sysu','Sun Yat-sen University','中山大学','https://www.sysu.edu.cn/'),
+ ('hkust','Hong Kong University of Science and Technology','香港科技大学','https://hkust.edu.hk/')]
 )
 THEME_INIT = """(() => {
  let theme;
@@ -82,10 +85,10 @@ body=f'''<!doctype html>
 <meta property="og:url" content="{SITE_URL}">
 <meta property="og:type" content="website">
 <script type="application/ld+json">{SITE_SCHEMA}</script>
-<link rel="icon" href="data:,"><link rel="stylesheet" href="morin-base.css?v={hashlib.sha256((ROOT/'morin-base.css').read_bytes()).hexdigest()[:12]}"><link rel="stylesheet" href="style.css?v={hashlib.sha256((ROOT/'style.css').read_bytes()).hexdigest()[:12]}"><script src="site.js?v={hashlib.sha256((ROOT/'site.js').read_bytes()).hexdigest()[:12]}" defer></script></head>
+<link rel="icon" href="data:,"><link rel="stylesheet" href="morin-base.css?v={hashlib.sha256((ROOT/'morin-base.css').read_bytes()).hexdigest()[:12]}"><link rel="stylesheet" href="style.css?v={hashlib.sha256((ROOT/'style.css').read_bytes()).hexdigest()[:12]}"><link rel="stylesheet" href="profile.css?v={hashlib.sha256((ROOT/'profile.css').read_bytes()).hexdigest()[:12]}"><link rel="stylesheet" href="homepage-figures.css?v={hashlib.sha256((ROOT/'homepage-figures.css').read_bytes()).hexdigest()[:12]}"><script src="profile.js?v={hashlib.sha256((ROOT/'profile.js').read_bytes()).hexdigest()[:12]}" defer></script><script src="site.js?v={hashlib.sha256((ROOT/'site.js').read_bytes()).hexdigest()[:12]}" defer></script></head>
 <body><a class="skip-link" href="#content">Skip to content</a>
 <div class="masthead"><div class="masthead__inner-wrap"><nav class="greedy-nav" aria-label="Main navigation"><ul class="visible-links"><li class="masthead__menu-item"><a href="#about">{tr('Homepage','主页')}</a></li>{''.join('<li class="masthead__menu-item"><a href="#'+i+'">'+tr(en,zh)+'</a></li>' for i,en,zh in [('about','About Me','关于我'),('news','News','动态'),('publications','Publications','论文'),('honors','Honors and Awards','荣誉与奖项'),('education','Education','教育经历'),('internships','Internships','实习经历')])}<li class="masthead__menu-item"><a class="blog-entry" href="blog/">Playground</a></li></ul></nav>{THEME_BUTTON}<button id="language" type="button" aria-label="切换到中文">中文</button></div></div>
-<div id="main"><aside class="sidebar sticky" aria-label="Profile"><div class="profile_box"><div class="author__avatar"><button class="portrait-toggle" type="button" aria-label="Toggle emoji portrait" aria-pressed="false" title="Toggle emoji portrait"><span class="portrait-frame"><img class="portrait portrait--photo" {preview_attrs("portraits", "portrait-cv.png", PORTRAIT_SIZES)} alt="Yongxue Xu" fetchpriority="high" decoding="async"><img class="portrait portrait--extension" {preview_attrs("portraits", "portrait-shirt-extension-v1.png", PORTRAIT_SIZES)} alt="" aria-hidden="true" decoding="async"><img class="portrait portrait--memoji" {preview_attrs("portraits", "portrait-memoji-transparent-v1.png", PORTRAIT_SIZES)} alt="" aria-hidden="true" decoding="async"></span><span class="portrait-sparkle" aria-hidden="true">✨</span><span class="portrait-universities" aria-hidden="true">{university_badges}</span></button></div>
+<div id="main"><aside class="sidebar sticky" aria-label="Profile"><div class="profile_box"><div class="author__avatar"><div class="portrait-scene"><button class="portrait-toggle" type="button" aria-label="Show emoji portrait and university links" aria-pressed="false" aria-controls="profile-universities" aria-describedby="portrait-hint"><span class="portrait-frame"><img class="portrait portrait--photo" {preview_attrs("portraits", "portrait-cv.png", PORTRAIT_SIZES)} alt="Yongxue Xu" fetchpriority="high" decoding="async"><img class="portrait portrait--extension" {preview_attrs("portraits", "portrait-shirt-extension-v1.png", PORTRAIT_SIZES)} alt="" aria-hidden="true" decoding="async"><img class="portrait portrait--memoji" {preview_attrs("portraits", "portrait-memoji-transparent-v1.png", PORTRAIT_SIZES)} alt="" aria-hidden="true" decoding="async"></span><span class="portrait-sparkle" aria-hidden="true">✨</span></button><div id="profile-universities" class="portrait-universities" aria-hidden="true" inert>{university_badges}</div><span id="portrait-hint" class="portrait-hint">{tr("Click to explore","点击展开")}</span></div></div>
 <div class="author__content"><h1 class="author__name">Yongxue Xu</h1><p class="author__bio">{tr('Undergraduate Student','本科生')}</p></div>
 <div class="author__urls-wrapper"><p class="research-interests">{tr('Research interests span 4D scene understanding, video generation, world models, and world&#8209;action models.','研究兴趣涵盖 4D 场景理解、视频生成、世界模型与世界-动作模型。')}</p><ul class="author__urls social-icons">
 <li class="profile-location">{icon('pin')}{tr('Shenzhen, China','中国 · 深圳')}</li>
@@ -107,6 +110,7 @@ body=f'''<!doctype html>
 <section id="education"><h2>📖 {tr('Education','教育经历')}</h2><div class="education-row"><div><strong>{tr('Sun Yat-sen University','中山大学')}</strong><p>{tr('B.Eng. in Intelligent Science and Technology (in progress)','智能科学与技术 · 工学学士（在读）')}</p><p>{tr('School of Intelligent Systems Engineering','智能工程学院')}</p></div><span class="date">2023.09 – 2027.06<br><small>{tr('(expected)','（预计）')}</small></span></div></section>
 <section id="internships"><h2>💻 {tr('Internships','实习经历')}</h2><ul class="internship-list">{''.join(internship(n) for n in D['internships'])}</ul></section>
 </div></div></main></div>
+<div id="profile-school-tooltip" class="profile-school-tooltip" role="tooltip" hidden></div>
 <dialog id="figure-dialog" aria-labelledby="figure-caption"><button class="close-figure" type="button" aria-label="Close figure">×</button><img id="figure-full" alt=""><p id="figure-caption"></p><p id="figure-status" role="status"></p><a id="figure-original" target="_blank" rel="noopener">{tr("Open full-size image","查看原尺寸图片")}</a></dialog>
 <dialog id="wechat-dialog" aria-labelledby="wechat-title"><button id="wechat-close" type="button" aria-label="Close WeChat QR code">×</button><h2 id="wechat-title">{tr('Connect on WeChat','添加微信')}</h2><img src="assets/wechat-card.webp" loading="lazy" decoding="async" alt="Yongxue Xu's WeChat QR code" width="720" height="917"><p>{tr('Scan the QR code to add me on WeChat.','扫描二维码，添加我的微信。')}</p></dialog>
 </body></html>'''
