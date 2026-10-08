@@ -33,6 +33,7 @@ function setLanguage(language) {
   document.documentElement.lang = isChinese ? 'zh-CN' : 'en';
   document.querySelectorAll('[data-en][data-zh]').forEach(el => { el.innerHTML = el.dataset[language]; });
   document.querySelectorAll('[data-alt-en][data-alt-zh]').forEach(el => { el.alt = el.dataset[isChinese ? 'altZh' : 'altEn']; });
+  document.querySelectorAll('[data-placeholder-en][data-placeholder-zh]').forEach(el => { el.placeholder = el.dataset[isChinese ? 'placeholderZh' : 'placeholderEn']; });
   languageButton.textContent = isChinese ? 'EN' : '中文';
   languageButton.setAttribute('aria-label', isChinese ? 'Switch to English' : '切换到中文');
   updateThemeLabel();

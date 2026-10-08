@@ -212,7 +212,7 @@
     if (typeof value !== 'string' || !value.trim()) return null;
     try {
       const url = new URL(value, location.origin);
-      if (url.protocol !== 'https:' && !(url.protocol === 'http:' && url.origin === location.origin)) return null;
+      if (url.origin !== location.origin || !/^\/blog\/[a-z0-9-]+\/$/.test(url.pathname)) return null;
       return url.href;
     } catch { return null; }
   }
@@ -221,21 +221,37 @@
     results.replaceChildren();
     const query = input.value.trim().toLocaleLowerCase();
     const words = query.split(/\s+/).filter(Boolean);
-    const matches = searchIndex.filter(entry => {
-      const text = [entry.title_en, entry.title_zh, entry.summary_en, entry.summary_zh].filter(value => typeof value === 'string').join(' ').toLocaleLowerCase();
-      return words.every(word => text.includes(word));
-    });
     const language = chinese() ? 'zh' : 'en';
-    for (const entry of matches.slice(0, 20)) {
+    const normalized = value => String(value || '').toLocaleLowerCase();
+    const contains = (text, word) => /^[a-z0-9-]+$/i.test(word) ? new RegExp('(^|[^a-z0-9])'+word,'i').test(text) : text.includes(word);
+    const matches = searchIndex.map(entry => {
+      const title = normalized(entry.title_en+' '+entry.title_zh);
+      const summary = normalized(entry.summary_en+' '+entry.summary_zh);
+      const sections = Array.isArray(entry.sections) ? entry.sections : [];
+      const content = sections.map(section => normalized([section.title_en,section.title_zh,section.text_en,section.text_zh].join(' ')));
+      if (!words.every(word => contains(title+' '+summary+' '+content.join(' '),word))) return null;
+      const titleMatch = words.every(word=>contains(title,word));
+      const summaryMatch = words.every(word=>contains(summary,word));
+      const sectionIndex = content.findIndex(text=>words.every(word=>contains(text,word)));
+      return {entry,score:titleMatch?3:summaryMatch?2:1,section:words.length&&!titleMatch&&!summaryMatch&&sectionIndex>=0?sections[sectionIndex]:null};
+    }).filter(Boolean).sort((a,b)=>b.score-a.score);
+    for (const {entry,section} of matches.slice(0, 20)) {
       const url = safeUrl(entry.url);
       if (!url) continue;
       const link = document.createElement('a');
       link.className = 'search-result';
-      link.href = url;
+      link.href = url + (section && /^[a-z0-9-]+$/.test(section.id) ? '#'+section.id : '');
       const title = document.createElement('strong');
       title.textContent = String(entry[`title_${language}`] || entry.title_en || entry.title_zh || '');
       const summary = document.createElement('span');
-      summary.textContent = String(entry[`summary_${language}`] || entry.summary_en || entry.summary_zh || '');
+      if (section) {
+        const text = String(section[`text_${language}`] || '');
+        const at = words.map(word=>normalized(text).indexOf(word)).filter(index=>index>=0).sort((a,b)=>a-b)[0] || 0;
+        let start = Math.max(0,at-45);
+        if (!chinese() && start>0) start=text.lastIndexOf(' ',start)+1;
+        const snippet=text.slice(start,start+180);
+        summary.textContent = (start?'…':'')+snippet+(start+180<text.length?'…':'');
+      } else summary.textContent = String(entry[`summary_${language}`] || entry.summary_en || entry.summary_zh || '');
       link.append(title, summary);
       results.append(link);
     }
@@ -248,7 +264,7 @@
     if (indexPromise) return indexPromise;
     loaded = false;
     loadFailed = false;
-    indexPromise = fetch('/blog/search-index.json', {credentials: 'same-origin'})
+    indexPromise = fetch('/blog/search-index.json', {credentials: 'same-origin',cache:'no-cache'})
       .then(response => { if (!response.ok) throw new Error('Search index unavailable'); return response.json(); })
       .then(data => { searchIndex = Array.isArray(data) ? data.filter(entry => entry && typeof entry === 'object' && !Array.isArray(entry) && safeUrl(entry.url)) : []; })
       .catch(() => { loadFailed = true; indexPromise = null; })
@@ -298,6 +314,18 @@
     closeButton?.addEventListener('click', closeSearch);
     dialog.addEventListener('cancel', cancelSearchClose);
     input.addEventListener('input', renderSearch);
+    results.addEventListener('click', event => {
+      if (event.target.closest('a.search-result')) { cancelSearchClose(); dialog.close(); }
+    });
+    dialog.addEventListener('keydown', event => {
+      if (event.isComposing || !['ArrowDown','ArrowUp'].includes(event.key)) return;
+      const links = [...results.querySelectorAll('a')];
+      if (!links.length || (event.target !== input && !links.includes(event.target))) return;
+      event.preventDefault();
+      const current = links.indexOf(document.activeElement);
+      if (event.key === 'ArrowUp' && current <= 0) input.focus();
+      else links[event.key === 'ArrowDown' ? Math.min(current+1,links.length-1) : current-1]?.focus();
+    });
     dialog.addEventListener('close', () => {
       if (dialog.open) return;
       cancelSearchClose();

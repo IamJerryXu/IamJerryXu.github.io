@@ -38,7 +38,7 @@ def render_blog(root, tr, theme_init, theme_button):
     social_links=''.join(f'<a class="icon-button social-tool" href="{url}" aria-label="{label}" title="{label}">{icon(key)}</a>' for key,url,label in social)
     toolbar=f'''<button class="icon-button" id="search-toggle" type="button" aria-label="Search" title="Search (⌘ K)" aria-haspopup="dialog" aria-controls="site-search" aria-expanded="false">{icon('search')}</button><button class="icon-button" id="sound-toggle" type="button" aria-label="Enable sounds" title="Enable sounds" aria-pressed="false">{icon('sound')}</button>{theme_button}{social_links.split("</a>")[0]+"</a>"}'''
     search_cloud=(root/'blog/clouds/search-bottom-cloud.svg').read_text()
-    search_dialog=f'''<dialog id="site-search" aria-labelledby="search-heading"><div class="search-heading"><h2 id="search-heading">{tr('Search','搜索')}</h2><button id="search-close" type="button" aria-label="Close search">×</button></div><label class="visually-hidden" for="site-search-input">{tr('Search articles and research','搜索文章与研究')}</label><input id="site-search-input" type="search" autocomplete="off" placeholder="AstraDraw, world models…"><div id="search-results" aria-live="polite"></div><p id="search-empty" hidden>{tr('No results. Try another keyword.','没有找到结果，试试其他关键词。')}</p><p class="search-hint">{tr('Articles and publications on this site','搜索本站文章与论文')}<kbd>Esc</kbd></p><div class="search-cloud">{search_cloud}</div></dialog>'''
+    search_dialog=f'''<dialog id="site-search" aria-labelledby="search-heading"><div class="search-heading"><h2 id="search-heading">{tr('Search','搜索')}</h2><button id="search-close" type="button" aria-label="Close search">×</button></div><label class="visually-hidden" for="site-search-input">{tr('Search this Blog','搜索本博客')}</label><input id="site-search-input" type="search" autocomplete="off" placeholder="Search articles…" data-placeholder-en="Search articles…" data-placeholder-zh="搜索文章…"><div id="search-results" aria-live="polite"></div><p id="search-empty" hidden>{tr('No results. Try another keyword.','没有找到结果，试试其他关键词。')}</p><p class="search-hint">{tr('Articles in this Blog','搜索本博客文章')}<kbd>Esc</kbd></p><div class="search-cloud">{search_cloud}</div></dialog>'''
     def navigation(prefix):
         categories=f'<a href="/blog/">{tr("All articles","全部文章")}</a><a href="/blog/#research">{tr("Research notes","研究笔记")}</a><a href="/blog/#project-notes">{tr("Project notes","项目笔记")}</a>'
         projects='<a href="https://github.com/IamJerryXu/AstraDraw" target="_blank" rel="noopener noreferrer">AstraDraw ↗</a><a href="https://inkmind-ai.com/" target="_blank" rel="noopener noreferrer">InkMind ↗</a>'
@@ -171,10 +171,32 @@ def render_blog(root, tr, theme_init, theme_button):
             body_html += section_heading(section['id'],section['title_en'],section['title_zh']) + render_blocks(section['blocks'])
         render_article(post,body_html,article_sections)
 
-    search_entries=[dict(title_en=post['title_en'],title_zh=post['title_zh'],summary_en=post['summary_en'],summary_zh=post['summary_zh'],url='/blog/'+post['slug']+'/') for post in posts]
-    content=json.loads((root/'content.json').read_text())
-    for paper in content['papers']:
-        search_entries.append(dict(title_en=paper['title'],title_zh=paper['title'],summary_en=paper['venue'],summary_zh=paper.get('venue_zh',paper['venue']),url='/#'+paper['id']))
+    # Search only content actually rendered in this Blog, never the academic paper list.
+    from html.parser import HTMLParser
+    class PlainText(HTMLParser):
+        def __init__(self):
+            super().__init__(); self.parts=[]
+        def handle_data(self,data):
+            self.parts.append(data)
+    def plain_text(markup):
+        parser=PlainText(); parser.feed(markup)
+        return ' '.join(' '.join(parser.parts).split())
+    search_entries=[]
+    for post in posts:
+        entry=dict(title_en=post['title_en'],title_zh=post['title_zh'],summary_en=post['summary_en'],summary_zh=post['summary_zh'],url='/blog/'+post['slug']+'/',sections=[])
+        entry['sections'].append(dict(id='introduction',title_en='Introduction',title_zh='引言',text_en=plain_text(post['intro_en']),text_zh=plain_text(post['intro_zh'])))
+        if post is note:
+            # The legacy article is authored in the template; extract its displayed bilingual text.
+            for i,(anchor,en,zh) in enumerate(sections):
+                markup=article_content.split(f'<h2 id="{anchor}">',1)[1].split('<h2 id=',1)[0]
+                entry['sections'].append(dict(id=anchor,title_en=en,title_zh=zh,**{
+                    'text_'+lang: ' '.join(plain_text(html.unescape(value)) for value in re.findall(r'data-'+lang+r'="([^\"]*)"',markup))
+                    for lang in ('en','zh')}))
+        else:
+            for section in post['sections']:
+                entry['sections'].append(dict(id=section['id'],title_en=section['title_en'],title_zh=section['title_zh'],**{
+                    'text_'+lang:' '.join(plain_text(block.get(lang,block.get('caption_'+lang,''))) for block in section['blocks']) for lang in ('en','zh')}))
+        search_entries.append(entry)
     (root/'blog/search-index.json').write_text(json.dumps(search_entries,ensure_ascii=False,indent=2)+'\n')
     from xml.sax.saxutils import escape
     items = ''.join(f'<item><title>{escape(post["title_en"])}</title><link>https://jerrysnow.me/blog/{post["slug"]}/</link><guid isPermaLink="true">https://jerrysnow.me/blog/{post["slug"]}/</guid><description>{escape(post["summary_en"])}</description></item>' for post in posts)

@@ -4,69 +4,152 @@
     "title_zh": "LMM-Track4D：跟上一个不断变化的世界",
     "summary_en": "What happens when a video question becomes a conversation? Keeping track of the same person takes geometry, motion, and a little memory.",
     "summary_zh": "当视频问答变成一段连续的对话，模型怎样才能一直跟住同一个人？这需要空间、运动，以及能够延续的状态。",
-    "url": "/blog/lmm-track4d/"
+    "url": "/blog/lmm-track4d/",
+    "sections": [
+      {
+        "id": "introduction",
+        "title_en": "Introduction",
+        "title_zh": "引言",
+        "text_en": "Imagine watching a basketball clip. You ask which player took the shot, then follow up: “Where did he move next?” That tiny word, “he,” asks quite a lot of a model. It needs to carry a person, a place, and a moment from one answer into the next.",
+        "text_zh": "想象你正在看一段篮球视频。你问谁刚才投了篮，又接着问：“他后来往哪儿走了？”一个很短的“他”，其实给模型出了道难题：上一轮说的是谁、当时在哪儿、后面发生了什么，都得接得上。"
+      },
+      {
+        "id": "one-more-question",
+        "title_en": "One more question",
+        "title_zh": "再追问一句",
+        "text_en": "That first answer might only need one frame. Now let the player slip behind someone else, or switch to another camera. “He” still means the same person. The model has to carry that connection through the change, even when a fresh look at the image would leave it unsure. This is the problem behind LMM-Track4D . The “4D” here means three-dimensional space evolving over time. The project asks how a large multimodal model can answer questions about a moving scene while maintaining a consistent account of the objects in it.",
+        "text_zh": "回答第一句，也许只需要看清一帧。接下来，让球员走到别人身后，或者把画面切到另一台相机。“他”指的仍然是刚才那个人。即使新的画面单独拿出来不太好认，模型也得把这条联系接住。 LMM-Track4D 研究的就是这个问题。这里的“4D”指三维空间随时间发生的变化：当场景一直在动，模型能不能一边回答问题，一边持续记录其中物体的状态？"
+      },
+      {
+        "id": "a-path-to-check",
+        "title_en": "A path we can check",
+        "title_zh": "让回答有一条可核对的路径",
+        "text_en": "LMM-Track4D pairs ordinary answers with structured 3D trajectories when the question calls for them. A trajectory ties positions to time. Instead of leaving the whole answer inside a sentence, it gives us a path that can be compared with the scene. That changes what we can ask of the model. “He moved across the court” is easy to read, but leaves plenty unspecified. A sequence of positions lets us examine which target was followed, which part of the clip the answer covers, and whether the movement stays coherent. The task supports an entire short clip or a requested segment of a longer clip. That distinction matters in a conversation: a follow-up can narrow the time window without changing the person we are talking about. The project overview: geometry, persistent state, and trajectory decoding support questions about an evolving scene.",
+        "text_zh": "当问题需要时，LMM-Track4D 会在文字回答之外给出 结构化的三维轨迹 。轨迹把位置和时间对应起来。这样，回答里就有了一条可以与实际场景核对的路径。 这也改变了我们检查回答的方式。“他穿过了球场”很容易理解，却省略了不少信息。有了按时间排列的位置，才能进一步看清：跟踪的是哪个目标，回答覆盖了哪一段视频，前后的运动是否连贯。 任务既支持整段短视频，也支持长视频中指定的一个片段。对连续对话来说，这个区别很实用：追问可以缩小时间范围，却不该把讨论的对象也一起弄丢。 项目总览：通过几何信息、持续状态与轨迹解码，回答有关动态场景的问题。"
+      },
+      {
+        "id": "carrying-state",
+        "title_en": "Carrying the scene forward",
+        "title_zh": "把场景状态接着传下去",
+        "text_en": "Start with the camera. A player can move left in the image because they ran, because the camera moved, or both. Ray–Time Geometry Encoding (RTGE) adds geometry and time to the visual representation, giving the model more than image position to work with. Then we need somewhere to keep track of the player. The persistent TRK state token carries dynamic information from one turn to the next. Think of a small working note beside the video: who we are following, and what has happened to them so far. In the model, this “note” is a learned representation. When the question asks for a path, OSK-RA decodes structured 3D trajectories from this representation, conditioned on the query. We can now look at where the answer goes, as well as read what it says.",
+        "text_zh": "先看相机。一名球员在画面里向左移动，可能是他跑了，也可能是相机动了，或者两者都在动。 Ray–Time Geometry Encoding（RTGE） 把几何与时间信息加入视觉表示，让模型判断运动时，多一些画面位置之外的依据。 接下来，还得有个地方记住这名球员。持续传递的 TRK 状态 token 负责把动态信息从上一轮带到下一轮。可以想象看视频时，手边放着一张小便笺：我们在跟谁，刚才发生了什么。在模型里，这张“便笺”是一组学习得到的表示。 当问题需要一条运动路径时， OSK-RA 会根据问题，从这些表示中解码出结构化三维轨迹。于是，除了读回答，我们还能看看它指向的路径。"
+      },
+      {
+        "id": "testing-continuity",
+        "title_en": "Testing continuity",
+        "title_zh": "怎样检查它有没有跟丢",
+        "text_en": "Track4D-Bench gives us 526 clip-level dialogue samples, pairing questions and answers with trajectory supervision. That lets us check the words against the motion: a fluent answer still has a path to account for. The evaluated baselines give us a comparison, and the reported results improve on them. But the questions are easier to picture than a table of scores: after a follow-up, are we still tracking the same person? Through an occlusion, does the path stay coherent? When the viewpoint changes, can we connect the two observations? There are practical constraints, too. The formulation uses camera geometry and time information, and the paper notes that it still relies on structured supervision. The scale of the benchmark, the length of the temporal window, and the openness of the conversation remain limited. These details matter if you are wondering how directly the method transfers to a video from your phone.",
+        "text_zh": "Track4D-Bench 包含 526 个视频片段级对话样本，把问答和轨迹监督放在一起。这样，文字可以和运动对照着看：回答再流畅，也得交代清楚那条路径。 论文报告了相对所评测基线的改进。不过，比起一张分数表，这几个问题更容易让人抓住重点：追问以后，跟的还是同一个人吗？经过遮挡，路径还连得上吗？换了视角，两次观察还能对应起来吗？ 实际使用还有一些条件。方法需要相机几何与时间信息，论文也明确指出，当前设定仍依赖结构化监督，数据规模、时间跨度和对话的开放程度都有局限。如果你在想能不能直接拿一段手机视频来用，这些条件就很关键。"
+      },
+      {
+        "id": "explore-the-project",
+        "title_en": "Explore the project",
+        "title_zh": "继续看看项目",
+        "text_en": "The public repository currently contains the overview and visual demonstrations. Code, data, checkpoints, and reproduction materials are listed as coming soon. For now, the demo is the clearest way to see what this form of dialogue looks like; it is not yet a complete recipe for reproducing the experiments. You can read the paper on arXiv or explore the project repository and demos . The repository is also where future code and data releases will be announced.",
+        "text_zh": "公开仓库目前提供项目介绍与可视化演示，代码、数据、模型权重和复现材料仍标注为待发布。现阶段，演示能帮助理解这种对话长什么样，但还不足以让读者完整复现实验。 可以阅读 arXiv 论文 ，或到 项目仓库查看介绍与演示 。后续代码和数据的发布信息也以仓库为准。"
+      }
+    ]
   },
   {
     "title_en": "POSReasoner: when an object comes back",
     "title_zh": "POSReasoner：看不见，不等于该忘记",
     "summary_en": "Keeping track of an object means deciding which observations to trust—and when to leave its memory alone.",
     "summary_zh": "持续跟住一个目标，需要判断眼前的证据是否可信，也需要知道什么时候该保留原来的记忆。",
-    "url": "/blog/posreasoner/"
+    "url": "/blog/posreasoner/",
+    "sections": [
+      {
+        "id": "introduction",
+        "title_en": "Introduction",
+        "title_zh": "引言",
+        "text_en": "Picture a sheep walking behind another sheep. For a moment, the one you were following disappears. Then a white, woolly shape comes back into view. Is that your sheep? A video segmentation model needs to answer this question while also drawing its outline. POSReasoner looks at what happens between those two jobs: deciding whether a new observation should change what the model remembers.",
+        "text_zh": "想象一只羊走到了另一只羊身后。你正跟着看的那只，短暂地消失了。等一团白色的身影重新出现，它还是刚才那只羊吗？视频分割模型既要画出轮廓，也要认清前后是不是同一个目标。POSReasoner 关注的，就是这两件事之间的一步：眼前的新观察，是否足以改写模型对它的记忆？"
+      },
+      {
+        "id": "a-good-mask-isnt-enough",
+        "title_en": "A good outline can still belong to the wrong object",
+        "title_zh": "轮廓画对了，也可能认错对象",
+        "text_en": "A mask tells us which pixels belong to an object. Across a video, we also need a stable identity: this mask and that earlier mask belong to the same sheep. A neatly drawn outline is not much comfort if it has quietly switched to the sheep next door. The trouble can outlast the frame where it started. If an ambiguous observation is accepted and written into memory, later observations are compared against that mistake. The model now has the wrong evidence helping it make its next decision. Occlusion makes this particularly awkward: the least reliable moment can become the moment that changes the record.",
+        "text_zh": "分割掩码告诉我们，哪些像素属于一个目标。但看一段视频时，还需要一条稳定的身份线索：这一帧和前面那一帧，圈出来的是 同一只 羊。轮廓再准确，如果悄悄换成了旁边那只，跟踪还是出了错。 更麻烦的是，错误不一定只停留在当前这一帧。如果一次含糊的匹配被写进记忆，后续判断就会以这段错误记录为依据。遮挡恰好容易制造这种情况：画面最不清楚的时候，反而可能成为记忆被改写的时候。"
+      },
+      {
+        "id": "keep-a-state",
+        "title_en": "Keep a record beyond the current frame",
+        "title_zh": "让状态跨过看不见的时刻",
+        "text_en": "POSReasoner gives each object a persistent state. Along with identity information, that state carries confidence and absence history. The current image is therefore one source of evidence, rather than the only evidence used to decide whether to keep its state. This makes a useful distinction possible. “I cannot see it right now” need not mean “forget what we knew about it.” When the object returns, its new observation can be checked against the surviving state. Keeping that history does not prove the match is correct; it gives the model something better to consult than a single uncertain frame. Examples from POSReasoner: identity tracking in crowded scenes and among similar objects, followed by long-term object reactivation. Yellow marks the reference object; teal shows predicted masks.",
+        "text_zh": "POSReasoner 为每个对象保留一份持续存在的状态，其中包含身份信息、置信度和缺席历史。于是，当前画面只是判断的一个依据，不再独自决定这个对象是否还值得被记住。 这让两件原本容易混在一起的事分开了：“现在看不见它”，不等于“应该忘掉它”。等对象重新出现，新观察还能与之前保留下来的状态比较。当然，保留历史并不能保证认对；它只是让模型在犹豫时，不必只依赖眼前这一帧。 POSReasoner 的示例：拥挤场景和相似目标中的身份跟踪，以及长时间缺席后的目标重新激活。黄色标记参考目标，青色表示预测掩码。"
+      },
+      {
+        "id": "propose-then-verify",
+        "title_en": "Make a suggestion. Then check it.",
+        "title_zh": "先提议，再核验",
+        "text_en": "The method separates this decision into two steps: Propose and Verify . Propose forms provisional associations between persistent states and current observations. These are suggestions, not updates that have already been committed to memory. Verify revisits those associations using object history, predicted presence, and competition between identities. That last part matters. Two similar objects may both appear to match the same candidate when considered separately. Their claims need to be considered together. A sparse state–observation graph gives the reasoner a way to exchange this information without treating every possible connection as equally relevant.",
+        "text_zh": "方法把这个决策分成两步： Propose（提议） 与 Verify（核验） 。提议阶段，在已有状态与当前观察之间建立暂时的对应关系。此时得到的只是候选匹配，还没有把它当成事实写入记忆。 核验阶段结合历史、对目标是否在场的预测，以及不同身份之间的竞争，重新检查这些对应关系。竞争关系尤其重要：两个相似对象单独去找匹配，都可能看中同一个候选。把它们放在一起考虑，才能处理这种冲突。稀疏的状态—观察图，用来组织这些相关信息。"
+      },
+      {
+        "id": "write-back",
+        "title_en": "An update is a decision, too",
+        "title_zh": "写进记忆，也需要作出判断",
+        "text_en": "After verification, the system can retain, update, reactivate, or suppress a state. A learned gate also controls how much evidence is written back. So choosing an association and deciding what to remember are related decisions, but they are not collapsed into one automatic step. Go back to the sheep. A weak glimpse need not replace a useful history immediately. A later, better-supported observation can provide grounds to reactivate the state. Only the verified transition is carried into the persistent state used for subsequent frames.",
+        "text_zh": "核验之后，系统可以保留、更新、重新激活或抑制一个状态。同时，一个学习得到的门控机制控制证据写回的程度。找到一个对应关系，与决定把什么存进记忆，是相关但并不等同的两件事。 回到那只羊：一个不太可靠的侧影，不必立刻覆盖之前有用的记录。后面出现更充分的证据时，再据此重新激活状态。只有经过核验的转移，才会进入后续帧使用的持续状态。"
+      },
+      {
+        "id": "what-the-experiments-check",
+        "title_en": "What the comparison actually tests",
+        "title_zh": "实验比较的是什么",
+        "text_en": "To test this, we keep the underlying segmentation model frozen. The paired comparisons use the same host checkpoint, candidate masks, input resolution, and evaluator. The trainable part is POSReasoner, learned from standard video annotations. Keeping the rest fixed helps us see what changes when we change the state decisions. The reported experiments cover video instance segmentation and long-term video object segmentation, including OVIS, YouTube-VIS, and LVOS. Improvements appear across multiple hosts, particularly around occlusion and reappearance. Those are the moments to look for in the examples: not just a clean outline, but the right object after a gap.",
+        "text_zh": "测试时，底层分割模型保持冻结。成对比较使用相同的模型权重、候选掩码、输入分辨率和评测工具；参与训练的是 POSReasoner，使用的也是常规视频标注。把其余条件固定下来，才更容易看清改变状态决策之后，结果有什么变化。 公开实验覆盖视频实例分割和长时视频目标分割，包括 OVIS、YouTube-VIS 和 LVOS。多种基础模型都获得了改善，遮挡与重新出现的情形尤其值得关注。看示例时，不妨留意这些时刻：除了轮廓是否清楚，中间消失过一次之后，找到的还是不是原来那个目标。"
+      },
+      {
+        "id": "limits-and-code",
+        "title_en": "What it can—and cannot—remember",
+        "title_zh": "记忆能帮忙，也有边界",
+        "text_en": "There is still a segmentation model underneath. POSReasoner reasons over the evidence that model supplies; it is not a promise to recover any object from any disappearance. If the available observations remain ambiguous, retaining a state does not magically reveal the correct identity. Verification is learned, too, and can make mistakes. You can read the paper on arXiv or explore the public repository . If you want to run it, start with the reproduction guide: datasets, host checkpoints, prediction exports, and trained reasoner weights are not bundled. The code makes the steps inspectable, but those external artifacts still need to be prepared.",
+        "text_zh": "底层分割模型仍然很重要。POSReasoner 依靠它提供的证据作判断，并不意味着对象无论消失多久、以什么方式出现，都能被找回来。如果观察始终含糊，保留状态也不会自动给出正确身份。核验机制同样是学习得到的，也可能出错。 进一步可以读 arXiv 论文 ，或查看 公开仓库 。准备运行时，建议从复现指南开始：仓库并不附带数据集、基础模型权重、导出的预测结果和已训练的推理模块权重，这些材料仍需另行准备。"
+      }
+    ]
   },
   {
     "title_en": "AstraDraw: from references to editable figures",
     "title_zh": "AstraDraw：从参考图到可编辑的科研图",
     "summary_en": "A workflow for drawing research figures with Astra and refining them in PowerPoint.",
     "summary_zh": "用 Astra 画科研图，再在 PowerPoint 里继续修改。",
-    "url": "/blog/astradraw/"
-  },
-  {
-    "title_en": "LaST: Latent State Tracking for Persistent Object Memory in Video World Models",
-    "title_zh": "LaST: Latent State Tracking for Persistent Object Memory in Video World Models",
-    "summary_en": "Submitted to ICLR 2027",
-    "summary_zh": "已投稿 ICLR 2027",
-    "url": "/#last"
-  },
-  {
-    "title_en": "TRACE: Typed Reference-Aware Conversational Editing for Humanoid Motion Diffusion",
-    "title_zh": "TRACE: Typed Reference-Aware Conversational Editing for Humanoid Motion Diffusion",
-    "summary_en": "Submitted to ICLR 2027",
-    "summary_zh": "已投稿 ICLR 2027",
-    "url": "/#trace"
-  },
-  {
-    "title_en": "Graph Domain Adaptation Does Not End with Representation Learning",
-    "title_zh": "Graph Domain Adaptation Does Not End with Representation Learning",
-    "summary_en": "Submitted to ICLR 2027",
-    "summary_zh": "已投稿 ICLR 2027",
-    "url": "/#evigda"
-  },
-  {
-    "title_en": "Learning to Reason with Persistent Object States for Video Instance Segmentation",
-    "title_zh": "Learning to Reason with Persistent Object States for Video Instance Segmentation",
-    "summary_en": "Submitted to AAAI 2027",
-    "summary_zh": "已投稿 AAAI 2027",
-    "url": "/#posreasoner"
-  },
-  {
-    "title_en": "Solving the Robust Influence Maximization Problem in Competitive Multilayer Networks via a Diffusion-Aware Role-Guided Evolutionary Approach",
-    "title_zh": "Solving the Robust Influence Maximization Problem in Competitive Multilayer Networks via a Diffusion-Aware Role-Guided Evolutionary Approach",
-    "summary_en": "IEEE Transactions on Network Science and Engineering · Under review",
-    "summary_zh": "IEEE Transactions on Network Science and Engineering · 审稿中",
-    "url": "/#influence"
-  },
-  {
-    "title_en": "LMM-Track4D: Eliciting 4D Dynamic Reasoning in LMMs via Trajectory-Grounded Dialogue",
-    "title_zh": "LMM-Track4D: Eliciting 4D Dynamic Reasoning in LMMs via Trajectory-Grounded Dialogue",
-    "summary_en": "Submitted to NeurIPS 2026",
-    "summary_zh": "已投稿 NeurIPS 2026",
-    "url": "/#track4d"
-  },
-  {
-    "title_en": "Identifying Critical Nodes with Deep Learning and Reinforcement Learning: A Case Study on Urban Road Networks",
-    "title_zh": "Identifying Critical Nodes with Deep Learning and Reinforcement Learning: A Case Study on Urban Road Networks",
-    "summary_en": "GBCESC 2025",
-    "summary_zh": "GBCESC 2025",
-    "url": "/#road"
+    "url": "/blog/astradraw/",
+    "sections": [
+      {
+        "id": "introduction",
+        "title_en": "Introduction",
+        "title_zh": "引言",
+        "text_en": "A research figure rarely ends with its first draft. Labels move, arrows change, and the layout needs to work at paper size. Keeping these parts editable makes room for the next revision.",
+        "text_zh": "科研图很少在第一稿就结束。标签要挪一点，箭头要调整，缩到论文大小后还得看清。保留文字、线条和布局的可编辑性，是为了给下一次修改留出空间。"
+      },
+      {
+        "id": "references",
+        "title_en": "Start with references",
+        "title_zh": "准备参考",
+        "text_en": "Start with references AstraDraw uses a paper to understand the method, and reference figures to understand the visual style. Put the references in a PowerPoint file and note what you want to borrow: a layout, a color palette, an arrow, or a legend. You can give Astra the local file paths. The repository also includes a shared reference library and example assets if you do not have your own collection yet.",
+        "text_zh": "准备参考 AstraDraw 用论文理解方法，用参考图理解画法。把喜欢的图放进一个 PPT，标出想参考的部分：布局、配色、箭头，或者图例。 可以直接把本地路径交给 Astra。还没有自己的素材库，也可以从仓库里的公开参考与示例素材开始。"
+      },
+      {
+        "id": "editable",
+        "title_en": "An editable figure",
+        "title_zh": "可编辑的图",
+        "text_en": "An editable figure After choosing a direction, the workflow produces a PowerPoint file and a preview. Text, arrows, and layout can then be adjusted in the editable version. This is one of the examples included in the repository. An example from AstraDraw. Check it at paper size A figure that looks clear when enlarged may be hard to read on the page. Check the labels, arrow directions, and spacing again at the size you plan to use.",
+        "text_zh": "可编辑的图 确定画法后，再生成 PowerPoint 和预览图。文字、箭头和布局可以在可编辑版本中继续调整。下面是仓库中提供的一个示例。 AstraDraw 示例。 按论文实际尺寸检查 放大时清楚的图，放进论文后未必好读。按最终使用尺寸，再检查一次文字、箭头方向和留白。"
+      },
+      {
+        "id": "revisions",
+        "title_en": "Revise one part at a time",
+        "title_zh": "局部修改",
+        "text_en": "Revise one part at a time For a small change, point to the object that needs work. Select it in the PPT, or mark it in a screenshot. The repository includes an example where a single label moves while the rest of the figure stays in place. “Move the label in the top-right corner down a little. Keep everything else as it is.” See the before-and-after example",
+        "text_zh": "局部修改 小改动可以直接指出要调整的对象：在 PPT 里选中，或者在截图中圈出来。仓库中有一个只移动标签、保留其余内容的例子。 “把右上角的标签往下移一点，其他别动。” 查看修改前后的对比"
+      },
+      {
+        "id": "get-started",
+        "title_en": "Try AstraDraw",
+        "title_zh": "开始使用",
+        "text_en": "Try AstraDraw The repository contains the setup instructions, reference materials, sample figures, and editable files. Start with your paper and a few references, then revise the result where it needs work. Source and setup instructions: Example file: Editable PowerPoint",
+        "text_zh": "开始使用 仓库中有使用说明、参考素材、示例图和可编辑文件。准备好论文与几张参考图，就可以开始，再根据结果逐处修改。 来源与使用说明： 示例文件： 可编辑 PowerPoint"
+      }
+    ]
   }
 ]
