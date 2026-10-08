@@ -89,6 +89,7 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 .portrait-toggle.is-memoji .portrait--photo,.portrait-toggle.is-memoji .portrait--extension{opacity:0}
 .author__avatar .portrait-toggle.is-memoji img.portrait--memoji{opacity:1}
 .portrait-sparkle{position:absolute;top:0;right:0;z-index:1;font-size:32px;line-height:1;pointer-events:none;opacity:0;transform:rotate(8deg) scale(.9);text-shadow:0 1px 3px #fff;transition:transform 260ms ease,opacity 260ms ease}
+.portrait-toggle.is-memoji .portrait-sparkle{opacity:1;transform:rotate(0) scale(1.08)}
 @media(hover:hover){.portrait-toggle:hover .portrait-sparkle{opacity:1;transform:rotate(0) scale(1.08)}}
 @media(max-width:540px){.portrait-sparkle{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.author__avatar .portrait-frame img,.portrait-sparkle{transition:none}}
