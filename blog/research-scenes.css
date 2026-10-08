@@ -29,3 +29,10 @@ html[data-theme=dark] .snow-shadow{fill:#05091d;opacity:.46}
 html[data-theme=dark] .scene-press{background:#625181}
 html[data-theme=dark] .scene-press>span{background:#9784cb;color:#171324}
 @media(prefers-reduced-motion:reduce){.snow-core,.snow-look,.scene-press,.scene-press::before,.scene-press>span{transition:none!important}.scene-press:hover>span{transform:translateY(-3px)}}
+
+/* Match the button face, shadow and caption during the retained downstroke. */
+.research-scene .scene-press[data-scene-pressed]>span{transform:translateY(-1px);transition:transform 25ms ease-out}
+.research-scene .scene-press[data-scene-pressed]::before{transform:translateY(1px);transition:transform 25ms ease-out}
+.research-scene .pos-verify{transform-origin:left center;transition:transform 250ms cubic-bezier(.3,.7,.4,1.5),color 180ms}
+.research-scene .pos-verify[data-scene-pressed]{transform:translateY(2px) scale(.985);transition:transform 25ms ease-out}
+@media(prefers-reduced-motion:reduce){.research-scene .pos-verify,.research-scene .scene-press[data-scene-pressed]>span,.research-scene .scene-press[data-scene-pressed]::before{transition:none!important}}

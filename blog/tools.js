@@ -143,6 +143,12 @@
     if (kind === 'stop') stopSound('counter');
     else if (['down', 'on', 'off'].includes(kind)) playSound(kind, {group: 'counter'});
   });
+  // Research controls use the same preference and one shared, interruptible voice.
+  document.addEventListener('blog:scene-sound', event => {
+    const kind = event.detail?.kind;
+    if (kind === 'stop') stopSound('research-scene');
+    else if (kind === 'press' || kind === 'release') playSound(kind, {group: 'research-scene'});
+  });
   soundButton?.addEventListener('click', () => {
     soundEnabled = !soundEnabled;
     soundRevision++;

@@ -1,4 +1,15 @@
 /* Timings measured from the reference; our static pages enter on each full navigation. */
+/* Article navigation: keep the sky stable while the reading surface arrives. */
+@keyframes article-arrive{from{opacity:0}to{opacity:1}}
+@media screen and (prefers-reduced-motion:no-preference){
+.blog-article .article-hero-inner{animation:article-arrive 420ms cubic-bezier(.22,.61,.36,1) backwards}
+.blog-article .article-body{animation:article-arrive 480ms 60ms cubic-bezier(.22,.61,.36,1) backwards}
+}
+/* Restored history pages should show their previous reading position immediately. */
+.article-arrival-restored .blog-article .article-hero-inner,
+.article-arrival-restored .blog-article .article-body,
+.article-arrival-restored .blog-article .article-toc,
+.article-arrival-restored .blog-article .header-actions>*{animation:none}
 /* Match the mascot's source fade, independently of its theme and expression layers. */
 @keyframes scene-character-fade{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:no-preference){
