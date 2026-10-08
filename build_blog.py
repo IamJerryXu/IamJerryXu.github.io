@@ -90,7 +90,7 @@ def render_blog(root, tr, theme_init, theme_button):
 <a href="https://github.com/IamJerryXu/AstraDraw/blob/main/output/paper-method/method.png" target="_blank" rel="noopener noreferrer">
 <img src="{asset('assets/astradraw-method-blog.webp')}" alt="AstraDraw research method figure example" width="1600" height="842" loading="lazy" decoding="async">
 </a>
-<figcaption>{tr('An example from AstraDraw.','AstraDraw 示例。')} <a href="https://github.com/IamJerryXu/AstraDraw/blob/main/output/paper-method/method.pptx">{tr('Open the editable PPT','查看可编辑 PPT')} ↗</a>
+<figcaption>{tr('An example from AstraDraw.','AstraDraw 示例。')}
 </figcaption>
 </figure>
 <aside class="article-note">
@@ -110,6 +110,7 @@ def render_blog(root, tr, theme_init, theme_button):
 </a>
 <div class="article-end">
 <span>{tr('Source: the public AstraDraw README.','来源：AstraDraw 公开 README。')}</span>
+<a href="https://github.com/IamJerryXu/AstraDraw/blob/main/output/paper-method/method.pptx">{tr('Editable PowerPoint','可编辑 PowerPoint')}</a>
 <a href="/blog/">← {tr('All articles','全部文章')}</a>
 </div>
 <div class="article-reactions article-reactions--mobile" data-reaction-key="astradraw"></div>
