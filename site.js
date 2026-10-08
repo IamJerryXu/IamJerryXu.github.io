@@ -37,6 +37,7 @@ document.querySelectorAll('[data-figure]').forEach(button => button.addEventList
   if (new URL(button.dataset.figure, document.baseURI).href === preview.src) return;
   figureStatus.textContent = document.documentElement.lang === 'en' ? 'Loading full-size image…' : '正在加载高清图…';
   const highResolution = new Image();
+  highResolution.fetchPriority = 'high';
   highResolution.src = button.dataset.figure;
   highResolution.decode().then(() => {
     if (request !== figureRequest || !dialog.open || fullFigure !== preview) return;

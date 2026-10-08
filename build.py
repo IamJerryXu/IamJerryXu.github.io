@@ -4,6 +4,20 @@ import json,html,hashlib,re
 ROOT=Path(__file__).parent
 D=json.loads((ROOT/'content.json').read_text())
 e=html.escape
+PREVIEWS=json.loads((ROOT/'assets/image-previews.json').read_text())
+
+def preview_attrs(group, key, sizes):
+ variants = PREVIEWS[group][key]['variants']
+ def url(v):
+  asset = ROOT/'assets'/v['src']
+  version = hashlib.sha256(asset.read_bytes()).hexdigest()[:12]
+  return f"assets/{v['src']}?v={version}"
+ srcset = ', '.join(f"{url(v)} {v['width']}w" for v in variants)
+ largest = variants[-1]
+ return f'src="{url(variants[0])}" srcset="{srcset}" sizes="{sizes}" width="{largest["width"]}" height="{largest["height"]}"'
+
+PORTRAIT_SIZES='(max-width:540px) 112px, (max-width:924px) 145px, (max-width:1279px) 160px, 175px'
+PAPER_SIZES='(max-width:540px) 190px, (min-width:925px) and (max-width:1279px) 175px, 210px'
 
 def tr(en,zh,tag='span',cls=''):
  return f'<{tag}'+(f' class="{cls}"' if cls else '')+f' data-en="{e(en,quote=True)}" data-zh="{e(zh,quote=True)}">{en}</{tag}>'
@@ -18,7 +32,7 @@ def paper(p):
  title=e(p['title'])
  if p['links']:title=f'<a href="{e(p["links"][0][1])}" target="_blank" rel="noopener noreferrer">{title}</a>'
  return f'''<article class="paper" id="{p['id']}">
- <button class="figure-button" type="button" data-figure="assets/{p.get('image_full',p['image'])}" data-caption="{e(p['title'])}" aria-label="Enlarge figure: {e(p['short'])}"><img src="assets/{p['image']}" alt="{e(p['short'])} overview" loading="lazy" width="192" height="132"></button>
+ <button class="figure-button" type="button" data-figure="assets/{p.get('image_full',p['image'])}" data-caption="{e(p['title'])}" aria-label="Enlarge figure: {e(p['short'])}"><img {preview_attrs("papers", p["id"], PAPER_SIZES)} alt="{e(p['short'])} overview" loading="lazy" decoding="async"></button>
  <div class="paper-body"><h3>{title}</h3><p class="authors">{p['authors']}</p><p class="venue">{tr(p['venue'],p['venue_zh'])}{('<span class="award"> · '+tr('Best Paper Award','最佳论文奖')+'</span>') if p['id']=='road' else ''}</p>
  <div class="paper-links">{links}<details class="citation"><summary>[BibTeX]</summary><div class="citation-content"><button type="button" class="copy-bib">{tr('Copy citation','复制引用')}</button><pre>{e(p['bib'])}</pre><span class="copy-status" role="status"></span></div></details></div></div></article>'''
 nav=''.join(f'<a href="#{id}">'+tr(en,zh)+'</a>' for id,en,zh in [('about','About','关于'),('news','News','动态'),('publications','Publications','论文'),('education','Education','教育'),('honors','Honors','荣誉')])
@@ -62,7 +76,7 @@ body=f'''<!doctype html>
 <link rel="icon" href="data:,"><link rel="stylesheet" href="morin-base.css?v={hashlib.sha256((ROOT/'morin-base.css').read_bytes()).hexdigest()[:12]}"><link rel="stylesheet" href="style.css?v={hashlib.sha256((ROOT/'style.css').read_bytes()).hexdigest()[:12]}"><script src="site.js?v={hashlib.sha256((ROOT/'site.js').read_bytes()).hexdigest()[:12]}" defer></script></head>
 <body><a class="skip-link" href="#content">Skip to content</a>
 <div class="masthead"><div class="masthead__inner-wrap"><nav class="greedy-nav" aria-label="Main navigation"><ul class="visible-links"><li class="masthead__menu-item"><a href="#about">{tr('Homepage','主页')}</a></li>{''.join('<li class="masthead__menu-item"><a href="#'+i+'">'+tr(en,zh)+'</a></li>' for i,en,zh in [('about','About Me','关于我'),('news','News','动态'),('publications','Publications','论文'),('honors','Honors and Awards','荣誉与奖项'),('education','Education','教育经历'),('internships','Internships','实习经历')])}</ul></nav><button id="language" type="button" aria-label="切换到中文">中文</button></div></div>
-<div id="main"><aside class="sidebar sticky" aria-label="Profile"><div class="profile_box"><div class="author__avatar"><button class="portrait-toggle" type="button" aria-label="Toggle emoji portrait" aria-pressed="false" title="Toggle emoji portrait"><span class="portrait-frame"><img class="portrait portrait--photo" src="assets/portrait-cv.png" alt="Yongxue Xu" width="1086" height="1448" fetchpriority="high"><img class="portrait portrait--extension" src="assets/portrait-shirt-extension-v1.png" alt="" aria-hidden="true" width="2172" height="724"><img class="portrait portrait--memoji" src="assets/portrait-memoji-v1.png" alt="" aria-hidden="true" width="1086" height="1448"></span><span class="portrait-sparkle" aria-hidden="true">✨</span><span class="portrait-universities" aria-hidden="true">{university_badges}</span></button></div>
+<div id="main"><aside class="sidebar sticky" aria-label="Profile"><div class="profile_box"><div class="author__avatar"><button class="portrait-toggle" type="button" aria-label="Toggle emoji portrait" aria-pressed="false" title="Toggle emoji portrait"><span class="portrait-frame"><img class="portrait portrait--photo" {preview_attrs("portraits", "portrait-cv.png", PORTRAIT_SIZES)} alt="Yongxue Xu" fetchpriority="high" decoding="async"><img class="portrait portrait--extension" {preview_attrs("portraits", "portrait-shirt-extension-v1.png", PORTRAIT_SIZES)} alt="" aria-hidden="true" decoding="async"><img class="portrait portrait--memoji" {preview_attrs("portraits", "portrait-memoji-v1.png", PORTRAIT_SIZES)} alt="" aria-hidden="true" decoding="async"></span><span class="portrait-sparkle" aria-hidden="true">✨</span><span class="portrait-universities" aria-hidden="true">{university_badges}</span></button></div>
 <div class="author__content"><h1 class="author__name">Yongxue Xu</h1><p class="author__bio">{tr('Undergraduate Student','本科生')}</p></div>
 <div class="author__urls-wrapper"><p class="research-interests">{tr('Research interests span 4D scene understanding, video generation, world models, and world&#8209;action models.','研究兴趣涵盖 4D 场景理解、视频生成、世界模型与世界-动作模型。')}</p><ul class="author__urls social-icons">
 <li class="profile-location">{icon('pin')}{tr('Shenzhen, China','中国 · 深圳')}</li>
@@ -85,7 +99,7 @@ body=f'''<!doctype html>
 <section id="internships"><h2>💻 {tr('Internships','实习经历')}</h2><ul class="internship-list">{''.join(internship(n) for n in D['internships'])}</ul></section>
 </div></div></main></div>
 <dialog id="figure-dialog" aria-labelledby="figure-caption"><button class="close-figure" type="button" aria-label="Close figure">×</button><img id="figure-full" alt=""><p id="figure-caption"></p><p id="figure-status" role="status"></p><a id="figure-original" target="_blank" rel="noopener">{tr("Open full-size image","查看原尺寸图片")}</a></dialog>
-<dialog id="wechat-dialog" aria-labelledby="wechat-title"><button id="wechat-close" type="button" aria-label="Close WeChat QR code">×</button><h2 id="wechat-title">{tr('Connect on WeChat','添加微信')}</h2><img src="assets/wechat-card.webp" alt="Yongxue Xu's WeChat QR code" width="720" height="917"><p>{tr('Scan the QR code to add me on WeChat.','扫描二维码，添加我的微信。')}</p></dialog>
+<dialog id="wechat-dialog" aria-labelledby="wechat-title"><button id="wechat-close" type="button" aria-label="Close WeChat QR code">×</button><h2 id="wechat-title">{tr('Connect on WeChat','添加微信')}</h2><img src="assets/wechat-card.webp" loading="lazy" decoding="async" alt="Yongxue Xu's WeChat QR code" width="720" height="917"><p>{tr('Scan the QR code to add me on WeChat.','扫描二维码，添加我的微信。')}</p></dialog>
 </body></html>'''
 (ROOT/'index.html').write_text(body)
 print('Rendered index.html with',len(D['papers']),'publications and',len(D['news']),'news entries.')

@@ -1,0 +1,206 @@
+{
+  "papers": {
+    "last": {
+      "source": "last-demo.png",
+      "originalBytes": 3636260,
+      "originalWidth": 2400,
+      "originalHeight": 999,
+      "variants": [
+        {
+          "src": "previews/last-420.webp",
+          "width": 420,
+          "height": 175,
+          "bytes": 38164
+        },
+        {
+          "src": "previews/last-630.webp",
+          "width": 630,
+          "height": 262,
+          "bytes": 79112
+        }
+      ]
+    },
+    "trace": {
+      "source": "trace.png",
+      "originalBytes": 1106889,
+      "originalWidth": 2000,
+      "originalHeight": 827,
+      "variants": [
+        {
+          "src": "previews/trace-420.webp",
+          "width": 420,
+          "height": 174,
+          "bytes": 21892
+        },
+        {
+          "src": "previews/trace-630.webp",
+          "width": 630,
+          "height": 261,
+          "bytes": 42696
+        }
+      ]
+    },
+    "evigda": {
+      "source": "evigda-overview.png",
+      "originalBytes": 5302112,
+      "originalWidth": 7316,
+      "originalHeight": 2943,
+      "variants": [
+        {
+          "src": "previews/evigda-420.webp",
+          "width": 420,
+          "height": 169,
+          "bytes": 31162
+        },
+        {
+          "src": "previews/evigda-630.webp",
+          "width": 630,
+          "height": 253,
+          "bytes": 56590
+        }
+      ]
+    },
+    "posreasoner": {
+      "source": "img/publication_preview/posreasoner-full.png",
+      "originalBytes": 379522,
+      "originalWidth": 1650,
+      "originalHeight": 869,
+      "variants": [
+        {
+          "src": "previews/posreasoner-420.webp",
+          "width": 420,
+          "height": 221,
+          "bytes": 26770
+        },
+        {
+          "src": "previews/posreasoner-630.webp",
+          "width": 630,
+          "height": 332,
+          "bytes": 46510
+        }
+      ]
+    },
+    "influence": {
+      "source": "img/publication_preview/influence-full.webp",
+      "originalBytes": 379562,
+      "originalWidth": 3200,
+      "originalHeight": 1352,
+      "variants": [
+        {
+          "src": "previews/influence-420.webp",
+          "width": 420,
+          "height": 177,
+          "bytes": 21124
+        },
+        {
+          "src": "previews/influence-630.webp",
+          "width": 630,
+          "height": 266,
+          "bytes": 39068
+        }
+      ]
+    },
+    "track4d": {
+      "source": "img/publication_preview/lmm-track4d-figure1-full.webp",
+      "originalBytes": 523264,
+      "originalWidth": 2400,
+      "originalHeight": 1350,
+      "variants": [
+        {
+          "src": "previews/track4d-420.webp",
+          "width": 420,
+          "height": 236,
+          "bytes": 33732
+        },
+        {
+          "src": "previews/track4d-630.webp",
+          "width": 630,
+          "height": 354,
+          "bytes": 64210
+        }
+      ]
+    },
+    "road": {
+      "source": "img/publication_preview/road-full.webp",
+      "originalBytes": 253678,
+      "originalWidth": 1560,
+      "originalHeight": 1020,
+      "variants": [
+        {
+          "src": "previews/road-420.webp",
+          "width": 420,
+          "height": 275,
+          "bytes": 23078
+        },
+        {
+          "src": "previews/road-630.webp",
+          "width": 630,
+          "height": 412,
+          "bytes": 48164
+        }
+      ]
+    }
+  },
+  "portraits": {
+    "portrait-cv.png": {
+      "source": "portrait-cv.png",
+      "originalBytes": 1665067,
+      "originalWidth": 1086,
+      "originalHeight": 1448,
+      "variants": [
+        {
+          "src": "previews/portrait-cv-480.webp",
+          "width": 480,
+          "height": 640,
+          "bytes": 58842
+        },
+        {
+          "src": "previews/portrait-cv-960.webp",
+          "width": 960,
+          "height": 1280,
+          "bytes": 171000
+        }
+      ]
+    },
+    "portrait-memoji-v1.png": {
+      "source": "portrait-memoji-v1.png",
+      "originalBytes": 1671250,
+      "originalWidth": 1086,
+      "originalHeight": 1448,
+      "variants": [
+        {
+          "src": "previews/portrait-memoji-v1-480.webp",
+          "width": 480,
+          "height": 640,
+          "bytes": 18208
+        },
+        {
+          "src": "previews/portrait-memoji-v1-960.webp",
+          "width": 960,
+          "height": 1280,
+          "bytes": 44376
+        }
+      ]
+    },
+    "portrait-shirt-extension-v1.png": {
+      "source": "portrait-shirt-extension-v1.png",
+      "originalBytes": 2349512,
+      "originalWidth": 2172,
+      "originalHeight": 724,
+      "variants": [
+        {
+          "src": "previews/portrait-shirt-extension-v1-480.webp",
+          "width": 480,
+          "height": 160,
+          "bytes": 10964
+        },
+        {
+          "src": "previews/portrait-shirt-extension-v1-960.webp",
+          "width": 960,
+          "height": 320,
+          "bytes": 32610
+        }
+      ]
+    }
+  }
+}
