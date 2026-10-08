@@ -1,4 +1,28 @@
 'use strict';
+
+// Decode the visible base before starting the entrance; theme/expression fades stay independent.
+(() => {
+  const character=document.querySelector('.scene-portrait');
+  if(!character)return;
+  const root=document.documentElement;
+  const reduced=matchMedia('(prefers-reduced-motion:reduce)');
+  let finished=false;
+  const reveal=()=>{finished=true;character.classList.add('is-ready');};
+  async function ready(){
+    if(finished)return;
+    if(reduced.matches){reveal();return;}
+    const theme=root.dataset.theme==='dark'?'night':'day';
+    const image=character.querySelector(`.character-layer--${theme} .character-base`);
+    if(image){
+      try{await image.decode();}catch{/* A failed image must not leave the wrapper permanently hidden. */}
+    }
+    if(finished)return;
+    if(theme!==(root.dataset.theme==='dark'?'night':'day')){ready();return;}
+    reveal();
+  }
+  reduced.addEventListener('change',()=>{if(reduced.matches&&!finished)reveal();});
+  ready();
+})();
 (() => {
   document.querySelectorAll('.header-actions > *').forEach((item,index) => item.style.setProperty('--tool-order',index+1));
   const header=document.querySelector('.blog-article .site-header');

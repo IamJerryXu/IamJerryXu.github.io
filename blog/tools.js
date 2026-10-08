@@ -4,6 +4,8 @@
   const searchButton = document.querySelector('#search-toggle');
   const dialog = document.querySelector('#site-search');
   const input = document.querySelector('#site-search-input');
+  const clearButton = document.querySelector('#search-clear');
+  let clearTimer = 0, clearing = false;
   const closeButton = document.querySelector('#search-close');
   const results = document.querySelector('#search-results');
   const empty = document.querySelector('#search-empty');
@@ -216,10 +218,52 @@
       return url.href;
     } catch { return null; }
   }
+  function highlight(element,text,words) {
+    const pattern = words.map(word=>word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+    if (!pattern) { element.textContent=text; return; }
+    let expression;
+    try { expression=new RegExp(pattern,'gi'); } catch {element.textContent=text;return;}
+    let cursor=0;
+    for (const match of text.matchAll(expression)) {
+      if (!match[0]) continue;
+      element.append(document.createTextNode(text.slice(cursor,match.index)));
+      const mark=document.createElement('mark');mark.textContent=match[0];element.append(mark);
+      cursor=match.index+match[0].length;
+    }
+    element.append(document.createTextNode(text.slice(cursor)));
+  }
+  function clearSearch(animate=false) {
+    clearTimeout(clearTimer);
+    const restore = document.activeElement === clearButton;
+    clearing = animate && !matchMedia('(prefers-reduced-motion:reduce)').matches;
+    input.disabled = clearing;
+    const finish = () => {
+      input.value='';input.disabled=false;clearing=false;clearButton.classList.remove('is-clearing');
+      renderSearch(); if (restore || document.activeElement===clearButton) input.focus();
+    };
+    if (!clearing) {finish();return;}
+    clearButton.classList.add('is-clearing');renderSearch();
+    const erase = () => {
+      const length=Array.from(input.value).length;
+      if (!length) {finish();return;}
+      const delay=length<=1?133.33:length<=2?66.67:length<=5?50:length<=10?16.67:8.33;
+      clearTimer=setTimeout(()=>{input.value=Array.from(input.value).slice(0,-1).join('');erase();},delay);
+    };
+    erase();
+  }
   function renderSearch() {
     if (!results || !empty || !input) return;
     results.replaceChildren();
-    const query = input.value.trim().toLocaleLowerCase();
+    clearButton.hidden = !input.value;
+    clearButton.setAttribute('aria-label',chinese()?'清空搜索':'Clear search');
+    const query = clearing ? '' : input.value.trim().toLocaleLowerCase();
+    const idle = query.length < 2 && !/[\u3400-\u9fff]/.test(query);
+    dialog.dataset.searchState = idle ? 'idle' : 'results';
+    if (idle) {
+      empty.hidden = false;
+      empty.textContent = chinese() ? '搜索本博客里的文章与正文。' : 'Search through the articles in this Blog.';
+      return;
+    }
     const words = query.split(/\s+/).filter(Boolean);
     const language = chinese() ? 'zh' : 'en';
     const normalized = value => String(value || '').toLocaleLowerCase();
@@ -242,8 +286,10 @@
       link.className = 'search-result';
       link.href = url + (section && /^[a-z0-9-]+$/.test(section.id) ? '#'+section.id : '');
       const title = document.createElement('strong');
-      title.textContent = String(entry[`title_${language}`] || entry.title_en || entry.title_zh || '');
+      const titleText = String(entry[`title_${language}`] || entry.title_en || entry.title_zh || '');
+      highlight(title,titleText,words);
       const summary = document.createElement('span');
+      summary.className = 'search-result-summary';
       if (section) {
         const text = String(section[`text_${language}`] || '');
         const at = words.map(word=>normalized(text).indexOf(word)).filter(index=>index>=0).sort((a,b)=>a-b)[0] || 0;
@@ -252,7 +298,12 @@
         const snippet=text.slice(start,start+180);
         summary.textContent = (start?'…':'')+snippet+(start+180<text.length?'…':'');
       } else summary.textContent = String(entry[`summary_${language}`] || entry.summary_en || entry.summary_zh || '');
-      link.append(title, summary);
+      const summaryText = summary.textContent;
+      summary.replaceChildren(); highlight(summary,summaryText,words);
+      const category = document.createElement('small');
+      category.className = 'search-result-category';
+      category.textContent = String(entry[`category_${language}`] || (chinese()?'文章':'Article'));
+      link.append(category, title, summary);
       results.append(link);
     }
     empty.hidden = results.childElementCount > 0;
@@ -312,7 +363,11 @@
     searchButton.setAttribute('aria-expanded', 'false');
     searchButton.addEventListener('click', openSearch);
     closeButton?.addEventListener('click', closeSearch);
-    dialog.addEventListener('cancel', cancelSearchClose);
+    dialog.addEventListener('cancel', event => {
+      event.preventDefault();
+      if (input.value || clearing) clearSearch(false); else closeSearch();
+    });
+    clearButton?.addEventListener('click',()=>clearSearch(true));
     input.addEventListener('input', renderSearch);
     results.addEventListener('click', event => {
       if (event.target.closest('a.search-result')) { cancelSearchClose(); dialog.close(); }
@@ -329,6 +384,7 @@
     dialog.addEventListener('close', () => {
       if (dialog.open) return;
       cancelSearchClose();
+      if (clearing) clearSearch(false);
       searchButton.setAttribute('aria-expanded', 'false');
       const target = previousFocus?.isConnected && typeof previousFocus.focus === 'function' ? previousFocus : searchButton;
       target.focus();

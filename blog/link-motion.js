@@ -107,6 +107,31 @@
     link.addEventListener('blur', () => reset());
     controls.push(reset);
   }
+  function mountTrash(button) {
+    const lid = button.querySelector('.search-trash-lid');
+    if (!lid) return;
+    lid.style.transformBox = 'view-box';
+    lid.style.transformOrigin = '50% 25%';
+    const model = spring([0, 0], ([y, angle]) => {
+      lid.style.transform = `translateY(${y}%) rotate(${angle}deg)`;
+    });
+    let timer = 0;
+    const reset = (instant = false) => {
+      clearTimeout(timer); model.set([0, 0], true, instant || reduce.matches);
+    };
+    const boop = () => {
+      if (reduce.matches) return;
+      clearTimeout(timer); model.set([-20, 12]);
+      timer = setTimeout(() => reset(), 200);
+    };
+    button.addEventListener('pointerenter', e => { if (e.pointerType !== 'touch') boop(); });
+    button.addEventListener('focus', () => { if (button.matches(':focus-visible')) boop(); });
+    button.addEventListener('click', boop);
+    button.addEventListener('blur', () => reset());
+    new MutationObserver(() => { if (button.hidden) reset(true); }).observe(button, {attributes: true, attributeFilter: ['hidden']});
+    controls.push(reset);
+  }
+  document.querySelectorAll('#search-clear').forEach(mountTrash);
   document.querySelectorAll('#search-close, #rainbow-close').forEach(mountClose);
   document.querySelectorAll('.elsewhere a').forEach(mountArrow);
   reduce.addEventListener('change', () => controls.forEach(reset => reset(true)));

@@ -1,0 +1,92 @@
+/* List typography measured on joshwcomeau.com, 2026-10-08.
+   Only the licensed Wotfard Regular is installed here. The source has genuine
+   Medium / Semibold cuts: these optical strokes approximate their emphasis,
+   not their outlines. Disable browser synthesis to avoid adding faux bold on
+   top of the measured stroke. Scope this file to the blog index. */
+.blog-home .post h3,
+.blog-home .read-link,
+.blog-home .post .post-summary,
+.blog-home .blog-layout .section-label,
+.blog-home .elsewhere a {
+  font-synthesis: none;
+}
+
+.blog-home .post h3 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 33px;
+  font-weight: 600;
+  letter-spacing: normal;
+  -webkit-text-stroke: .8px currentColor;
+}
+
+.blog-home .post p {
+  margin: 16px 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: normal;
+  -webkit-text-stroke: 0;
+}
+
+.blog-home .post .post-summary {
+  margin: 0;
+  font-size: 17px;
+  line-height: 25.5px;
+  font-weight: 500;
+  -webkit-text-stroke: .3px currentColor;
+}
+
+.blog-home .read-link {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: normal;
+  -webkit-text-stroke: .55px currentColor;
+}
+
+.blog-home .blog-layout .section-label {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  -webkit-text-stroke: .28px currentColor;
+}
+
+.blog-home .elsewhere a {
+  margin-bottom: 16px;
+  font-size: 19px;
+  line-height: 28.5px;
+  font-weight: 500;
+  letter-spacing: normal;
+  -webkit-text-stroke: .32px currentColor;
+}
+
+.blog-home .elsewhere small {
+  font-weight: 400;
+  -webkit-text-stroke: 0;
+}
+
+.blog-home .topic-pills a {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  padding-block: 5px;
+  -webkit-text-stroke: 0;
+}
+
+.blog-home .post + .post { margin-top: 48px; }
+
+/* The reference light palette is slightly darker and less purple. */
+html:not([data-theme=dark]) .blog-home .blog-layout { --fg: #0a0c10; --muted: #5a6072; color: var(--fg); }
+
+/* CJK falls back to the platform font, whose native weight cuts already exist.
+   Keep those outlines crisp rather than applying Latin optical compensation. */
+.blog-home:lang(zh) .post h3,
+.blog-home:lang(zh) .read-link,
+.blog-home:lang(zh) .post .post-summary,
+.blog-home:lang(zh) .blog-layout .section-label,
+.blog-home:lang(zh) .elsewhere a {
+  -webkit-text-stroke: 0;
+  font-synthesis: weight;
+}

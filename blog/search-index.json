@@ -1,5 +1,7 @@
 [
   {
+    "category_en": "Research notes",
+    "category_zh": "研究笔记",
     "title_en": "LMM-Track4D: keeping track of a moving world",
     "title_zh": "LMM-Track4D：跟上一个不断变化的世界",
     "summary_en": "What happens when a video question becomes a conversation? Keeping track of the same person takes geometry, motion, and a little memory.",
@@ -51,6 +53,8 @@
     ]
   },
   {
+    "category_en": "Research notes",
+    "category_zh": "研究笔记",
     "title_en": "POSReasoner: when an object comes back",
     "title_zh": "POSReasoner：看不见，不等于该忘记",
     "summary_en": "Keeping track of an object means deciding which observations to trust—and when to leave its memory alone.",
@@ -109,6 +113,8 @@
     ]
   },
   {
+    "category_en": "Project notes",
+    "category_zh": "项目笔记",
     "title_en": "AstraDraw: from references to editable figures",
     "title_zh": "AstraDraw：从参考图到可编辑的科研图",
     "summary_en": "A workflow for drawing research figures with Astra and refining them in PowerPoint.",
