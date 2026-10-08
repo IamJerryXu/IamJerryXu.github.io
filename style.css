@@ -94,6 +94,26 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 @media(max-width:540px){.portrait-sparkle{font-size:26px}}
 @media(prefers-reduced-motion:reduce){.author__avatar .portrait-frame img,.portrait-sparkle{transition:none}}
 
+/* The four university marks appear only when the emoji portrait is pinned. */
+.author__avatar .portrait-toggle{width:100%}
+.author__avatar .portrait-frame{margin-inline:auto;transition:transform 260ms ease}
+.portrait-toggle[aria-pressed="true"] .portrait-frame{transform:scale(.76)}
+.portrait-universities{position:absolute;inset:0;pointer-events:none;opacity:0;visibility:hidden;transition:opacity 220ms ease,visibility 220ms ease}
+.portrait-toggle[aria-pressed="true"] .portrait-universities{opacity:1;visibility:visible}
+.portrait-university{position:absolute;display:flex;align-items:center;justify-content:center;width:31px;height:34px;transform:translateY(-50%)}
+.portrait-university--sjtu{left:0;top:28%}
+.portrait-university--westlake{left:0;top:69%}
+.portrait-university--sysu{right:0;top:28%}
+.portrait-university--hkust{right:0;top:69%}
+.author__avatar .portrait-university img{display:block;width:100%;height:100%;min-width:0;max-width:none;padding:0;border:0;border-radius:0;background:transparent;object-fit:contain}
+@media(max-width:924px){.portrait-university{width:25px;height:29px}.portrait-toggle[aria-pressed="true"] .portrait-frame{transform:scale(.70)}}
+@media(max-width:540px){
+  .profile_box{grid-template-columns:clamp(112px,calc(100vw - 244px),146px) minmax(0,1fr)}
+  .portrait-university{width:clamp(19px,calc(5vw + 3px),24px);height:27px}
+}
+@media(min-width:390px) and (max-width:540px){.portrait-toggle[aria-pressed="true"] .portrait-frame{transform:scale(.85)}}
+@media(prefers-reduced-motion:reduce){.author__avatar .portrait-frame,.portrait-universities{transition:none}}
+
 /* The original InkMind wordmark sits below the contact links. */
 .profile-inkmind{display:block;width:160px;max-width:100%;margin:16px 0 0;padding:4px 0;line-height:0}
 .profile-inkmind img{display:block;width:100%;height:auto}
