@@ -109,7 +109,7 @@
       if(event.shiftKey&&index===0){event.preventDefault();close(true);}
       else if(!event.shiftKey&&index===list.length-1){
         event.preventDefault();const group=items.filter(e=>!e.mobile),next=group[group.indexOf(item)+1];
-        close();(next?.button||document.querySelector('#search-toggle'))?.focus();
+        close();(next?.button||document.querySelector('.blog-nav .nav-homepage')||document.querySelector('#search-toggle'))?.focus();
       }
       return;
     }

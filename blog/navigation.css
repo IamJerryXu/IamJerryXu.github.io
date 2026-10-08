@@ -54,3 +54,9 @@ html[data-theme=dark] .nav-shell .nav-shell-content{box-shadow:none}
 @media(prefers-reduced-motion:reduce){.nav-shell.is-entering .nav-shell-clip{animation:none}}
 /* On first mount the clipper supplies the fade; crossfade delays apply only when travelling. */
 .nav-shell.is-entering .nav-shell-content[data-active=true]{transition:none}
+
+/* The wordmark stays inside the Blog; Homepage is a separate destination. */
+.blog-nav .nav-homepage{flex:none;white-space:nowrap;font-size:16px;line-height:24px;padding:10px 0;outline-offset:5px}
+#mobile-menu .nav-homepage{font-size:25px;line-height:36px;padding:10px 12px;margin-top:10px}
+@media(min-width:801px){.blog-header{gap:32px}.blog-nav{gap:24px}}
+@media(min-width:801px) and (max-width:1000px){.blog-header{padding-inline:24px;gap:20px}.blog-header>.identity{font-size:24px}.blog-nav{gap:16px}.blog-nav .nav-trigger,.blog-nav .nav-homepage{font-size:14px}.header-actions{gap:14px}}
