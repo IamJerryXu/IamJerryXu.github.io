@@ -216,3 +216,10 @@ html[data-theme="dark"] #theme-toggle .theme-icon--sun{display:block}
   html[data-theme="dark"] ::selection{background:#4b627a;color:#fff}
 }
 @media print{#theme-toggle{display:none}html[data-theme="dark"]{color-scheme:light}}
+
+/* The Blog is a separate reading space; its link comes after all existing sections. */
+.greedy-nav{overflow-x:auto;scrollbar-width:none}
+.greedy-nav::-webkit-scrollbar{display:none}
+.greedy-nav .visible-links .blog-entry:hover,.greedy-nav .visible-links .blog-entry:focus-visible{color:transparent;background:linear-gradient(100deg,#b44466,#a16b28,#34805a,#2d7ca5,#7560b4,#a74f90);background-clip:text;-webkit-background-clip:text}
+.greedy-nav .visible-links .blog-entry:before{background:linear-gradient(100deg,#b44466,#a16b28,#34805a,#2d7ca5,#7560b4,#a74f90);height:2px}
+@media screen{html[data-theme="dark"] .greedy-nav .visible-links .blog-entry:hover,html[data-theme="dark"] .greedy-nav .visible-links .blog-entry:focus-visible{color:transparent;background-image:linear-gradient(100deg,#f49fba,#efc17f,#8cd7ad,#93d0ee,#baa6f2,#e9a6d3)}}
