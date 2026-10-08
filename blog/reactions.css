@@ -1,0 +1,29 @@
+/* Interaction measurements: Josh W. Comeau's public article heart, modules
+   8426/88173/67920/20143, audited 2026-10-08. Counts here are browser-local. */
+.article-reactions { --heart-empty-lower:#b6bac9; --heart-empty-upper:#cdd4ea; --heart-face:rgba(13,15,18,.5); --heart-mouth:#7e1b34; --heart-tongue:#b82840; --heart-pink:hsl(333 100% 45%); display:flex; align-items:center; gap:16px; margin-top:32px; padding:0 0 3px 8px; }
+html[data-theme="dark"] .article-reactions { --heart-empty-lower:rgba(182,186,201,.5); --heart-empty-upper:rgba(205,212,234,.5); --heart-face:rgba(13,15,18,.9); --heart-mouth:#541222; --heart-tongue:#a7253a; --heart-pink:hsl(333 100% 55%); }
+.article-reactions .reaction-shape { position:relative; width:48px; height:48px; flex:none; display:grid; place-items:center; }
+.article-reactions .reaction-button { display:block; padding:0; border:0; background:none; color:inherit; cursor:pointer; touch-action:manipulation; -webkit-tap-highlight-color:transparent; transition:transform 250ms; transform:scale(1); border-radius:10px; line-height:0; }
+.article-reactions .reaction-button:hover { transform:scale(1.1); }
+.article-reactions .reaction-button:active, .article-reactions .reaction-button.is-pressed { transform:scale(1.2); }
+.article-reactions .reaction-button:focus-visible { outline:2px solid var(--heart-pink); outline-offset:8px; }
+.article-reactions .reaction-heart { display:block; width:48px; height:40.32px; overflow:visible; transform-origin:50% 50%; }
+.article-reactions .reaction-bounce { display:block; }
+.article-reactions .reaction-bounce.is-bouncing { animation:reaction-bounce 400ms cubic-bezier(.17,.67,.54,.93) alternate 6; }
+@keyframes reaction-bounce { to { transform:translateY(-20%); } }
+.article-reactions .reaction-reading { display:flex; align-items:flex-start; flex-direction:column; gap:1px; }
+.article-reactions .reaction-number { position:relative; color:var(--muted,#62687b); font:700 15px/24px ui-monospace,SFMono-Regular,Consolas,monospace; font-variant-numeric:tabular-nums; }
+.article-reactions[data-has-cheers="true"] .reaction-number { color:var(--heart-pink); }
+.article-reactions .reaction-note { margin:0; color:var(--muted,#62687b); font-size:10px; line-height:15px; letter-spacing:0; font-weight:400; text-transform:none; }
+.article-reactions .reaction-delta { position:absolute; top:0; left:calc(100% + 4px); font-size:11px; color:var(--muted,#62687b); transform-origin:left center; pointer-events:none; white-space:nowrap; }
+.article-reactions .reaction-particles { position:absolute; inset:0; pointer-events:none; }
+.article-reactions .reaction-particle { position:absolute; left:50%; top:50%; width:12px; height:12px; pointer-events:none; }
+.article-reactions .reaction-eyes-happy, .article-reactions .reaction-mouth-open { opacity:0; }
+.article-reactions[data-max="true"] .reaction-eyes-happy, .article-reactions[data-max="true"] .reaction-mouth-open { opacity:1; }
+.article-reactions[data-max="true"] .reaction-eyes, .article-reactions[data-max="true"] .reaction-mouth-line { opacity:0; }
+.article-reactions .reaction-sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+@media (prefers-reduced-motion:reduce) {
+  .article-reactions .reaction-button, .article-reactions .reaction-button:hover, .article-reactions .reaction-button:active, .article-reactions .reaction-button.is-pressed { transform:none; transition:none; }
+  .article-reactions .reaction-bounce.is-bouncing { animation:none; }
+  .article-reactions .reaction-particles, .article-reactions .reaction-delta { display:none; }
+}

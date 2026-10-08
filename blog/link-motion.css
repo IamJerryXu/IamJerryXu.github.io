@@ -1,0 +1,6 @@
+/* Independent SVG line motion preserves the existing button and link hit areas. */
+.has-close-motion{display:grid;place-items:center}
+.has-close-motion .link-motion-icon{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;overflow:visible;pointer-events:none}
+#search-close .link-motion-icon{width:24px;height:24px}
+.elsewhere a>span.has-arrow-motion,.elsewhere a:hover>span.has-arrow-motion{width:24px;transform:none;transition:none;line-height:0}
+.elsewhere .has-arrow-motion .link-motion-icon{display:block;width:24px;height:24px;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;pointer-events:none;margin-top:2px}

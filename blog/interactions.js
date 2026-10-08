@@ -49,3 +49,13 @@
     else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}
   });
 })();
+// Goodies opens the live rainbow controls without leaving the Blog landing page.
+(() => {
+  function openRainbow(){
+    const gear=document.querySelector('.rainbow-settings');if(!gear)return false;
+    document.querySelector('.scene').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth',block:'start'});
+    if(gear.getAttribute('aria-expanded')!=='true')gear.click();return true;
+  }
+  document.querySelectorAll('[data-open-rainbow]').forEach(link=>link.addEventListener('click',event=>{if(document.querySelector('.rainbow-settings')){event.preventDefault();setTimeout(openRainbow,0);}}));
+  if(location.hash==='#rainbow')openRainbow();
+})();

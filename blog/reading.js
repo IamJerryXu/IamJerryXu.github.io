@@ -1,14 +1,25 @@
 'use strict';
 // Keep the reading position reflected in the table of contents.
 (() => {
-  const headings = [...document.querySelectorAll('.article-body h2[id]')];
+  const headings = [...document.querySelectorAll('.article-body h2[id], .article-body .article-intro[id]')];
   const links = [...document.querySelectorAll('.article-toc a')];
   if (!headings.length) return;
   let pending = false;
+  headings.forEach(heading=>heading.tabIndex=-1);
+  document.querySelectorAll('.article-toc a[href^="#"], .mobile-toc a[href^="#"]').forEach(link=>link.addEventListener('click',event=>{
+    const heading=document.getElementById(link.hash.slice(1));if(!heading)return;
+    event.preventDefault();history.pushState(null,'',link.hash);
+    heading.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth',block:'start'});
+    if(event.detail===0)heading.focus({preventScroll:true});
+  }));
   function update() {
     pending = false;
     let active = headings[0];
-    for (const heading of headings) if (heading.getBoundingClientRect().top <= 180) active = heading;
+    if(scrollY>0){
+      const visible=headings.find(heading=>{const box=heading.getBoundingClientRect();return box.bottom>120&&box.top<innerHeight;});
+      const preceding=headings.filter(heading=>heading.getBoundingClientRect().bottom<=120);
+      active=visible||preceding[preceding.length-1]||headings[0];
+    }
     for (const link of links) {
       if (link.hash === `#${active.id}`) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');

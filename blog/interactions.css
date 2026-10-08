@@ -89,3 +89,14 @@ body,.clouds path,.article-hero,.article-hero path,.footer-cloud{transition:back
 #site-search>*{position:relative}
 @media(prefers-reduced-motion:reduce){#site-search::after{animation:none}}
 #search-results strong{font-weight:500;-webkit-text-stroke:.18px currentColor}
+/* The reference search edge is a multi-lobed SVG, rather than a rounded box. */
+#site-search{background:var(--bg);overflow:visible;padding-bottom:24px}
+#site-search::before,#site-search::after{display:none}
+#site-search>.search-cloud{position:absolute;left:0;right:0;bottom:0;width:100%;transform:translateY(calc(100% - 2px));display:flex;justify-content:center;z-index:-1;pointer-events:none;overflow-x:clip;overflow-y:visible}
+.search-cloud>svg{display:block;flex:none;width:100%;min-width:2000px;height:auto;aspect-ratio:4113/146;transform-origin:top center;animation:search-cloud-unfold 600ms ease both;--cloud-end-y:-30%;--cloud-start-x:.8}
+@keyframes search-cloud-unfold{from{transform:scaleX(var(--cloud-start-x)) scaleY(0)}to{transform:scaleY(2) translateY(var(--cloud-end-y))}}
+#site-search.is-closing{animation-timing-function:cubic-bezier(.56,.1,.85,.87)}
+@media(min-width:1440px){.search-cloud>svg{--cloud-end-y:0%}}
+@media(min-width:1600px){.search-cloud>svg{--cloud-start-x:.9}}
+@media(min-width:1840px){.search-cloud>svg{--cloud-start-x:1}}
+@media(prefers-reduced-motion:reduce){.search-cloud>svg{animation:none;transform:scaleY(2) translateY(var(--cloud-end-y))}}
