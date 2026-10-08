@@ -106,15 +106,21 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 .portrait-university--hkust{right:-60px;top:74%;height:60px;--emblem-delay:135ms;--float-duration:6s;--float-phase:-3.2s}
 .author__avatar .portrait-university img{position:relative;display:block;width:100%;height:100%;min-width:0;max-width:none;padding:0;border:0;border-radius:0;background:transparent;object-fit:contain}
 .portrait-toggle[aria-pressed="true"] .portrait-university{animation:emblem-appear 520ms cubic-bezier(.2,.75,.3,1) var(--emblem-delay) both}
-.portrait-toggle[aria-pressed="true"] .portrait-university img{animation:emblem-float var(--float-duration) ease-in-out var(--float-phase) infinite}
+.portrait-toggle[aria-pressed="true"] .portrait-university img{will-change:transform;animation:emblem-float-y var(--float-duration) cubic-bezier(.45,0,.55,1) var(--float-phase) infinite}
+.portrait-toggle[aria-pressed="true"] .portrait-university--westlake img,
+.portrait-toggle[aria-pressed="true"] .portrait-university--hkust img{animation-name:emblem-float-x}
 @keyframes emblem-appear{
   0%{opacity:0;transform:translateY(calc(-50% + 7px))}
   70%{opacity:1;transform:translateY(calc(-50% - 1px))}
   100%{opacity:1;transform:translateY(-50%)}
 }
-@keyframes emblem-float{
-  0%,100%{top:1px}
-  50%{top:-3px}
+@keyframes emblem-float-y{
+  0%,100%{transform:translate3d(0,2px,0)}
+  50%{transform:translate3d(0,-2px,0)}
+}
+@keyframes emblem-float-x{
+  0%,100%{transform:translate3d(-3px,0,0)}
+  50%{transform:translate3d(3px,0,0)}
 }
 /* When the page is close to the viewport edge, use the oval's empty corners. */
 @media(min-width:925px) and (max-width:1015px),(min-width:1280px) and (max-width:1370px){
@@ -134,7 +140,7 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
   .portrait-university--hkust{height:46px}
   .portrait-toggle[aria-pressed="true"] .portrait-sparkle{right:33px}
 }
-@media(prefers-reduced-motion:reduce){.portrait-universities{transition:none}.portrait-university,.portrait-university img{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.portrait-universities{transition:none}.portrait-university,.portrait-university img{animation:none!important;will-change:auto!important}}
 
 /* The original InkMind wordmark sits below the contact links. */
 .profile-inkmind{display:block;width:160px;max-width:100%;margin:16px 0 0;padding:4px 0;line-height:0}
