@@ -130,27 +130,16 @@ def render_blog(root, tr, theme_init, theme_button):
                 example_id = block['id']
                 if not re.fullmatch(r'[a-z0-9-]+', example_id):
                     raise ValueError('Invalid example ID')
-                controls, panels = [], []
-                for i, step in enumerate(block['steps']):
-                    tab_id, panel_id = f'{example_id}-tab-{i}', f'{example_id}-panel-{i}'
-                    controls.append(f'<button type="button" id="{tab_id}" aria-controls="{panel_id}">{tr(step["label_en"],step["label_zh"])}</button>')
-                    if block['diagram'] == 'trajectory':
-                        # A conceptual path, deliberately not presented as a measured 3D output.
-                        svg = '<path class="example-baseline" d="M32 100H388"/><path class="example-track" d="M56 98Q130 100 175 64T350 46"/>'
-                        positions = [(56,98),(113,86),(175,64),(247,41),(302,38),(350,46)]
-                        for j,(x,y) in enumerate(positions):
-                            active = j == 0 if i == 0 else (j >= 3 if i == 2 else True)
-                            svg += f'<circle class="example-dot {"is-active" if active else ""}" cx="{x}" cy="{y}" r="8"/>'
-                        svg += '<text x="56" y="131">t₁</text><text x="350" y="80">tₙ</text>'
-                    elif block['diagram'] == 'memory':
-                        x = [70,200,330][i]
-                        svg = '<path class="example-baseline" d="M32 119H388"/><rect class="example-obstacle" x="163" y="23" width="74" height="97" rx="3"/>'
-                        svg += f'<circle class="example-object {"is-hidden" if i == 1 else ""}" cx="{x}" cy="82" r="22"/><text class="example-object-label" x="{x}" y="87">A</text>'
-                        svg += '<circle class="example-other" cx="281" cy="89" r="22"/><text class="example-other-label" x="281" y="94">B</text>'
-                    else:
-                        raise ValueError('Unknown conceptual diagram')
-                    panels.append(f'<section class="example-panel" id="{panel_id}" aria-labelledby="{tab_id}"><svg viewBox="0 0 420 150" aria-hidden="true">{svg}</svg><p class="example-prompt">{tr(step["prompt_en"],step["prompt_zh"])}</p><p>{tr(step["en"],step["zh"])}</p></section>')
-                rendered.append(f'<section class="article-example" id="{example_id}" aria-labelledby="{example_id}-title"><h3 id="{example_id}-title">{tr(block["title_en"],block["title_zh"])}</h3><p class="example-caption">{tr(block["caption_en"],block["caption_zh"])}</p><div class="example-controls" aria-labelledby="{example_id}-title" hidden>{"".join(controls)}</div><div class="example-panels">{"".join(panels)}</div></section>')
+                if block['diagram'] == 'trajectory':
+                    path = 'M30 128C115 128 140 88 220 65S380 30 450 51S525 65 570 39'
+                    svg = f'<path class="demo-path-base" d="{path}"/><path class="demo-path-active" d="{path}"/><circle class="demo-tracker" cx="30" cy="128" r="21"/>'
+                elif block['diagram'] == 'memory':
+                    svg = f'<defs><pattern id="{example_id}-hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><line x1="0" y1="0" x2="0" y2="9" class="demo-hatch"/></pattern></defs><path class="demo-ground" d="M0 131H600"/><circle class="demo-distractor" cx="444" cy="104" r="23"/><circle class="demo-tracker" cx="30" cy="88" r="23"/><g class="demo-obstacle"><rect x="248" y="8" width="104" height="123" rx="2"/><rect x="248" y="8" width="104" height="123" rx="2" fill="url(#{example_id}-hatch)"/></g>'
+                else:
+                    raise ValueError('Unknown conceptual diagram')
+                panels = ''.join(f'<section class="example-panel" data-label-en="{html.escape(step["label_en"],quote=True)}" data-label-zh="{html.escape(step["label_zh"],quote=True)}"><p class="example-prompt">{tr(step["prompt_en"],step["prompt_zh"])}</p><p>{tr(step["en"],step["zh"])}</p></section>' for step in block['steps'])
+                play = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 4 14 8-14 8Z"/></svg>'
+                rendered.append(f'<div class="article-example" data-demo="{block["diagram"]}" aria-labelledby="{example_id}-title"><h3 id="{example_id}-title" class="visually-hidden">{tr(block["title_en"],block["title_zh"])}</h3><p class="example-instruction">{tr(block["caption_en"],block["caption_zh"])}</p><div class="demo-stage" aria-hidden="true"><svg viewBox="0 0 600 160">{svg}</svg></div><div class="demo-controls" hidden><div class="demo-range"><label for="{example_id}-time">{tr("Timeline","时间线")}</label><output class="demo-phase" for="{example_id}-time"></output><input id="{example_id}-time" type="range" min="0" max="1000" step="1" value="0"></div><button class="demo-play" type="button" aria-label="Play example">{play}</button></div><div class="example-panels">{panels}</div></div>')
             elif kind == 'figure':
                 src = block['src'].lstrip('/')
                 if not src.startswith('assets/') or '..' in src.split('/'):

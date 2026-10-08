@@ -6,7 +6,7 @@
   "summary_zh": "当视频问答变成一段连续的对话，模型怎样才能一直跟住同一个人？这需要空间、运动，以及能够延续的状态。",
   "intro_en": "Imagine watching a basketball clip. You ask which player took the shot, then follow up: “Where did he move next?” That tiny word, “he,” asks quite a lot of a model. It needs to carry a person, a place, and a moment from one answer into the next.",
   "intro_zh": "想象你正在看一段篮球视频。你问谁刚才投了篮，又接着问：“他后来往哪儿走了？”一个很短的“他”，其实给模型出了道难题：上一轮说的是谁、当时在哪儿、后面发生了什么，都得接得上。",
-  "updated": "2026-10-08",
+  "updated": "2026-10-09",
   "category_en": "Research notes",
   "category_zh": "研究笔记",
   "sections": [
@@ -31,16 +31,16 @@
           "diagram": "trajectory",
           "title_en": "Keep the player. Change the question.",
           "title_zh": "问题换了，还是同一个人",
-          "caption_en": "An illustrated conversation. Select a turn below.",
-          "caption_zh": "一段对话示意。点击下方切换追问。",
+          "caption_en": "Drag the timeline, or press play.",
+          "caption_zh": "拖动时间线，或点击播放。",
           "steps": [
             {
               "label_en": "Find",
               "label_zh": "找到目标",
               "prompt_en": "“Who took the shot?”",
               "prompt_zh": "“刚才谁投了篮？”",
-              "en": "First, establish who we mean. The answer introduces a target that the next question can refer back to. The dots stand for successive positions of that one player.",
-              "zh": "先弄清楚在说谁。回答确定了一个目标，下一轮才能用“他”接着提问。图中的圆点代表同一名球员先后出现的位置。"
+              "en": "Start with one player. The next question can refer back to this target; the line sketches a possible path through the scene.",
+              "zh": "先确定一名球员，下一轮才能用“他”接着提问。线条示意他在场景中的一段运动。"
             },
             {
               "label_en": "Follow",

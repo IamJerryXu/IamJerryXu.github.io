@@ -1,7 +1,7 @@
 /* Reading components: measured from the reference, scoped to article content.
    Source selectors and evidence: output/josh-reference/DEEP-INTERACTION-AUDIT.md. */
-.blog-article{--reading-note:#e8f1fc;--reading-note-accent:#4242fa;--reading-quote:#626a73;--reading-transition:350ms cubic-bezier(.41,.1,.13,1)}
-html[data-theme=dark] .blog-article{--reading-note:hsl(214 40% 15%);--reading-note-accent:hsl(215 100% 72%);--reading-quote:#acb4bc}
+.blog-article{--article-heading:#2c0b8e;--reading-note:#e8f1fc;--reading-note-accent:#4242fa;--reading-quote:#626a73;--reading-transition:350ms cubic-bezier(.41,.1,.13,1)}
+html[data-theme=dark] .blog-article{--article-heading:#e6b3ff;--reading-note:hsl(214 40% 15%);--reading-note-accent:hsl(215 100% 72%);--reading-quote:#acb4bc}
 .article-body{font-size:18px;line-height:1.5}
 .article-body p{margin-bottom:1.25em}
 .article-body h2{scroll-margin-top:128px}
@@ -38,11 +38,12 @@ html[data-theme=dark] .blog-article{--reading-note:hsl(214 40% 15%);--reading-no
 /* Article geometry follows the measured reading page, without an extra breadcrumb. */
 .blog-article .blog-header{height:80px;padding-top:16px;padding-bottom:16px}
 .article-hero-inner{padding-top:80px}
-.article-title{margin-bottom:21.2px;letter-spacing:normal}
+.article-title{max-width:100%;margin-bottom:21.2px;letter-spacing:normal}
 .article-hero{padding-bottom:160px}
 .article-main{padding-top:80px}
 .article-meta{display:flex;gap:5px;flex-wrap:wrap}
 @media(max-width:1064px){.article-meta{flex-direction:column;gap:8px}.article-meta-separator{display:none}}
-.article-body h2{font-size:32px;line-height:48px}
+/* Reference .hrk0sy8: 32/48, normal tracking, 700; licensed Regular uses browser weight synthesis. */
+.article-body h2{font-size:32px;line-height:48px;font-weight:700;letter-spacing:normal;-webkit-text-stroke:0;color:var(--article-heading)}
 @media(max-width:1064px){.article-main{display:block;max-width:750px}.article-sidebar{display:none}}
 @media(max-width:800px){.article-title{font-size:36px;line-height:1.3}.article-meta{font-size:16px}.article-hero-inner{padding-top:80px}}
