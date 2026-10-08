@@ -36,7 +36,7 @@ async function main() {
   for (const paper of content.papers) {
     manifest.papers[paper.id] = await createVariants(paper.image_full || paper.image, paper.id, [420, 630]);
   }
-  for (const source of ['portrait-cv.png', 'portrait-memoji-v1.png', 'portrait-shirt-extension-v1.png']) {
+  for (const source of ['portrait-cv.png', 'portrait-memoji-transparent-v1.png', 'portrait-shirt-extension-v1.png']) {
     manifest.portraits[source] = await createVariants(source, path.parse(source).name, [480, 960]);
   }
   await fs.writeFile(path.join(assets, 'image-previews.json'), JSON.stringify(manifest, null, 2) + '\n');

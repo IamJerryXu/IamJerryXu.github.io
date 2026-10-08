@@ -162,26 +162,6 @@
         }
       ]
     },
-    "portrait-memoji-v1.png": {
-      "source": "portrait-memoji-v1.png",
-      "originalBytes": 1671250,
-      "originalWidth": 1086,
-      "originalHeight": 1448,
-      "variants": [
-        {
-          "src": "previews/portrait-memoji-v1-480.webp",
-          "width": 480,
-          "height": 640,
-          "bytes": 18208
-        },
-        {
-          "src": "previews/portrait-memoji-v1-960.webp",
-          "width": 960,
-          "height": 1280,
-          "bytes": 44376
-        }
-      ]
-    },
     "portrait-shirt-extension-v1.png": {
       "source": "portrait-shirt-extension-v1.png",
       "originalBytes": 2349512,
@@ -199,6 +179,26 @@
           "width": 960,
           "height": 320,
           "bytes": 32610
+        }
+      ]
+    },
+    "portrait-memoji-transparent-v1.png": {
+      "source": "portrait-memoji-transparent-v1.png",
+      "originalBytes": 1285742,
+      "originalWidth": 1086,
+      "originalHeight": 1448,
+      "variants": [
+        {
+          "src": "previews/portrait-memoji-transparent-v1-480.webp",
+          "width": 480,
+          "height": 640,
+          "bytes": 32786
+        },
+        {
+          "src": "previews/portrait-memoji-transparent-v1-960.webp",
+          "width": 960,
+          "height": 1280,
+          "bytes": 85416
         }
       ]
     }
