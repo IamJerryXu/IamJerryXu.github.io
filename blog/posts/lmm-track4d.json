@@ -29,36 +29,30 @@
           "type": "walkthrough",
           "id": "follow-up-example",
           "diagram": "trajectory",
-          "title_en": "Keep the player. Change the question.",
-          "title_zh": "问题换了，还是同一个人",
-          "caption_en": "Drag the timeline, or press play.",
-          "caption_zh": "拖动时间线，或点击播放。",
+          "title_en": "One player, two questions",
+          "title_zh": "同一个球员，两个问题",
+          "caption_en": "Adapted from the two questions in Figure 1. The character stands for the player’s identity.",
+          "caption_zh": "根据论文图 1 的两轮问答改画；小雪团代指球员身份。",
           "steps": [
             {
-              "label_en": "Find",
-              "label_zh": "找到目标",
-              "prompt_en": "“Who took the shot?”",
-              "prompt_zh": "“刚才谁投了篮？”",
-              "en": "Start with one player. The next question can refer back to this target; the line sketches a possible path through the scene.",
-              "zh": "先确定一名球员，下一轮才能用“他”接着提问。线条示意他在场景中的一段运动。"
+              "label_en": "First question",
+              "label_zh": "第一问",
+              "prompt_en": "Who scored the three-pointer at 0.8 s?",
+              "prompt_zh": "谁在 0.8 秒时投中了三分球？",
+              "en": "The first question picks out player #6 at a particular moment.",
+              "zh": "第一问用一个具体时刻，确定了图中的 6 号球员。"
             },
             {
-              "label_en": "Follow",
-              "label_zh": "继续追踪",
-              "prompt_en": "“Where did he move next?”",
-              "prompt_zh": "“他接着往哪里走了？”",
-              "en": "The word “he” should keep its referent. Now the answer needs motion over time, rather than another independent description of a frame.",
-              "zh": "“他”仍然指刚才那个人。现在需要回答的是一段随时间变化的运动，而不是重新描述另一帧画面。"
-            },
-            {
-              "label_en": "Narrow down",
-              "label_zh": "缩小范围",
-              "prompt_en": "“And just after the pass?”",
-              "prompt_zh": "“那传球之后呢？”",
-              "en": "The follow-up changes the time window, not the target. This is why carrying a state across turns matters: we want to refine the question without starting the identity search over.",
-              "zh": "追问缩小了时间范围，目标没有变。这就是跨轮次传递状态的意义：可以把问题问得更细，而不必每次重新找人。"
+              "label_en": "Follow-up",
+              "label_zh": "追问",
+              "prompt_en": "Show his trajectory from 0.5 s to 1.2 s.",
+              "prompt_zh": "画出他从 0.5 秒到 1.2 秒的轨迹。",
+              "en": "The follow-up still refers to #6. What changes is the requested interval: 0.5–1.2 s. The target should carry over from the first answer.",
+              "zh": "追问中的“他”仍然是 6 号球员。变化的是要看的时间范围：0.5–1.2 秒。目标身份需要从上一轮保留下来。"
             }
-          ]
+          ],
+          "search_en": "Two questions. Keep an eye on who “his” refers to. Player same target Who scored the three-pointer at 0.8 s? Show <em>his</em> trajectory from 0.5 s to 1.2 s. The first question picks out player #6 at a particular moment. The follow-up still refers to #6. What changes is the requested interval: 0.5–1.2 s. The target should carry over from the first answer. Adapted from the two questions in Figure 1. The character stands for the player’s identity. Event time Requested video interval",
+          "search_zh": "两个问题，留意第二问里的“他”指向谁。 球员 同一个目标 谁在 0.8 秒时投中了三分球？ 画出<em>他</em>从 0.5 秒到 1.2 秒的轨迹。 第一问用一个具体时刻，确定了图中的 6 号球员。 追问中的“他”仍然是 6 号球员。变化的是要看的时间范围：0.5–1.2 秒。目标身份需要从上一轮保留下来。 根据论文图 1 的两轮问答改画；小雪团代指球员身份。 事件时刻 请求的视频片段"
         }
       ]
     },

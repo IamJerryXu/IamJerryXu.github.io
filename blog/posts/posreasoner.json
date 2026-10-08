@@ -102,36 +102,38 @@
           "type": "walkthrough",
           "id": "memory-example",
           "diagram": "memory",
-          "title_en": "Follow one object through a gap",
-          "title_zh": "跟着一个目标，经过一次遮挡",
-          "caption_en": "Drag the timeline, or press play.",
-          "caption_zh": "拖动时间线，或点击播放。",
+          "title_en": "Out of view, still in memory",
+          "title_zh": "看不见，仍然记得",
+          "caption_en": "Move the character behind the cloud. Its stored state stays below.",
+          "caption_zh": "让角色走到云后。下方保留的状态仍在。",
           "steps": [
             {
-              "label_en": "Visible",
-              "label_zh": "看得见",
-              "prompt_en": "The target is in view.",
-              "prompt_zh": "目标还在视野里。",
-              "en": "The purple outline is the object we are following. The grey one is a different object. While the target is visible, its observation can be checked against the stored state.",
-              "zh": "紫色轮廓是正在跟随的目标，灰色轮廓是另一个对象。目标清楚可见时，可以把当前观察与保留的状态作比较。"
+              "label_en": "In view",
+              "label_zh": "在视野中",
+              "prompt_en": "An observation and a stored state are different things.",
+              "prompt_zh": "当前观察，与已保留的状态，是两件事。",
+              "en": "The character stands for the current observation. The small portrait below represents an already verified object state.",
+              "zh": "场景中的角色代表当前观察。下方的小肖像代表一份已经核验通过的对象状态。"
             },
             {
               "label_en": "Occluded",
-              "label_zh": "被挡住",
-              "prompt_en": "Passing behind the screen.",
-              "prompt_zh": "正在经过挡板后方。",
-              "en": "The target passes behind the screen. The grey object is still visible, but that does not make it a replacement. Keeping the earlier state gives us something to compare with when the target returns.",
-              "zh": "目标走到了挡板后面。灰色对象仍然可见，但不能因此用它来替换原来的目标。保留之前的状态，等目标重现时才有依据可供比较。"
+              "label_zh": "被遮挡",
+              "prompt_en": "The observation disappears; the state stays.",
+              "prompt_zh": "观察消失了，状态还在。",
+              "en": "Moving behind the cloud removes the object from view, but does not erase its persistent state.",
+              "zh": "走到云后，当前画面里看不到目标，但持续状态并不会因此被抹掉。"
             },
             {
-              "label_en": "Returns",
-              "label_zh": "重新出现",
-              "prompt_en": "Back in view. Now check the match.",
-              "prompt_zh": "重新出现了，再检查是不是它。",
-              "en": "Propose supplies a possible association. Verify checks it against history, presence evidence, and competing identities. A supported transition can reactivate the stored state; an uncertain glimpse is still only a candidate.",
-              "zh": "提议阶段给出一个可能的关联。核验阶段结合历史、在场证据与身份竞争检查它。证据支持的转移可以重新激活之前的状态；一个不确定的侧影仍然只是候选。"
+              "label_en": "Candidate",
+              "label_zh": "候选匹配",
+              "prompt_en": "Back in view does not mean verified.",
+              "prompt_zh": "重新出现，不等于匹配已经通过核验。",
+              "en": "The returning observation is a candidate. The record remains unchanged until we show an illustrative verified update. This is a hand-authored concept illustration, not a model prediction.",
+              "zh": "重新出现的观察仍然只是候选。演示核验后的更新之前，保留的记录不变。这是手动编写的概念示意，不是模型预测。"
             }
-          ]
+          ],
+          "search_en": "What we can see A concept illustration Drag me through the cloud The state we keep The last verified record stays here. Into the cloud Show a verified update The character can leave the picture without erasing the state kept below. When it comes back, a possible match still needs verification before it can change that record. New evidence, carried into the same object state. Back into view Try again Update shown Move the character. Use left and right arrow keys. Concept illustration of persistent object memory Behind the cloud; state retained Back in view; match not yet verified Illustrated update complete In view Here is our target. The small portrait below stands for a record that has already been verified. Our view is changing. The stored record stays put while the character passes behind the cloud. We cannot see the target now. That does not erase its record: the state below is still there. It is back in view. This is only a possible match so far; the old record has not been replaced. In this illustrated case, verification supports the match. Only now do we carry the new evidence into the next state.",
+          "search_zh": "当前画面 概念示意 拖动我，穿过这朵云 保留的目标状态 上一次核验通过的记录，留在这里。 走到云后 查看核验后的一种更新 角色可以离开画面，而下方保留的状态并不会因此被抹掉。重新出现时，候选匹配仍须经过核验，才能改写这份记录。 新证据已写入，延续的仍是同一目标。 让它走出来 再走一次 已展示更新 移动角色，可使用左右方向键。 持续对象记忆的概念示意 云后，状态保留 重新出现，匹配尚未核验 示意更新完成 在视野中 这是要跟住的目标。下面的小肖像代表一份已经核验通过的记录。 眼前的画面在变，保留的记录没有跟着变。角色正在经过云层。 现在看不见目标了，但这不等于忘掉它：下方保留的状态还在。 它重新出现了。目前还只是一个候选匹配，旧记录尚未被替换。 在这个示意情形中，核验支持了这次匹配。到这一步，新证据才进入下一份状态。"
         }
       ]
     },
