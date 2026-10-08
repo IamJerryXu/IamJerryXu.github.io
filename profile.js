@@ -4,36 +4,46 @@
   if (!scene) return;
   const toggle = scene.querySelector('.portrait-toggle');
   const universities = scene.querySelector('.portrait-universities');
-  const schools = [...universities.querySelectorAll('a')];
-  const tooltip = document.querySelector('#profile-school-tooltip');
+  const schools = [...universities.querySelectorAll('button')];
+  const emblemDialog = document.querySelector('#profile-emblem-dialog');
+  const closeEmblem = emblemDialog.querySelector('.profile-emblem-close');
+  let emblemImage = emblemDialog.querySelector('img');
+  let lastEmblem = null;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let pinned = false, preview = false, activeSchool = null, inView = true;
+  let pinned = false, preview = false, inView = true;
   const chinese = () => document.documentElement.lang.startsWith('zh');
-  function hideTooltip() { tooltip.hidden = true; activeSchool = null; }
-  function showTooltip(school) {
-    activeSchool = school;
-    tooltip.textContent = school.dataset[chinese() ? 'schoolZh' : 'schoolEn'];
-    tooltip.hidden = false;
-    const r = school.getBoundingClientRect(), box = tooltip.getBoundingClientRect();
-    tooltip.style.left = `${Math.max(12, Math.min(innerWidth - box.width - 12, r.x + r.width / 2 - box.width / 2))}px`;
-    const upper = school.classList.contains('portrait-university--sjtu') || school.classList.contains('portrait-university--sysu');
-    const top = upper ? Math.max(8, r.top - box.height - 12) : r.bottom + 12;
-    tooltip.style.top = `${Math.min(innerHeight - box.height - 12, top)}px`;
+  function openEmblem(school) {
+    lastEmblem = school;
+    // A new image node prevents the previously opened emblem from flashing.
+    const image = new Image();
+    image.id = 'profile-emblem-full';
+    image.src = school.querySelector('img').src;
+    image.alt = school.dataset[chinese() ? 'schoolZh' : 'schoolEn'];
+    emblemImage.replaceWith(image);
+    emblemImage = image;
+    emblemDialog.showModal();
   }
+  closeEmblem.addEventListener('click', () => emblemDialog.close());
+  emblemDialog.addEventListener('click', event => {
+    const r = emblemDialog.getBoundingClientRect();
+    if (event.target === emblemDialog && (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom)) emblemDialog.close();
+  });
+  emblemDialog.addEventListener('close', () => lastEmblem?.focus({preventScroll:true}));
   function render() {
     toggle.classList.toggle('is-memoji', pinned || preview);
     toggle.setAttribute('aria-pressed', String(pinned));
     toggle.setAttribute('aria-label', chinese()
-      ? (pinned ? '收起校徽并切回照片' : '显示卡通头像与学校链接')
-      : (pinned ? 'Close university links and return to photo' : 'Show emoji portrait and university links'));
+      ? (pinned ? '收起校徽并切回照片' : '显示卡通头像与校徽')
+      : (pinned ? 'Close university emblems and return to photo' : 'Show emoji portrait and university emblems'));
     scene.classList.toggle('is-expanded', pinned);
     universities.inert = !pinned;
     universities.setAttribute('aria-hidden', String(!pinned));
     schools.forEach(school => {
       school.tabIndex = pinned ? 0 : -1;
-      school.setAttribute('aria-label', `${school.dataset[chinese() ? 'schoolZh' : 'schoolEn']}${chinese() ? '，打开学校官网（新窗口）' : ', open university website (new tab)'}`);
+      school.setAttribute('aria-label', `${school.dataset[chinese() ? 'schoolZh' : 'schoolEn']}${chinese() ? '，放大校徽' : ', enlarge emblem'}`);
     });
-    if (!pinned) hideTooltip();
+    emblemDialog.setAttribute('aria-label', chinese() ? '校徽大图' : 'University emblem');
+    closeEmblem.setAttribute('aria-label', chinese() ? '关闭校徽大图' : 'Close emblem');
   }
   toggle.addEventListener('pointerenter', event => {
     if (event.pointerType === 'mouse' && matchMedia('(hover:hover)').matches) { preview = true; render(); }
@@ -58,19 +68,15 @@
     };
     state.reset = () => { cancelAnimationFrame(state.frame);state.frame=0;state.time=0;state.x=state.y=state.vx=state.vy=state.tx=state.ty=0;draw(); };
     const target = (x,y) => { if(reduced.matches||document.hidden||!inView){state.reset();return;}state.tx=x;state.ty=y;if(!state.frame)state.frame=requestAnimationFrame(tick); };
-    school.addEventListener('pointerenter', e => {if(e.pointerType==='mouse' && (!schools.includes(document.activeElement) || document.activeElement===school))showTooltip(school);});
+    school.addEventListener('click', () => openEmblem(school));
     school.addEventListener('pointermove', e => {if(e.pointerType!=='mouse')return;const r=school.getBoundingClientRect();target((e.clientX-r.x-r.width/2)/r.width*5,(e.clientY-r.y-r.height/2)/r.height*5);});
-    school.addEventListener('pointerleave', () => {target(0,0);if(activeSchool===school&&document.activeElement!==school)hideTooltip();});
-    school.addEventListener('focus', () => showTooltip(school));
-    school.addEventListener('blur', hideTooltip);
+    school.addEventListener('pointerleave', () => target(0,0));
     return state;
   });
-  const pause = () => {scene.classList.toggle('is-paused',!inView||document.hidden);if(!inView||document.hidden){springs.forEach(s=>s.reset());hideTooltip();}};
+  const pause = () => {scene.classList.toggle('is-paused',!inView||document.hidden);if(!inView||document.hidden){springs.forEach(s=>s.reset());}};
   new IntersectionObserver(entries => {inView=entries[0].isIntersecting;pause();}).observe(scene);
   document.addEventListener('visibilitychange',pause);
   reduced.addEventListener('change',()=>springs.forEach(s=>s.reset()));
-  addEventListener('scroll',hideTooltip,{passive:true});
-  addEventListener('resize',hideTooltip,{passive:true});
-  new MutationObserver(()=>{render();if(activeSchool)showTooltip(activeSchool);}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   render();
 })();

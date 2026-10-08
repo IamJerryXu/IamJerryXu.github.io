@@ -44,14 +44,14 @@
         },
         {
           "type": "figure",
-          "src": "/assets/img/publication_preview/posreasoner-full.webp",
-          "width": 1600,
-          "height": 914,
+          "src": "/assets/img/publication_preview/posreasoner-teaser-complete.jpg",
+          "width": 1654,
+          "height": 1941,
           "href": "https://github.com/IamJerryXu/POSReasoner/blob/main/assets/posreasoner-teaser.jpg",
-          "alt_en": "POSReasoner examples with sheep, fish, basketball players, and elephants, illustrating identity tracking and object reactivation.",
-          "alt_zh": "POSReasoner 的羊群、鱼群、篮球运动员和大象示例，展示身份跟踪与目标重新激活。",
-          "caption_en": "Examples from POSReasoner: identity tracking in crowded scenes and among similar objects, followed by long-term object reactivation. Yellow marks the reference object; teal shows predicted masks.",
-          "caption_zh": "POSReasoner 的示例：拥挤场景和相似目标中的身份跟踪，以及长时间缺席后的目标重新激活。黄色标记参考目标，青色表示预测掩码。"
+          "alt_en": "Complete POSReasoner result figure: sheep, fish, basketball players and elephants show identity-consistent tracking; giraffe, baboon, car and skateboarder show long-term object reactivation.",
+          "alt_zh": "完整的 POSReasoner 结果图：羊、鱼、篮球运动员和大象展示身份一致跟踪；长颈鹿、狒狒、汽车和滑板运动员展示长时间缺席后的对象重新激活。",
+          "caption_en": "The complete project figure. The upper half shows identity-consistent tracking; the lower half follows objects through long gaps and dynamic scenes. Yellow marks the reference object; teal shows predicted masks.",
+          "caption_zh": "项目完整示例图。上半部分展示身份一致跟踪，下半部分展示长时间缺席与动态场景中的对象重新激活。黄色标记参考目标，青色表示预测掩码。"
         }
       ]
     },
@@ -69,6 +69,17 @@
           "type": "p",
           "en": "Verify revisits those associations using object history, predicted presence, and competition between identities. That last part matters. Two similar objects may both appear to match the same candidate when considered separately. Their claims need to be considered together. A sparse state–observation graph gives the reasoner a way to exchange this information without treating every possible connection as equally relevant.",
           "zh": "核验阶段结合历史、对目标是否在场的预测，以及不同身份之间的竞争，重新检查这些对应关系。竞争关系尤其重要：两个相似对象单独去找匹配，都可能看中同一个候选。把它们放在一起考虑，才能处理这种冲突。稀疏的状态—观察图，用来组织这些相关信息。"
+        },
+        {
+          "type": "figure",
+          "src": "/assets/img/publication_preview/posreasoner-method.png",
+          "width": 3200,
+          "height": 1684,
+          "href": "https://github.com/IamJerryXu/POSReasoner/blob/main/assets/posreasoner-method.png",
+          "alt_en": "POSReasoner method: a frozen host supplies masks and observations; Propose and Verify refine object associations; a gated verified transition writes the next persistent state.",
+          "alt_zh": "POSReasoner 方法图：冻结的基础模型提供掩码和观察；Propose 与 Verify 细化对象关联；经过门控的核验转移写入下一时刻的持续状态。",
+          "caption_en": "Read the diagram from left to right: observations from the frozen host, two passes of association reasoning, then the gated write into the next state.",
+          "caption_zh": "从左向右看：冻结的基础模型提供观察，两轮推理细化关联，最后通过门控写入下一时刻的状态。"
         }
       ]
     },
@@ -86,6 +97,41 @@
           "type": "p",
           "en": "Go back to the sheep. A weak glimpse need not replace a useful history immediately. A later, better-supported observation can provide grounds to reactivate the state. Only the verified transition is carried into the persistent state used for subsequent frames.",
           "zh": "回到那只羊：一个不太可靠的侧影，不必立刻覆盖之前有用的记录。后面出现更充分的证据时，再据此重新激活状态。只有经过核验的转移，才会进入后续帧使用的持续状态。"
+        },
+        {
+          "type": "walkthrough",
+          "id": "memory-example",
+          "diagram": "memory",
+          "title_en": "Follow one object through a gap",
+          "title_zh": "跟着一个目标，经过一次遮挡",
+          "caption_en": "A simplified view of object memory. A and B represent two similar objects; select a moment below.",
+          "caption_zh": "对象记忆的概念示意。A、B 代表两个相似目标，点击下方切换时刻。",
+          "steps": [
+            {
+              "label_en": "Visible",
+              "label_zh": "看得见",
+              "prompt_en": "A is visible. There is useful evidence to keep.",
+              "prompt_zh": "A 清楚可见，有值得保留的证据。",
+              "en": "We have an object state and a current observation that can be compared with it. A verified match can support an update; the write gate decides how much new evidence enters memory.",
+              "zh": "此时既有对象状态，也有当前观察，两者可以比较。通过核验的匹配可以支持更新；新的证据写进多少，由写回门控控制。"
+            },
+            {
+              "label_en": "Occluded",
+              "label_zh": "被挡住",
+              "prompt_en": "A disappears. B is still there.",
+              "prompt_zh": "A 被遮住了，B 还在画面里。",
+              "en": "An available observation is not automatically the right one. Keeping A’s history separate from B helps explain why “no reliable match” need not immediately become “replace the old memory.”",
+              "zh": "有一个看得见的候选，不代表它就是要找的那个。把 A 的历史与 B 分开，就容易理解：暂时找不到可靠匹配，并不意味着应该立刻用别的观察覆盖原有记忆。"
+            },
+            {
+              "label_en": "Returns",
+              "label_zh": "重新出现",
+              "prompt_en": "Something reappears. Is it A?",
+              "prompt_zh": "有个目标重新出现，它是 A 吗？",
+              "en": "Propose supplies a possible association. Verify checks it against history, presence evidence, and competing identities. A supported transition can reactivate A; an uncertain glimpse is still only a candidate.",
+              "zh": "提议阶段给出一个可能的关联。核验阶段结合历史、在场证据与身份竞争检查它。证据支持的转移可以重新激活 A；一个不确定的侧影仍然只是候选。"
+            }
+          ]
         }
       ]
     },
@@ -103,6 +149,13 @@
           "type": "p",
           "en": "The reported experiments cover video instance segmentation and long-term video object segmentation, including OVIS, YouTube-VIS, and LVOS. Improvements appear across multiple hosts, particularly around occlusion and reappearance. Those are the moments to look for in the examples: not just a clean outline, but the right object after a gap.",
           "zh": "公开实验覆盖视频实例分割和长时视频目标分割，包括 OVIS、YouTube-VIS 和 LVOS。多种基础模型都获得了改善，遮挡与重新出现的情形尤其值得关注。看示例时，不妨留意这些时刻：除了轮廓是否清楚，中间消失过一次之后，找到的还是不是原来那个目标。"
+        },
+        {
+          "type": "details",
+          "title_en": "Why keep the host model frozen?",
+          "title_zh": "为什么要冻结基础模型？",
+          "en": "Suppose we changed both the segmentation model and the memory rule. Better masks could come from either change, making the comparison hard to interpret. The paired setup keeps the host checkpoint, candidates, resolution, and evaluator the same, so the comparison is about the added state reasoning. That control makes the result easier to read; it does not imply the reasoner can repair evidence the host never supplied.",
+          "zh": "假如分割模型和记忆规则一起换掉，结果变好究竟来自哪一处，就不容易分清。成对实验固定基础模型权重、候选、分辨率和评测工具，比较的是加入状态推理之后的变化。这个控制让实验更容易解释，但不意味着推理模块能够补出基础模型从未提供的证据。"
         }
       ]
     },

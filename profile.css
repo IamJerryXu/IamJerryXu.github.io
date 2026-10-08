@@ -4,12 +4,12 @@
 .author__avatar .portrait-frame{transition:border-color 260ms,box-shadow 260ms;box-shadow:0 2px 8px #142a3c04}
 .portrait-toggle:hover .portrait-frame,.portrait-toggle:focus-visible .portrait-frame{border-color:#bacbd5;box-shadow:0 5px 22px #24465e0d}
 .portrait-toggle:active .portrait-frame{box-shadow:0 1px 5px #24465e12}
-.portrait-hint{position:absolute;left:50%;bottom:8px;z-index:4;transform:translate(-50%,4px);padding:4px 9px;border-radius:20px;background:#fffffff0;border:1px solid #dbe3e8;box-shadow:0 2px 6px #142a3c08;color:#536775;font-family:inherit;font-size:11px;line-height:1.3;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity 180ms,transform 260ms}
+.portrait-hint{display:flex;align-items:center;gap:6px;position:absolute;left:50%;bottom:8px;z-index:4;transform:translate(-50%,4px);padding:4px 9px;border-radius:20px;background:#fffffff0;border:1px solid #dbe3e8;box-shadow:0 2px 6px #142a3c08;color:#536775;font-family:inherit;font-size:11px;line-height:1.3;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity 180ms,transform 260ms}
 .portrait-toggle:hover~.portrait-hint,.portrait-toggle:focus-visible~.portrait-hint{opacity:1;transform:translate(-50%,0)}
 .portrait-scene.is-expanded .portrait-hint{visibility:hidden}
 .portrait-scene.is-expanded .portrait-universities{opacity:1;visibility:visible}
 .portrait-universities{z-index:3}
-.portrait-university{pointer-events:none;border-radius:50%;text-decoration:none!important;outline-offset:5px;touch-action:manipulation;--badge-x:0px;--badge-y:0px}
+.portrait-university{appearance:none;padding:0;border:0;background:transparent;cursor:zoom-in;pointer-events:none;border-radius:50%;text-decoration:none!important;outline-offset:5px;touch-action:manipulation;--badge-x:0px;--badge-y:0px}
 .portrait-scene.is-expanded .portrait-university{pointer-events:auto;animation:profile-badge-enter 540ms cubic-bezier(.2,.85,.25,1.16) var(--emblem-delay) both}
 .badge-response,.badge-float{display:block;width:100%;height:100%}
 .badge-response{transform:translate(var(--badge-x),var(--badge-y));transition:filter 220ms;will-change:auto}
@@ -19,20 +19,40 @@
 .portrait-university:hover img,.portrait-university:focus-visible img{scale:1.08;filter:drop-shadow(0 4px 5px #203c4c20)}
 .portrait-university:active img{scale:1.01}
 .portrait-scene:not(.is-expanded) .badge-float,.portrait-scene.is-paused .badge-float{animation-play-state:paused}
-.profile-school-tooltip{position:fixed;z-index:120;max-width:calc(100vw - 24px);padding:8px 12px;border:1px solid #e0e6eb;border-radius:9px;background:#fffffff7;color:#324956;box-shadow:0 5px 22px #182c4014;font-size:12px;line-height:1.4;text-align:center;pointer-events:none;animation:profile-tooltip-in 160ms ease-out both}
-.profile-school-tooltip[hidden]{display:none}
-@keyframes profile-tooltip-in{from{opacity:0;translate:0 -3px}to{opacity:1;translate:0 0}}
 @keyframes profile-badge-enter{from{opacity:0;transform:translateY(calc(-50% + 6px)) scale(.86)}to{opacity:1;transform:translateY(-50%) scale(1)}}
 html[data-theme=dark] .portrait-toggle:hover .portrait-frame,html[data-theme=dark] .portrait-toggle:focus-visible .portrait-frame{border-color:#637786;box-shadow:0 5px 22px #0003}
-html[data-theme=dark] .portrait-hint,html[data-theme=dark] .profile-school-tooltip{background:#282d33f7;color:#dee8ef;border-color:#46515c;box-shadow:0 5px 22px #0003}
+html[data-theme=dark] .portrait-hint{background:#282d33f7;color:#dee8ef;border-color:#46515c;box-shadow:0 5px 22px #0003}
 /* A neutral backing protects official emblem colors on the dark canvas. */
 html[data-theme=dark] .portrait-university--sjtu .badge-float,html[data-theme=dark] .portrait-university--sysu .badge-float{background:#fff;border-radius:50%;box-shadow:0 0 0 2px #fff}
 html[data-theme=dark] .portrait-university--westlake img,html[data-theme=dark] .portrait-university--hkust img{filter:drop-shadow(0 0 1px #fff9) drop-shadow(0 2px 3px #0003)}
 @media(max-width:924px){.portrait-scene.is-expanded .portrait-sparkle{right:37px;top:-10px}}
 @media(max-width:540px){.portrait-scene.is-expanded .portrait-sparkle{right:33px}.portrait-hint{font-size:10px;padding:3px 7px;bottom:5px}}
 @media(hover:none){.portrait-scene:not(.is-expanded) .portrait-hint{opacity:1;transform:translate(-50%,0)}}
-@media(prefers-reduced-motion:reduce){.portrait-scene *,.profile-school-tooltip{animation:none!important;transition:none!important}.badge-response{transform:none}.portrait-university:hover img,.portrait-university:focus-visible img{scale:1}}
-@media print{.portrait-universities,.portrait-hint,.profile-school-tooltip{display:none!important}}
+@media(prefers-reduced-motion:reduce){.portrait-scene *{animation:none!important;transition:none!important}.badge-response{transform:none}.portrait-university:hover img,.portrait-university:focus-visible img{scale:1}}
+@media print{.portrait-universities,.portrait-hint{display:none!important}}
 
 html[data-theme=dark] .portrait-university--westlake .badge-float,html[data-theme=dark] .portrait-university--hkust .badge-float{position:relative;isolation:isolate}
 html[data-theme=dark] .portrait-university--westlake .badge-float::before,html[data-theme=dark] .portrait-university--hkust .badge-float::before{content:"";position:absolute;inset:-4px;z-index:-1;border-radius:12px;background:#b9c8d7}
+
+/* Four tiny dots unfold into the same arrangement as the four emblems. */
+.portrait-hint-orbit{display:block;width:13px;height:13px;flex:none;overflow:visible;rotate:-12deg;transition:rotate 480ms cubic-bezier(.2,.8,.2,1)}
+.portrait-hint-orbit circle{fill:#7491a5;transform-box:fill-box;transform-origin:center;scale:.78;transition:scale 400ms cubic-bezier(.2,.8,.2,1)}
+.portrait-hint-orbit circle:nth-child(2){fill:#77a493;transition-delay:35ms}
+.portrait-hint-orbit circle:nth-child(3){fill:#d6ae72;transition-delay:70ms}
+.portrait-hint-orbit circle:nth-child(4){fill:#b4a0bf;transition-delay:105ms}
+.portrait-toggle:hover~.portrait-hint .portrait-hint-orbit,.portrait-toggle:focus-visible~.portrait-hint .portrait-hint-orbit{rotate:0deg}
+.portrait-toggle:hover~.portrait-hint circle,.portrait-toggle:focus-visible~.portrait-hint circle{scale:1}
+#profile-emblem-dialog{box-sizing:border-box;width:min(400px,calc(100vw - 48px),calc(100dvh - 48px));max-width:none;max-height:none;aspect-ratio:1;margin:auto;padding:54px;border:1px solid #e3e8ec;border-radius:28px;background:#fff;color:#536775;box-shadow:0 24px 100px #0b18232b;overflow:visible}
+#profile-emblem-dialog[open]{animation:profile-emblem-in 260ms cubic-bezier(.2,.8,.3,1) both}
+#profile-emblem-dialog::backdrop{background:#1b283d6b;backdrop-filter:blur(5px);animation:profile-backdrop-in 200ms ease both}
+#profile-emblem-full{display:block;width:100%;height:100%;object-fit:contain}
+.profile-emblem-close{display:grid;place-items:center;position:absolute;top:10px;right:10px;width:36px;height:36px;padding:8px;border:0;border-radius:50%;background:transparent;color:inherit;transition:background 180ms,rotate 220ms}
+.profile-emblem-close svg{width:20px;height:20px}
+.profile-emblem-close:hover{background:#edf1f4;rotate:90deg}
+html[data-theme=dark] #profile-emblem-dialog{background:#f4f6f8;border-color:#dce2e7;box-shadow:0 24px 100px #0006}
+html[data-theme=dark] #profile-emblem-dialog::backdrop{background:#070c16a6}
+@keyframes profile-emblem-in{from{opacity:0;transform:translateY(5px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes profile-backdrop-in{from{opacity:0}to{opacity:1}}
+@media(max-width:540px){.portrait-hint{gap:4px}.portrait-hint-orbit{width:11px;height:11px}#profile-emblem-dialog{padding:44px;border-radius:24px}}
+@media(prefers-reduced-motion:reduce){#profile-emblem-dialog[open],#profile-emblem-dialog::backdrop{animation:none}.profile-emblem-close{transition:none}}
+@media print{#profile-emblem-dialog{display:none!important}}

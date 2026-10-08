@@ -84,7 +84,7 @@ def render_blog(root, tr, theme_init, theme_button):
     def page(title, description, main, path, home=False, hero=""):
         canonical='https://jerrysnow.me/'+path
         return f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} — Yongxue Xu</title><meta name="description" content="{html.escape(description,quote=True)}"><meta name="robots" content="noindex, follow"><meta name="theme-color" content="#ffffff"><script>{theme_init}</script><link rel="canonical" href="{canonical}"><link rel="icon" href="data:,"><link rel="preload" href="{asset('blog/fonts/wotfard-regular.woff2')}" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="{asset('blog/blog.css')}"><link rel="stylesheet" href="{asset('blog/icons.css')}"><link rel="stylesheet" href="{asset('blog/interactions.css')}"><link rel="stylesheet" href="{asset('blog/panel-motion.css')}"><link rel="stylesheet" href="{asset('blog/navigation.css')}"><link rel="stylesheet" href="{asset('blog/footer.css')}"><link rel="stylesheet" href="{asset('blog/article-components.css')}"><link rel="stylesheet" href="{asset('blog/reactions.css')}"><link rel="stylesheet" href="{asset('blog/link-motion.css')}"><link rel="stylesheet" href="{asset('blog/article-meta.css')}"><link rel="stylesheet" href="{asset('blog/search-refine.css')}"><link rel="stylesheet" href="{asset('blog/type-refine.css')}"><script src="{asset('blog/blog.js')}" defer></script><script src="{asset('blog/reading.js')}" defer></script><script src="{asset('blog/tools.js')}" defer></script><script src="{asset('blog/icons.js')}" defer></script><script src="{asset('blog/interactions.js')}" defer></script><script src="{asset('blog/panel-motion.js')}" defer></script><script src="{asset('blog/navigation.js')}" defer></script><script src="{asset('blog/reactions.js')}" defer></script><script src="{asset('blog/link-motion.js')}" defer></script><script src="{asset('blog/article-meta.js')}" defer></script><script src="{asset('blog/page-hits.js')}" defer></script><link rel="alternate" type="application/rss+xml" title="Yongxue Xu — Blog" href="/blog/feed.xml"></head><body id="top" class="{'blog-home' if home else 'blog-article'}"><a class="skip-link" href="#content">Skip to content</a>{header}{search_dialog}{scene if home else hero}<main class="{'blog-layout' if home else 'article-main'}" id="content">{main}</main>{footer}</body></html>'''
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} — Yongxue Xu</title><meta name="description" content="{html.escape(description,quote=True)}"><meta name="robots" content="noindex, follow"><meta name="theme-color" content="#ffffff"><script>{theme_init}</script><link rel="canonical" href="{canonical}"><link rel="icon" href="data:,"><link rel="preload" href="{asset('blog/fonts/wotfard-regular.woff2')}" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="{asset('blog/blog.css')}"><link rel="stylesheet" href="{asset('blog/icons.css')}"><link rel="stylesheet" href="{asset('blog/interactions.css')}"><link rel="stylesheet" href="{asset('blog/panel-motion.css')}"><link rel="stylesheet" href="{asset('blog/navigation.css')}"><link rel="stylesheet" href="{asset('blog/footer.css')}"><link rel="stylesheet" href="{asset('blog/article-components.css')}"><link rel="stylesheet" href="{asset('blog/article-examples.css')}"><link rel="stylesheet" href="{asset('blog/reactions.css')}"><link rel="stylesheet" href="{asset('blog/link-motion.css')}"><link rel="stylesheet" href="{asset('blog/article-meta.css')}"><link rel="stylesheet" href="{asset('blog/search-refine.css')}"><link rel="stylesheet" href="{asset('blog/type-refine.css')}"><script src="{asset('blog/blog.js')}" defer></script><script src="{asset('blog/reading.js')}" defer></script><script src="{asset('blog/article-examples.js')}" defer></script><script src="{asset('blog/tools.js')}" defer></script><script src="{asset('blog/icons.js')}" defer></script><script src="{asset('blog/interactions.js')}" defer></script><script src="{asset('blog/panel-motion.js')}" defer></script><script src="{asset('blog/navigation.js')}" defer></script><script src="{asset('blog/reactions.js')}" defer></script><script src="{asset('blog/link-motion.js')}" defer></script><script src="{asset('blog/article-meta.js')}" defer></script><script src="{asset('blog/page-hits.js')}" defer></script><link rel="alternate" type="application/rss+xml" title="Yongxue Xu — Blog" href="/blog/feed.xml"></head><body id="top" class="{'blog-home' if home else 'blog-article'}"><a class="skip-link" href="#content">Skip to content</a>{header}{search_dialog}{scene if home else hero}<main class="{'blog-layout' if home else 'article-main'}" id="content">{main}</main>{footer}</body></html>'''
     def post_card(post, anchor):
         return f'''<article class="post" id="{anchor}"><h3><a href="{post['slug']}/">{tr(post['title_en'],post['title_zh'])}</a></h3><p class="post-summary">{tr(post['summary_en'],post['summary_zh'])}</p><p>{tr(post['intro_en'],post['intro_zh'])}</p><a class="read-link" href="{post['slug']}/">{tr('Read more','阅读全文')}<svg class="read-arrows" viewBox="0 0 36 12" aria-hidden="true"><path class="read-arrow-first" d="M.75 6h10.5M6 .75 11.25 6 6 11.25"/><path class="read-arrow-extra read-arrow-extra--1" d="M15 10L19.5 5.5L15 1"/><path class="read-arrow-extra read-arrow-extra--2" d="M23 10L27.5 5.5L23 1"/><path class="read-arrow-extra read-arrow-extra--3" d="M31 10L35.5 5.5L31 1"/></svg></a></article>'''
     cards = ''.join(post_card(post, 'research' if i == 0 and research_posts else 'project-notes' if post['slug'] == 'astradraw' else 'post-'+post['slug']) for i,post in enumerate(posts))
@@ -124,6 +124,33 @@ def render_blog(root, tr, theme_init, theme_button):
                 rendered.append('<p>'+tr(block['en'],block['zh'])+'</p>')
             elif kind == 'note':
                 rendered.append('<aside class="article-note"><strong>'+tr(block['title_en'],block['title_zh'])+'</strong><p>'+tr(block['en'],block['zh'])+'</p></aside>')
+            elif kind == 'details':
+                rendered.append('<details class="article-details"><summary>'+tr(block['title_en'],block['title_zh'])+'</summary><div><p>'+tr(block['en'],block['zh'])+'</p></div></details>')
+            elif kind == 'walkthrough':
+                example_id = block['id']
+                if not re.fullmatch(r'[a-z0-9-]+', example_id):
+                    raise ValueError('Invalid example ID')
+                controls, panels = [], []
+                for i, step in enumerate(block['steps']):
+                    tab_id, panel_id = f'{example_id}-tab-{i}', f'{example_id}-panel-{i}'
+                    controls.append(f'<button type="button" id="{tab_id}" aria-controls="{panel_id}">{tr(step["label_en"],step["label_zh"])}</button>')
+                    if block['diagram'] == 'trajectory':
+                        # A conceptual path, deliberately not presented as a measured 3D output.
+                        svg = '<path class="example-baseline" d="M32 100H388"/><path class="example-track" d="M56 98Q130 100 175 64T350 46"/>'
+                        positions = [(56,98),(113,86),(175,64),(247,41),(302,38),(350,46)]
+                        for j,(x,y) in enumerate(positions):
+                            active = j == 0 if i == 0 else (j >= 3 if i == 2 else True)
+                            svg += f'<circle class="example-dot {"is-active" if active else ""}" cx="{x}" cy="{y}" r="8"/>'
+                        svg += '<text x="56" y="131">t₁</text><text x="350" y="80">tₙ</text>'
+                    elif block['diagram'] == 'memory':
+                        x = [70,200,330][i]
+                        svg = '<path class="example-baseline" d="M32 119H388"/><rect class="example-obstacle" x="163" y="23" width="74" height="97" rx="3"/>'
+                        svg += f'<circle class="example-object {"is-hidden" if i == 1 else ""}" cx="{x}" cy="82" r="22"/><text class="example-object-label" x="{x}" y="87">A</text>'
+                        svg += '<circle class="example-other" cx="281" cy="89" r="22"/><text class="example-other-label" x="281" y="94">B</text>'
+                    else:
+                        raise ValueError('Unknown conceptual diagram')
+                    panels.append(f'<section class="example-panel" id="{panel_id}" aria-labelledby="{tab_id}"><svg viewBox="0 0 420 150" aria-hidden="true">{svg}</svg><p class="example-prompt">{tr(step["prompt_en"],step["prompt_zh"])}</p><p>{tr(step["en"],step["zh"])}</p></section>')
+                rendered.append(f'<section class="article-example" id="{example_id}" aria-labelledby="{example_id}-title"><h3 id="{example_id}-title">{tr(block["title_en"],block["title_zh"])}</h3><p class="example-caption">{tr(block["caption_en"],block["caption_zh"])}</p><div class="example-controls" aria-labelledby="{example_id}-title" hidden>{"".join(controls)}</div><div class="example-panels">{"".join(panels)}</div></section>')
             elif kind == 'figure':
                 src = block['src'].lstrip('/')
                 if not src.startswith('assets/') or '..' in src.split('/'):
@@ -182,6 +209,12 @@ def render_blog(root, tr, theme_init, theme_button):
     def plain_text(markup):
         parser=PlainText(); parser.feed(markup)
         return ' '.join(' '.join(parser.parts).split())
+    def block_text(block, lang):
+        # Include explanatory controls and expanded content in the same section's search text.
+        chunks = [block.get(lang, ''), block.get('title_'+lang, ''), block.get('caption_'+lang, '')]
+        for step in block.get('steps', []):
+            chunks.extend([step.get('label_'+lang, ''), step.get('prompt_'+lang, ''), step.get(lang, '')])
+        return plain_text(' '.join(chunks))
     search_entries=[]
     for post in posts:
         entry=dict(category_en=post['category_en'],category_zh=post['category_zh'],title_en=post['title_en'],title_zh=post['title_zh'],summary_en=post['summary_en'],summary_zh=post['summary_zh'],url='/blog/'+post['slug']+'/',sections=[])
@@ -196,7 +229,7 @@ def render_blog(root, tr, theme_init, theme_button):
         else:
             for section in post['sections']:
                 entry['sections'].append(dict(id=section['id'],title_en=section['title_en'],title_zh=section['title_zh'],**{
-                    'text_'+lang:' '.join(plain_text(block.get(lang,block.get('caption_'+lang,''))) for block in section['blocks']) for lang in ('en','zh')}))
+                    'text_'+lang:' '.join(block_text(block,lang) for block in section['blocks']) for lang in ('en','zh')}))
         search_entries.append(entry)
     (root/'blog/search-index.json').write_text(json.dumps(search_entries,ensure_ascii=False,indent=2)+'\n')
     from xml.sax.saxutils import escape

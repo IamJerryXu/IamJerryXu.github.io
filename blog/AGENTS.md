@@ -3,7 +3,7 @@
 ## 入口与修改位置
 
 - 文章由仓库根目录 `build_blog.py` 中的 `render_blog()` 生成；运行 `python3 build.py` 构建全站。不要只编辑生成后的 `blog/index.html` 或 `blog/astradraw/index.html`，否则下次构建会覆盖。
-- AstraDraw 原有内容保存在 `blog/posts.json`；新增文章保存在 `blog/posts/<slug>.json`，使用段落、说明框、真实图片组成的双语 sections。`build_blog.py` 共用 `render_article()` 输出页头、标题、目录、文末和页脚，同时更新文章列表、搜索与 RSS。每篇文章的 slug 和章节 id 必须唯一，爱心与访问量按文章区分。
+- AstraDraw 原有内容保存在 `blog/posts.json`；新增文章保存在 `blog/posts/<slug>.json`，使用段落、说明框、真实图片组成的双语 sections。`walkthrough` 用于有实际解释价值的可切换概念示意，`details` 用于可展开补充说明；两者均须保留无脚本可读内容并进入搜索。`build_blog.py` 共用 `render_article()` 输出页头、标题、目录、文末和页脚，同时更新文章列表、搜索与 RSS。每篇文章的 slug 和章节 id 必须唯一，爱心与访问量按文章区分。
 - 学术主页入口名为 Playground，现有 Blog URL `/blog/` 保持兼容。未获新的明确要求时，不调整学术主页其他区块、头像、页面顺序或旧站内容。
 - 现有样式分工：`blog.css` 基础布局，`article-components.css` 阅读组件，`interactions.css/js` 通用微交互，`reading.js` 目录与人物，`icons.css/js` 图标，`navigation.css/js` 导航，`footer.css` 页脚与云层，`panel-motion.css/js` 彩虹面板装饰，`link-motion.css/js` 关闭按钮和链接箭头，`reactions.css/js` 爱心互动。在负责对应行为的文件里修改，避免新增冲突的重复规则。
 
