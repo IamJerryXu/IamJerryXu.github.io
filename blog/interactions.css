@@ -52,7 +52,7 @@ body,.clouds path,.article-hero,.article-hero path,.footer-cloud{transition:back
 .heading-anchor:active path:nth-child(3){transform:translateX(4px) rotate(11.3deg)}
 .heading-anchor:active path:nth-child(4){transform:translateX(-4px) rotate(11.3deg)}
 }
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.scene-portrait .character-layer,.footer-peek .character-layer,.heading-anchor,.heading-anchor path,body,.clouds path,.article-hero,.article-hero path,.footer-cloud{transition:none!important}.header-actions>*,.identity>span,.name-mark path,.article-toc{animation:none!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.scene-portrait .character-layer,.footer-peek .character-layer,.heading-anchor,.heading-anchor path,body,.clouds path,.article-hero,.article-hero path,.footer-cloud{transition:none!important}.header-actions>*,.identity>span,.name-mark,.name-mark path,.article-toc{animation:none!important}}
 /* The gear waits for intent, then keeps a cumulative press/release turn. */
 .rainbow-tools{opacity:0;transform:scale(.5) translate(-32px,64px);transform-origin:center;transition:opacity 800ms,transform 200s}
 .rainbow-tools.is-revealed,.rainbow-tools:focus-within{opacity:1;transform:scale(1) translate(0,0);transition:opacity 500ms cubic-bezier(.17,.67,.53,.97),transform 500ms cubic-bezier(.17,.67,.53,.97)}

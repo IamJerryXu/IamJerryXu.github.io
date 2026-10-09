@@ -46,15 +46,17 @@ footer.site-footer{position:relative;isolation:isolate;overflow:clip;display:blo
 .footer-credit{max-width:1100px;margin:auto;padding:0 32px 40px;display:flex;flex-wrap:wrap;gap:8px 24px;font-size:14px;line-height:24px;color:var(--muted);position:relative;z-index:3}.footer-credit a{color:inherit;text-decoration:underline;text-underline-offset:4px}.footer-credit a:hover{color:var(--blue)}.article-body h2{font-size:32px;line-height:48px;font-weight:700;margin-top:48px;margin-bottom:32px}.article-toc{top:160px;font-size:16px}.article-toc h2{font-size:16px}.article-note{font-size:16px;line-height:24px}.blog-header{padding-top:40px;padding-bottom:8px}
 @media(max-width:800px){.blog-header{padding:16px}.article-body h2{font-size:26px;line-height:38px}.footer-credit{padding:0 24px 32px}}
 @media(max-width:563px){.footer-credit{padding:0 16px 28px;font-size:12px;gap:4px 12px}}
-/* Two rounded hand-drawn marks framing the name. */
-.name-mark{width:22px;height:36px;flex:none;overflow:visible;fill:var(--muted);stroke:none;margin:0 1px;transition:fill 200ms}
-.name-paw{transform-origin:14px 20px;transform:rotate(-8deg)}
-.identity:is(:hover,:focus-visible) .name-mark{fill:var(--blue)}
-.identity:is(:hover,:focus-visible) .name-paw{animation:paw-greeting 500ms ease-out}
-@keyframes paw-greeting{0%,100%{transform:translateY(0) rotate(-8deg)}32%{transform:translateY(-2.5px) rotate(7deg)}65%{transform:translateY(.5px) rotate(-12deg)}}
-@media(max-width:460px){.name-mark{width:19px;height:32px}}
-@media(max-width:350px){.name-mark{width:17px;height:30px}}
-@media(prefers-reduced-motion:reduce){.name-mark{transition:none}.identity:is(:hover,:focus-visible) .name-paw{animation:none}}
+/* Two tiny outline paws, above and below the breathing room in the name. */
+.name-mark{width:17px;height:38px;flex:none;overflow:visible;fill:none;stroke:var(--muted);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;margin:0 1px;transition:stroke 200ms}
+.name-mark-upper,.name-mark-lower{transform-box:fill-box;transform-origin:center}
+.identity:is(:hover,:focus-visible) .name-mark{stroke:var(--blue)}
+.identity:is(:hover,:focus-visible) .name-mark-upper{animation:paw-upper-greeting 500ms ease-out}
+.identity:is(:hover,:focus-visible) .name-mark-lower{animation:paw-lower-greeting 500ms 55ms ease-out}
+@keyframes paw-upper-greeting{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(-1.3px) rotate(-5deg)}70%{transform:translateY(.3px) rotate(2deg)}}
+@keyframes paw-lower-greeting{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(1.3px) rotate(5deg)}70%{transform:translateY(-.3px) rotate(-2deg)}}
+@media(max-width:460px){.name-mark{width:15px;height:34px}}
+@media(max-width:350px){.name-mark{width:13px;height:32px}}
+@media(prefers-reduced-motion:reduce){.name-mark{transition:none}.identity:is(:hover,:focus-visible) .name-mark path{animation:none}}
 
 /* The freely licensed Regular face is used throughout; light optical emphasis
    avoids the browser's much heavier synthetic bold at the reference sizes. */
