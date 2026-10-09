@@ -20,7 +20,7 @@ def render_blog(root, tr, theme_init, theme_button):
     portrait=asset('assets/blog-character-seated-v1.webp')
     def character_images():
         return ''.join(f'<span class="character-layer character-layer--{mode}"><img class="character-base" src="{asset(base)}" alt="" width="397" height="720" decoding="async" draggable="false"><img class="character-expression" src="{asset(happy)}" alt="" width="397" height="720" decoding="async" draggable="false"></span>' for mode,base,happy in [('day','assets/blog-character-seated-v1.webp','assets/blog-character-seated-happy-v1.webp'),('night','assets/blog-character-seated-night-v1.webp','assets/blog-character-seated-night-happy-v1.webp')])
-    star='<svg class="name-mark" viewBox="0 0 18 38" aria-hidden="true"><path class="name-mark-upper" d="M2.8 5.4C4 7.6 4.5 10.2 6.2 11.1C7.1 11.6 8.1 8.1 8.6 6.8L13.6 9.8C13.8 7.2 12.8 4.8 11.9 2"/><path class="name-mark-lower" d="M5.5 33.4C7.1 31.2 8.2 28.8 8.5 26.3C9.1 29 10.3 31.1 12.1 32.5"/></svg>'
+    star='<svg class="name-mark" viewBox="0 0 28 36" aria-hidden="true" focusable="false"><g class="name-paw"><ellipse cx="4.4" cy="12" rx="2.6" ry="3.5" transform="rotate(-25 4.4 12)"/><ellipse cx="10.1" cy="7.8" rx="2.7" ry="3.6" transform="rotate(-9 10.1 7.8)"/><ellipse cx="17.9" cy="7.8" rx="2.7" ry="3.6" transform="rotate(9 17.9 7.8)"/><ellipse cx="23.6" cy="12" rx="2.6" ry="3.5" transform="rotate(25 23.6 12)"/><path d="M14 15C10.7 15 9.8 18.1 7.4 20.5C4.6 23.2 5.5 27.8 9 28C10.9 28.1 12.4 26.9 14 26.9C15.6 26.9 17.1 28.1 19 28C22.5 27.8 23.4 23.2 20.6 20.5C18.2 18.1 17.3 15 14 15Z"/></g></svg>'
 
 
 
