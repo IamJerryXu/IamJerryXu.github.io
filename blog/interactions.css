@@ -22,12 +22,12 @@
 @keyframes toolbar-arrive{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes name-first-arrive{from{opacity:0;transform:translateX(6px)}to{opacity:1;transform:translateX(0)}}
 @keyframes name-last-arrive{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
-@keyframes paw-arrive{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+@keyframes name-letters-arrive{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
 @media(min-width:801px) and (prefers-reduced-motion:no-preference){
 .header-actions>*{animation:toolbar-arrive calc(500ms + var(--tool-order)*100ms) calc(var(--tool-order)*100ms) cubic-bezier(.17,.67,.2,1) both}
 .blog-home .site-header .identity>span:first-child{animation:name-first-arrive 300ms 750ms cubic-bezier(.27,.22,.44,1.03) both}
 .blog-home .site-header .identity>span:last-child{animation:name-last-arrive 300ms 825ms cubic-bezier(.27,.22,.44,1.03) both}
-.blog-home .site-header .name-mark{animation:paw-arrive 400ms 1050ms cubic-bezier(.27,.22,.44,1.03) backwards}
+.blog-home .site-header .name-monogram{animation:name-letters-arrive 400ms 1050ms cubic-bezier(.27,.22,.44,1.03) backwards}
 .article-toc{animation:toc-fade 400ms both,toc-enter 700ms cubic-bezier(.17,.67,.54,1) both}
 }
 @keyframes toc-fade{from{opacity:0}to{opacity:1}}
@@ -52,7 +52,7 @@ body,.clouds path,.article-hero,.article-hero path,.footer-cloud{transition:back
 .heading-anchor:active path:nth-child(3){transform:translateX(4px) rotate(11.3deg)}
 .heading-anchor:active path:nth-child(4){transform:translateX(-4px) rotate(11.3deg)}
 }
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.scene-portrait .character-layer,.footer-peek .character-layer,.heading-anchor,.heading-anchor path,body,.clouds path,.article-hero,.article-hero path,.footer-cloud{transition:none!important}.header-actions>*,.identity>span,.name-mark,.name-mark path,.article-toc{animation:none!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.scene-portrait .character-layer,.footer-peek .character-layer,.heading-anchor,.heading-anchor path,body,.clouds path,.article-hero,.article-hero path,.footer-cloud{transition:none!important}.header-actions>*,.identity>span,.name-monogram,.name-monogram path,.article-toc{animation:none!important}}
 /* The gear waits for intent, then keeps a cumulative press/release turn. */
 .rainbow-tools{opacity:0;transform:scale(.5) translate(-32px,64px);transform-origin:center;transition:opacity 800ms,transform 200s}
 .rainbow-tools.is-revealed,.rainbow-tools:focus-within{opacity:1;transform:scale(1) translate(0,0);transition:opacity 500ms cubic-bezier(.17,.67,.53,.97),transform 500ms cubic-bezier(.17,.67,.53,.97)}

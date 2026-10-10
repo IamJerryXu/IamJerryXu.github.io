@@ -46,19 +46,18 @@ footer.site-footer{position:relative;isolation:isolate;overflow:clip;display:blo
 .footer-credit{max-width:1100px;margin:auto;padding:0 32px 40px;display:flex;flex-wrap:wrap;gap:8px 24px;font-size:14px;line-height:24px;color:var(--muted);position:relative;z-index:3}.footer-credit a{color:inherit;text-decoration:underline;text-underline-offset:4px}.footer-credit a:hover{color:var(--blue)}.article-body h2{font-size:32px;line-height:48px;font-weight:700;margin-top:48px;margin-bottom:32px}.article-toc{top:160px;font-size:16px}.article-toc h2{font-size:16px}.article-note{font-size:16px;line-height:24px}.blog-header{padding-top:40px;padding-bottom:8px}
 @media(max-width:800px){.blog-header{padding:16px}.article-body h2{font-size:26px;line-height:38px}.footer-credit{padding:0 24px 32px}}
 @media(max-width:563px){.footer-credit{padding:0 16px 28px;font-size:12px;gap:4px 12px}}
-/* The name mark follows Josh Comeau's tiny two-stroke signature: one loose upper stroke and one tucked lower stroke. */
-.name-mark{position:relative;display:inline-block;width:18px;height:24px;flex:none;overflow:visible;margin:0 1px;transition:color 200ms}
-.name-mark svg{position:absolute;display:block;overflow:visible;fill:none;stroke:var(--muted);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round}
-.name-mark-upper{left:2px;top:-1px;width:14px;height:12px;transform-origin:center}
-.name-mark-lower{left:6px;bottom:0;width:9px;height:10px;transform-origin:center}
-.identity:is(:hover,:focus-visible) .name-mark svg{stroke:var(--blue)}
-.identity:is(:hover,:focus-visible) .name-mark-upper{animation:paw-upper-greeting 500ms ease-out}
-.identity:is(:hover,:focus-visible) .name-mark-lower{animation:paw-lower-greeting 500ms 55ms ease-out}
-@keyframes paw-upper-greeting{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(-1.3px) rotate(-5deg)}70%{transform:translateY(.3px) rotate(2deg)}}
-@keyframes paw-lower-greeting{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(1.3px) rotate(5deg)}70%{transform:translateY(-.3px) rotate(-2deg)}}
-@media(max-width:460px){.name-mark{width:16px;height:22px}}
-@media(max-width:350px){.name-mark{width:15px;height:21px}}
-@media(prefers-reduced-motion:reduce){.name-mark{transition:none}.identity:is(:hover,:focus-visible) .name-mark path{animation:none}}
+/* The final u/e in Yongxue become a small handwritten vertical ligature. */
+.name-monogram{position:relative;display:inline-block;width:17px;height:28px;flex:none;overflow:visible;margin:0 2px 0 -2px;-webkit-text-stroke:0}
+.name-monogram svg{position:absolute;display:block;overflow:visible;fill:none;stroke:currentColor;stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;transition:stroke 200ms;transform-origin:center}
+.name-letter-u{left:0;top:-1px;width:16px;height:14px}
+.name-letter-e{left:2px;bottom:-1px;width:16px;height:14px}
+.identity:is(:hover,:focus-visible) .name-letter-u{animation:name-u-greeting 500ms ease-out}
+.identity:is(:hover,:focus-visible) .name-letter-e{animation:name-e-greeting 500ms 55ms ease-out}
+@keyframes name-u-greeting{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(-1.3px) rotate(-5deg)}70%{transform:translateY(.3px) rotate(2deg)}}
+@keyframes name-e-greeting{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(1.3px) rotate(5deg)}70%{transform:translateY(-.3px) rotate(-2deg)}}
+@media(max-width:460px){.name-monogram{width:16px;height:26px}.name-monogram svg{width:15px;height:13px}}
+@media(max-width:350px){.name-monogram{width:15px;height:24px}.name-monogram svg{width:14px;height:12px}}
+@media(prefers-reduced-motion:reduce){.name-monogram svg{transition:none;animation:none!important}}
 
 /* The freely licensed Regular face is used throughout; light optical emphasis
    avoids the browser's much heavier synthetic bold at the reference sizes. */
