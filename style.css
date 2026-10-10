@@ -72,7 +72,7 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 .internship-list{padding-left:30px;margin:0 0 25px}
 .internship-list>li{margin-bottom:14px}
 .internship-description{margin:6px 0 0}
-.internship-logo{display:inline-block;width:96px;margin-left:12px;vertical-align:middle;line-height:0;border-radius:2px;transition:opacity 150ms}
+.internship-logo{display:inline-block;width:96px;margin-left:12px;vertical-align:middle;transform:translateY(-2px);line-height:0;border-radius:2px;transition:opacity 150ms}
 .internship-logo img{display:block;width:100%;height:auto;filter:brightness(0);opacity:.8}
 .internship-logo:hover{opacity:.7}
 .internship-logo:focus-visible{outline:2px solid currentColor;outline-offset:4px}
