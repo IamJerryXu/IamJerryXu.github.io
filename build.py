@@ -24,7 +24,13 @@ def tr(en,zh,tag='span',cls=''):
 def news(n):
  return f'<li><time datetime="{n[0]}">{n[0].replace("-",".")}</time><span class="news-celebration" aria-hidden="true">🎉🎉</span> <div>'+tr(n[1],n[2])+'</div></li>'
 def internship(n):
- return '<li><em>'+tr(n['period_en'],n['period_zh'])+'</em>, '+tr(n['title_en'],n['title_zh'])+'<p class="internship-description">'+tr(n['description_en'],n['description_zh'])+'</p></li>'
+ logo=''
+ if n.get('logo'):
+  asset=n['logo']
+  version=hashlib.sha256((ROOT/asset['src']).read_bytes()).hexdigest()[:12]
+  logo=f'<a class="internship-logo" href="{e(asset["url"],quote=True)}" target="_blank" rel="noopener noreferrer" aria-label="{e(asset["alt"],quote=True)} official website"><img src="{e(asset["src"],quote=True)}?v={version}" alt="{e(asset["alt"],quote=True)}" width="{asset["width"]}" height="{asset["height"]}" loading="lazy" decoding="async"></a>'
+ return '<li><em>'+tr(n['period_en'],n['period_zh'])+'</em>, '+tr(n['title_en'],n['title_zh'])+logo+'<p class="internship-description">'+tr(n['description_en'],n['description_zh'])+'</p></li>'
+
 def paper(p):
  links=''
  for label,url in p['links']:
