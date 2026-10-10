@@ -48,7 +48,7 @@ footer.site-footer{position:relative;isolation:isolate;overflow:clip;display:blo
 @media(max-width:563px){.footer-credit{padding:0 16px 28px;font-size:12px;gap:4px 12px}}
 /* The final u/e in Yongxue become a small handwritten vertical ligature. */
 .name-monogram{position:relative;display:inline-block;width:17px;height:28px;flex:none;overflow:visible;margin:0 2px 0 -2px;-webkit-text-stroke:0}
-.name-monogram svg{position:absolute;display:block;overflow:visible;fill:none;stroke:currentColor;stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;transition:stroke 200ms;transform-origin:center}
+.name-monogram svg{position:absolute;display:block;overflow:visible;fill:none;stroke:var(--muted);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;transition:stroke 200ms;transform-origin:center}
 .name-letter-u{left:0;top:-1px;width:16px;height:14px}
 .name-letter-e{left:2px;bottom:-1px;width:16px;height:14px}
 .identity:is(:hover,:focus-visible) .name-letter-u{animation:name-u-greeting 500ms ease-out}
