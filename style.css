@@ -150,9 +150,11 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 
 /* A compact theme control sits beside the language switch. */
 html{color-scheme:light}
-#theme-toggle{display:inline-flex;align-items:center;justify-content:center;flex:0 0 34px;width:34px;height:34px;padding:7px;border:0;border-radius:50%;background:transparent;color:#7a8288;line-height:1;touch-action:manipulation}
+#theme-toggle{display:inline-flex;align-items:center;justify-content:center;flex:0 0 40px;width:40px;height:40px;padding:7px;border:0;border-radius:50%;background:transparent;color:#7a8288;line-height:1;touch-action:manipulation}
+#language{font-size:18px;line-height:1;color:#7a8288;padding:8px 2px 8px 4px;letter-spacing:.02em}
+#theme-toggle svg{width:26px;height:26px}
 #theme-toggle:hover{color:#346888;background:rgba(52,104,136,.07)}
-#theme-toggle svg{display:block;width:20px;height:20px;flex-shrink:0}
+#theme-toggle svg{display:block;width:26px;height:26px;flex-shrink:0}
 #theme-toggle .theme-icon--sun{display:none}
 html[data-theme="dark"] #theme-toggle .theme-icon--moon{display:none}
 html[data-theme="dark"] #theme-toggle .theme-icon--sun{display:block}
