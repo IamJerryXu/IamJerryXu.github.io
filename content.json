@@ -193,12 +193,12 @@
       "description_en": "Working on building Omni-Simple-World, an embodied foundation model that unifies task understanding, world prediction, and action generation. In parallel, pursuing frontier research in Physical Intelligence, exploring embodied reasoning and action generation in generative models.",
       "description_zh": "参与构建具身基础模型 Omni-Simple-World，统一任务理解、世界预测与动作生成。同时开展前沿物理智能（Physical Intelligence）研究，探索生成式模型中的具身推理与动作生成。",
       "logo": {
-        "src": "assets/simpleai-logo.png",
+        "src": "assets/simpleai-lab-logo.png",
         "alt": "SimpleAI",
         "url": "https://www.simpleai.tech/",
-        "width": 304,
-        "height": 51,
-        "source": "https://qiniu.mfdemo.cn/shenpu/img/home/foot-logo.png"
+        "width": 1323,
+        "height": 323,
+        "source": "https://cloud.simpleai.tech/simple-world-lab/assets/site-icon-0ZP7Ay-H.png"
       }
     },
     {
