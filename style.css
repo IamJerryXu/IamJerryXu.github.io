@@ -152,7 +152,6 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 html{color-scheme:light}
 #theme-toggle,#language{display:inline-flex;align-items:center;justify-content:center;flex:0 0 32px;width:32px;height:32px;padding:4px;border:0;border-radius:4px;background:transparent;color:#7a8288;line-height:1;touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #language{font-size:14px;letter-spacing:0}
-#language .language-motion,#language .language-label{display:inline-block;pointer-events:none;transform-origin:center}
 #theme-toggle:hover,#language:hover{color:#346888}
 #theme-toggle:focus-visible,#language:focus-visible{outline:2px solid #346888;outline-offset:4px}
 #theme-toggle svg{display:block;width:20px;height:20px;flex-shrink:0}

@@ -28,13 +28,14 @@ systemTheme.addEventListener('change', event => {
   if (!themePreference) applyTheme(event.matches ? 'dark' : 'light');
 });
 const languageButton = document.querySelector('#language');
+const languageControl = window.createLanguageControl(languageButton);
 function setLanguage(language) {
   const isChinese = language === 'zh';
   document.documentElement.lang = isChinese ? 'zh-CN' : 'en';
   document.querySelectorAll('[data-en][data-zh]').forEach(el => { el.innerHTML = el.dataset[language]; });
   document.querySelectorAll('[data-alt-en][data-alt-zh]').forEach(el => { el.alt = el.dataset[isChinese ? 'altZh' : 'altEn']; });
   document.querySelectorAll('[data-placeholder-en][data-placeholder-zh]').forEach(el => { el.placeholder = el.dataset[isChinese ? 'placeholderZh' : 'placeholderEn']; });
-  languageButton.textContent = isChinese ? 'EN' : '中文';
+  languageControl.label.textContent = isChinese ? 'EN' : '中文';
   languageButton.setAttribute('aria-label', isChinese ? 'Switch to English' : '切换到中文');
   updateThemeLabel();
   try { localStorage.setItem('academic-language', language); } catch {}
@@ -42,7 +43,7 @@ function setLanguage(language) {
 let rememberedLanguage = 'en';
 try { rememberedLanguage = localStorage.getItem('academic-language') === 'zh' ? 'zh' : 'en'; } catch {}
 setLanguage(rememberedLanguage);
-languageButton.addEventListener('click', () => setLanguage(document.documentElement.lang === 'en' ? 'zh' : 'en'));
+languageButton.addEventListener('click', () => languageControl.change(() => setLanguage(document.documentElement.lang === 'en' ? 'zh' : 'en')));
 
 // Keep the compact navigation usable on touch and with the keyboard.
 (() => {

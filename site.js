@@ -28,80 +28,8 @@ systemTheme.addEventListener('change', event => {
   if (!themePreference) applyTheme(event.matches ? 'dark' : 'light');
 });
 const languageButton = document.querySelector('#language');
-// Separate inner layers keep the press spring independent of header entrance.
-languageButton.innerHTML = '<span class="language-motion"><span class="language-label"></span></span>';
-const languageLabel = languageButton.querySelector('.language-label');
-const languageFeedback = (() => {
-  const surface = languageButton.querySelector('.language-motion');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-  let frame = 0, previous = 0, hoverTimer = 0, labelAnimation;
-  let pressed = false;
-  const scale = {x: 1, v: 0, target: 1};
-  const angle = {x: 0, v: 0, target: 0};
-  function draw() { surface.style.transform = `scale(${scale.x}) rotate(${angle.x}deg)`; }
-  function tick(now) {
-    frame = 0;
-    const dt = Math.min((now - (previous || now - 16.67)) / 1000, .032);
-    previous = now;
-    let moving = false;
-    for (const value of [scale, angle]) {
-      value.v += ((value.target - value.x) * 300 - value.v * 18) * dt;
-      value.x += value.v * dt;
-      if (Math.abs(value.x - value.target) < .001 && Math.abs(value.v) < .001) {
-        value.x = value.target; value.v = 0;
-      } else moving = true;
-    }
-    draw();
-    if (moving) frame = requestAnimationFrame(tick);
-    else previous = 0;
-  }
-  function aim(size, rotation) {
-    scale.target = size; angle.target = rotation;
-    if (reduce.matches) { reset(); return; }
-    if (!frame) frame = requestAnimationFrame(tick);
-  }
-  function reset() {
-    pressed = false; clearTimeout(hoverTimer); cancelAnimationFrame(frame);
-    frame = 0; previous = 0; labelAnimation?.cancel();
-    Object.assign(scale, {x: 1, v: 0, target: 1});
-    Object.assign(angle, {x: 0, v: 0, target: 0}); draw();
-  }
-  function down() {
-    if (pressed) return;
-    pressed = true; clearTimeout(hoverTimer); aim(.86, -6);
-  }
-  function up() { if (pressed) { pressed = false; aim(1, 0); } }
-  function hover() {
-    if (pressed || reduce.matches) return;
-    clearTimeout(hoverTimer); aim(1.06, -8);
-    hoverTimer = setTimeout(() => aim(1, 0), 150);
-  }
-  languageButton.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') hover(); });
-  languageButton.addEventListener('pointerdown', event => { if (event.button === 0) down(); });
-  languageButton.addEventListener('pointerleave', reset);
-  languageButton.addEventListener('pointercancel', reset);
-  window.addEventListener('pointerup', up);
-  languageButton.addEventListener('keydown', event => {
-    if ((event.key === ' ' || event.key === 'Enter') && !event.repeat) down();
-  });
-  languageButton.addEventListener('keyup', event => { if (event.key === ' ' || event.key === 'Enter') up(); });
-  languageButton.addEventListener('focus', () => { if (languageButton.matches(':focus-visible')) hover(); });
-  languageButton.addEventListener('blur', reset);
-  window.addEventListener('blur', reset);
-  window.addEventListener('pagehide', reset);
-  document.addEventListener('visibilitychange', () => { if (document.hidden) reset(); });
-  reduce.addEventListener('change', reset);
-  return () => {
-    reset();
-    if (reduce.matches) return;
-    // An instant click still begins visibly compressed; the action never waits.
-    scale.x = .86; angle.x = -6; draw(); aim(1, 0);
-    labelAnimation = languageLabel.animate([
-      {opacity: .3, transform: 'translateY(4px)'},
-      {opacity: 1, transform: 'translateY(0)'}
-    ], {duration: 240, easing: 'cubic-bezier(.2,.7,.2,1)'});
-  };
-})();
+const languageControl = window.createLanguageControl(languageButton);
+const languageLabel = languageControl.label;
 function setLanguage(language) {
   const isChinese = language === 'zh';
   document.documentElement.lang = isChinese ? 'zh-CN' : 'en';
@@ -115,8 +43,7 @@ let rememberedLanguage = 'en';
 try { rememberedLanguage = localStorage.getItem('academic-language') === 'zh' ? 'zh' : 'en'; } catch {}
 setLanguage(rememberedLanguage);
 languageButton.addEventListener('click', () => {
-  setLanguage(document.documentElement.lang === 'en' ? 'zh' : 'en');
-  languageFeedback();
+  languageControl.change(() => setLanguage(document.documentElement.lang === 'en' ? 'zh' : 'en'));
 });
 const dialog = document.querySelector('#figure-dialog');
 let fullFigure = document.querySelector('#figure-full');

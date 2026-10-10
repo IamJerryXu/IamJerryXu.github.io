@@ -1,0 +1,6 @@
+/* Reserve a single horizontal line in every header, including narrow screens. */
+#language,.header-actions #language{width:44px;min-width:44px;flex:0 0 44px;height:32px;padding:4px;font-size:14px;line-height:20px;white-space:nowrap;word-break:normal;writing-mode:horizontal-tb;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#language .language-motion{position:relative;display:block;flex:none;width:36px;height:24px;line-height:24px;text-align:center;overflow:hidden;pointer-events:none;transform-origin:center;white-space:nowrap}
+#language .language-label{display:block;white-space:nowrap}
+#language .language-outgoing{position:absolute;inset:0;display:block;white-space:nowrap}
+#language:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:4px}
