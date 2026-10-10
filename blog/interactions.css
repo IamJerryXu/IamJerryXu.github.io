@@ -69,9 +69,6 @@ body,.clouds path,.article-hero,.article-hero path,.footer-cloud{transition:back
 #site-search{position:fixed;inset:0 0 auto;margin:0;width:100%;max-width:none;max-height:85svh;border:0;border-radius:0;padding:36px max(24px,calc((100vw - 850px)/2)) 24px;box-shadow:0 12px 40px #0003;transform-origin:top center}
 #site-search[open]{animation:search-arrive 833ms 100ms linear(0,.1407 4.43%,.9383 16.72%,1.0774 20.43%,1.1493 24.31%,1.1629 26.95%,1.1536 29.93%,1.0168 43.09%,.9766 51%,1.0033 76.88%,1) both}
 @keyframes search-arrive{from{transform:translateY(-15%);opacity:0}to{transform:translateY(0);opacity:1}}
-#site-search.is-closing{animation:search-depart 500ms 250ms both}
-#site-search.is-closing>*{animation:search-content-depart 340ms both;pointer-events:none}
-@keyframes search-depart{from{transform:translateY(0);opacity:1}to{transform:translateY(-50%);opacity:0}}
 @keyframes search-content-depart{to{opacity:0}}
 #mobile-menu{position:fixed;inset:80px 8px 8px;width:auto;overflow:auto;border-radius:6px;padding:24px;z-index:12}
 #mobile-menu:not([hidden]){animation:menu-arrive 400ms cubic-bezier(.17,.67,.51,1) both}
@@ -110,7 +107,6 @@ body,.clouds path,.article-hero,.article-hero path,.footer-cloud{transition:back
 #site-search>.search-cloud{position:absolute;left:0;right:0;bottom:0;width:100%;transform:translateY(calc(100% - 2px));display:flex;justify-content:center;z-index:-1;pointer-events:none;overflow-x:clip;overflow-y:visible}
 .search-cloud>svg{display:block;flex:none;width:100%;min-width:2000px;height:auto;aspect-ratio:4113/146;transform-origin:top center;animation:search-cloud-unfold 600ms ease both;--cloud-end-y:-30%;--cloud-start-x:.8}
 @keyframes search-cloud-unfold{from{transform:scaleX(var(--cloud-start-x)) scaleY(0)}to{transform:scaleY(2) translateY(var(--cloud-end-y))}}
-#site-search.is-closing{animation-timing-function:cubic-bezier(.56,.1,.85,.87)}
 @media(min-width:1440px){.search-cloud>svg{--cloud-end-y:0%}}
 @media(min-width:1600px){.search-cloud>svg{--cloud-start-x:.9}}
 @media(min-width:1840px){.search-cloud>svg{--cloud-start-x:1}}

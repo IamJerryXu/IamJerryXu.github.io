@@ -341,11 +341,20 @@
       return;
     }
     cancelSearchClose();
+    // Start from the current entrance frame, including the protruding cloud edge.
+    const shellStyle = getComputedStyle(dialog);
+    const cloud = dialog.querySelector('.search-cloud > svg');
+    const shellBounds = dialog.getBoundingClientRect();
+    const cloudBottom = cloud?.getBoundingClientRect().bottom ?? shellBounds.bottom;
+    dialog.style.setProperty('--search-exit-start', shellStyle.transform === 'none' ? 'translateY(0)' : shellStyle.transform);
+    dialog.style.setProperty('--search-exit-opacity', shellStyle.opacity);
+    dialog.style.setProperty('--search-exit-overhang', `${Math.max(0, cloudBottom - shellBounds.bottom) + 2}px`);
+    if (cloud) dialog.style.setProperty('--search-cloud-exit-transform', getComputedStyle(cloud).transform);
     dialog.classList.add('is-closing');
     const revision = searchCloseRevision;
     searchCloseTimer = window.setTimeout(() => {
       if (revision === searchCloseRevision && dialog.open) dialog.close();
-    }, 750);
+    }, 600); // Fallback if the browser does not dispatch animationend.
   }
   function openSearch() {
     if (!dialog || !input) return;
@@ -369,6 +378,9 @@
     searchButton.setAttribute('aria-expanded', 'false');
     searchButton.addEventListener('click', openSearch);
     closeButton?.addEventListener('click', closeSearch);
+    dialog.addEventListener('animationend', event => {
+      if (event.target === dialog && event.animationName === 'search-shell-depart' && dialog.classList.contains('is-closing')) dialog.close();
+    });
     dialog.addEventListener('cancel', event => {
       event.preventDefault();
       if (input.value || clearing) clearSearch(false); else closeSearch();
@@ -393,7 +405,7 @@
       if (clearing) clearSearch(false);
       searchButton.setAttribute('aria-expanded', 'false');
       const target = previousFocus?.isConnected && typeof previousFocus.focus === 'function' ? previousFocus : searchButton;
-      target.focus();
+      target.focus({preventScroll: true});
     });
     // Only a press and release on the backdrop dismisses the dialog.
     let backdropPress = false;

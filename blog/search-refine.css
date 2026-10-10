@@ -50,14 +50,15 @@ html[data-theme="dark"] #site-search { --search-accent: #aaa3ff; }
   #site-search #search-close, #site-search .search-input-row, #site-search #search-empty { animation: none; }
   #site-search #search-results .search-result { transition: none; }
 }
-/* Dismiss immediately retracts the shell over 500ms; the DOM remains mounted
-   for 750ms. Enter remains the existing -15% spring, and the cloud keeps its
-   own scale/unfold keyframes. */
+/* The shell and its overflow cloud leave together; close on animationend. */
 #site-search.is-closing { animation: search-shell-depart 500ms cubic-bezier(.56,.1,.85,.87) both; }
-#site-search.is-closing > :not(.search-cloud) { animation: search-control-disappear 300ms both; pointer-events: none; }
+#site-search.is-closing::backdrop { animation: search-backdrop-depart 500ms ease-out both; }
+#site-search.is-closing > :not(.search-cloud), #site-search.is-closing #search-empty { animation: search-control-disappear 300ms both; pointer-events: none; }
 #site-search.is-closing > .search-cloud { animation: none; }
-@keyframes search-shell-depart { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-100%); opacity: 1; } }
+#site-search.is-closing .search-cloud > svg { animation: none; transform: var(--search-cloud-exit-transform); }
+@keyframes search-shell-depart { from { transform: var(--search-exit-start, translateY(0)); opacity: var(--search-exit-opacity, 1); } to { transform: translateY(calc(-100% - var(--search-exit-overhang, 160px))); opacity: 1; } }
+@keyframes search-backdrop-depart { to { opacity: 0; } }
 @keyframes search-control-disappear { to { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
-  #site-search.is-closing, #site-search.is-closing > :not(.search-cloud) { animation: none; }
+  #site-search.is-closing, #site-search.is-closing::backdrop, #site-search.is-closing > :not(.search-cloud), #site-search.is-closing #search-empty { animation: none; }
 }
