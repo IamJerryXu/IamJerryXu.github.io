@@ -76,8 +76,9 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 .internship-logo img{display:block;width:100%;height:auto}
 .internship-logo:hover{opacity:.7}
 .internship-logo:focus-visible{outline:2px solid currentColor;outline-offset:4px}
-html[data-theme="dark"] .internship-logo{background:#fff;border-radius:4px}
-@media print{html[data-theme="dark"] .internship-logo{background:none}}
+.logo-color-filter{position:absolute;overflow:hidden;pointer-events:none}
+html[data-theme="dark"] .internship-logo img{filter:url(#simpleai-dark-ink)}
+@media print{html[data-theme="dark"] .internship-logo img{filter:none}}
 
 @media(max-width:540px){.internship-list{padding-left:22px}}
 

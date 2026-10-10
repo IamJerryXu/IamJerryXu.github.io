@@ -28,7 +28,9 @@ def internship(n):
  if n.get('logo'):
   asset=n['logo']
   version=hashlib.sha256((ROOT/asset['src']).read_bytes()).hexdigest()[:12]
-  logo=f'<a class="internship-logo" href="{e(asset["url"],quote=True)}" target="_blank" rel="noopener noreferrer" aria-label="{e(asset["alt"],quote=True)} official website"><img src="{e(asset["src"],quote=True)}?v={version}" alt="{e(asset["alt"],quote=True)}" width="{asset["width"]}" height="{asset["height"]}" loading="lazy" decoding="async"></a>'
+  # Lighten only neutral ink; preserve the original red and transparent edges.
+  dark_ink='<svg class="logo-color-filter" width="0" height="0" aria-hidden="true" focusable="false"><defs><filter id="simpleai-dark-ink" color-interpolation-filters="sRGB"><feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -4 4 0 0 1"/><feComponentTransfer><feFuncA type="discrete" tableValues="0 1"/></feComponentTransfer><feComposite in2="SourceAlpha" operator="in" result="light-ink"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="light-ink"/></feMerge></filter></defs></svg>'
+  logo=dark_ink+f'<a class="internship-logo" href="{e(asset["url"],quote=True)}" target="_blank" rel="noopener noreferrer" aria-label="{e(asset["alt"],quote=True)} official website"><img src="{e(asset["src"],quote=True)}?v={version}" alt="{e(asset["alt"],quote=True)}" width="{asset["width"]}" height="{asset["height"]}" loading="lazy" decoding="async"></a>'
  return '<li><em>'+tr(n['period_en'],n['period_zh'])+'</em>, '+tr(n['title_en'],n['title_zh'])+logo+'<p class="internship-description">'+tr(n['description_en'],n['description_zh'])+'</p></li>'
 
 def paper(p):
