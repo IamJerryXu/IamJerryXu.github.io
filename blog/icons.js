@@ -1,5 +1,6 @@
 'use strict';
 (() => {
+  const themeOnly = document.currentScript?.dataset.iconsScope === 'theme';
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const root = document.documentElement;
   const active = new Set();
@@ -143,7 +144,7 @@
     models.push(model);
   }
   // The small external-link mark has its own 150ms boop, independent of toolbar icons.
-  document.querySelectorAll('.nav-panel a[href]').forEach(link => {
+  document.querySelectorAll(themeOnly ? ':not(*)' : '.nav-panel a[href]').forEach(link => {
     if(!link.textContent.includes('↗') && link.target !== '_blank')return;
     const walker=document.createTreeWalker(link,NodeFilter.SHOW_TEXT);
     let textNode;while((textNode=walker.nextNode()))if(textNode.nodeValue.includes('↗'))textNode.nodeValue=textNode.nodeValue.replace(/\s*↗/g,'');
@@ -159,11 +160,11 @@
     link.addEventListener('pointerleave',end);link.addEventListener('focus',()=>{if(link.matches(':focus-visible'))start();});link.addEventListener('blur',end);
     model.update(true);models.push(model);
   });
-  const header = {search:document.querySelector('#search-toggle'),sound:document.querySelector('#sound-toggle'),theme:document.querySelector('#theme-toggle')};
+  const header = {search:themeOnly ? null : document.querySelector('#search-toggle'),sound:themeOnly ? null : document.querySelector('#sound-toggle'),theme:document.querySelector('#theme-toggle')};
   Object.entries(header).forEach(([type,button])=>mount(button,type));
   const labels = {'RSS':'rss','Google Scholar':'scholar','GitHub':'github','LinkedIn':'linkedin'};
-  Object.entries(labels).forEach(([label,type])=>document.querySelectorAll(`a[aria-label="${label}"]`).forEach(button=>mount(button,type)));
-  document.querySelectorAll('[data-toolbar-action]').forEach(button=>{
+  if (!themeOnly) Object.entries(labels).forEach(([label,type])=>document.querySelectorAll(`a[aria-label="${label}"]`).forEach(button=>mount(button,type)));
+  document.querySelectorAll(themeOnly ? ':not(*)' : '[data-toolbar-action]').forEach(button=>{
     const type=button.dataset.toolbarAction;
     if(!header[type])return;
     mount(button,type);
@@ -174,7 +175,7 @@
     const searchLabel=zh?'搜索':'Search';
     header.search?.setAttribute('aria-label',searchLabel);
     if(header.search)header.search.title=zh?'搜索 (⌘ K)':'Search (⌘ K)';
-    document.querySelectorAll('[data-toolbar-action]').forEach(button=>{
+    document.querySelectorAll(themeOnly ? ':not(*)' : '[data-toolbar-action]').forEach(button=>{
       const source=header[button.dataset.toolbarAction]; if(!source)return;
       ['aria-label','aria-pressed','aria-expanded','title'].forEach(name=>{
         const value=source.getAttribute(name);

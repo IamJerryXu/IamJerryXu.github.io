@@ -150,15 +150,15 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 
 /* A compact theme control sits beside the language switch. */
 html{color-scheme:light}
-#theme-toggle{display:inline-flex;align-items:center;justify-content:center;flex:0 0 40px;width:40px;height:40px;padding:7px;border:0;border-radius:50%;background:transparent;color:#7a8288;line-height:1;touch-action:manipulation}
-#language{font-size:18px;line-height:1;color:#7a8288;padding:8px 2px 8px 4px;letter-spacing:.02em}
-#theme-toggle svg{width:26px;height:26px}
-#theme-toggle:hover{color:#346888;background:rgba(52,104,136,.07)}
-#theme-toggle svg{display:block;width:26px;height:26px;flex-shrink:0}
+#theme-toggle,#language{display:inline-flex;align-items:center;justify-content:center;flex:0 0 32px;width:32px;height:32px;padding:4px;border:0;border-radius:4px;background:transparent;color:#7a8288;line-height:1;touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#language{font-size:14px;letter-spacing:0}
+#language .language-motion,#language .language-label{display:inline-block;pointer-events:none;transform-origin:center}
+#theme-toggle:hover,#language:hover{color:#346888}
+#theme-toggle:focus-visible,#language:focus-visible{outline:2px solid #346888;outline-offset:4px}
+#theme-toggle svg{display:block;width:20px;height:20px;flex-shrink:0}
 #theme-toggle .theme-icon--sun{display:none}
 html[data-theme="dark"] #theme-toggle .theme-icon--moon{display:none}
 html[data-theme="dark"] #theme-toggle .theme-icon--sun{display:block}
-@media(max-width:540px){#theme-toggle{flex-basis:32px;width:32px;height:32px;padding:6px}}
 
 /* Change the page surfaces and typography, leaving photographic content intact. */
 @media screen{
@@ -177,7 +177,7 @@ html[data-theme="dark"] #theme-toggle .theme-icon--sun{display:block}
   html[data-theme="dark"] .greedy-nav a:hover,
   html[data-theme="dark"] #language:hover,
   html[data-theme="dark"] #theme-toggle:hover{color:#eef0f4}
-  html[data-theme="dark"] #theme-toggle:hover{background:rgba(255,255,255,.07)}
+  html[data-theme="dark"] #theme-toggle:focus-visible,html[data-theme="dark"] #language:focus-visible{outline-color:#91b9d8}
   html[data-theme="dark"] .greedy-nav .visible-links a:before{background:#818b97}
   html[data-theme="dark"] .author__urls{background:transparent;border-color:#35383d}
   html[data-theme="dark"] .author__avatar .portrait-frame{background:#25272c;border-color:#35383d}
