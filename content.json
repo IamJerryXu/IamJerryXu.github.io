@@ -186,6 +186,14 @@
   ],
   "internships": [
     {
+      "period_en": "Offer received",
+      "period_zh": "已获实习 offer",
+      "title_en": "Research Intern, SimpleAI · <a href=\"https://cloud.simpleai.tech/simple-world-lab/\" target=\"_blank\" rel=\"noopener noreferrer\">Simple World Lab</a>",
+      "title_zh": "研究实习生，SimpleAI · <a href=\"https://cloud.simpleai.tech/simple-world-lab/\" target=\"_blank\" rel=\"noopener noreferrer\">Simple World Lab</a>",
+      "description_en": "Research focus: embodied foundation models and multimodal learning for physical intelligence.",
+      "description_zh": "研究方向为具身基础模型与多模态学习，面向物理世界的理解与交互。"
+    },
+    {
       "period_en": "2026.06 – Present",
       "period_zh": "2026.06 – 至今",
       "title_en": "Research Intern, <a href=\"https://sysu-hcp.net/\" target=\"_blank\" rel=\"noopener noreferrer\">HCP Lab</a>, Prof. <a href=\"https://scholar.google.com/citations?user=voxznZAAAAAJ&amp;hl=en\" target=\"_blank\" rel=\"noopener noreferrer\">Xiaodan Liang</a>’s Group",
