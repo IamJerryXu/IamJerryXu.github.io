@@ -142,43 +142,23 @@
     }
   },
   "portraits": {
-    "portrait-cv.png": {
-      "source": "portrait-cv.png",
-      "originalBytes": 1665067,
+    "portrait-great-wall-v1.png": {
+      "source": "portrait-great-wall-v1.png",
+      "originalBytes": 2604484,
       "originalWidth": 1086,
       "originalHeight": 1448,
       "variants": [
         {
-          "src": "previews/portrait-cv-480.webp",
+          "src": "previews/portrait-great-wall-v1-480.webp",
           "width": 480,
           "height": 640,
-          "bytes": 58842
+          "bytes": 107322
         },
         {
-          "src": "previews/portrait-cv-960.webp",
+          "src": "previews/portrait-great-wall-v1-960.webp",
           "width": 960,
           "height": 1280,
-          "bytes": 171000
-        }
-      ]
-    },
-    "portrait-shirt-extension-v1.png": {
-      "source": "portrait-shirt-extension-v1.png",
-      "originalBytes": 2349512,
-      "originalWidth": 2172,
-      "originalHeight": 724,
-      "variants": [
-        {
-          "src": "previews/portrait-shirt-extension-v1-480.webp",
-          "width": 480,
-          "height": 160,
-          "bytes": 10964
-        },
-        {
-          "src": "previews/portrait-shirt-extension-v1-960.webp",
-          "width": 960,
-          "height": 320,
-          "bytes": 32610
+          "bytes": 261504
         }
       ]
     },
