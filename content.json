@@ -71,9 +71,18 @@
       "id": "trace",
       "short": "TRACE",
       "title": "TRACE: Typed Reference-Aware Conversational Editing for Humanoid Motion Diffusion",
-      "authors": "Zejian Kang<sup>*</sup>, Yifu Luo<sup>*</sup>, Boyang Shen<sup>*</sup>, Jingxuan Li, Zekai Chen, Shi Zekun, <strong>Yongxue Xu</strong>, Zhenyu Hou, Bingqian Wu, Shaolei Zhang, Wentao Yang, and Xiangru Huang",
-      "bib": "@misc{kang2026trace,\n  title={TRACE: Typed Reference-Aware Conversational Editing for Humanoid Motion Diffusion},\n  author={Kang, Zejian and Luo, Yifu and Shen, Boyang and Li, Jingxuan and Chen, Zekai and {Shi Zekun} and Xu, Yongxue and Hou, Zhenyu and Wu, Bingqian and Zhang, Shaolei and Yang, Wentao and Huang, Xiangru},\n  year={2026},\n  note={Submitted to ICLR 2027. Equal contribution: Zejian Kang, Yifu Luo, and Boyang Shen}\n}",
-      "links": [],
+      "authors": "Zejian Kang<sup>*</sup>, Yifu Luo<sup>*</sup>, Boyang Shen<sup>*</sup>, Jingxuan Li, Zekai Chen, Zekun Shi, <strong>Yongxue Xu</strong>, Zhenyu Hou, Bingqian Wu, Shaolei Zhang, Wentao Yang, and Xiangru Huang",
+      "bib": "@article{kang2026trace,\n  title={TRACE: Typed Reference-Aware Conversational Editing for Humanoid Motion Diffusion},\n  author={Kang, Zejian and Luo, Yifu and Shen, Boyang and Li, Jingxuan and Chen, Zekai and Shi, Zekun and Xu, Yongxue and Hou, Zhenyu and Wu, Bingqian and Zhang, Shaolei and Yang, Wentao and Huang, Xiangru},\n  journal={arXiv preprint arXiv:2610.21515},\n  url={https://arxiv.org/abs/2610.21515},\n  year={2026},\n  note={Submitted to ICLR 2027. Equal contribution: Zejian Kang, Yifu Luo, and Boyang Shen}\n}",
+      "links": [
+        [
+          "arXiv",
+          "https://arxiv.org/abs/2610.21515"
+        ],
+        [
+          "Code",
+          "https://github.com/Multimodal-Perception-Action/TRACE"
+        ]
+      ],
       "image": "trace.png",
       "venue": "Submitted to ICLR 2027",
       "venue_zh": "已投稿 ICLR 2027"
