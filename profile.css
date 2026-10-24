@@ -1,6 +1,6 @@
 /* A small interactive profile, with the original portrait and official artwork. */
-.portrait-scene{position:relative;width:fit-content;isolation:isolate;--badge-left:max(-60px,calc((925px - 100vw)/2 - 11px))}
-@media(min-width:1280px){.portrait-scene{--badge-left:max(-60px,calc((1280px - 100vw)/2 - 11px))}}
+.portrait-scene{position:relative;width:fit-content;isolation:isolate;--badge-left:max(-60px,calc((925px - 100vw)/2 - 3px))}
+@media(min-width:1280px){.portrait-scene{--badge-left:max(-60px,calc((1280px - 100vw)/2 - 3px))}}
 .author__avatar .portrait-frame{transition:border-color 260ms,box-shadow 260ms;box-shadow:0 2px 8px #142a3c04}
 .portrait-toggle:hover .portrait-frame,.portrait-toggle:focus-visible .portrait-frame{border-color:#bacbd5;box-shadow:0 5px 22px #24465e0d}
 .portrait-toggle:active .portrait-frame{box-shadow:0 1px 5px #24465e12}
@@ -43,3 +43,42 @@ html[data-theme=dark] .portrait-university--westlake .badge-float::before,html[d
 .portrait-toggle:hover~.portrait-hint .portrait-hint-orbit,.portrait-toggle:focus-visible~.portrait-hint .portrait-hint-orbit{rotate:0deg}
 .portrait-toggle:hover~.portrait-hint circle,.portrait-toggle:focus-visible~.portrait-hint circle{scale:1}
 @media(max-width:540px){.portrait-hint{gap:4px}.portrait-hint-orbit{width:11px;height:11px}}
+
+/* Reserve the emblem's full hover/spring envelope beside the portrait.
+   Use the same pixel breakpoints as the portrait sizes; the reference theme's
+   em-based float columns otherwise switch at different browser font settings. */
+@media (min-width:925px) {
+  #main {
+    display:grid;
+    grid-template-columns:210px minmax(0,1fr);
+    column-gap:40px;
+    align-items:start;
+    max-width:925px;
+    padding-inline:15px;
+  }
+  #main::after {display:none}
+  #main > .sidebar {
+    float:none;
+    width:auto;
+    min-width:0;
+    margin:0;
+    top:calc(var(--masthead-height,55px) + 10px);
+  }
+  #main > .page {
+    float:none;
+    width:auto;
+    min-width:0;
+    margin:0;
+    padding-left:0;
+    padding-right:0;
+  }
+  .sidebar .author__avatar {display:block;width:auto}
+  .sidebar .author__content {display:block;width:100%;padding:0}
+}
+@media (min-width:1280px) {
+  #main {max-width:1280px;column-gap:55px}
+}
+@media (max-width:540px) {
+  /* Bottom emblems extend below the oval, including their animated hover. */
+  .profile_box .author__urls-wrapper {margin-top:26px}
+}

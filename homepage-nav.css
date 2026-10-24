@@ -1,0 +1,89 @@
+/* Keep every destination visible when text or browser zoom needs more room. */
+.masthead__inner-wrap {
+  gap: clamp(10px, 1.25vw, 18px);
+}
+.masthead__inner-wrap::after {
+  display: none;
+}
+.masthead .greedy-nav {
+  min-width: 0;
+  overflow: visible;
+}
+.masthead .greedy-nav .visible-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: clamp(14px, 1.7vw, 26px);
+  row-gap: 0;
+}
+.masthead .greedy-nav .visible-links > li {
+  display: block;
+  flex: 0 0 auto;
+}
+.masthead .greedy-nav .visible-links > li > a {
+  margin: 0;
+  padding-block: .5rem;
+}
+.masthead .greedy-nav .visible-links > li:first-child {
+  margin-right: clamp(0px, 1.2vw, 18px);
+}
+.masthead__inner-wrap > #theme-toggle,
+.masthead__inner-wrap > #language {
+  flex-shrink: 0;
+}
+@media (max-width: 924px) {
+  .masthead__inner-wrap {
+    align-items: flex-start;
+  }
+  .masthead__inner-wrap > #theme-toggle,
+  .masthead__inner-wrap > #language {
+    margin-top: 3px;
+  }
+  .masthead .greedy-nav .visible-links {
+    column-gap: 18px;
+  }
+  .masthead .greedy-nav .visible-links > li:first-child {
+    margin-right: 0;
+  }
+}
+@media (max-width: 540px) {
+  .masthead__inner-wrap {
+    display: block;
+    position: relative;
+  }
+  .masthead__inner-wrap > #theme-toggle,
+  .masthead__inner-wrap > #language {
+    position: absolute;
+    z-index: 11;
+    top: 8px;
+    margin-top: 0;
+  }
+  .masthead__inner-wrap > #theme-toggle { right: 72px; }
+  .masthead__inner-wrap > #language { right: 20px; }
+  .masthead .greedy-nav .visible-links > li:first-child {
+    flex-basis: 100%;
+  }
+  .masthead .greedy-nav .visible-links > li:first-child > a {
+    width: fit-content;
+    max-width: calc(100% - 92px);
+  }
+  .masthead .greedy-nav .visible-links {
+    column-gap: 14px;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .masthead .greedy-nav .visible-links > li > a {
+    padding-block: 7px;
+  }
+}
+
+/* Share the actual sticky-header height with anchored sections. */
+html { scroll-padding-top: calc(var(--masthead-height, 69px) + 16px); }
+section, .paper { scroll-margin-top: 0; }
+.masthead__inner-wrap { max-width: 925px; }
+@media (min-width: 1280px) {
+  .masthead__inner-wrap { max-width: 1280px; }
+}
+@media (max-width: 540px) {
+  .masthead .greedy-nav .visible-links > li { line-height: inherit; }
+}
