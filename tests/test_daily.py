@@ -45,7 +45,7 @@ class DailyTests(unittest.TestCase):
 
     def test_empty_edition_is_not_a_published_reading(self):
         self.write([])
-        self.assertIn('Not yet published', self.render())
+        self.assertIn('No reading notes have been published yet', self.render())
 
     def test_deterministic_order(self):
         a, b = paper('2610.12347'), paper('2610.12346')
