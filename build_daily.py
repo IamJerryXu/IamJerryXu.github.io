@@ -136,7 +136,9 @@ def render_daily(root, tr, page, cloud_svg):
 <button class="daily-date-toggle" id="daily-date-toggle" type="button" aria-expanded="false" aria-controls="daily-date-panel" hidden><svg class="daily-calendar" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4m8-4v4M4 11h16"/></svg><span class="daily-date-label">{tr('Date', '日期')}</span><span id="daily-date-value" data-en="All dates" data-zh="全部日期">All dates</span><svg class="daily-date-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg></button>
 <nav class="daily-date-panel" id="daily-date-panel" aria-label="Reading dates"><ul>{date_link('', 'All dates', '全部日期')}{''.join(date_link(entry['date'], entry['date'], entry['date']) for entry in published)}</ul></nav></div>''' if count else ''
     empty = '' if count else f'<section class="daily-empty"><h2>{tr("The reading archive starts here", "精读档案，从这里开始")}</h2><p>{tr("No reading notes have been published yet. Only verified papers and honestly labelled reading depth will appear here.", "暂未发布论文笔记。这里只收录经过核验的论文，并如实标注实际阅读深度；不以示例内容充当精读。")}</p></section>'
+    intro = tr('Reading notes on video generation and embodied intelligence—work worth a closer look, and questions worth exploring further.', '关于视频生成与具身智能的论文阅读笔记，记录值得细读的工作，也留下值得继续追问的问题。')
     main = f'''<div class="article-body daily-content">
+<p class="article-intro" id="introduction">{intro}</p>
 {filters}
 <p class="daily-count" id="daily-count" role="status" aria-live="polite"><span data-daily-count>{count}</span> {tr('papers in the archive', '篇已收录论文')}</p>
 <div id="daily-results">{groups}{empty}</div><p id="daily-no-results" hidden>{tr('No papers for this date.', '此日期暂无论文。')}</p>
