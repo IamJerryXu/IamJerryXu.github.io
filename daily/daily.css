@@ -2,10 +2,29 @@
    Only archive-specific controls and metadata are styled here. */
 .daily-content { overflow-wrap: anywhere; }
 .daily-caption, .daily-count, .daily-authors, .daily-meta { color: var(--muted); font-size: 14px; line-height: 1.5; }
-.daily-filters { margin: 28px 0 16px; }
-.daily-filters label { display: inline-flex; align-items: center; gap: 12px; max-width: 100%; font-size: 14px; color: var(--muted); }
-.daily-filters select { min-height: 44px; max-width: 100%; padding: 8px 24px 8px 8px; font: inherit; font-size: 16px; color: var(--fg); background: var(--bg); border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
-.daily-filters select:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
+/* Follow Playground's nav-panel surface, colors and entrance curve. */
+.daily-filters { position: relative; width: fit-content; max-width: 100%; margin: 28px 0 16px; z-index: 3; }
+.daily-date-toggle { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 12px; border: 0; border-radius: 8px; background: transparent; color: var(--fg); font: inherit; font-size: 15px; line-height: 24px; transition: background-color 200ms, color 200ms; }
+.daily-date-toggle:hover, .daily-date-toggle[aria-expanded=true] { background: var(--pill); color: var(--blue); }
+.daily-date-label { color: var(--muted); font-size: 13px; }
+.daily-date-toggle svg, .daily-date-panel svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.daily-calendar { width: 18px; height: 18px; }
+.daily-date-chevron { width: 18px; height: 18px; margin-left: 4px; transition: transform 200ms cubic-bezier(.17,.67,.51,1); }
+.daily-date-toggle[aria-expanded=true] .daily-date-chevron { transform: rotate(180deg); }
+.daily-date-panel ul { list-style: none; margin: 0; padding: 0; }
+.daily-date-panel li { margin: 0; padding: 0; }
+.daily-date-panel a { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 44px; padding: 10px 12px; border-radius: 5px; color: var(--fg); font-size: 15px; line-height: 24px; text-decoration: none; transition: background-color 150ms, color 150ms; }
+.daily-date-panel a:hover, .daily-date-panel a:focus-visible { background: var(--pill); color: var(--blue); }
+.daily-date-panel a:focus-visible { outline-offset: -2px; }
+.daily-date-panel a[aria-current=true] { color: var(--blue); }
+.daily-date-panel svg { width: 16px; height: 16px; opacity: 0; }
+.daily-date-panel a[aria-current=true] svg { opacity: 1; }
+.is-enhanced .daily-date-panel { position: absolute; top: calc(100% + 10px); left: 0; width: 224px; max-width: calc(100vw - 32px); max-height: min(320px,50svh); overflow-y: auto; overscroll-behavior: contain; padding: 8px; border: 1px solid color-mix(in srgb,var(--fg) 9%,transparent); border-radius: 9px; background: var(--bg); box-shadow: 0 1px 3px #21394b12,0 6px 12px #21394b12,0 16px 32px #21394b18; transform-origin: 40px top; animation: daily-date-enter 220ms cubic-bezier(.17,.67,.51,1) both; }
+.is-enhanced .daily-date-panel[data-placement=above] { top: auto; bottom: calc(100% + 10px); transform-origin: 40px bottom; }
+html[data-theme=dark] .is-enhanced .daily-date-panel { box-shadow: 0 2px 8px #0004,0 16px 32px #0004; }
+.is-enhanced .daily-date-panel.is-closing { animation: daily-date-leave 180ms ease both; pointer-events: none; }
+@keyframes daily-date-enter { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes daily-date-leave { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-4px); } }
 /* Keep result updates available to assistive technology without a dashboard counter. */
 .daily-count { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .daily-content .daily-date { margin: 56px 0 0; color: var(--accent); font-size: 16px; line-height: 24px; font-weight: 400; letter-spacing: 1px; }
@@ -28,7 +47,7 @@
 .daily-sidebar li { margin: 0 0 12px; }
 @media (max-width: 800px) {
   .daily-content .daily-paper h2 { font-size: 24px; }
-  .daily-filters { gap: 12px; }
+
 }
 @media (prefers-reduced-motion: reduce) {
   .daily-paper h2 > a { transition: none; }
@@ -38,3 +57,26 @@
 }
 
 .daily-content .daily-date + .daily-caption { margin-top: 12px; }
+
+/* Local, OFL-licensed SC glyph subset. Latin remains the existing Wotfard. */
+@font-face {
+  font-family: 'Daily Noto Sans SC';
+  src: url('fonts/noto-sans-sc-reading.woff2?v=826ceb02b1ab') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+.daily-content { --daily-cjk: 'Wotfard', 'Daily Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif; }
+.daily-reading, .daily-reason, .daily-meta, .daily-filters { font-family: var(--daily-cjk); }
+.daily-reading p { font-size: 17px; line-height: 1.95; font-weight: 400; letter-spacing: normal; margin-bottom: 22px; color: var(--article-type-ink); word-break: normal; overflow-wrap: break-word; line-break: strict; }
+.daily-reading h3 { font-family: var(--daily-cjk); }
+.daily-reason { font-size: 15px; line-height: 1.85; letter-spacing: normal; }
+.daily-reading .article-note p { font-size: 16px; line-height: 1.9; }
+@media (max-width: 800px) {
+  .daily-reading p { font-size: 16px; line-height: 1.95; margin-bottom: 20px; }
+  .daily-reading .article-note p { font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .daily-date-toggle, .daily-date-chevron, .daily-date-panel a { transition: none; }
+  .is-enhanced .daily-date-panel, .is-enhanced .daily-date-panel.is-closing { animation: none; }
+}

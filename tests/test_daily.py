@@ -69,6 +69,14 @@ class DailyTests(unittest.TestCase):
             self.assertIn(heading, output)
         self.assertIn('Abstract screened', output)
 
+    def test_dates_are_real_links_without_javascript(self):
+        self.write()
+        output = self.render()
+        self.assertIn('href="#day-2026-10-27" data-date="2026-10-27"', output)
+        self.assertIn('href="#daily-results" data-date=""', output)
+        self.assertIn('aria-expanded="false" aria-controls="daily-date-panel" hidden', output)
+        self.assertNotIn('<select', output)
+
     def test_rejects_duplicate_base_ids_across_days(self):
         self.write()
         self.write([paper('2610.12345v2')], '2026-10-26')

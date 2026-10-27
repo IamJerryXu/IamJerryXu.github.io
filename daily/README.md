@@ -67,7 +67,7 @@ The shared Playground renderer owns the page shell. `daily/daily.css` and
 Do not edit generated HTML alone. Without JavaScript all notes stay visible.
 
 Check `/`, `/blog/`, `/daily/` at desktop and mobile widths, light/dark and both
-navigation languages. Check date selection, All dates, keyboard focus,
+navigation languages. Check date selection, All dates, Escape/outside-click dismissal, keyboard focus,
 Back/Forward, no-results, no-JavaScript, reduced motion and source links when
 changing archive interactions. Actual reading prose stays Chinese intentionally.
 
@@ -113,9 +113,17 @@ collection pass, not an asserted end-to-end live run of this exact script versio
 
 ## Archive presentation
 
-Keep the archive quiet: one compact date selector, with All dates to clear it.
+Keep the archive quiet: one compact date disclosure, with All dates to clear it.
+Use semantic buttons and date links with aria-expanded/aria-current, the existing
+Playground navigation surface and reduced-motion behavior. Without JavaScript
+links jump directly to edition anchors and all papers remain visible.
 Do not render `scope_note`, topic filters, topic badges or a priority-topic list.
 Keep `tags` in source data for collection and validation only. Legacy `tag` URL
 parameters are ignored; date changes remove them and preserve unrelated parameters.
 Do not restore language instructions or visible result counters. Preserve source
 dates, links, actual reading depth, score rationale and paper evidence/limitations.
+
+Chinese reading text uses the local OFL Noto Sans SC subset and explicit system
+fallbacks, with Wotfard retained for Latin. See `fonts/README.md` for provenance,
+license and optional offline subset updates. Keep this typography scoped to Daily
+Papers; do not replace the shared Playground fonts.

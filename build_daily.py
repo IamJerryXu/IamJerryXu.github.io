@@ -111,8 +111,9 @@ def render_daily(root, tr, page, cloud_svg):
         # Intentionally plain text: unlike older Blog data, daily text is never HTML.
         return ''.join(f'<p>{e(value)}</p>' for value in values)
 
-    def option(value, en, zh):
-        return f'<option value="{e(value, quote=True)}" data-en="{e(en, quote=True)}" data-zh="{e(zh, quote=True)}">{e(en)}</option>'
+    def date_link(value, en, zh):
+        target = '#day-' + value if value else '#daily-results'
+        return f'<li><a href="{target}" data-date="{value}">{tr(en, zh)}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg></a></li>'
 
     def paper_html(paper):
         anchor = 'paper-' + re.sub(r'[^a-zA-Z0-9-]', '-', re.sub(r'v\d+$', '', paper['arxiv_id']))
@@ -131,9 +132,9 @@ def render_daily(root, tr, page, cloud_svg):
         return announcement
 
     groups = ''.join(f'<section class="daily-day" data-date="{entry["date"]}" id="day-{entry["date"]}"><h2 class="daily-date"><time datetime="{entry["date"]}">{entry["date"]}</time></h2>{edition_note(entry)}{"".join(paper_html(paper) for paper in entry["papers"])}</section>' for entry in published)
-    filters = f'''<form class="daily-filters" id="daily-filters" hidden>
-<label for="daily-date">{tr('Date', '日期')}<select id="daily-date" name="date">{option('', 'All dates', '全部日期')}{''.join(option(entry['date'], entry['date'], entry['date']) for entry in published)}</select></label>
-</form>''' if count else ''
+    filters = f'''<div class="daily-filters" id="daily-filters">
+<button class="daily-date-toggle" id="daily-date-toggle" type="button" aria-expanded="false" aria-controls="daily-date-panel" hidden><svg class="daily-calendar" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4m8-4v4M4 11h16"/></svg><span class="daily-date-label">{tr('Date', '日期')}</span><span id="daily-date-value" data-en="All dates" data-zh="全部日期">All dates</span><svg class="daily-date-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg></button>
+<nav class="daily-date-panel" id="daily-date-panel" aria-label="Reading dates"><ul>{date_link('', 'All dates', '全部日期')}{''.join(date_link(entry['date'], entry['date'], entry['date']) for entry in published)}</ul></nav></div>''' if count else ''
     empty = '' if count else f'<section class="daily-empty"><h2>{tr("The reading archive starts here", "精读档案，从这里开始")}</h2><p>{tr("No reading notes have been published yet. Only verified papers and honestly labelled reading depth will appear here.", "暂未发布论文笔记。这里只收录经过核验的论文，并如实标注实际阅读深度；不以示例内容充当精读。")}</p></section>'
     latest = f'<time datetime="{published[0]["date"]}">{published[0]["date"]}</time>' if published else tr('Not yet published', '尚未发布')
     intro = tr('A Chinese reading notebook at the intersection of video MLLMs and world models. Priority: embodied VLA × world models, video world models, and persistent 4D scenes when the camera leaves and returns.', '围绕 Video MLLM × World Model 的中文精读笔记。重点关注具身 VLA 与世界模型结合、视频世界模型，以及相机离开后再次回到场景时的 4D 物体持久性与视频生成。')
