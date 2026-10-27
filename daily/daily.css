@@ -80,3 +80,15 @@ html[data-theme=dark] .is-enhanced .daily-date-panel { box-shadow: 0 2px 8px #00
   .daily-date-toggle, .daily-date-chevron, .daily-date-panel a { transition: none; }
   .is-enhanced .daily-date-panel, .is-enhanced .daily-date-panel.is-closing { animation: none; }
 }
+
+/* Song-style Chinese body text; headings, Latin and controls retain their fonts. */
+@font-face {
+  font-family: 'Daily Noto Serif SC';
+  src: url('fonts/noto-serif-sc-reading.woff2?v=7135af93bce7') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+.daily-reading p {
+  font-family: 'Wotfard', 'Daily Noto Serif SC', 'Songti SC', 'STSong', 'Noto Serif CJK SC', 'Source Han Serif SC', serif;
+}

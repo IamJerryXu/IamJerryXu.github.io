@@ -123,7 +123,8 @@ parameters are ignored; date changes remove them and preserve unrelated paramete
 Do not restore language instructions or visible result counters. Preserve source
 dates, links, actual reading depth, score rationale and paper evidence/limitations.
 
-Chinese reading text uses the local OFL Noto Sans SC subset and explicit system
-fallbacks, with Wotfard retained for Latin. See `fonts/README.md` for provenance,
+Chinese reading paragraphs use the local OFL Noto Serif SC subset (Song-style)
+and explicit serif fallbacks, with Wotfard retained for Latin. Headings, metadata
+and date controls retain the Noto Sans SC / system sans stack. See `fonts/README.md` for provenance,
 license and optional offline subset updates. Keep this typography scoped to Daily
 Papers; do not replace the shared Playground fonts.
