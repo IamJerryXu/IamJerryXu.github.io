@@ -1,0 +1,458 @@
+{
+  "date": "2026-10-27",
+  "scope_note": "本期收录11篇近36小时提交论文，并明确标注1篇10月26日新公告补充（UniWorld，10月23日首稿）。检索基准为2026-10-27 02:53:44 UTC：六个相关分类API去重750篇，其中近16小时0篇、近36小时312篇；另核对最新公告列表。不是“今天发表”的12篇，也不保证穷尽。正文为方法、实验与局限的选择性阅读，未独立复现；评分是研究相关性、证据和参考价值的主观判断，不是质量保证。",
+  "papers": [
+    {
+      "arxiv_id": "2610.34663v1",
+      "title": "Video World Models Need Predictable Latents",
+      "authors": [
+        "Mattia Scardecchia",
+        "Sherry Yang"
+      ],
+      "published": "2026-10-26",
+      "tags": [
+        "video-world-model",
+        "vla-world-model"
+      ],
+      "score": 9.5,
+      "score_reason": "主观：相关性5.0/5、证据2.7/3、方法启发1.8/2；控制重建质量与训练预算，直接检验动作rollout和策略评估。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "只为像素重建训练的潜空间未必容易预测；只追求可预测性又可能丢掉判断机器人任务所需的细节。"
+      ],
+      "summary": [
+        "用时序预测或逆动力学目标微调自编码器，并让解码器通过交叉注意力读取过去帧，使潜变量更专注于变化，再训练动作条件扩散世界模型。"
+      ],
+      "insight": [
+        "Bridge V2上的等预算实验中，OOD及长程MSE/LPIPS降低15%–24%；2步采样的感知质量可超过基线10步。在10步DDIM采样下，汇总3种策略×17项任务，潜预测模型的模拟—真实成功率相关系数为0.62，基线0.51。"
+      ],
+      "connection": [
+        "对VLA rollout很直接：应优化状态的动力学可预测性，而非只比较重建质量；历史外观与变化量分工也值得用于持久状态设计，但尚未测试相机回访。"
+      ],
+      "limitations": [
+        "主要是机器人操作、二维空间压缩编码器；策略评估只有一个训练种子并依赖VLM裁判。“七倍更快”指达到基线LPIPS，不是所有误差或端到端训练成本。正文选读，未独立复现。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.35001v1",
+      "title": "More Memory, Better Videos? A Controlled Study of Visual Memory in Long-Video Generation",
+      "authors": [
+        "Yuzhuo Chen",
+        "Huafeng Shi",
+        "Xinyu Wang",
+        "Yulong Xu",
+        "Yucheng Wang",
+        "Haoqin Hong",
+        "Guoxin Zhang",
+        "Zehua Ma",
+        "Weiming Zhang"
+      ],
+      "published": "2026-10-26",
+      "tags": [
+        "video-generation",
+        "video-world-model"
+      ],
+      "score": 9.4,
+      "score_reason": "主观：相关性4.9/5、证据2.7/3、评测启发1.8/2；直击对象重现与状态更新，并用无记忆、提示剥离和第二裁判检查混淆。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "历史外观一致不等于当前状态正确：检索可能带回已经消失的角色，或覆盖故事刚改变的对象属性。"
+      ],
+      "summary": [
+        "VMem-Bench分开评估真实电影的参考检索与30个生成故事的闭环结果；后者在同一生成器上比较四种检索策略、无记忆及特权last-seen对照。"
+      ],
+      "insight": [
+        "检索使实体召回由0.559升至0.628–0.693，却降低精确率与禁止实体回避率。去掉外观提示后，无记忆的长间隔角色召回从0.984降至0.565，说明“重新出现”可被提示泄露混淆。"
+      ],
+      "connection": [
+        "持久世界状态应同时记录身份、当前属性和失效条件；回访评测需分别测该出现、该改变及不该出现的内容，而不只测与旧帧相似度。这里是叙事实体重现，不是几何相机回环。"
+      ],
+      "limitations": [
+        "每故事每条件仅一次rollout，各策略历史会分叉，不能归因为单张参考图的因果效应；裁判影响绝对分数，提出的记忆门控和过滤方案尚未验证。正文选读，未独立复现。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.34593v1",
+      "title": "What Does World Modeling Actually Improve in Robot Action Learning?",
+      "authors": [
+        "Hanwen Cui",
+        "Yuanyuan Li",
+        "Qing Guo",
+        "Zhida Zhang",
+        "Chao Chen",
+        "Xi Chen",
+        "Jie Cao"
+      ],
+      "published": "2026-10-25",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 9.3,
+      "score_reason": "主观评分：相关性5.0/5、证据2.6/3、方法启发1.7/2；严格区分预测监督、执行收益与分布外迁移，直接回应WAM评估问题。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "动作成功率提升，究竟来自更好的世界理解，还是训练时多了有效监督？"
+      ],
+      "summary": [
+        "在FastWAM和OpenWAM内部固定架构、初始化、数据与步数，只切换未来视频损失，再分开评估熟悉任务、轨迹模式与分布偏移。"
+      ],
+      "insight": [
+        "熟悉任务有显著收益，但环境随机化下两模型成功率均不超过3.22%。π0.5增加仅训练时使用的轻量预测器后，成功率82.94%→89.19%，增益置信区间为2.31至10.31个百分点。"
+      ],
+      "connection": [
+        "支持先问预测状态是否改善行动，而非把视频生成质量当作控制证据；持久对象状态与相机回访也应作为独立迁移测试，不能由训练内成功率替代。"
+      ],
+      "limitations": [
+        "仅RoboTwin仿真、每配置单次训练；随机化存在地板效应。轻量分支与Wan分支差异不显著，且不是仅改变模型规模的严格对照。正文选读，未独立复现。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.35044v1",
+      "title": "DriveUniTok: A Unified Multimodal Tokenizer for Driving World-Action Models",
+      "authors": [
+        "Jingbo Xu",
+        "Hanchao Leng",
+        "JiaHui Huang",
+        "Hanbing Li",
+        "Jingwei Zhao",
+        "Kuiyuan Yang",
+        "Chen Gao",
+        "Guang Chen",
+        "Hangjun Ye",
+        "Yong Li"
+      ],
+      "published": "2026-10-26",
+      "tags": [
+        "vla-world-model",
+        "video-world-model"
+      ],
+      "score": 9.1,
+      "score_reason": "主观评分：相关性4.7/5、证据2.7/3、启发1.7/2；世界预测与动作共享可解码状态，并有同预算、同骨干对照。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "外观、几何和自车动作分别编码，会让后续模型同时学习跨模态对应与时间演化，也容易产生相互不一致的预测。"
+      ],
+      "summary": [
+        "将RGB、投影LiDAR深度和相对自车位姿压入同一连续潜变量，再冻结编码器，以扩散模型预测未来潜变量并共同解码图像、深度和轨迹。"
+      ],
+      "insight": [
+        "NAVSIM同584个token、同预测计算预算下，统一设计的PDMS为91.0，分流对照为87.5；相对自然预算分流，对应DiT单步计算约减52%。两组对照比单独报告排行榜更有参考价值。"
+      ],
+      "connection": [
+        "共同可解码状态能把动作rollout与几何、外观一致性放在同一个接口下检查；可启发持久世界状态设计，但论文未测试相机回看或对象身份记忆。"
+      ],
+      "limitations": [
+        "核心结果来自非反应式NAVSIM规划；LiDAR提供额外几何信息，不能把与RGB-only编码器的比较视为纯架构优势。共享设计的参数共享、连接方式等因素仍耦合。正文选读，未独立复现。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.34356v1",
+      "title": "RynnVLA-Latent: Scaling Robotic Manipulation Foundation Models with 3D-Grounded Latent Actions",
+      "authors": [
+        "Haoyu Zhao",
+        "Xingyue Zhao",
+        "Zhian Su",
+        "Bohan Hou",
+        "Yinzhou Tang",
+        "Fengyi Wang",
+        "Kehan Li",
+        "Yuming Jiang",
+        "Siteng Huang",
+        "Xin Li",
+        "Zhenyu Zeng",
+        "Mingxiu Chen",
+        "Deli Zhao",
+        "Zhongyu Li"
+      ],
+      "published": "2026-10-25",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 8.9,
+      "score_reason": "主观评分：相关性4.9/5、证据2.3/3、方法启发1.7/2；3D运动约束连接视频与控制，但部分结果文本不一致需保守解读。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "视频比动作标注丰富，但外观变化、相机运动和真正可控动作容易混入同一潜表示。"
+      ],
+      "summary": [
+        "RynnLAM以残差未来特征、相机补偿3D流和相机分支解耦学习连续潜动作；用其标注约3.01万小时视频，再将预测潜动作的VLA适配到具体机器人。"
+      ],
+      "insight": [
+        "相对动作探针MSE为0.38；去掉3D流或相机解耦GRL分别升至0.50、0.49。完整608维描述符仍含相机潜变量，不能称为相机不变表示。"
+      ],
+      "connection": [
+        "对对象中心建模的启发是先分离观察者运动与物体运动，再学习行动相关变化；这里学习的是短时转移描述符，并未建立持续对象世界状态。"
+      ],
+      "limitations": [
+        "几何来自伪标签，不能保证度量准确或因果动作可辨识；仍需具身专用动作示范。正文与结论的RoboTwin汇总数值及排名表述不一致，本条不据此评价。正文选读，未独立复现。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.32381v2",
+      "title": "UniWorld: A Unified World Model for Real-Time Visual World Simulation",
+      "authors": [
+        "Xin Zhang",
+        "Yabo Chen",
+        "Shuaiwei Wang",
+        "Zixuan Duan",
+        "Haibin Huang",
+        "Feng Xu",
+        "Xuelong Li"
+      ],
+      "published": "2026-10-23",
+      "tags": [
+        "video-world-model",
+        "video-generation",
+        "camera-return"
+      ],
+      "score": 8.8,
+      "score_reason": "新公告补充：10月23日首稿、10月26日公告，本文选读v2。主观：相关性4.9/5、证据2.2/3、方法启发1.7/2；直接测相机回访，并明确状态不变量，但回访样本少且误差仍大。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "长序列生成不只要保留外观，还需保证历史视频与对应深度在滑动窗口中同步、不被重写。"
+      ],
+      "summary": [
+        "用噪声对齐的历史投影与滚动深度状态连接上游几何和视频渲染，仅提交新后缀；这是生成式渲染接口，而非学习物理动力学。"
+      ],
+      "insight": [
+        "100段30秒视频完成连续生成；缓存与在线深度的三组输出逐位一致。8张H100上960×544稳态DiT吞吐14.47FPS，非端到端速度。"
+      ],
+      "connection": [
+        "附录让相机在20秒回到初始视点，是直接可参考的回访评测；但三个案例回访LPIPS为0.2635–0.4769，GT仅0.0056–0.0118，说明不改旧帧远不等于重访一致。"
+      ],
+      "limitations": [
+        "回访只有同一小房间的三个个例；120秒实验含训练集压力测试。长程保真仍下降，局部有界深度状态也不代表全部缓存恒定。正文选读，未独立复现。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.34649v1",
+      "title": "RobotAgentBench: Towards Open-world Robot Autonomy",
+      "authors": [
+        "Lingjun Mao",
+        "Jinglin Cao",
+        "Lukun He",
+        "Wenpeng Xu",
+        "Yuchen Yan",
+        "Hengyu Jin",
+        "Zijun Zhang",
+        "Jinzhou Tang",
+        "Songyao Jin",
+        "Ziche Liu",
+        "Yifei Shao",
+        "Junbo Huang",
+        "Fang Nan",
+        "Ruobing Han",
+        "Ziqiao Xi",
+        "Ziming Xu",
+        "Shuang Liang",
+        "Sibo Zhu",
+        "Wenyi Wu",
+        "Xinyue Wang",
+        "Yiming Huang",
+        "Xinkai Zou",
+        "Gao Zhu",
+        "Kun Zhou",
+        "Biwei Huang"
+      ],
+      "published": "2026-10-26",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 8.6,
+      "score_reason": "主观推荐：相关性4.3/5、证据2.7/3、方法参考1.6/2；将策略成功与自主性分开测量，适合作为闭环评估参考。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "会按指令抓取，不代表能发现任务、理解场景需求并在失败后恢复；需要比单项操作成功率更完整的评估。"
+      ],
+      "summary": [
+        "RobotAgentBench从一处真实家庭重建并扩展50种布局，覆盖90个原子任务及4类开放场景，比较独立VLA/WAM与规划—执行—核验式代理。"
+      ],
+      "insight": [
+        "正文区分目标发现、上下文推理、操作、恢复和鲁棒性；结果显示加规划器仍常卡在重复执行。每项30实例，另有匹配任务的仿真—实机对照，而非只展示成功视频。"
+      ],
+      "connection": [
+        "对动作rollout的评估应追踪任务进度、状态变化与恢复，而不只问末帧是否合理；可据此设计持久世界状态被干预后的闭环测试。"
+      ],
+      "limitations": [
+        "布局来自同一家庭扩展，比较限于给定场景和任务族；不是任意开放世界泛化或相机回访测试。正文选读，未独立复现。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.35002v1",
+      "title": "DUET4D: Self-Corrective Coupled Guidance for Sparse-View 4D Reconstruction",
+      "authors": [
+        "Beizhen Zhao",
+        "Nanjie Yao",
+        "Boyi Fu",
+        "Qingsong Yan",
+        "Haofan Ren",
+        "Kaiyong Zhao",
+        "Hao Wang"
+      ],
+      "published": "2026-10-26",
+      "tags": [
+        "4d-object-centric"
+      ],
+      "score": 8.6,
+      "score_reason": "主观：相关性4.4/5、证据2.5/3、方法启发1.7/2；显式4D证据约束生成先验，含匹配预处理对照，但并非动作世界模型。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "稀疏视角下，单帧生成补全会产生跨时空冲突；直接把不可靠伪观测写入高斯优化又会制造漂浮和冗余几何。"
+      ],
+      "summary": [
+        "让当前4D高斯提供对应关系与置信度，先对齐恢复残差、引导冻结单帧扩散，再只用反复受支持的误差增密，并结合真实观测剪枝，构成纠错循环。"
+      ],
+      "insight": [
+        "在三个动态重建数据集测试。匹配SparseCam4D预处理后，Neural 3D Video上PSNR为22.04对21.33；消融中完整引导的tPSNR为37.99，普通扩散为36.33。"
+      ],
+      "connection": [
+        "可借鉴“证据充分才写入显式状态”，避免一次幻觉变成持久对象几何；这是生成先验与4D状态相互校验的具体实现，但没有相机返回或动作rollout实验。"
+      ],
+      "limitations": [
+        "严重初始几何错误、极快运动和长期遮挡会破坏锚点；低置信区域退回独立单视图恢复，无法可靠补出从未观察的内容。所报FPS是重建后的渲染速度。高斯场不等于对象身份记忆。正文选读，未独立复现。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.34662v1",
+      "title": "StreamVibe: Proactive Video Agents for Evolving User Intent",
+      "authors": [
+        "Chengzhi Liu",
+        "Yuxiang Lai",
+        "Yuzhe Yang",
+        "Yanqing Liu",
+        "Jiheng Hou",
+        "Yue Cao",
+        "Haonan Wang",
+        "Ruixi Fan",
+        "Lan Wang",
+        "Sheng Liu",
+        "Songyou Peng",
+        "Yale Song",
+        "Kevin Qinghong Lin",
+        "Xin Eric Wang",
+        "Jui-Hsin Lai",
+        "Youbao Tang"
+      ],
+      "published": "2026-10-26",
+      "tags": [
+        "video-mllm"
+      ],
+      "score": 8.5,
+      "score_reason": "主观推荐：相关性4.2/5、证据2.6/3、方法参考1.7/2；显式状态更新与连续交互评估有用，不等同于物理世界模型。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "流式视频助手不仅要记住过去，还要判断旧意图是否仍然有效，避免环境已变化却重复输出旧答案。"
+      ],
+      "summary": [
+        "StreamVibe以4100个评测样例覆盖显式、隐式和动态意图；视频策略经SFT与局部轨迹RL训练，外部Harness维护意图生命周期、任务进度及分层记忆。"
+      ],
+      "insight": [
+        "正文同时测试给定历史的单点判断和使用自身历史的完整轨迹；固定策略加入状态管理后，动态意图场景的多余回应进一步减少。长序列仍出现时机F1下降与约束丢失。"
+      ],
+      "connection": [
+        "与持久世界状态的连接在“读记忆”与“更新有效状态”应分开：历史证据不应自动覆盖当前状态，可用于设计对象离开视野后的状态版本管理。"
+      ],
+      "limitations": [
+        "主要证据是交互问答，不是视频生成或对象几何持久性；答案质量依赖LLM裁判，现有意图变化仍较受限。正文选读，未独立复现。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.34921v1",
+      "title": "PhysEvolve: Verifier-grounded Self-evolution for Physical Reasoning with Executable Worlds",
+      "authors": [
+        "Jinyuan Hu",
+        "Yilei Jiang",
+        "Chen Tang",
+        "Minghong Cai",
+        "Xinran Liu",
+        "Xiangyu Yue"
+      ],
+      "published": "2026-10-26",
+      "tags": [
+        "video-mllm"
+      ],
+      "score": 8.5,
+      "score_reason": "主观推荐：相关性4.2/5、证据2.6/3、方法参考1.7/2；反事实分支和可执行核验值得借鉴，但结论限于视频物理问答。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "只看已经发生的视频，难以为“移除某物后会怎样”提供可靠监督；自生成题目也需要独立物理真值。"
+      ],
+      "summary": [
+        "PhysEvolve让共享VLM编写世界程序，再由模拟器冻结初始状态、执行移除物体的配对分支，生成唯一答案的视觉问题，联合训练出题与解题能力。"
+      ],
+      "insight": [
+        "Qwen3-VL-8B上，ContPhy移除反事实准确率44.26%→51.64%；PhysBench总分仅增0.55点，提升主要集中于投掷等目标能力。删除分支训练会明显削弱相关迁移。"
+      ],
+      "connection": [
+        "可把对象中心世界状态变成可干预的评测契约：保留相同初始条件，仅改变一个实体，检验动作或物体变化后的后果，而非外观相似度。"
+      ],
+      "limitations": [
+        "训练为单次运行、刚体模板与单一8B底座；分支消融也改变题型及训练暴露量，不能视作完全独立变量。未验证机器人控制或相机回访；选读未复现。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.34564v1",
+      "title": "FlockWorld: Toward Population-Scale Multi-Agent Video World Models through Artificial Life Simulation",
+      "authors": [
+        "Meryem Koksal",
+        "Yunzhe Wang",
+        "Volkan Ustun"
+      ],
+      "published": "2026-10-25",
+      "tags": [
+        "video-world-model",
+        "video-generation"
+      ],
+      "score": 8.4,
+      "score_reason": "主观评分：相关性4.5/5、证据2.3/3、方法启发1.6/2；受控多观察者一致性测试很有用，但二维简化环境限制外推。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "多个观察者各自生成视频，可能虚构互不相容的实体；单视角观感难揭示共享世界是否一致。"
+      ],
+      "summary": [
+        "在100个Boids的二维环境中选2至30个相机代理，用动作条件FlockDiT联合生成其局部视图；以互见、相对位移和运动一致性评估10秒rollout。"
+      ],
+      "insight": [
+        "在检测密度匹配的10与30视角设置，联合生成比独立生成检出更多代理；diffusion forcing较稳定。但互见率可被过度生成实体抬高，必须同时检查数量与检测上限。"
+      ],
+      "connection": [
+        "可作为对象持续性评估的低成本原型：同一实体被不同观察者重见时应共享身份与位置；本工作测跨视角一致性，尚不是相机离开再返回实验。"
+      ],
+      "limitations": [
+        "每配置只训练一次；模型生成状态偏离真值后，回放加速度可能与新状态不一致。环境简单且密集跨代理注意力成本快速增长。正文选读，未独立复现。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.34745v1",
+      "title": "SceneAgent: An Agentic Pipeline from 3D and 4D Captures to Simulation Environments",
+      "authors": [
+        "Luke Hollis",
+        "Tianxing Fan",
+        "Heng Yang"
+      ],
+      "published": "2026-10-26",
+      "tags": [
+        "vla-world-model",
+        "4d-object-centric"
+      ],
+      "score": 8.4,
+      "score_reason": "主观评分：相关性4.6/5、证据2.2/3、启发1.6/2；从观测建立可执行场景状态很贴题，但定量范围和物理校准仍有限。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "视觉重建不等于可交互环境：物体、关节、材料参数及遮挡区域都需要补全，并以模拟结果反复检查。"
+      ],
+      "summary": [
+        "由编码代理编排重建、物性估计与仿真工具，以渲染对照修复场景；动态视频则拟合初态和模拟参数，保留材料粒子索引形成连续轨迹。"
+      ],
+      "insight": [
+        "在三个4DCodeBench合成场景上，五种代理配置的动态IoU均提高；该指标比较动态区域的图像掩码，不是完整3D物理准确率。生成物体变体和成功脚本示范还可用于VLA微调。"
+      ],
+      "connection": [
+        "显式可执行场景与持续材料索引，为“镜头外状态仍存在”提供了可检查的表示思路；这里有状态载体，但尚非相机离开再返回的生成一致性实验证据。"
+      ],
+      "limitations": [
+        "物性尚未用真实交互标定；动态定量评估仅三个合成场景，重建研究仅一厨房和一料箱且每配置一次。真实迁移主要是初步抓放实验，参数拟合不保证唯一。正文选读，未独立复现。"
+      ]
+    }
+  ]
+}

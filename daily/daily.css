@@ -1,0 +1,44 @@
+/* Reuse Playground's licensed Wotfard, article geometry, clouds and motion.
+   Only archive-specific controls and metadata are styled here. */
+.daily-content { overflow-wrap: anywhere; }
+.daily-caption, .daily-count, .daily-authors, .daily-meta { color: var(--muted); font-size: 14px; line-height: 1.5; }
+.daily-filters { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; margin: 32px 0 20px; }
+.daily-filters label { display: grid; gap: 8px; flex: 1 1 185px; min-width: 0; font-size: 14px; color: var(--muted); }
+.daily-filters select, .daily-filters button { min-height: 44px; max-width: 100%; padding: 10px 12px; font: inherit; font-size: 16px; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 5px; }
+.daily-filters select { width: 100%; }
+.daily-filters button { transition: color 200ms, border-color 200ms; }
+.daily-filters button:hover { color: var(--blue); border-color: var(--blue); }
+.daily-filters select:focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
+.daily-content .daily-date { margin: 56px 0 0; color: var(--accent); font-size: 16px; line-height: 24px; font-weight: 400; letter-spacing: 1px; }
+.daily-paper { padding: 0 0 24px; scroll-margin-top: 112px; }
+.daily-paper + .daily-paper { border-top: 1px solid var(--line); }
+.daily-content .daily-paper h2 { margin: 24px 0 16px; font-size: 26px; line-height: 1.4; }
+.daily-paper h2 > a:not(.heading-anchor) { color: var(--article-heading); transition: color 200ms; }
+.daily-paper h2 > a:not(.heading-anchor):hover { color: var(--blue); }
+.daily-meta, .daily-tags { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 16px; }
+.daily-depth { color: var(--blue); }
+.daily-tags { gap: 6px; }
+.daily-tag { border-radius: 5px; padding: 4px 8px; font-size: 13px; line-height: 1.5; background: var(--pill); }
+.daily-reason { color: var(--muted); font-size: 16px; }
+.daily-reading h3 { margin: 32px 0 16px; font-size: 21px; line-height: 1.5; color: var(--article-heading); }
+.daily-reading p { white-space: pre-line; }
+.daily-reading .article-note { margin-bottom: 24px; }
+.daily-source { font-size: 14px; }
+.daily-empty h2 { margin-top: 32px; }
+.daily-sidebar p, .daily-sidebar li { font-size: 15px; line-height: 1.6; }
+.daily-sidebar p { margin: 0 0 32px; }
+.daily-sidebar ul { margin: 0 0 24px; padding-left: 18px; color: var(--muted); }
+.daily-sidebar li { margin: 0 0 12px; }
+@media (max-width: 800px) {
+  .daily-content .daily-paper h2 { font-size: 24px; }
+  .daily-filters { gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .daily-filters button, .daily-paper h2 > a { transition: none; }
+}
+@media print {
+  .daily-filters { display: none !important; }
+}
+
+.daily-content .daily-date + .daily-caption { margin-top: 12px; }
+.daily-scope { margin-top: 16px; color: var(--muted); font-size: 16px; }

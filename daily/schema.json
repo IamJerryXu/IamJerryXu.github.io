@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jerrysnow.me/daily/schema.json",
+  "title": "Daily paper reading edition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "date",
+    "papers"
+  ],
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Asia/Shanghai curation edition day; filename must match."
+    },
+    "papers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "arxiv_id",
+          "authors",
+          "connection",
+          "insight",
+          "limitations",
+          "motivation",
+          "published",
+          "reading_depth",
+          "score",
+          "score_reason",
+          "summary",
+          "tags",
+          "title"
+        ],
+        "properties": {
+          "authors": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "motivation": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "summary": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "insight": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "connection": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "limitations": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "arxiv_id": {
+            "type": "string",
+            "pattern": "^(?:\\d{2}(?:0[1-9]|1[0-2])\\.\\d{4,5}|[a-z-]+(?:\\.[A-Z]{2})?/\\d{7})(?:v[1-9]\\d*)?$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "published": {
+            "type": "string",
+            "format": "date",
+            "description": "arXiv first-submission date in UTC, not announcement date."
+          },
+          "tags": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "vla-world-model",
+                "video-world-model",
+                "video-generation",
+                "4d-object-centric",
+                "camera-return",
+                "unified-understanding-generation",
+                "video-mllm"
+              ]
+            }
+          },
+          "score": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "score_reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reading_depth": {
+            "enum": [
+              "abstract_only",
+              "partial_text",
+              "full_text"
+            ]
+          }
+        }
+      }
+    },
+    "scope_note": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Visible Chinese note about announcement coverage and edition scope."
+    },
+    "announcement_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Verified arXiv announcement date in UTC; not first-publication date."
+    }
+  }
+}
