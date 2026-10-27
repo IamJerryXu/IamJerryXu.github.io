@@ -96,12 +96,18 @@ class DailyTests(unittest.TestCase):
             path.write_text(json.dumps(dict(date=day,papers=[])))
             with self.assertRaises(ValueError): load_entries(self.root)
 
-    def test_scope_note_is_visible_and_escaped(self):
+    def test_scope_note_and_tags_remain_internal(self):
         entry = self.write()
         entry.update(scope_note='Verified announcement <scope>', announcement_date='2026-10-26')
         (self.root/'daily/entries/2026-10-27.json').write_text(json.dumps(entry))
         output = self.render()
-        self.assertIn('Verified announcement &lt;scope&gt;', output)
+        self.assertNotIn('Verified announcement', output)
+        self.assertNotIn('daily-tag', output)
+        self.assertNotIn('data-tags=', output)
+        self.assertNotIn('Research topic', output)
+        self.assertNotIn('PRIORITY TOPICS', output)
+        self.assertNotIn('Notes are written', output)
+        self.assertEqual(load_entries(self.root)[0]['scope_note'], entry['scope_note'])
         self.assertIn('arXiv announcement (UTC)', output)
         entry['announcement_date'] = '2026-10-28'
         (self.root/'daily/entries/2026-10-27.json').write_text(json.dumps(entry))

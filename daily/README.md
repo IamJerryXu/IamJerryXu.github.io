@@ -12,7 +12,7 @@ page shell, licensed fonts, cloud artwork, theme/language controls, and motion.
   The same UTC announcement batch can fall on the next China day. Atom `published`
   is first submission, not the public announcement time.
 - `daily/schema.json` documents the exact shape; `build_daily.load_entries` enforces
-  it with Python's standard library. Paper fields are required. Edition-level `scope_note` (visible plain-text coverage note)
+  it with Python's standard library. Paper fields are required. Edition-level `scope_note` (internal audit note; never rendered)
   and `announcement_date` (UTC arXiv announcement day) are optional. `papers: []` is valid
   and does not fabricate a published edition. No examples are published as papers.
 - Each paper has `arxiv_id`, `title`, `authors` (array), `published`, `tags` (array),
@@ -63,11 +63,11 @@ python3 build.py
 
 `build.py` calls `build_blog.render_blog`, which invokes `build_daily.render_daily`.
 The shared Playground renderer owns the page shell. `daily/daily.css` and
-`daily/daily.js` only add archive layout, metadata and date/topic filtering.
+`daily/daily.js` only add archive layout, metadata and date filtering.
 Do not edit generated HTML alone. Without JavaScript all notes stay visible.
 
 Check `/`, `/blog/`, `/daily/` at desktop and mobile widths, light/dark and both
-navigation languages. Check date + topic combinations, reset, keyboard focus,
+navigation languages. Check date selection, All dates, keyboard focus,
 Back/Forward, no-results, no-JavaScript, reduced motion and source links when
 changing archive interactions. Actual reading prose stays Chinese intentionally.
 
@@ -110,3 +110,12 @@ Independently inspect borderline abstracts and novelty/evidence before writing
 notes. A green collection audit does not guarantee semantic recall or paper quality.
 The final helper has offline tests; the initial edition used the equivalent live
 collection pass, not an asserted end-to-end live run of this exact script version.
+
+## Archive presentation
+
+Keep the archive quiet: one compact date selector, with All dates to clear it.
+Do not render `scope_note`, topic filters, topic badges or a priority-topic list.
+Keep `tags` in source data for collection and validation only. Legacy `tag` URL
+parameters are ignored; date changes remove them and preserve unrelated parameters.
+Do not restore language instructions or visible result counters. Preserve source
+dates, links, actual reading depth, score rationale and paper evidence/limitations.
