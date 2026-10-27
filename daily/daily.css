@@ -3,7 +3,7 @@
 .daily-content { overflow-wrap: anywhere; }
 .daily-caption, .daily-count, .daily-authors, .daily-meta { color: var(--muted); font-size: 14px; line-height: 1.5; }
 /* Follow Playground's nav-panel surface, colors and entrance curve. */
-.daily-filters { position: relative; width: fit-content; max-width: 100%; margin: 28px 0 16px; z-index: 3; }
+.daily-filters { position: relative; width: fit-content; max-width: 100%; margin: 0 0 16px; z-index: 3; }
 .daily-date-toggle { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 12px; border: 0; border-radius: 8px; background: transparent; color: var(--fg); font: inherit; font-size: 15px; line-height: 24px; transition: background-color 200ms, color 200ms; }
 .daily-date-toggle:hover, .daily-date-toggle[aria-expanded=true] { background: var(--pill); color: var(--blue); }
 .daily-date-label { color: var(--muted); font-size: 13px; }

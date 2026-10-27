@@ -118,6 +118,7 @@ Use semantic buttons and date links with aria-expanded/aria-current, the existin
 Playground navigation surface and reduced-motion behavior. Without JavaScript
 links jump directly to edition anchors and all papers remain visible.
 Do not render `scope_note`, topic filters, topic badges or a priority-topic list.
+Start the archive directly after the hero, without introductory priority prose.
 Keep `tags` in source data for collection and validation only. Legacy `tag` URL
 parameters are ignored; date changes remove them and preserve unrelated parameters.
 Do not restore language instructions or visible result counters. Preserve source
