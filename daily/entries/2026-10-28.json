@@ -1,0 +1,489 @@
+{
+  "date": "2026-10-28",
+  "announcement_date": "2026-10-28",
+  "scope_note": "采集器首个 API 请求遭代理拒绝，成功获取的 API 分类数为零，不能解释为没有新论文。经官方网页核验，10月28日 cs.CV 公告完整156条（127篇主分类、29篇交叉列入）；cs.RO、cs.LG、cs.AI 公告总数分别为85、237、254，但仅各自前50条可靠确认属于当前批次。这些分类有重叠，不能相加为唯一论文数。六个 /new 页面及 cs.CL、eess.IV 的 recent 页面仍显示旧批次，部分分页亦陈旧，未完成六分类全覆盖。按已核验的10月28日公告筛选并跨日去重，保留真实首次提交日期。排除旧批次候选及正文不可得的 JAM、SceneEvolve；未声称穷尽、全文阅读或复现。",
+  "papers": [
+    {
+      "arxiv_id": "2610.37566v1",
+      "title": "ReferStream: Interactive Subject Injection for Streaming Video Generation",
+      "authors": [
+        "Shuolin Xu",
+        "Guanyuan Li",
+        "Boyu Li",
+        "Kelu Yao",
+        "Xiaogang Xu",
+        "Hongchuan Yu",
+        "Shuicheng Yan",
+        "Xiaobin Hu"
+      ],
+      "published": "2026-10-27",
+      "tags": [
+        "video-generation"
+      ],
+      "score": 8.5,
+      "score_reason": "主观：相关性 4.5/5、证据 2/3、方法启发 2/2；讨论流式视频主体写入与旧身份保持，在线及离线基线的参考信息并不对等。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "在线插入新主体，不应以破坏原有主体身份和场景为代价。参考信息既要让新主体进入画面，也不能持续覆盖已有历史；两项目标需要分别检查。"
+      ],
+      "summary": [
+        "无需额外训练，把参考主体与当前场景组成联合 latent，暂时注入 KV 缓存；注入后恢复原全局缓存，同时保留新生成历史。"
+      ],
+      "insight": [
+        "方法与实验选读见第 3–4 节、表 1/3 及附录 B。关键是限制参考特征对后续生成的持续干扰，而非无限增加缓存：临时注入解决新信息进入生成过程的问题，恢复原全局缓存则保护原有上下文，新生成历史仍可继续参与后续生成。",
+        "报告的 Existing-ID 得分为 73.18，对比在线 LongLive-2.0 的 42.29；Count 得分为 82.33，对比 73.90。这些结果支持关注旧主体保持与主体数量，但不能把自动 ID 得分当成身份识别准确率。",
+        "比较条件有重要边界：在线基线缺少视觉参考，离线方法又提前看到全部参考，因此不能把各方法视为同等信息量下的公平比较。消融还显示，旧主体保持与新主体相似度存在权衡；一项分数提高不代表所有身份目标同时改善。"
+      ],
+      "connection": [
+        "研究建议：对持久对象研究，把新信息写入与旧身份保护拆成独立测试；进一步改变插入顺序、遮挡长度与主体数量，观察旧主体是否受新参考影响。这是延伸实验建议，不是论文已经完成的相机回访实验，也不应将缓存管理直接解释为显式三维世界状态。"
+      ],
+      "limitations": [
+        "正文选读，未独立复现。自动 ID 指标并非身份识别准确率；缺少多随机种子的显著性证据。文中结果未证明显式 3D 状态，也未证明 camera-return 条件下的生成一致性。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.37626v1",
+      "title": "Know, then Draw: A New Learning Paradigm for Visual Generation",
+      "authors": [
+        "Yucheng Mao",
+        "Chongjian Ge",
+        "Zhuowen Tu",
+        "Hao Tan",
+        "Hanwen Jiang"
+      ],
+      "published": "2026-10-27",
+      "tags": [
+        "unified-understanding-generation"
+      ],
+      "score": 7.5,
+      "score_reason": "主观：相关性 3.5/5、证据 2/3、方法启发 2/2；语义知识与像素渲染的分离有表征研究价值，但证据来自静态图像而非视频世界模型。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "适合重建像素的表示，未必最适合学习可生成的视觉知识。若只凭重建效果选取表征，可能混淆语义知识的获取与将知识渲染成图像的能力。"
+      ],
+      "summary": [
+        "先用自回归预训练学习语义知识，再冻结骨干，加入扩散模块负责像素渲染。"
+      ],
+      "insight": [
+        "第 2–3 节、表 1/2 及附录 A9 展示了知识学习与渲染分阶段的思路。冻结骨干后加入扩散模块，使后续像素生成不必与最初的语义知识学习采用同一训练目标；无重建解码器的语义 tokenizer 也能支持生成。",
+        "在匹配数据预算、约 400M 规模的实验中，GenEval/DPG 得分为 65.51/71.11，对比直接像素扩散的 61.16/62.56。重点是语义表征质量与重建质量可以分离，而不是证明单纯改用自回归就必然更好。",
+        "较大模型的成绩还包含提示改写和固定种子选择。这些额外条件会影响结果解释，不能将其全部收益直接归因于架构，也不宜用大模型榜单替代匹配预算实验来支持因果判断。"
+      ],
+      "connection": [
+        "研究建议：对统一理解与生成，分别检查知识获取和渲染能力，避免只用重建分数选择共享表征。若把该思路迁移到视频，需要另测动态与跨帧身份保持，不能从静态图片结果推导出世界状态建模能力。"
+      ],
+      "limitations": [
+        "正文选读，未独立复现。这不是视频世界模型，也未展示统一 VQA；较大模型实验中的提示改写和固定种子选择需要与架构因素区分。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.37666v1",
+      "title": "ThinkWorld: World Imagination Reinforces Chain-of-Dynamics Reasoning",
+      "authors": [
+        "Chaehyun Kim",
+        "Chi-Pin Huang",
+        "Jisoo Kim",
+        "Min-Hung Chen",
+        "Yu-Chiang Frank Wang",
+        "Seungryong Kim",
+        "Fu-En Yang"
+      ],
+      "published": "2026-10-27",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 9,
+      "score_reason": "主观：相关性 5/5、证据 2/3、方法启发 2/2；关注无动作标签视频与动作表示的联系，证据仍受单训练种子约束。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "人类视频丰富，却缺少可执行的机器人动作。怎样让视频里的运动知识参与动作学习，而不把视频理解等同于可部署控制？"
+      ],
+      "summary": [
+        "将人手和机器人运动编码为共同的离散 CoD，用预测未来与真实后续视频的一致性奖励表征，让无动作标签视频参与训练。"
+      ],
+      "insight": [
+        "第 3–4 节与附录 A/C/D：当前及历史 RGB、指令和状态作为输入，CoD 条件化预测冻结 DINO 空间中一秒后的特征。监督 token 交叉熵与未来特征损失之后，动态区域相似度用于 GRPO，同时保留监督回放；动作头使用 flow matching。",
+        "部署时不生成 CoD 或未来，因此不能把训练机制描述为想象 rollout 中的政策优化。LIBERO-PRO 的累加消融为：未来预测 50.4%，加入 CoD 后 54.4%，再加 RL 后 55.6%。"
+      ],
+      "connection": [
+        "我的解读：这是用后果校验动作表示，而非部署时搜索。可进一步检验奖励改善的是可控动态还是特征匹配；不能仅凭 CoD 打乱消融就证明长期因果能力。"
+      ],
+      "limitations": [
+        "正文选读，未独立复现。仅单训练种子；有双臂 YAM 真机实验，但技能组合主要是定性展示。不支持持久物体记忆或相机回访结论。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.37196v1",
+      "title": "How Much Can Best-of-N Help a World Action Model? Measuring Selectable Headroom and Realizing It in Closed Loop",
+      "authors": [
+        "Haojia Gao",
+        "Yue Cao",
+        "Yumin Liu",
+        "Haohua Que",
+        "Mingkai Liu",
+        "Guanqiu Guo",
+        "Zhuo Zou",
+        "Bokui Chen",
+        "Xueqian Wang"
+      ],
+      "published": "2026-10-27",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 10,
+      "score_reason": "主观：相关性 5/5、证据 3/3、方法启发 2/2；文内评估协议和受控证据较强，满分不代表独立复现或真机验证。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "每个动作候选只执行一次，可能把后续运气当成候选质量。增加候选数之前，需要分清可选择收益与评估噪声。"
+      ],
+      "summary": [
+        "通过重复延续、分开选择与评分的随机种子测量真实可选择空间，再用失败门与排序器实现闭环选择。"
+      ],
+      "insight": [
+        "第 3–4 节、第 5.4 及第 7 节：恢复相同 MuJoCo 状态，对候选做重复延续。在固定 WAM 之外训练逻辑回归失败门与岭回归排序器，后者读取动作条件想象的未来位置；只有失败门开启时才比较 12 个轴向偏移。",
+        "实验覆盖四个 WAM、两个基准及十万余分支。闭环成功率从 76.9%提升到 81.6%，未见任务从 62.6%提升到 69.8%。但在训练任务内，当前状态加方向的读出也接近完整排序器，收益并不必然依赖想象。"
+      ],
+      "connection": [
+        "我的解读：先问候选是否有可实现收益，再问评估器能否找到它。建议 best-of-N 研究采用留出延续协议，避免把候选数量增加本身当成能力证据。"
+      ],
+      "limitations": [
+        "正文选读，未独立复现。全部闭环结果来自 MuJoCo 仿真，没有真机实验；训练任务内的简化读出结果限制了对想象模块必要性的归因。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.36840v1",
+      "title": "Trace-WAM: Learning to Act via 3D Motion Prediction for World Action Models",
+      "authors": [
+        "Xu Hu",
+        "Changjie Wu",
+        "Linzhe Shi",
+        "Hang Zhang",
+        "Chen Yang",
+        "Lingjun Zhang",
+        "Guowen Zhang",
+        "Mu Xu",
+        "Junran Peng",
+        "Qing Li",
+        "Zhaoxiang Zhang"
+      ],
+      "published": "2026-10-27",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 9,
+      "score_reason": "主观：相关性 5/5、证据 3/3、方法启发 1/2；以消融区分动态监督与部署输入，真机证据规模仍有限。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "RGB 预测承担大量背景外观负担，而控制更关心物体和机器人如何运动。需要检查动态监督是否真正帮助动作，而非只让预测视频更好看。"
+      ],
+      "summary": [
+        "添加未来 3D 点轨迹监督强化动态表示，部署仍仅由当前观测预测动作。"
+      ],
+      "insight": [
+        "第 3–4 节：RGB、语言、本体状态进入视频、B-spline 轨迹系数和动作三个分支；flow matching 结合动静平衡与静态 Smooth-L1 约束。动作分支并不读取未来轨迹，未来运动在这里是训练监督，不能混同为部署时规划输入。",
+        "LIBERO-Plus 为 84.5%；去掉深度后 82.4%，注入未来运动 latent 反而降至 81.6%。Piper 真机三个任务每项 20 次，平均 85.0%，对比 Fast-WAM 的 63.3%。"
+      ],
+      "connection": [
+        "我的解读：动态监督有用，不等于部署必须消费预测动态。进一步实验应拆分标签质量、额外监督量和 3D 信息本身的贡献，而不是把所有提升归给未来预测。"
+      ],
+      "limitations": [
+        "正文选读，未独立复现。真实数据标签依赖估计轨迹与相对深度，真机实验规模有限；这些结果不是部署规划或未来 rollout 验证。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.37518v1",
+      "title": "World Dreamer v5-lite: A Multi-Robot World Action Model with One Dreamer",
+      "authors": [
+        "Guoning Wu",
+        "Zijian Cai",
+        "Yuhang Zhang",
+        "Ying Liu",
+        "Yongbin Zheng"
+      ],
+      "published": "2026-10-27",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 8,
+      "score_reason": "主观：相关性 5/5、证据 2/3、方法启发 1/2；共享空间状态与协作直接相关，但历史窗口很短。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "多机器人看到不同画面，却要在同一工作空间协作。拼接相机 token 并不自动建立位置对应。"
+      ],
+      "summary": [
+        "将标定相机特征写入共享三平面状态，各机器人读取同一状态并交换相对位姿信息，同时保留独立动作流。"
+      ],
+      "insight": [
+        "第 3.2–3.5、4.1–4.4 及第 5 节：训练时遮蔽部分视角但保留全部动作目标，使机器人利用伙伴观察；部署不生成未来视频。",
+        "RoboFactory 三个任务均值 74.0%，四个实机任务 78.8%。RoboFactory 使用修改后的相机配置，解释比较时需要保留这一条件。",
+        "共享状态仅在 3 个已观察 latent 时间步内从零累积。这是短历史聚合，不是经过验证的跨长程持久记忆。"
+      ],
+      "connection": [
+        "我的解读：共享工作空间证据比简单图像拼接更值得检验。建议独立测试长遮挡、物体搬动和返回旧视点，控制成功率不能代替身份保持。"
+      ],
+      "limitations": [
+        "正文选读，未独立复现。历史窗口短，依赖标定；现有证据不能支持长期 object permanence 结论。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.36823v1",
+      "title": "TAPESTRY: A Single Backbone for Video Generation and Robot Control",
+      "authors": [
+        "Jeremy A. Collins",
+        "Seungjae Lee",
+        "Rachanon Wachakorn",
+        "Krishnan Srinivasan",
+        "Animesh Garg",
+        "Vitor Campagnolo Guizilini",
+        "Paarth Shah"
+      ],
+      "published": "2026-10-27",
+      "tags": [
+        "vla-world-model",
+        "video-generation"
+      ],
+      "score": 8.5,
+      "score_reason": "主观：相关性 4.5/5、证据 2/3、方法启发 2/2；视频与控制共享骨干有启发，但特殊迁移协议和小样本 OOD 限制外推。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "视频先验是否必须在控制时生成未来视频才能起作用？训练中的共享知识与部署时的计算需求需要分别回答。"
+      ],
+      "summary": [
+        "将动作时间步投影为视频 latent patch，让视频、视频动作联合及动作单独去噪共享骨干；部署仅做短动作序列的单步推理。"
+      ],
+      "insight": [
+        "第 2–3、4.1–4.4 及第 6 节：单步机制依赖 zero-terminal-SNR 的 v-prediction，因此不能直接推广到所有 flow 骨干。",
+        "LIBERO 的 76%来自评估任务视频可见、但动作标签不可见的特殊迁移协议，不是标准榜单结果。实机分布内为 28/30；OOD 每个条件仅 5 次，对 DreamZero 的优势未达到显著性。"
+      ],
+      "connection": [
+        "我的解读：应分开世界知识的训练来源与部署输出。建议分别评估预测质量、控制效果和计算成本，不以视频逼真程度推导控制可靠性。"
+      ],
+      "limitations": [
+        "正文选读，未独立复现。机制不适用于所有 flow 骨干；OOD 样本很小，未测试相机回访或长期对象持久性。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.37633v1",
+      "title": "Repurposing Video Diffusion Transformers for Cross-View Temporal Object Correspondence",
+      "authors": [
+        "Siyoon Jin",
+        "Dahyun Chung",
+        "Honggyu An",
+        "Sangbeom Lim",
+        "Wonjin Nam",
+        "Jaewoo Jung",
+        "WonJun Moon",
+        "Seungryong Kim"
+      ],
+      "published": "2026-10-27",
+      "tags": [
+        "4d-object-centric",
+        "camera-return"
+      ],
+      "score": 9,
+      "score_reason": "主观：相关性 5/5、证据 2/3、方法启发 2/2；延迟出现与非重叠可见性涉及对象对应，但输出为掩码而非世界生成。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "同类不等于同一个对象。先匹配再跟踪若在起始阶段认错，就可能持续追错实例。"
+      ],
+      "summary": [
+        "把视频 DiT 改为 RGB 到掩码的 latent transport，在统一 token 空间处理第一、第三人称视频；通过跨视角注意力监督、困难负例和局部裁剪改善对应。"
+      ],
+      "insight": [
+        "第 4.2–4.4、6.1–6.3 节与附录 F.3/G：整理的 Ego-Exo4D 子集明确测试对象延迟出现，以及两个视角可见时间不重叠的情况。",
+        "可见性与追踪保持表现有优势，但轮廓精度并非全面领先；不能把能持续找到对象与能精确分割对象边界合并成同一结论。"
+      ],
+      "connection": [
+        "我的解读：应把对象存在、实例身份与边界准确度拆开测量。非重叠可见性可启发生成评测，但给定配对视频的推断，不等于生成世界在相机返回时自洽。"
+      ],
+      "limitations": [
+        "正文选读，未独立复现。小物体受 latent 压缩影响；长序列采用分块，不具无限历史，迭代开销较高。输出为掩码，不是新生成的世界视频。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.36729v1",
+      "title": "Hy-Nomas: Towards Free-form Interactive World Generation",
+      "authors": [
+        "Qiaoling Chen",
+        "Jiaxiang Cheng",
+        "Xueqing Deng",
+        "Tiankai Hang",
+        "Ji Hou",
+        "Jiaqi Li",
+        "Yifan Liu",
+        "Tao Lu",
+        "Junshu Tang",
+        "Yu Tang",
+        "Yao Teng",
+        "Yu Tian",
+        "Heng Wang",
+        "Weizhi Wang",
+        "Xiyao Wang",
+        "Xilun Wu",
+        "Mingyu Yang",
+        "Yangbin Yu",
+        "Rui Zhao",
+        "Longjun Cao",
+        "Linghao Chen",
+        "Haoyi Duan",
+        "Jiaming Han",
+        "Mingji Han",
+        "Enhua Jiang",
+        "Shunkai Li",
+        "Yanzhe Liang",
+        "Qinwei Ma",
+        "Cong Wang",
+        "Lei Wang",
+        "Bing Wu",
+        "Ke Xing",
+        "Ray Ying",
+        "Zhentao Yu",
+        "Key Zhang",
+        "Yuan Zhou",
+        "Zhengguang Zhou",
+        "Kai Zou"
+      ],
+      "published": "2026-10-27",
+      "tags": [
+        "video-world-model",
+        "video-generation",
+        "camera-return"
+      ],
+      "score": 10,
+      "score_reason": "主观：相关性 5/5、证据 3/3、方法启发 2/2；明确包含离开—返回测试且报告弱项，分数不是独立复现或全面领先认证。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "多轮指令应改变场景，但不该不断重复已经结束的动作。持续场景描述与限时动作指令需要不同的有效期。"
+      ],
+      "summary": [
+        "8B 视频模型区分持续描述和限时动作条件，通过因果注意力、生成历史训练与提示增强，统一文本和相机控制。"
+      ],
+      "insight": [
+        "第 1、5–7 及第 9 节：Bench-4 明确包含 60 个场景、静态锚点和四组离开—返回轨迹，因而能直接检查相机返回时的场景表现。",
+        "对 Genie3 的胜／平／负为 13.3%／56.7%／30.0%，作者承认空间记忆落后。比较使用各自接口，部分基线还经过适配，不能把结果概括为全面领先。"
+      ],
+      "connection": [
+        "我的解读：指令有效期和明确的返回测试，比泛称长视频更有价值。建议区分返回原场景与返回被动作改变后的场景；静态锚点重现，不等于持久动态状态正确。"
+      ],
+      "limitations": [
+        "正文选读，未独立复现。空间记忆仍弱，接口比较并不完全对齐；尚未证明动作后长期对象状态完备。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.37257v1",
+      "title": "GameVerse: A Minute-Scale Gameplay Dataset for Long-Horizon Interactive World Modeling",
+      "authors": [
+        "Kang He",
+        "Wenshuo Peng",
+        "Chuanhao Li",
+        "Zihui Gao",
+        "Xiaojie Xu",
+        "Zhengyuan Lin",
+        "Yuzhe Ding",
+        "Donghong Ji",
+        "Kaipeng Zhang",
+        "Yongtao Ge"
+      ],
+      "published": "2026-10-27",
+      "tags": [
+        "video-world-model",
+        "video-generation"
+      ],
+      "score": 8.5,
+      "score_reason": "主观：相关性 4.5/5、证据 2/3、方法启发 2/2；长程数据与同骨干比较有价值，但它主要是数据资源，尚未验证闭环控制。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "短片与粗字幕难以监督长程一致性，数据本身可能限制世界模型，而不只是记忆结构不够强。"
+      ],
+      "summary": [
+        "数据集包含 1,655 小时游戏视频，结合分钟级连续片段、估计相机轨迹与分层事件字幕。"
+      ],
+      "insight": [
+        "数据统计、第 5–6 节：正文在 103 个输入上评估 60 秒生成，同骨干 HY-World 微调后 3D 一致性从 66.94 提升至 73.42。",
+        "两分钟是数据片段的上限，不是已经验证的闭环交互时长。轨迹检验衡量估计器之间的一致性，也不等于相对真实位姿的精度。"
+      ],
+      "connection": [
+        "我的解读：该资源可用于区分记忆结构与训练数据瓶颈。参考帧 CLIP 相似度受视角影响，不能替代相机回访后的状态测试。"
+      ],
+      "limitations": [
+        "正文选读，未独立复现。未验证闭环，长度、轨迹和字幕贡献未分别消融；引言写 30 秒，而第 5 节及结论写 60 秒，此处按正文报告，不能宣称完成两分钟实验。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.36371v1",
+      "title": "BoxWorld: Let World Engines Control and Video Generators Render",
+      "authors": [
+        "Zike Wu",
+        "Ahmed Hatem",
+        "Chintan Trivedi",
+        "Wallace Michel Pinto Lira",
+        "Xuebin Qin",
+        "Lele Wang",
+        "Renjie Liao"
+      ],
+      "published": "2026-10-26",
+      "tags": [
+        "video-world-model",
+        "video-generation",
+        "4d-object-centric"
+      ],
+      "score": 9,
+      "score_reason": "主观：相关性 5/5、证据 2/3、方法启发 2/2；显式引擎与视频渲染的分工清楚，但成对状态基准规模与接口差异限制外推。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "世界规则是否必须由视频模型隐式学习？若规则可以由程序检查，就应区分状态转移是否正确与生成画面是否执行了指定状态。"
+      ],
+      "summary": [
+        "由代码引擎判断结果，生成器按对象框、持久属性与动态状态渲染；训练依次进行布局 grounding、状态变化与自生成历史适配。"
+      ],
+      "insight": [
+        "选读方法、实验、引擎协议及消融和局限附录。PairedStateBench 成对成功率为 97.3%，基线最高 16.2%；末阶段蒸馏将结果从 67.6%提高至 97.3%。",
+        "基准仅含 87 个案例、37 对分支，系统输入接口也不同。这支持显式引擎加渲染器的控制方式，却不证明生成器自己学会了因果规律，更不能写成统一输入下的公平 SOTA。"
+      ],
+      "connection": [
+        "我的解读：让可检查程序负责规则，让神经生成负责外观。进一步可测试未见状态组合的渲染执行准确性；这是架构启示和实验建议，不是论文已经完成的泛化实验。"
+      ],
+      "limitations": [
+        "正文选读，未独立复现。复杂接触、精细几何与标注误差仍是限制；Paired-CF 不是相机回访测试，也不能据此声称状态永久不会丢失。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.36466v1",
+      "title": "Nemotron-Labs-Diffusion-Uni: Elastic Self-Refining Unified Diffusion LLM with Cross-Paradigm On-Policy Distillation",
+      "authors": [
+        "Shufan Li",
+        "Hanrong Ye",
+        "Greg Heinrich",
+        "Yonggan Fu",
+        "Haotian Zhang",
+        "Sifei Liu",
+        "Aditya Grover",
+        "Pavlo Molchanov"
+      ],
+      "published": "2026-10-27",
+      "tags": [
+        "unified-understanding-generation"
+      ],
+      "score": 8.5,
+      "score_reason": "主观：相关性 3.5/5、证据 3/3、方法启发 2/2；统一理解与图像生成的监督接口消融明确，与本期具身及视频重点的关联较间接；证据评分不代表独立复现。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "统一离散扩散模型怎样利用不同范式的专家，而不硬套不相容的监督？教师强，并不保证其输出适用于学生当前的预测条件。"
+      ],
+      "summary": [
+        "学生的自回归视图承接 VLM 教师，再约束扩散视图；图像侧让连续流教师修正学生输出，中间图像 token 状态支持渐进细化。"
+      ],
+      "insight": [
+        "选读架构、自细化、两种蒸馏、实验、消融及速度局限附录。MathVista 从 71.5 提升至 77.0，而直接套用教师分数反而降到 47.7，说明监督接口对齐不可忽略。",
+        "ImgEdit 从 3.81 提升至 4.17，独立教师样本蒸馏为 3.90。文生图没有 OPD 教师，因此不能把文生图收益归因于跨范式蒸馏。",
+        "图像教师修正学生结果后再做 SFT，并不严格等同于传统 on-policy；所谓弹性是按任务加载双塔参数，不是 token 级动态路由。"
+      ],
+      "connection": [
+        "我的解读：统一模型不必统一教师来源，但需要对齐教师上下文和学生预测条件。建议先审计监督接口，再评价教师强弱；强教师也可能产生错误的训练信号。"
+      ],
+      "limitations": [
+        "正文选读，未独立复现。语言侧要求词表一致，精细文字绘制仍有限；应区分教师修正后 SFT 与严格传统 on-policy，也不能把按任务加载双塔描述成 token 级路由。"
+      ]
+    }
+  ]
+}
