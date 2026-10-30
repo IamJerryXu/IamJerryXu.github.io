@@ -1,0 +1,452 @@
+{
+  "date": "2026-10-30",
+  "announcement_date": "2026-10-30",
+  "scope_note": "内部审计：2026-10-30 07:36:56 UTC 复核，六类官方 new 页均已显示 Friday, 30 October 2026。各类总数/新文/交叉/替换分别为 {\"cs.CV\": [374, 197, 36, 141], \"cs.RO\": [189, 109, 20, 60], \"cs.LG\": [608, 213, 159, 236], \"cs.AI\": [605, 158, 234, 213], \"cs.CL\": [279, 108, 67, 104], \"eess.IV\": [23, 8, 7, 8]}；这些是页面计数，含跨类重复，不是逐篇完整审阅数。API 此前代理 403，未重试，成功 API 类别数为 0；执行环境直接 HTML 下载也遭代理 403，已停止该路径。采用获准官方 web 公告及固定版本 abs/HTML 正文回退，关键词检索和定向选读并非穷尽筛选；未保存完整 Atom 或原始 HTML，不宣称采满 900 条。以复核时刻计算 16 小时起点 2026-10-29 15:36:56 UTC，当前最终选读候选仅 5 篇在窗内，故放宽至 36 小时起点 2026-10-28 19:36:56 UTC，12 篇均在窗内且属于今日公告新文。计数仅针对已核候选，不是全库窗口统计。与既有 24 篇 canonical ID 去重无重复。所有条目标 partial_text、未复现。固定版本及首次 UTC 时间：2610.40373v1 2026-10-29T16:21:06Z; 2610.39543v1 2026-10-29T07:44:54Z; 2610.39278v1 2026-10-29T03:30:27Z; 2610.40607v1 2026-10-29T17:53:02Z; 2610.40339v1 2026-10-29T16:03:19Z; 2610.40640v1 2026-10-29T17:58:45Z; 2610.39609v1 2026-10-29T08:43:08Z; 2610.40115v1 2026-10-29T14:14:16Z; 2610.40614v1 2026-10-29T17:54:42Z; 2610.39812v1 2026-10-29T10:54:32Z; 2610.39721v1 2026-10-29T09:51:26Z; 2610.39232v1 2026-10-29T02:50:17Z。",
+  "papers": [
+    {
+      "arxiv_id": "2610.40373v1",
+      "title": "HiFOR: Hierarchical Foresight with Action-Guided World Grounding for Vision-Language-Action Model",
+      "authors": [
+        "Rongxing Ding",
+        "Hongyu Qu",
+        "Kehong Wu",
+        "Xudong Wang",
+        "Fan Zhang",
+        "Xinguang Xiang",
+        "Xiangbo Shu"
+      ],
+      "published": "2026-10-29",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：分层未来确实进入动作生成，有逐项消融；不等同于在线搜索。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "预测下一刻画面与理解任务最终目标并不是同一件事；把所有预测一起交给动作模型，也未必能让它取到当前真正需要的信息。"
+      ],
+      "summary": [
+        "HiFOR 同时预测短期、语义里程碑和目标层面的未来特征，并让动作去噪过程按时间层级、视角和空间位置检索它们。未来表征参与部署时的动作生成。"
+      ],
+      "insight": [
+        "§3 的输入是多视角图像、指令和机器人状态，输出包含末端平移、旋转与夹爪的动作块。成功示范提供里程碑定位，冻结 DINOv2 提供未来视觉监督；短期还预测机器人状态。训练把动作 flow matching 与未来预测损失相加，检索结果通过残差进入动作专家。",
+        "表 3 的 RoboTwin Hard 消融从无模块的 40.35% 到短期预测 44.15%，再加里程碑与目标达 46.95%，加入动作引导检索后为 49.40%。这是有用的递进对照，但评测为随机选取的 20 个任务，不能当成完整任务集成绩；检索预测特征也不是逐条模拟候选动作并搜索最优轨迹。"
+      ],
+      "connection": [
+        "我的解读是，预测模块的价值取决于控制器如何读取它。进一步值得比较：固定读取与随去噪变化的读取在错误预测下谁更稳健；也可打乱时间层级，检查增益来自结构还是仅仅增加特征容量。这些是研究建议。"
+      ],
+      "limitations": [
+        "本文选读 §3–4 与表 3，未复现。里程碑标注依赖示范、自动定位与人工复核；局部消融不能证明预测具备长期因果正确性，也没有相机回访或永久对象记忆证据。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.39543v1",
+      "title": "From Reasoning to Action: Consequence-Grounded Alignment for Vision-Language-Action Models",
+      "authors": [
+        "Yixue Zhang",
+        "Wenke Xia",
+        "Kun Wu",
+        "Wenbo Yu",
+        "Pei Ren",
+        "Junnan Nie",
+        "Di Hu",
+        "Zhengping Che",
+        "Chang Liu"
+      ],
+      "published": "2026-10-29",
+      "tags": [
+        "vla-world-model",
+        "unified-understanding-generation"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：动作后果监督与部署路径区分清楚，具有分项对照。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "机器人说出正确的动作意图，不代表实际动作会遵循它。需要同时检查动作方向是否匹配意图，以及动作产生的后果是否抵达预期位置。"
+      ],
+      "summary": [
+        "CoRAct 先联合学习结构化推理、动作和动作条件未来图像，再冻结主模型，用运动一致性与视觉落点奖励训练动作初始噪声策略。部署只生成一份动作，不运行多候选未来验证。"
+      ],
+      "insight": [
+        "§III 中，图像、状态和指令先生成 movement／waypoint 推理；推理用交叉熵，动作与未来图像用 flow matching。未来图像分支看动作而看不到推理中的目标落点，避免直接照抄答案。离线对候选未来图像定位夹爪，并与目标落点比较，按组相对奖励优化噪声分布。",
+        "表 II 将推理和对齐逐步分开：VLABench 从无推理的 39.2%，经 movement／waypoint 监督达 47.5%，再加运动与后果对齐达 51.8%。§III-C 明确部署从学习到的分布采样一次，做 10 步动作去噪；因此闭环纠错来自后续观测，而不是每步在线想象搜索。"
+      ],
+      "connection": [
+        "我的解读是，昂贵的后果检验可以变成训练信号，但收益仍取决于检验器是否可信。建议分别替换未来图像模型与落点定位器，测量哪一环误差会把噪声策略推向错误方向；动作意图一致也不能替代任务完成率。"
+      ],
+      "limitations": [
+        "正文选读 §III–IV 与表 I–II，未复现。奖励依赖学习的未来图像及二维落点，并非真实执行后果；主要模型仍可能共享预测和验证偏差，不能据此宣称通用安全保证。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.39278v1",
+      "title": "WorldFlow: Joint Video and 3D Motion Prediction via Large-Scale Pretraining",
+      "authors": [
+        "Yuhao Lu",
+        "Jiongxu Chen",
+        "Hexiang Wei",
+        "Jiajin Wu",
+        "Juelin Li",
+        "Mingjian Liang",
+        "Fan Yang",
+        "Zhuowei Liang",
+        "Zihao Liu",
+        "Zhennan Wang",
+        "Sheng Wang",
+        "Lin Shao"
+      ],
+      "published": "2026-10-29",
+      "tags": [
+        "vla-world-model",
+        "video-world-model",
+        "4d-object-centric"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：显式轨迹、匹配训练对照与小规模真机执行形成证据链。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "像素里看得出物体将移动，不等于控制器能直接取得可执行的几何路径。先生成视频再跟踪，也会额外引入跟踪和尺度误差。"
+      ],
+      "summary": [
+        "WorldFlow 从单帧图像、语言及三维查询点共同预测视频与点位移。它把对象运动作为独立生成模态，在共享注意力中与视频联合去噪，再把位移累积为轨迹。"
+      ],
+      "insight": [
+        "§3 使用联合 rectified-flow 损失，并补充位移、累计方向和终点约束。查询点的初始几何与图像位置对齐视频 token。§4.3 的匹配骨干、数据和优化对照中，SpatialCog 的终点误差由仅预测 flow 的 0.248 米降到联合生成的 0.078 米，支持视频监督对运动预测的帮助。",
+        "§4.4 真机确实使用预测：RGB-D 提取对象点云，预测轨迹再交给抓取与局部刚性拟合模块转成机械臂运动。保持其余模块一致的 36 次执行中，成功为 24/36，对照 μ₀ 为 4/36；这仍明显低于作者判定的轨迹预测成功 35/36，说明预测合理与完整执行之间还有落差。"
+      ],
+      "connection": [
+        "我的解读是，应把“世界预测正确”“动作可实现”“任务完成”作为三项分别统计。进一步可按抓取、轨迹拟合与接触失败拆解错误，避免只提高离线轨迹指标却没有改善控制。这里的迁移接口是对象运动，不是一个已经端到端学好的通用策略。"
+      ],
+      "limitations": [
+        "选读 §3–4 与表 2，未复现。三维监督含自动估计噪声，查询点需预先提供；真机每任务仅三次，不能外推广泛可靠性，也没有相机返回后的动态对象状态测试。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.40607v1",
+      "title": "Fight World Model: Customizable Combat through Visual Interaction Proxies",
+      "authors": [
+        "Jiahua Li",
+        "Zixu John",
+        "Tom Zhong",
+        "Fuping Wu",
+        "Tianhao Xu",
+        "Ruicheng Zhang",
+        "Jun Zhou",
+        "Zunnan Xu"
+      ],
+      "published": "2026-10-29",
+      "tags": [
+        "video-world-model",
+        "video-generation"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：规则干预和同记录编码对照具体，证据范围限于固定视角格斗。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "受击动画、血量下降和攻击指令通常一起出现，但免疫或吸血规则会打破这种关联。能画出熟悉的打斗，未必能忠实执行修改后的规则。"
+      ],
+      "summary": [
+        "FWM 由程序引擎更新状态，确定性编译器把攻击窗口、短暂受击与持续血量分别编码为视觉条件，视频模型只负责渲染这些已确定的结果。"
+      ],
+      "insight": [
+        "§3 将角色身份同时绑定到参考图、初始画面和代理图；flow matching 仅监督未来视频 latent，条件保持干净。修改规则后重新运行引擎，参考与文字保持不变，从而检查渲染是否遵守新状态，而不是让文本直接提示结果。",
+        "表 2 在相同执行记录下比较编码：空间代理加状态 token 的联合交互得分为 63.28%，完整交互代理为 98.48%。表 4 去掉血条后健康值 MAE 从 0.15 升到 2.18 个最大血量百分点。指标是规则结果的画面兑现程度，不是模型独立推断物理规律的准确率。"
+      ],
+      "connection": [
+        "我的解读是，规则执行与视觉服从可以拆开测量。建议把同一规则放到不同外观、角色换边和长时间间隔中，单独检查状态正确但画面错误的情形。对对象持久性研究，这提供了可核对状态的实验思路，却不能替代三维遮挡与相机回访评测。"
+      ],
+      "limitations": [
+        "选读 §3–4、表 2／4，未复现。实验是 Street Fighter II 固定二维视角；部分反应与外观判断依赖 VLM，跨系统输入接口也不完全相同，不能称为统一条件下的通用世界模型排名。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.40339v1",
+      "title": "Wizard: Manipulate Any World in Real Time via Agentic Control",
+      "authors": [
+        "Yuzhe Wu",
+        "Zijun Lin",
+        "Yeying Jin"
+      ],
+      "published": "2026-10-29",
+      "tags": [
+        "video-world-model",
+        "video-generation"
+      ],
+      "score": 8,
+      "score_reason": "相关性 5/5，证据 1/3，创新可用性 2/2：可操作的结构化控制方案，但主要实验是定性展示。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "新角色、新场景和新动作要在同一生成系统里组合，单靠文字提示很难精确控制骨骼运动，更难保证游戏状态与画面始终对应。"
+      ],
+      "summary": [
+        "Wizard 把角色骨架和场景几何编成代理视频，用显式状态控制器更新动作、碰撞和血量，再由视频生成器按照代理与参考图渲染。"
+      ],
+      "insight": [
+        "§4 输入包括场景图、角色参考和玩家控制；先重建近似几何、绑定骨架并检索重定向动作。角色区域掩码限制参考图注意力，变身时阻断旧身份缓存；状态由控制器维护，战斗判定不依赖生成画面的“想象”。",
+        "生成骨干经过因果适配、一致性蒸馏和自身 rollout 上的分布匹配蒸馏，报告两步去噪、24 FPS。§5 的新角色与场景结果主要是配对代理／生成帧的定性展示，没有足以支持普遍领先的量化对照。启动前还有场景与角色准备过程，实时帧率不能解释为从任意图片立即完成初始化。"
+      ],
+      "connection": [
+        "我的解读是，把可编辑的骨架和几何暴露出来，是一种清楚的控制接口。下一步更值得测的是代理执行正确时渲染仍失败的比例，并把动作库覆盖、身份泄漏与新场景失真分开归因，而不是只展示几个看起来流畅的组合。"
+      ],
+      "limitations": [
+        "选读 §3–5，未复现。近似几何和已有动作库构成限制；训练包含离开再出现情形，但这不等于完成严格 camera-return 基准，更不能证明任意动态对象的长期状态一致。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.40640v1",
+      "title": "SonoWorld4D: From One Video to a 4D Audio-Visual Scene via Diffusion Synchronization",
+      "authors": [
+        "Derong Jin",
+        "Xiyi Chen",
+        "Ming C. Lin",
+        "Ruohan Gao"
+      ],
+      "published": "2026-10-29",
+      "tags": [
+        "4d-object-centric",
+        "video-generation"
+      ],
+      "score": 8,
+      "score_reason": "相关性 4/5，证据 2/3，创新可用性 2/2：对象中心声场与新监听位置验证具体，但不是动作条件控制模型。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "换一个位置听到的声音，不该仍保留原相机处的远近变化。动态场景中的声音需要跟随对象，而不是永远贴在输入视频的观察位置。"
+      ],
+      "summary": [
+        "SonoWorld4D 将单目视频拆成静态背景和动态对象的四维表示，再在对象空间与相机空间之间同步音频扩散，使声音能随新的监听轨迹重新渲染。"
+      ],
+      "insight": [
+        "§4 先对前景轨迹与背景做尺度和局部位置对齐；音频采样中通过正向声学渲染、声源分离与近似逆变换约束两个空间。它是无需新增训练的组合框架，不是把动作输入进动力学模型来预测新事件。声学模型面向弱混响室外场景，忽略反射路径。",
+        "SonoScene4D 的 54 段视频均为 8 秒，并在不同于相机的位置录制声音。表 1 完整方法的声源方向角误差为 40.7°，仅视频生音变体为 46.1°。这支持对象空间同步对新监听位置的帮助，但误差仍不小，不能说空间声音已经精确恢复。"
+      ],
+      "connection": [
+        "我的解读是，对象身份和世界坐标也能为音频提供持续锚点。可以进一步设计对象暂时不可见但声音持续、或对象位置改变后的返回测试，分别检验几何定位与声源绑定；这些是建议，论文的自由视点渲染不能自动算作已经完成这些持久性实验。"
+      ],
+      "limitations": [
+        "选读 §3–5 与表 1，未复现。前景重建、分离和近似逆声学过程都可能带入误差；场景来自输入片段，尚不是可持续执行任意动作的交互物理世界。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.39609v1",
+      "title": "DiFuse: Fusing Native Diffusion Representations for Spatial Reasoning in Unified Multimodal Models",
+      "authors": [
+        "Ruixin Fan",
+        "Weining Wang",
+        "Jiahui Sun",
+        "Tailai Chen",
+        "Jing Liu"
+      ],
+      "published": "2026-10-29",
+      "tags": [
+        "unified-understanding-generation"
+      ],
+      "score": 8,
+      "score_reason": "相关性 4/5，证据 2/3，创新可用性 2/2：同数据 SFT 对照支持生成表征回流理解，但主要是静态空间问答。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "统一模型能看图也能画图，不代表生成分支学到的结构已经被理解分支利用。关键是能否把空间信息按正确位置接回去。"
+      ],
+      "summary": [
+        "DiFuse 在原生扩散分支中途提取特征，经压缩、卷积适配与网格对齐，残差注入理解解码器的视觉 token；不需要解码出最终辅助图像。"
+      ],
+      "insight": [
+        "§3 的固定生成提示要求深度图，扩散推进到选定时间后停止。原模型冻结，只训练适配器与解码器 LoRA，使用原有自回归 SFT 损失，没有额外几何损失。训练特征可以缓存，但新输入仍需要提取，不能把离线缓存误写成部署完全没有生成分支开销。",
+        "表 1 的 UniWorld-V1 对照保持指令数据和优化设置相同，空间平均分由 SFT 的 71.88 升到 73.68；通用平均分为 71.94。OmniGen2 的空间增益更小，通用平均分反而低于其 SFT 对照，因此证据支持选择性的空间帮助，不是所有能力一致提升。"
+      ],
+      "connection": [
+        "我的解读是，统一能力的收益可能来自可定位的中间表征，而不必先完整画图。进一步可以固定额外计算预算，比较中间特征、真实深度和无空间对齐特征；若扩展到视频，还应另测时间对齐，不能直接把单图问答增益叫作动态世界理解。"
+      ],
+      "limitations": [
+        "选读 §3–4 与表 1，未复现。层和时间步选择依赖骨干；当前结果没有建立视频状态持久性、动作预测或机器人执行收益。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.40115v1",
+      "title": "SelfThinker: Self-Evolving Reasoning via Reliability-Verified Intrinsic Visual Thoughts",
+      "authors": [
+        "Zhangquan Chen",
+        "Ruqi Huang"
+      ],
+      "published": "2026-10-29",
+      "tags": [
+        "unified-understanding-generation"
+      ],
+      "score": 8,
+      "score_reason": "相关性 4/5，证据 2/3，创新可用性 2/2：验证与蒸馏分工明确，有文本推理测试与诊断对照。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "生成一张辅助图并答对问题，仍可能只是语言先验在起作用。要把自生成图像变成可靠监督，首先得判断图像究竟提供了什么帮助。"
+      ],
+      "summary": [
+        "SelfThinker 用冻结理解分支衡量辅助图对目标答案概率的增益，并以其他题目的图校准；通过验证的图作为教师额外上下文，蒸馏到只看原图的学生。"
+      ],
+      "insight": [
+        "§3 区分真实答案与多数投票两种验证方向。生成侧用 flow matching 改善候选图；理解侧沿学生自己的文本轨迹做教师／学生分布的 JSD 蒸馏。测试时输入原图和问题，只生成文字，不再画中间图；“无人工辅助图标注”也不代表主实验没有答案标签。",
+        "表 2 在统一评判器及纯文本解码下，七项平均由 ThinkMorph 的 52.7 到 64.0；投票版本为 63.4。§4.4 的视觉搜索验证 AUC 为 0.660，说明筛选信号有辨别力却远非完美。平均提升不能替代逐项错误分析，尤其不能保证自举验证总会识别错误图像。"
+      ],
+      "connection": [
+        "我的解读是，生成能力可以作为训练阶段的证据来源，部署接口保持简单。更值得追问的是：当多数答案本身错误时，验证器会不会强化共同偏差？可控制答案可靠性与图像质量分别做干预，检验改善究竟来自视觉证据还是教师上下文。"
+      ],
+      "limitations": [
+        "选读 §3–4 与表 2–3，未复现。训练主要来自合成视觉搜索与导航题，结果涉及静态理解；不能推广为视频未来预测、物体永久性或机器人闭环能力。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.40614v1",
+      "title": "L3G-World: Real-Time Infinite World Generation with Latent 3D Gaussian Memory",
+      "authors": [
+        "Jinhyeok Choi",
+        "JoungBin Lee",
+        "Jongmin Lee",
+        "Minkyeong Jeon",
+        "Jiyoung Kim",
+        "Kaeun Han",
+        "Yoonjin Yoon",
+        "Seungryong Kim"
+      ],
+      "published": "2026-10-29",
+      "tags": [
+        "video-world-model",
+        "camera-return"
+      ],
+      "score": 10,
+      "score_reason": "相关性 5/5，证据 3/3，创新可用性 2/2：有配对回返与记忆组件消融；主观推荐分不代表所有指标最佳或独立复现。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "记忆若随每一帧堆积，相机多转几圈就会越来越贵；若旧几何永远不能修正，最初的重建错误又会一直影响返回时的画面。"
+      ],
+      "summary": [
+        "L3G-World 用可增补、可修订的三维 Gaussian 记忆保存场景与 VAE 特征。目标视角直接渲染 latent 来条件化下一段视频，随后把生成结果写回记忆。"
+      ],
+      "insight": [
+        "方法输入为单图及相机轨迹。低覆盖或高重建误差区域产生新条目，已可见旧条目接受残差更新。记忆训练结合图像、深度、latent 与可见性约束，生成器使用 flow matching 后再蒸馏；它不必把每次记忆渲染都重新编码为 VAE 特征。",
+        "实验包含 481 帧原路回返，并在相同相机位置配对比较，属于真正的 camera-return；新增、修订与 latent lifting 均有消融。Fast 蒸馏版在单 H100 上总管线为 9.02 FPS，不能与 A100 上单独测得的记忆模块吞吐混用。部分基线经过初始化或动作接口适配，比较并非全部原生同条件。"
+      ],
+      "connection": [
+        "我的解读是，“可修订的空间记忆”比“无限世界”更准确。回访时一致仍可能只是始终记错；下一步应分别检验初始错误能否撤销、遮挡后是否恢复正确内容，以及对象移动后旧位置是否被清除。这些动态状态问题不能由静态回返分数代答。"
+      ],
+      "limitations": [
+        "选读方法、实验与实现／局限附录，未复现。记忆主要针对静态场景，不显式建模独立运动物体；探索空间扩大仍会增加存储，生成错误也可能在写回过程中传播。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.39812v1",
+      "title": "GROME: GROunding Factorized MEmory into Video World Models",
+      "authors": [
+        "Fang Yu",
+        "Xiaoxue Wu",
+        "Haiyu Zhang",
+        "Yangfu Li",
+        "Botong Zhao",
+        "Yu Qiao",
+        "Tianfan Xue",
+        "Yue Lu",
+        "Xinyuan Chen"
+      ],
+      "published": "2026-10-29",
+      "tags": [
+        "video-world-model",
+        "camera-return",
+        "4d-object-centric"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：静动态分解与同骨干回访对照直接相关，受控范围和代理指标仍有限。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "回到旧位置时，背景应该保持稳定，运动中的实体却不能机械地退回旧姿态。把两者当成同一种历史图像读取，会混淆空间记忆与时间状态。"
+      ],
+      "summary": [
+        "GROME 将历史拆成静态几何和动态实体的局部记忆，静态部分按空间覆盖取证，动态部分读取保留时间索引的最新证据，再注入冻结的视频模型。"
+      ],
+      "insight": [
+        "方法通过分离注意力、参考值适配与去噪阶段路由组织记忆读取，无需额外训练。对照 LingBotV2 时固定 20 个 latent slots、种子、采样与轨迹，更有助于判断收益是否来自记忆组织，而不只是增加上下文；跨模型对照则不能视为完全同条件。",
+        "主评估为 200 个场景，静态与动态各 100 个，长度 15–18 秒、360–432 帧；回访时参考内容已经离开有效上下文。实体一致性分数为 0.769，仍低于 WorldPlay 的 0.910，因此不能写成全面领先，也不应把这个受控时长扩写成分钟级持久世界。"
+      ],
+      "connection": [
+        "我的解读是，最新动态证据比最早参考更合理，却不等于知道对象离开视野之后真实发生了什么。可以进一步把“最近一次见到的状态”和“隐藏期间的演化假设”分开存储，返回时用新观察检验；这属于研究建议，并非论文已经证明的隐状态推断能力。"
+      ],
+      "limitations": [
+        "官方 HTML 方法、实验和附录选读，未复现。外部几何误差与骨干外观漂移可能传播；免训练不等于低推理成本，受控回访结果也不能认证任意动态事件后的长期对象永久性。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.39721v1",
+      "title": "WorldProbe: When Video World Models Fall Apart under Long-Horizon Spatial Exploration",
+      "authors": [
+        "Minqi Wang",
+        "Jie Peng",
+        "Hejun Dong",
+        "Ruchang Yao",
+        "Puyi Wang",
+        "Siyuan Huang",
+        "Jihai Zhang",
+        "Yafu Li",
+        "Qi Dou",
+        "Xiaoye Qu",
+        "Yu Cheng"
+      ],
+      "published": "2026-10-29",
+      "tags": [
+        "video-world-model",
+        "camera-return"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：在线探索揭示回访与演化差异，但位姿及 VLM 评分是代理。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "短片局部看起来稳定，不代表相机绕行后还能回到同一个地方。固定轨迹也未必会追着模型当前最容易暴露的问题继续探索。"
+      ],
+      "summary": [
+        "WorldProbe 是诊断基准：目标条件的多模态代理根据生成结果在线调整摄像机动作，分别检查局部画质、内容、回访记忆和演化一致性。它不是新的生成器。"
+      ],
+      "insight": [
+        "主实验覆盖 164 个案例、10 个模型，最长 180 秒。记忆评估先通过 ViPE 重建位姿、筛选近邻视点，再用 VLM 比较跨视角内容；演化评估结合抽样帧与控制摘要判断变化是否合理。动作影响后续探索路径，但评分并不来自可直接读取的真实物理状态。",
+        "实验的重点是局部质量与长程一致性可能分离：画面能继续流畅生成，记忆或演化仍会失效。附加案例中 DreamX 的 367.9 秒不能当成主评估所有模型的统一时长；同样，VLM 给出的高一致性分数也不代表已经证实物理正确。"
+      ],
+      "connection": [
+        "我的解读是，记住地点与解释变化必须分开验。可以用这类在线探索协议检验记忆方法是否只是适应了预设返回路线，并进一步固定探索策略、换评分器做稳健性检查。把它用于比较 GROME 等方法是合理的后续实验建议，本期没有进行这种交叉实验。"
+      ],
+      "limitations": [
+        "官方 HTML 方法、实验和附录选读，未复现。代理策略、轨迹筛选、位姿估计和 VLM 都影响结论；自动探索可能发现失败，但不能凭有限测试认证真实世界的长期物理持久性。"
+      ]
+    },
+    {
+      "arxiv_id": "2610.39232v1",
+      "title": "Seeing and Imagining as One: Unified Video Generation and 4D Perception for Embodied World Modeling",
+      "authors": [
+        "Haitang Feng",
+        "Zhuoman Liu",
+        "Zhennan Wang",
+        "Sheng Wang",
+        "Juelin Li",
+        "Chengzhi Zhao",
+        "Hexiang Wei",
+        "Lin Shao"
+      ],
+      "published": "2026-10-29",
+      "tags": [
+        "video-world-model",
+        "unified-understanding-generation"
+      ],
+      "score": 8,
+      "score_reason": "相关性 4/5，证据 2/3，创新可用性 2/2：生成与结构化感知共用模型，尚不涉及持久记忆或回访控制。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "视频预测只输出 RGB 时，后续系统仍要另行估计几何和运动；这种串联可能把生成伪影继续传给感知。能否让同一模型直接提供可读的结构化输出？"
+      ],
+      "summary": [
+        "GenSight 让 RGB、深度、主体分割与首帧相对二维 flow 共用 VAE 和 DiT，通过任务调制在统一 velocity 空间学习生成与感知。"
+      ],
+      "insight": [
+        "方法以同一 noisy-video latent 为分支输入，dense 模态目标用于监督而不是额外输入。训练使用 velocity MSE 和空间梯度匹配。生成视频仍需多步，观察视频的 dense 感知则按模态单步读出，不能写成单步生成视频或一次前向完成所有模态。",
+        "表 1 的 RoboMIND 测试中，GenSight 的 FVD 为 14.55，对照 Cosmos3-Nano 为 44.97；但原始 flow EPE 落后 RynnWorld4D，不能称所有指标领先。三维 flow 由深度与二维 flow 恢复时假设相机静止，且部分标签来自估计器，这些条件限制了“4D 感知”的解释范围。"
+      ],
+      "connection": [
+        "我的解读是，可读结构有助于诊断模型，却不天然构成物理约束。建议用独立传感器检验输出是否相互一致，并做同数据的联合／单任务对照；再改变相机运动或对象接触，检查结构化预测能否反映真正的动力学变化。"
+      ],
+      "limitations": [
+        "选读 §3–4、表 1 及相关附录，未复现。49 帧片段和任务留出结果不等于长期对象记忆；缺少隔离联合训练与单任务、velocity 与 clean-latent 目标的完整对照，也未证明预测用于机器人在线决策。"
+      ]
+    }
+  ]
+}
