@@ -149,19 +149,19 @@ html[data-theme="dark"] .internship-logo img{filter:url(#simpleai-dark-ink)}
 }
 @media(prefers-reduced-motion:reduce){.portrait-universities{transition:none}.portrait-university,.portrait-university img{animation:none!important;will-change:auto!important}}
 
-/* The original InkMind wordmark sits below the contact links. */
-.profile-inkmind{display:block;width:160px;max-width:100%;margin:16px 0 0;padding:4px 0;line-height:0}
+/* A quiet vertical affiliation block below the contact links. */
+.profile-affiliations{display:flex;flex-direction:column;align-items:flex-start;gap:7px;width:176px;max-width:100%;margin-top:17px;padding-top:12px;border-top:1px solid #e9ebed}
+.profile-affiliations a{display:flex;align-items:center;position:relative;max-width:100%;height:29px;line-height:0;transition:opacity 150ms}
+.profile-inkmind{width:144px}
 .profile-inkmind img{display:block;width:100%;height:auto}
-.profile-inkmind:hover{opacity:.75}
-.profile-simpleai{display:block;width:160px;max-width:100%;margin:8px 0 0;padding:4px 0;line-height:0;transition:opacity 150ms}
-.profile-simpleai img{display:block;width:100%;height:auto}
-.profile-simpleai:hover{opacity:.75}
-.profile-simpleai:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+.profile-simpleai{width:164px;overflow:hidden}
+/* Compensate for transparent margins without changing the official artwork. */
+.profile-simpleai img{display:block;position:absolute;width:115.951%;max-width:none;height:auto;left:-7.976%;top:50%;transform:translateY(-50%)}
+.profile-affiliations a:hover{opacity:.7}
+.profile-affiliations a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+html[data-theme="dark"] .profile-affiliations{border-top-color:#383b40}
 html[data-theme="dark"] .profile-simpleai img{filter:url(#simpleai-dark-ink)}
-@media(max-width:924px){.profile-simpleai{width:145px}}
 @media print{html[data-theme="dark"] .profile-simpleai img{filter:none}}
-
-@media(max-width:924px){.profile-inkmind{width:145px;margin-top:14px}}
 
 /* A compact theme control sits beside the language switch. */
 html{color-scheme:light}
