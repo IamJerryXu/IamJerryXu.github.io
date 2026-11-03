@@ -50,7 +50,7 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
   .sidebar .research-interests{width:100%;line-height:1.5}
 }
 
-/* Reserve space for InkMind while keeping the profile compact. */
+/* Adapt the profile spacing to the available screen height. */
 @media(min-width:925px){
   .sidebar{padding-top:0;--profile-space:clamp(0px,calc((100dvh - 650px)*.03),3px)}
   .sidebar .author__name{margin-top:calc(8px + var(--profile-space))}
@@ -149,18 +149,12 @@ html[data-theme="dark"] .internship-logo img{filter:url(#simpleai-dark-ink)}
 }
 @media(prefers-reduced-motion:reduce){.portrait-universities{transition:none}.portrait-university,.portrait-university img{animation:none!important;will-change:auto!important}}
 
-/* Paired affiliation cards share one size and optical logo balance. */
-.profile-affiliations{display:flex;flex-direction:column;gap:9px;width:190px;max-width:100%;margin-top:18px}
-.profile-affiliations a{box-sizing:border-box;display:flex;align-items:center;justify-content:center;position:relative;width:100%;height:56px;border:1px solid #e7eaee;border-radius:9px;background:#f7f8fa;line-height:0;overflow:hidden;transition:background-color 160ms,border-color 160ms}
-.profile-inkmind img{display:block;width:132px;max-width:calc(100% - 36px);height:auto}
-/* The source has symmetric transparent margins; center the visible artwork. */
-.profile-simpleai img{display:block;position:absolute;width:169.291px;max-width:calc(115.951% - 42px);height:auto;left:50%;top:50%;transform:translate(-50%,-50%)}
-.profile-affiliations a:hover{background:#f0f3f6;border-color:#cdd5de}
-.profile-affiliations a:focus-visible{outline:2px solid #527c94;outline-offset:3px}
-html[data-theme="dark"] .profile-affiliations a{background:#25272c;border-color:#363a42}
-html[data-theme="dark"] .profile-affiliations a:hover{background:#2c3037;border-color:#535d6b}
-html[data-theme="dark"] .profile-simpleai img{filter:url(#simpleai-dark-ink)}
-@media print{.profile-affiliations a{background:transparent!important;border-color:#ddd!important}html[data-theme="dark"] .profile-simpleai img{filter:none}}
+/* More breathing room for the profile links after removing the logo block. */
+.sidebar .author__urls{font-size:16px;row-gap:9px;column-gap:18px}
+.sidebar .author__urls a,.sidebar .author__urls button{line-height:1.6}
+.sidebar .author__urls .contact-icon{width:18px;height:18px;margin-right:7px;vertical-align:-3px}
+.sidebar .research-interests{font-size:16px;line-height:1.6;margin-bottom:20px}
+.sidebar .author__bio{margin-bottom:16px}
 
 /* A compact theme control sits beside the language switch. */
 html{color-scheme:light}
@@ -226,7 +220,6 @@ html[data-theme="dark"] #theme-toggle .theme-icon--sun{display:block}
   html[data-theme="dark"] button:focus-visible,
   html[data-theme="dark"] summary:focus-visible{outline-color:#91b9d8}
   html[data-theme="dark"] .figure-button img{box-shadow:3px 3px 9px rgba(0,0,0,.45)}
-  html[data-theme="dark"] .profile-inkmind img{filter:invert(1)}
   html[data-theme="dark"] img.contact-icon{filter:invert(1) grayscale(1)}
   html[data-theme="dark"] ::selection{background:#4b627a;color:#fff}
 }
