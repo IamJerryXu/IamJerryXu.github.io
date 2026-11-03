@@ -15,6 +15,11 @@
   ],
   "news": [
     [
+      "2026-10-19",
+      "I joined <a href=\"https://cloud.simpleai.tech/simple-world-lab/\" target=\"_blank\" rel=\"noopener noreferrer\">SimpleAI’s Simple World Lab</a> as a Research Intern, helping build the embodied foundation model Omni-Simple-World and exploring frontier research in generative models and embodied intelligence.",
+      "加入 <a href=\"https://cloud.simpleai.tech/simple-world-lab/\" target=\"_blank\" rel=\"noopener noreferrer\">SimpleAI · Simple World Lab</a> 担任研究实习生，参与构建具身基础模型 Omni-Simple-World，并开展生成式模型与具身智能方向的前沿研究。"
+    ],
+    [
       "2026-09-24",
       "We release <a href=\"#last\">LaST</a>, preserving object geometry and appearance across occlusion and reappearance in long-video generation.",
       "我们发布了 <a href=\"#last\">LaST</a>，在长视频生成中保持对象遮挡或离开视野后重现时的几何与外观一致性。"
