@@ -1,0 +1,391 @@
+{
+  "date": "2026-11-05",
+  "announcement_date": "2026-11-04",
+  "scope_note": "内部审计：北京时间 2026-11-05 整理，六类官方 /new 页面均为 2026-11-04 公告；CV 总260/新141、RO125/56、LG445/148、AI413/115、CL162/53、eess.IV18/12，包含交叉列入及替换，不可相加视为去重数。此前 export API 代理拒绝仍适用，本次未重试，API 成功类别 0；16/36 小时总体候选未知，不宣称六类各150或完整召回。通过官方公告、固定版本 abs 和 HTML/PDF 定向筛选；早提交但本次新公告工作保留首次提交日期。历史58个 canonical ID 去重。SlotMemory 2605.31033、Flow Equivariant World Models 2601.01075 是更新，不当新首发；RA​​FT 2611.04368、Say the Same Act Differently 2611.04166 已在此前对话推荐，本刊不作为新发现。Hybrid Particle-Voxel Dynamics 2611.04492 HTML 为404、PDF 因页面工具16MB限制未取到，未冒称选读。所有条目为部分正文选读，未复现；DreamFree 和 FloMo 固定实际读过的 v1，已有 v2。首次提交 UTC：2611.04870 2026-11-03T13:25:52Z；2611.04527 2026-11-03T08:55:03Z；2611.05062 2026-11-03T15:25:35Z；2611.04873 2026-11-03T13:26:53Z；2611.04195 2026-11-03T02:29:27Z；2611.04028 2026-11-02T22:18:31Z；2611.04164 2026-11-03T01:54:23Z；2611.03815 2026-11-02T19:00:18Z；2611.04764 2026-11-03T12:11:03Z；2611.05279 2026-11-03T17:59:16Z。",
+  "papers": [
+    {
+      "arxiv_id": "2611.04870v1",
+      "title": "PrimeSim: A Generalist World Model Simulator from Large-Scale Cross-Embodiment Demonstrations",
+      "authors": [
+        "Travis Davies",
+        "Wentao Ma",
+        "Lihao Guo",
+        "Tengfei Ma",
+        "Xiaowen Chang",
+        "Jiafeng Xu",
+        "Shilong Wang",
+        "Yiqi Deng",
+        "Shaowen He",
+        "Xiaoqi Li",
+        "Qian Zhu",
+        "Ran Cheng",
+        "Hao Dong"
+      ],
+      "published": "2026-11-03",
+      "tags": [
+        "vla-world-model",
+        "video-world-model"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：动作和多视角条件有对照，模拟器保真仍有限。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "视频看起来逼真，不代表机器人执行给定动作时，模拟中的物体和不同相机画面都会作出正确响应。"
+      ],
+      "summary": [
+        "PrimeSim 使用跨机器人演示训练动作条件多视角视频模型，并通过自回归后训练让它充当策略模拟器。"
+      ],
+      "insight": [
+        "训练汇集 22 种平台的 30,110 小时示范，对不同动作频率、相机和末端执行器进行对齐。输入是观察、多步动作及可选语言；相对动作分块被编码并与视频帧对齐，DiT 交替执行单视角与跨视角注意力，摄像机 token 标记来源。中期训练用条件 flow matching 预测未来多视角视频 latent 的速度，而不是直接监督一个真实物理引擎。",
+        "后训练把双向生成改为因果生成，结合蒸馏、自生成历史和分层时间记忆降低长 rollout 漂移。WorldSimProbe 的五类测试中，PrimeSim 四项领先；局部动作校准为 70.2，低于 LingBot-VA 的 77.0。论文还用生成环境进行策略优化，不能因此认为所有模型中的策略改进都能无损转移真实机器人。"
+      ],
+      "connection": [
+        "我的解读是，应把动作响应、跨视角一致和策略排序保真作为独立问题；建议用同一初始状态重复真实执行，检查模型对失败及接触结果的不确定性。"
+      ],
+      "limitations": [
+        "选读 §2–4，未复现。基准和模型计算预算不同；长视频稳定不证明相机离开后回访时对象状态真实。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.04527v1",
+      "title": "Future Representation Distillation for Imagination-Free World Action Models",
+      "authors": [
+        "Jaehyeong Jo",
+        "Sangwon Jang",
+        "Sihyun Yu",
+        "Seonghyeon Ye",
+        "Yekyung Nah",
+        "Hojung Jung",
+        "Kimin Lee",
+        "Sung Ju Hwang"
+      ],
+      "published": "2026-11-03",
+      "tags": [
+        "vla-world-model",
+        "video-world-model"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：训练和部署接口清晰，有真实和仿真评测。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "视频先验能改善控制，但每次决策都生成未来视频可能昂贵，也可能让预测错误传给动作。"
+      ],
+      "summary": [
+        "DreamFree 将视频教师的未来表征蒸馏到只看当前观察的视觉编码器，控制时直接读出动作。"
+      ],
+      "insight": [
+        "冻结视频扩散教师读取含未来帧的视频；学生只输入当前帧及指令，投影器将学生 token 映射到教师时空布局，以表征相似性损失学习预测性特征，同时保留原始 flow matching 生成损失。教师和投影器仅在训练使用。之后用动作标注示范训练查询式读出模块和动作解码器，结合指令、本体状态预测动作块。部署不生成未来视频，也不对候选未来进行搜索。",
+        "RoboCasa-Kitchen 上 14B 骨干报告平均成功率 71.7%；论文还比较无蒸馏变体、不同视频骨干与训练数据，并报告真实机器人控制约 11 Hz。现实成功取决于数据、控制频率及硬件，不能把视频教师提供的先验误称为运行时可核验的未来。"
+      ],
+      "connection": [
+        "我的解读是，应分开评估视频知识迁移与部署时显式预测的价值。建议匹配骨干、训练预算和推理时延，比较当前帧直接读出与真正在线预测。"
+      ],
+      "limitations": [
+        "选读 v1 PDF §3–4，未复现；已存在后续版本，此处固定实际阅读的 v1。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.05062v1",
+      "title": "FloMo: 3D Scene Flow as a World Action Model Intermediate for Learning from Human Video",
+      "authors": [
+        "Jeremy Collins",
+        "Namra Patel",
+        "Ayush Agarwal",
+        "Shitij Govil",
+        "Animesh Garg"
+      ],
+      "published": "2026-11-03",
+      "tags": [
+        "vla-world-model",
+        "video-world-model",
+        "4d-object-centric"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：比较运动与视频监督，但真实机器人试验数量较小。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "人类视频包含丰富运动，却没有机器人动作标签；完整 RGB 未来也包含大量与控制无关的外观。"
+      ],
+      "summary": [
+        "FloMo 把三维场景流编码成视频模型可处理的表示，联合学习运动和机器人动作。"
+      ],
+      "insight": [
+        "离线阶段对每个 16 帧视频窗采样 4096 个点，用预训练三维点追踪器估计轨迹，并转换到首帧相机坐标；轨迹渲染成 RGB 样式后输入预训练视频模型的 latent 空间。模型给定当前观察和语言联合预测场景流与动作，使用无动作的人类视频和带动作的机器人数据训练。这里是联合输出，不应写成给定候选动作后生成条件未来的模拟器。",
+        "分布外真实机器人对照包含三个条件，每条件 10 次；无人体视频消融每条件仅 5 次。作者报告加入 RGB 视频预测会降低策略表现，但小样本、估计轨迹误差和模型训练配置都影响解释；这些结果支持该实验中运动中间量有用，不证明所有视频目标都无益。"
+      ],
+      "connection": [
+        "我的解读是，可以把几何运动和外观保真分别衡量。建议控制场景流标注质量、监督量及模型计算，再测试运动表示在遮挡和相机变动下的稳健性。"
+      ],
+      "limitations": [
+        "选读 v1 §III–IV 和表 I，未复现；实际阅读版本为 v1，之后已有 v2。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.04873v1",
+      "title": "Trusting Imagined Futures: Auditing Imagined Rewards for VLA Post-Training",
+      "authors": [
+        "Zicheng Kong",
+        "Zhenbo Xu",
+        "Haoyan Zhang",
+        "Jinghan Yang",
+        "Zhenzhen Li",
+        "Yiwei Ru",
+        "Liuyu Xiang",
+        "WanTing Xu",
+        "Min Ren",
+        "Zhaofeng He"
+      ],
+      "published": "2026-11-03",
+      "tags": [
+        "vla-world-model",
+        "video-world-model"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：使用匹配执行审核奖励，仍存在不可靠替换。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "预测奖励最高的想象视频，可能对应一次实际执行质量较差的动作。"
+      ],
+      "summary": [
+        "TIF 用匹配的想象结果和实际执行训练奖励审核器，离线选择真实轨迹进行行为克隆。"
+      ],
+      "insight": [
+        "每个初始状态包含来源动作和若干策略分支；候选对应想象视频与实际执行。奖励模型预测总体效用和五个执行质量维度，审核器学习识别高预测、低实际效用的过估计。只有候选优势超过阈值且风险足够低才替换原监督，否则保留原始轨迹；用于训练的是被保留的真实执行数据，而不是想象视频本身。",
+        "384 个测试状态中，仅按奖励替换的 310 个候选里有 219 个实际效用降低；加入优势与审核门后，降低效用的替换比例由 70.6% 降到 53.2%，仍超过一半。LIBERO 四套任务三种种子下，平均成功率为 76.25%，较原始轨迹提高 3 个百分点；匹配替换量的对照对于解读审核器收益尤其重要。"
+      ],
+      "connection": [
+        "我的解读是，模型奖励的排序和实际执行质量需要单独校准。建议报告被拒绝但实际更好的候选，以及真实执行反馈的采集成本。"
+      ],
+      "limitations": [
+        "选读 §3–4，未复现。真实机器人部分评估已录制视频的选择质量，并非证明新策略已在真机闭环提升。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.04195v1",
+      "title": "SettleSplat: Monocular Gaussian Mapping under In-View Scene Changes",
+      "authors": [
+        "Anh Thuan Tran",
+        "Xiyun Song",
+        "Yubin Zhou",
+        "Heather Yu",
+        "Jana Kosecka",
+        "Liang Peng"
+      ],
+      "published": "2026-11-03",
+      "tags": [
+        "4d-object-centric"
+      ],
+      "score": 9,
+      "score_reason": "相关性 4/5，证据 3/3，创新可用性 2/2：真实动态场景有消融；关注建图而非视频生成。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "移动物体静止后可能成为场景的新组成部分；一直把它当动态干扰去除，会留下过时地图。"
+      ],
+      "summary": [
+        "SettleSplat 从单目视频构建高斯地图，区分短暂运动与逐渐稳定的场景变化。"
+      ],
+      "insight": [
+        "系统用单目图像估计深度和位姿，先对所有像素建图，每个高斯携带由跨视角跟踪不确定性监督的动态性，随后结合观察次数移除暂态干扰。几何矛盾由估计深度与渲染深度的残差结合高斯深度不确定度计算；精化阶段对变化稳定前后的帧采用不同权重。训练目标组合图像、深度和动态性损失。",
+        "论文在 Bonn 和 Co-Fusion 共 11 个序列评估新视角合成，并报告变化区域和全图指标。它针对持续单目视频中在视野内发生的变化；估计深度、跟踪质量及稳定时刻判断可能把真实变化和重建误差混淆。"
+      ],
+      "connection": [
+        "我的解读是，对象是否曾经运动与它现在是否应留在地图中是两个问题。建议进一步测试物体离开视野后被移动再返回的情形，而不是把现有视野内变化结果当作回返验证。"
+      ],
+      "limitations": [
+        "选读 §3–4 及补充说明，未复现；这是几何建图，不是动作条件视频世界模拟。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.04028v1",
+      "title": "Compression Forcing: Hierarchical History Tokenization Enables Flexible World Models",
+      "authors": [
+        "Siqiao Huang",
+        "Partha Kaushik",
+        "Michael Chen",
+        "Hengkai Pan",
+        "Kaiwen Geng",
+        "Omar Chehab",
+        "Fernando Moreno-Pino",
+        "Max Simchowitz"
+      ],
+      "published": "2026-11-02",
+      "tags": [
+        "video-world-model",
+        "video-generation"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：匹配骨干及预算的 tokenization 对照清晰。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "历史压缩如果只优化像素重建，可能把预算花在与未来动力学无关的背景细节上。"
+      ],
+      "summary": [
+        "Compression Forcing 学习按预测重要性组织历史 token，再用不同长度前缀引导未来预测。"
+      ],
+      "insight": [
+        "编码器压缩历史视频，解码器用不同长度 token 前缀同时学习重建和动态预测，促使前面的 token 更关注对后续变化有用的信息。扩散骨干以历史前缀以及适用时的动作作为条件；推理时组合不同前缀得到的分数，增强动态相关历史的影响。动态显著性是通过训练目标诱导的表示，不是对象身份或物理状态的真值标注。",
+        "Kinetics-600 动态视频预测使用相同骨干和训练预算，DAT 不加引导的 FID 为 89.26，加分层引导为 88.13，标准 SD-VAE 为 90.57。论文另测游戏模拟和机器人操作，但不同任务的效果应按各自设置解读；改进幅度不能证明任意环境均受益。"
+      ],
+      "connection": [
+        "我的解读是，历史压缩应该按预测与决策需求评估，而不只按重建质量。建议控制动作标签、缓存预算和生成步数，单独测试遮挡对象的保留。"
+      ],
+      "limitations": [
+        "选读 §3–4 和对照表，未复现；普通预测指标不等于回返场景一致性。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.04164v1",
+      "title": "What Remains in Sight? Autoregressive Video Decoding as Representation-Guided Context Rewriting",
+      "authors": [
+        "Lixuan He",
+        "Jihyeon Je",
+        "Yang You",
+        "Leonidas Guibas"
+      ],
+      "published": "2026-11-03",
+      "tags": [
+        "video-world-model",
+        "video-generation"
+      ],
+      "score": 9,
+      "score_reason": "相关性 4/5，证据 3/3，创新可用性 2/2：多骨干对照和固定上下文预算有助判断。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "长视频分块生成时，即使完整历史被保存，解码器每一步看到哪部分历史仍是重要选择。"
+      ],
+      "summary": [
+        "ReCR 不重新训练生成器，而是根据内部表示选择历史块并重排时间位置后生成下一块。"
+      ],
+      "insight": [
+        "每个已完成块在写入缓存时汇总解码器 token 形成表示。选择器同时考虑与全局历史的一致性、相对最近片段的新增信息、时间边界覆盖及去冗余，并通过空间范围交换扩大观察布局；选中的历史映射到紧凑的因果时间轴，再与当前块一起供解码器使用。这个选择是推理时上下文管理，不是显式对象地图。",
+        "VBench-Long 的 60 秒实验中，Self-Forcing 总分 78.19，加入 ReCR 为 81.60；LongLive 为 80.72，加入后 81.37。各项指标并非全面同时提高，例如部分主体或背景一致性出现下降；自动视频质量指标也不能确认对象是否经历了正确的状态变化。"
+      ],
+      "connection": [
+        "我的解读是，历史保留和历史读取应分别审计。建议在明确相机回返和物体移动的控制轨迹上检查被选中的证据是否包含正确旧状态。"
+      ],
+      "limitations": [
+        "选读 §3–4，未复现；不声称论文完成了相机回返的对象持久性实验。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.03815v1",
+      "title": "AIRoA-0: Long-Horizon, Precise, Cross-Embodiment Manipulation from Handheld Data",
+      "authors": [
+        "Yueh-Hua Wu",
+        "Kei Ota",
+        "Hanlong Li",
+        "Hayata Yuasa",
+        "Jason Wang",
+        "Kengo Ikeuchi",
+        "Kensuke Chiyoma",
+        "Makoto Sugiura",
+        "Masafumi Takahashi",
+        "Masatoshi Tateno",
+        "Naoaki Kanazawa",
+        "Nicola Scianca",
+        "Petr Khrapchenkov",
+        "Satoshi Otsubo",
+        "Takehiko Ohkawa",
+        "Takuya Okubo",
+        "Tatsuya Matsushima",
+        "Yuki Noguchi",
+        "Yuma Shin",
+        "Zixuan Zhong"
+      ],
+      "published": "2026-11-02",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 9,
+      "score_reason": "相关性 4/5，证据 3/3，创新可用性 2/2：真实任务与跨平台实验具体，仍依赖匹配夹爪。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "若示范只能由机器人采集，双臂长任务数据规模会受到设备与遥操作成本限制。"
+      ],
+      "summary": [
+        "AIRoA-0 用手持夹爪示范预训练和后训练，在匹配摄像机与夹爪的机器人上执行长程操作。"
+      ],
+      "insight": [
+        "数据来自 16,151 小时双手示范，既包含任务指令也包含子任务指令。策略只接收两个腕部相机；视觉门控根据指令给图像 token 分配权重，并通过预算损失限制平均保留权重。训练时辅助预测子任务文本以塑造表征；该辅助文本不是动作专家的输入。后训练加入阶段预测和本体记忆，执行时平滑阶段并流式输出动作。",
+        "十个真实任务各报告 15 次，作者方法平均 78%，最强基线 27%；每项使用的手持后训练数据量不同，且基线采用各自最佳设置。手持夹爪和机器人夹爪、摄像机接口匹配是迁移条件，并不代表无需适配任意机械手。"
+      ],
+      "connection": [
+        "我的解读是，具身迁移既取决于数据量，也取决于感知和动作接口是否对齐。建议控制演示时长和硬件匹配程度，分别测量阶段预测、门控与动作执行贡献。"
+      ],
+      "limitations": [
+        "选读 §2–5，未复现。它不是视频世界模型或 camera-return 验证，部分任务样本较小。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.04764v1",
+      "title": "Pixel-space video generation with U-JiT",
+      "authors": [
+        "Théophane Vallaeys",
+        "Jakob Verbeek",
+        "Matthieu Cord"
+      ],
+      "published": "2026-11-03",
+      "tags": [
+        "video-generation"
+      ],
+      "score": 9,
+      "score_reason": "相关性 4/5，证据 3/3，创新可用性 2/2：匹配计算和采样消融具体，实验视频较短。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "视频 latent 压缩使训练高效，却可能丢失细节；能否在像素空间直接生成而控制计算？"
+      ],
+      "summary": [
+        "U-JiT 使用随网络深度变化的 patch 尺寸和调整后的采样策略，直接生成像素视频。"
+      ],
+      "insight": [
+        "模型外层使用较小 patch 保留细节，内部用更粗的 token 和较高通道容量处理语义，形成类似 U 形的结构；不需要先训练视频自编码器。作者分析 latent 解码器带来的高频偏置，并在推理时调整采样时间及 classifier-free guidance，分别比较架构与采样策略的作用。",
+        "Kinetics-600 上输入 5 帧、生成后续视频的 128 分辨率实验，U-JiT-B FVD 为 1.06，JiT-B 为 1.22；关闭优化采样时 U-JiT-B 为 1.25，说明架构和采样都影响结果。表中的 FLOPs 是单次前向，未计 latent 模型解码器成本，不能等同完整生成耗时。"
+      ],
+      "connection": [
+        "我的解读是，压缩表征与采样过程都应纳入同预算比较。建议报告端到端计算、长序列一致性和动作条件控制，而不从短视频感知指标推导世界模型能力。"
+      ],
+      "limitations": [
+        "选读 §3–4 及表 2，未复现；结果主要是短视频生成，不涉及机器人控制或回返。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.05279v1",
+      "title": "Möbius: A Unified Motion-Language Model Bridging Understanding and Generation",
+      "authors": [
+        "Jiazhi Shu",
+        "Chengfeng Zhao",
+        "Jinyi Wang",
+        "Yubo Zhao",
+        "Zhiyang Dou",
+        "Ronghui Li",
+        "Yu Lu",
+        "Xinwei Jiang",
+        "Zijiao Zeng",
+        "Yuan Liu"
+      ],
+      "published": "2026-11-03",
+      "tags": [
+        "unified-understanding-generation"
+      ],
+      "score": 9,
+      "score_reason": "相关性 4/5，证据 3/3，创新可用性 2/2：统一运动语言接口和多任务评估具体，非视频世界模拟。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "动作理解、文本描述和动作生成若交给完全分离的模型，难以在同一个接口里组合编辑和推理。"
+      ],
+      "summary": [
+        "Möbius 在共享注意力中处理文本和连续人体运动，支持运动描述、生成和编辑。"
+      ],
+      "insight": [
+        "模型直接使用逐帧运动表示，不依赖离散运动 tokenizer 或预训练运动 VAE；干净与带噪运动使用双向注意力，文本保持因果注意力，理解和生成使用各自参数。先以运动描述训练理解路径，再冻结理解参数，从其初始化生成路径，以带噪目标运动的重建损失训练去噪。整个目标运动序列在生成时共同迭代更新，因此不是逐帧实时机器人控制。",
+        "HumanML3D 运动描述表中，0.6B 模型 BLEU-4 为 0.2032，MotionGPT3 为 0.1605；不同数据和模型规模应分开比较。编辑结果需要额外 MotionFix 配对数据，不能把该任务成绩全部归因于零样本统一接口。"
+      ],
+      "connection": [
+        "我的解读是，统一接口可让理解和生成共享可检查的动作语义，但动作匹配指标不等于物理可执行性。建议另测接触、约束违反和机器人形态迁移。"
+      ],
+      "limitations": [
+        "选读 §3–4 和编辑结果，未复现。对象是人体运动序列而非视频生成或真实机器人世界状态。"
+      ]
+    }
+  ]
+}
