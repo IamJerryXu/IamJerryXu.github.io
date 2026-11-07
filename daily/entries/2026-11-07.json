@@ -1,0 +1,257 @@
+{
+  "date": "2026-11-07",
+  "announcement_date": "2026-11-06",
+  "scope_note": "北京时间2026-11-07整理。截至UTC 2026-11-07 02:47，官方cs.AI、cs.CV、cs.LG、cs.RO的/new均显示11月6日批次，总条目分别为361、258、417、115，含交叉列入与替换，不能相加为独立候选数。依官方公告时间表，该批次为UTC 11月6日01:00公开，落在36小时扩展窗口，不在16小时窗口；本期采用最新公告批次。按历史canonical ID去重，收录7篇新稿而非替换稿。未完成全arXiv穷尽检索，未调用API，候选总数未知。所有论文仅作正文部分选读，未复现。published字段记录首次提交UTC日期而非公告日期。版本均v1，首次提交UTC分别为：2611.08338 11月5日17:24:36；2611.07867 11月5日11:45:25；2611.07245 11月4日23:51:02；2611.07939 11月5日12:40:57；2611.08128 11月5日14:58:11；2611.07912 11月5日12:27:38；2611.07730 11月5日09:42:12。",
+  "papers": [
+    {
+      "arxiv_id": "2611.08338v1",
+      "title": "GPWM: Modeling the World as 3D Particle Motion",
+      "authors": [
+        "Robert Ren",
+        "Matthew Bronars",
+        "He Zhu",
+        "Yikai Tang",
+        "Jianing Zhang",
+        "Sergey Zakharov",
+        "Pavel Tokmakov",
+        "Katerina Fragkiadaki"
+      ],
+      "published": "2026-11-05",
+      "tags": [
+        "4d-object-centric",
+        "vla-world-model"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：粒子动力学与潜噪声规划直接关联三维交互建模，但依赖完整状态且规划为开环仿真。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "视频外观逼真并不保证接触后的三维物理运动正确；世界模型还应提供有效交互的搜索先验。"
+      ],
+      "summary": [
+        "直接生成粒子与刚体的三维运动，用统一表示覆盖刚体、软体、布料及颗粒。"
+      ],
+      "insight": [
+        "物体感知、多分辨率时空 Transformer 联合 flow matching 与 diffusion forcing；规划在潜在噪声空间搜索执行器与物体的联合运动，而非只在任意动作空间搜索。",
+        "ParticleWorlds 含2550万帧，覆盖六类场景。平均误差降低31%是逐场景取 specialist/unified 较优结果，不能归因于统一模型单独取得。统一模型在六域中五域优于既有基线，并在拖拽、抓放两域超过自家专用模型。"
+      ],
+      "connection": [
+        "我的解读是，动力学预测与交互分布先验应该分开评估：即使使用同一个模型，搜索空间的选择仍可能决定规划是否利用模型漏洞。"
+      ],
+      "limitations": [
+        "选读方法概述、§5–6及规划附录片段，未复现。要求完整、跨时间跟踪的三维状态；从视觉恢复粒子与身份尚未解决。规划在仿真中开环执行，长时噪声优化成本限制快速在线控制。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.07867v1",
+      "title": "PlayGen2: Learning Real-Time Playable Worlds with Explicit 3D State",
+      "authors": [
+        "Jihai Zhang",
+        "Yuhan Zhou",
+        "Junyou Li",
+        "Deheng Ye",
+        "Qi Dou",
+        "Yu Cheng"
+      ],
+      "published": "2026-11-05",
+      "tags": [
+        "video-world-model",
+        "4d-object-centric",
+        "video-generation"
+      ],
+      "score": 9,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 2/2：持久三维状态与渲染解耦切中离屏一致性，长时评测具体，但场景限于Doom且延迟需按配置核对。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "仅让生成画面循环充当记忆，很难同时保证响应控制、持久空间与离屏实体演化。"
+      ],
+      "summary": [
+        "分离世界状态更新与神经渲染，以持久三维状态保存场景，再生成第一人称画面。"
+      ],
+      "insight": [
+        "占据栅格保存静态几何，带身份的三维状态保存玩家和实体；局部模型学习动作条件运动、几何补全和实体发现。渲染由深度与语义投影驱动，生成RGB不作为状态预测的唯一循环记忆。",
+        "Doom中评估256条十分钟模拟轨迹，十分钟时动作识别准确率82.1%–85.6%，严重穿透对应的累计接触错误率5.2%–6.8%。论文展示未见地图、多人组合与规则式状态干预；十分钟指模拟时间，不是实时运行时长。"
+      ],
+      "connection": [
+        "我的解读是，显式状态接口让离屏实体保持活动，也允许以代码修改规则；应进一步拆开地图记忆、实体动力学和渲染质量，避免用画质替代交互正确性。"
+      ],
+      "limitations": [
+        "选读系统概述、§4及效率结果，未复现，证据限于Doom。摘要约160ms与正文默认八步配置不一致：串行200.6ms、4.98 FPS；流水并行7.16 FPS、275.7ms。应按具体配置理解延迟，不能泛称160ms实时运行。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.07245v1",
+      "title": "MAC-v2: Long-horizon model-based value expansion from pixels",
+      "authors": [
+        "Kwanyoung Park",
+        "Sergey Levine"
+      ],
+      "published": "2026-11-04",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 8,
+      "score_reason": "相关性 4/5，证据 2/3，创新可用性 2/2：控制相关潜表示和动作分块对长时价值展开有启发，含多基准与消融，但不全面超过行为克隆。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "像素离线强化学习的长时想象会同时累积表示误差和动力学误差，延长预测并不自动改善决策。"
+      ],
+      "summary": [
+        "以不重建图像的潜世界模型结合动作分块，减少长时价值展开中的递归预测次数。"
+      ],
+      "insight": [
+        "动力学预测与行为策略目标共同训练表示，使其保留可预测且与控制相关的信息；再用模型价值展开筛选行为策略候选。去除任一目标对编码器的梯度，或替换为图像重建等表示目标，会削弱所测任务表现。",
+        "评测覆盖visual OGBench、MMBench2、Robomimic与LIBERO-10。LIBERO-10为80±1，与BC相同；Robomimic square为72±10，BC为68±21。正文声称各Robomimic任务均不低于BC，但表2 can为95±3，BC为97±3，应以具体表格为准。"
+      ],
+      "connection": [
+        "我的解读是，表示是否适合控制比能否重建所有像素更关键；结果并不证明所有长时任务都应放弃重建，也不证明想象一定超过专家行为克隆。"
+      ],
+      "limitations": [
+        "选读方法概述、实验表2、§5.3及附录配置片段，未复现。主要为离线基准，专家示范分布中价值筛选改善空间有限；不能概括为全面超越BC。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.07939v1",
+      "title": "WAM-Sim0.1: World Anchored Memory Meets Online RL for Consistent and Realistic Driving Simulation",
+      "authors": [
+        "Jiahao Cui",
+        "Jiaye Li",
+        "Wenhao Zhang",
+        "Yaoyi Li",
+        "Shan Luan",
+        "Quanhui Tang",
+        "Jianhua Han",
+        "Lin Cheng",
+        "Hang Xu",
+        "Siyu Zhu"
+      ],
+      "published": "2026-11-05",
+      "tags": [
+        "video-world-model",
+        "video-generation",
+        "4d-object-centric"
+      ],
+      "score": 8,
+      "score_reason": "相关性 5/5，证据 2/3，创新可用性 1/2：分层世界记忆切中长期身份和几何一致性，报告驾驶指标，但地理依赖与固定外观限制迁移。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "自回归驾驶视频易出现道路结构漂移、主体身份漂移和画质退化，短期条件不足以稳定长期世界。"
+      ],
+      "summary": [
+        "构建分层持久记忆，再对自生成rollout进行在线flow-matching强化学习后训练。"
+      ],
+      "insight": [
+        "记忆分为位姿对齐结构token、只读地理背景token及一次写入的实例外观token；后训练使用分层视觉奖励和视觉语言模型的物理判断。",
+        "nuScenes报告FID 3.47、FVD 25.72，下游感知为24.16 mAP、71.23 road mIoU；另用自采数据检查分钟级生成中的结构和身份保持。物理评分包含VLM判断，不是物理正确性证明。"
+      ],
+      "connection": [
+        "我的解读是，记忆研究需要明确哪些属性固定、哪些必须更新；一次写入身份有助抗漂移，却也可能阻碍真实外观变化。"
+      ],
+      "limitations": [
+        "选读方法概述、摘要实验结果、评估协议与附录F，未复现。百个以上并发主体会增加检索和注意力成本；一次写入外观不擅长碰撞破坏等大变化；依赖地理参考，未知区域可能退化为缺乏锚定的生成。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.08128v1",
+      "title": "FreeOcc: Decoupling Ego-Motion for Efficient 4D Occupancy Forecasting via Continuous Flow Matching",
+      "authors": [
+        "Zeping Zhang",
+        "Zhuoya Zhao",
+        "Samy Metari",
+        "Robert Laganière"
+      ],
+      "published": "2026-11-05",
+      "tags": [
+        "4d-object-centric",
+        "vla-world-model"
+      ],
+      "score": 8,
+      "score_reason": "相关性 4/5，证据 2/3，创新可用性 2/2：显式消除自运动与按不确定性分配计算值得借鉴，报告效率及迁移，但任务仍是条件占据预测。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "已有规划器给出自车运动时，再用大网络学习分离自运动和场景变化可能重复消耗模型容量。"
+      ],
+      "summary": [
+        "通过SE(2)变换显式消除自运动，使用连续flow matching建模剩余场景动态。"
+      ],
+      "insight": [
+        "无注意力时间融合配合物理约束的连续动力学；不确定性感知机制将确定区域交给单次解码器，只对模糊区域调用ODE分支。",
+        "28.3M参数，FreeOcc-E报告27 FPS、nuScenes 32.1% mIoU、0.47m NFCD；另测试零样本迁移至SemanticKITTI，以及模拟丢包和时间戳抖动。"
+      ],
+      "connection": [
+        "我的解读是，结构先验可替代部分学习负担，但应区分已知自车运动下的条件占据预测与开放式可交互世界模拟。"
+      ],
+      "limitations": [
+        "选读方法概述、结论及附录B，未复现。当前不建模语义类别，不能把mIoU解读为多类别语义理解成果；ODE仍有额外成本，速度依赖配置与硬件。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.07912v1",
+      "title": "GuidedWAM: Training-Free Energy Guidance for World Action Models in Autonomous Driving",
+      "authors": [
+        "Xiyan Su",
+        "Finn Rasmus Schäfer",
+        "Hojun Lim",
+        "Frank Diermeyer",
+        "Johannes Betz",
+        "Markus Lienkamp"
+      ],
+      "published": "2026-11-05",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 7,
+      "score_reason": "相关性 4/5，证据 2/3，创新可用性 1/2：冻结模型的低成本能量引导有实用价值，但证据仅单基准开环伪仿真，软目标无硬保证。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "冻结世界动作模型后，如何不重新训练就改变驾驶目标，同时控制推理成本？"
+      ],
+      "summary": [
+        "在采样中间干净动作估计上施加能量引导，以采样阶段调度、能量归一化和速度限幅稳定修正。"
+      ],
+      "insight": [
+        "Jacobian-free形式避免每个采样步骤穿过整个主网络反向传播；可微能量仍提供目标方向。",
+        "NAVSIM v2 hard-split的三种公开冻结模型、三个采样种子上，EPDMS提升1.8–3.6；论文报告每步采样额外开销低于10%。"
+      ],
+      "connection": [
+        "我的解读是，它提供低成本推理目标接口；应将目标遵循、舒适度和安全保证分开，软能量改善分数不等于硬约束可靠。"
+      ],
+      "limitations": [
+        "选读方法概述、主实验表、计算开销与§5，未复现。仅单一基准开环伪仿真，无闭环测试；软约束不能保证满足目标，加权和不能解决矛盾能量，随机采样器也未验证。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.07730v1",
+      "title": "Seeing Beyond the Next Step: World-Model-Guided Human-Like Navigation in Multi-Agent Scenes",
+      "authors": [
+        "Seong-Eun Hong",
+        "JuYeong Hwang",
+        "Jinhyun Kim",
+        "Hanyoung Jang",
+        "HyeongYeop Kang"
+      ],
+      "published": "2026-11-05",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 7,
+      "score_reason": "相关性 4/5，证据 2/3，创新可用性 1/2：训练时前瞻蒸馏可降低部署负担，含留出场景和偏好评估，但固定短时动作与仿真环境限制外推。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "局部避障可行不等于后续社会行为合理，而每个决策步骤在线展开世界模型又成本较高。"
+      ],
+      "summary": [
+        "训练时用两个世界模型评估动作后果并蒸馏策略，部署时移除世界模型。"
+      ],
+      "insight": [
+        "一个分支预测附近社会动态，一个预测未来场景语义，为离散动作候选联合评分，再通过组内相对偏好蒸馏改进策略。",
+        "五个留出场景检查安全、群体一致性和目标推进，并进行人类观察者偏好实验；部署保留动作分类，报告每次决策65ms。"
+      ],
+      "connection": [
+        "我的解读是，前瞻能力可以在训练阶段摊入策略，但必须检查策略是否把训练时的模型偏差一起固化。"
+      ],
+      "limitations": [
+        "选读方法概述、实验总结与§5，未复现。固定100个短时动作锚点且仅单次预测，不擅长长时延迟让行或群体重组；双模型冲突由固定加权处理。闭环证据来自ETH/UCY的Unity重建，未验证真实机器人传感、定位和执行延迟。"
+      ]
+    }
+  ]
+}
