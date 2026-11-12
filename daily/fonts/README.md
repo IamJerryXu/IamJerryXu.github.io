@@ -2,8 +2,8 @@
 
 `noto-sans-sc-reading.woff2` is a self-hosted subset of official Noto Sans SC,
 instantiated at genuine weight 400. The derived family is named Daily Noto Sans SC.
-It contains 1190 non-ASCII codepoints used by the current generated archive and
-its bilingual UI, and is 166,972 bytes. Latin continues to use the existing licensed
+It contains 1210 non-ASCII codepoints used by the current generated archive and
+its bilingual UI, and is 169,344 bytes. Latin continues to use the existing licensed
 Wotfard. No remote font requests are made by readers.
 
 Upstream: https://github.com/google/fonts/tree/main/ofl/notosanssc
@@ -40,7 +40,7 @@ The helper is offline and is not imported by the site build or collector.
 
 ## Chinese reading paragraphs: Noto Serif SC
 
-The current serif subset is 212,580 bytes with 1190 non-ASCII codepoints.
+The current serif subset is 216,076 bytes with 1210 non-ASCII codepoints.
 Only `.daily-reading p` uses the self-hosted `noto-serif-sc-reading.woff2` at
 real weight 400. The derived family is Daily Noto Serif SC. Latin still uses
 Wotfard first; headings, date controls and metadata retain their sans-serif stack.
@@ -73,7 +73,7 @@ The script requires an explicit family so a Serif source cannot accidentally be
 published under the Sans filename. Regular publication does not download fonts
 or require fontTools; until refreshed, new glyphs use the documented system stack.
 
-Coverage audited for the 2026-11-11 edition: both subsets include all 1157 Chinese
+Coverage audited for the 2026-11-12 edition: both subsets include all 1176 Chinese
 characters in the generated archive, including every Chinese character introduced
 by the new edition. U+0160 (Latin capital S with caron) is absent from these CJK
 source fonts but covered by Wotfard. U+2080 (subscript zero), absent from both
