@@ -2,8 +2,8 @@
 
 `noto-sans-sc-reading.woff2` is a self-hosted subset of official Noto Sans SC,
 instantiated at genuine weight 400. The derived family is named Daily Noto Sans SC.
-It contains 1210 non-ASCII codepoints used by the current generated archive and
-its bilingual UI, and is 172,956 bytes. Latin continues to use the existing licensed
+It contains 1263 non-ASCII codepoints used by the current generated archive and
+its bilingual UI, and is 175,876 bytes. Latin continues to use the existing licensed
 Wotfard. No remote font requests are made by readers.
 
 Upstream: https://github.com/google/fonts/tree/main/ofl/notosanssc
@@ -40,7 +40,7 @@ The helper is offline and is not imported by the site build or collector.
 
 ## Chinese reading paragraphs: Noto Serif SC
 
-The current serif subset is 220,756 bytes with 1210 non-ASCII codepoints.
+The current serif subset is 223,880 bytes with 1263 non-ASCII codepoints.
 Only `.daily-reading p` uses the self-hosted `noto-serif-sc-reading.woff2` at
 real weight 400. The derived family is Daily Noto Serif SC. Latin still uses
 Wotfard first; headings, date controls and metadata retain their sans-serif stack.
@@ -81,3 +81,5 @@ CJK sources and Wotfard, remains on the existing fallback stack. The source TTF
 SHA-256 values were reverified against the provenance above.
 
 2026-11-14 refresh: official-source checksums reverified; both subsets rebuilt via the repository script after HTML generation, then HTML rebuilt. Both cmap tables cover all 822 unique Han characters in the new reading prose.
+
+2026-11-18 refresh: both official source SHA-256 values reverified; generated HTML, rebuilt both subsets, and rebuilt HTML again. Both regular-weight subsets cover all 1224 Han characters in the archive, including 21 newly introduced Han characters. Serif: 223,880 bytes; Sans: 175,876 bytes; each contains 1263 codepoints.
