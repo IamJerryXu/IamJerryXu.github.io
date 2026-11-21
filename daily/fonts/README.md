@@ -2,8 +2,8 @@
 
 `noto-sans-sc-reading.woff2` is a self-hosted subset of official Noto Sans SC,
 instantiated at genuine weight 400. The derived family is named Daily Noto Sans SC.
-It contains 1324 non-ASCII codepoints used by the current generated archive and
-its bilingual UI, and is 184,728 bytes. Latin continues to use the existing licensed
+It contains 1345 non-ASCII codepoints used by the current generated archive and
+its bilingual UI, and is 187,636 bytes. Latin continues to use the existing licensed
 Wotfard. No remote font requests are made by readers.
 
 Upstream: https://github.com/google/fonts/tree/main/ofl/notosanssc
@@ -40,7 +40,7 @@ The helper is offline and is not imported by the site build or collector.
 
 ## Chinese reading paragraphs: Noto Serif SC
 
-The current serif subset is 235,484 bytes with 1324 non-ASCII codepoints.
+The current serif subset is 239,004 bytes with 1345 non-ASCII codepoints.
 Only `.daily-reading p` uses the self-hosted `noto-serif-sc-reading.woff2` at
 real weight 400. The derived family is Daily Noto Serif SC. Latin still uses
 Wotfard first; headings, date controls and metadata retain their sans-serif stack.
@@ -87,3 +87,5 @@ SHA-256 values were reverified against the provenance above.
 2026-11-19 refresh: verified both upstream source checksums and rebuilt both regular-weight subsets after generating this edition, then rebuilt HTML. Both cmap tables cover all 1253 unique Han characters in the archive, including 29 new Han characters. Serif: 229,596 bytes; Sans: 179,976 bytes; 1293 codepoints each. Browser Rendered Fonts inspection was blocked by the browser organization policy; static coverage does not substitute for that pending check.
 
 2026-11-20 refresh: verified both official-source checksums, built HTML, rebuilt both genuine weight-400 subsets, and rebuilt HTML. Both cmaps cover all 1283 archive Han characters, including 30 new characters. Serif: 235,484 bytes; Sans: 184,728 bytes; 1324 codepoints each. Actual Rendered Fonts remains unverified because browser organization policy blocks DevTools; static glyph coverage and computed CSS are not substitutes.
+
+2026-11-21 refresh: verified both official-source checksums, generated HTML, rebuilt both genuine weight-400 subsets and rebuilt HTML. Both cmaps cover all 1304 archive Han characters, including 21 new characters. Serif: 239,004 bytes; Sans: 187,636 bytes; 1345 codepoints each. Actual per-glyph Rendered Fonts remains unverified under the reported DevTools organization policy; static coverage is not a substitute.
