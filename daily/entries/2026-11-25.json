@@ -1,0 +1,457 @@
+{
+  "date": "2026-11-25",
+  "announcement_date": "2026-11-24",
+  "scope_note": "北京时间 2026-11-25 归档。六类 arXiv Atom API 每类 150 条，共 900 分类行、747 去重记录，UTC 16 小时 0 条，扩大至 36 小时 467 条。cs.CV、cs.LG、cs.AI 可能因每类 150 条截断未覆盖完整提交窗口，另对照 2026-11-24 的六类官方公告，共 1321 个非替换唯一 ID。优先读公告新文也纳入可核实的 API 新文。版本更新不另造跨期记录；关键词加语义审查并不等于全量精读。",
+  "papers": [
+    {
+      "arxiv_id": "2611.31803v1",
+      "title": "SceneMemBench: A Benchmark for Scene Memory in Interactive Video World Models",
+      "authors": [
+        "Si, Yuheng",
+        "Lyu, Linye",
+        "Zhou, Jiawei",
+        "Du, Lingyi",
+        "Ye, Nanfei",
+        "Liu, Aobo",
+        "Liu, Yu",
+        "Li, Yu",
+        "Zhuo, Cheng"
+      ],
+      "published": "2026-11-24",
+      "tags": [
+        "camera-return",
+        "video-world-model"
+      ],
+      "score": 10,
+      "score_reason": "5+3+2：直接分解回访任务，真实历史与全程生成两套协议互补。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "回到老地方时，失败可能来自模型没记住，也可能是路没走对或前面生成已经漂移。原路返回还允许模型检索旧画面，不足以检验它是否保存了可换角度读取的场景。"
+      ],
+      "summary": [
+        "SceneMemBench 把看过的原视角与没看过的新视角分开，又用真实历史续写和全程生成分别诊断记忆与交互。数据包含 33 个 Unreal Engine 场景、600 条受控轨迹和 60 个端到端案例。"
+      ],
+      "insight": [
+        "Continued Rollout 给模型同一段完整的真实观察历史，通过各模型原生的历史或记忆接口初始化；随后只生成回访查询段，评分用的真实查询帧不进入模型。旧视角任务包括反向旋转与完整转一圈；新视角则要从历史未出现的相机位置恢复已观察的区域。Full Rollout 只从初始图像出发，保留前面生成漂移、控制误差等现实因素，两套分数的评分证据不同，不能横向相减。",
+        "论文拆开测内容、外观和几何：DINOv2 测场景主体，LPIPS、SSIM、PSNR 测外观，单目深度及法线测几何代理。正文为旧视角允许在终点附近选更匹配的参考帧，新视角用固定终点，因此跨任务难度看附录 E.1 和 F.1：统一采用固定终点，在包含平移的 Seen 对照上，六模型平均仍在全部六个指标胜过 Novel。附录也用删改历史检验返回时到底有没有用到早先观察，而不是单看画面是否像。"
+      ],
+      "connection": [
+        "可借鉴的最小实验是复用同一条相机路径，先以真实历史测记忆读取，再以生成历史测写入和误差累积；给相同区域添加原位与错位回访，记录相机有没有到位、地标有没有重现。在动态视频里再单列一个状态已变的物体，别把外观一致当成状态正确。"
+      ],
+      "limitations": [
+        "主要是静态场景结构恢复，没有测试物体在镜头外真实改变后是否更新；深度对齐是代理指标，不是绝对尺度真值。只核读实验协议、结果和涉及关键控制的附录。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.31239v1",
+      "title": "Lyris: Layout-Guided Long Video Generation with Persistent 3D Memory",
+      "authors": [
+        "Wang, Chen",
+        "Huang, Jiahui",
+        "de Lutio, Riccardo",
+        "Trevithick, Alex",
+        "Chu, Bryan",
+        "Ren, Jiawei",
+        "Leal-TaixÃ©, Laura",
+        "Huang, Shengyu",
+        "Liu, Lingjie",
+        "Turki, Haithem"
+      ],
+      "published": "2026-11-23",
+      "tags": [
+        "camera-return",
+        "video-generation",
+        "video-world-model"
+      ],
+      "score": 10,
+      "score_reason": "5+3+2：实际测试长距离、新视角回访，并隔离布局、点云及参考图的作用。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "只有输入照片时，记忆可以约束看过的区域，但无法告诉模型门外从未看到的房间应该怎么摆。单靠文字描述也很难把物体固定到世界坐标。"
+      ],
+      "summary": [
+        "Lyris 把已见区域交给点云和参考图，把未见空间交给视觉语言模型规划的带标签 3D 框，再把两类条件沿相机路径渲染给视频模型。"
+      ],
+      "insight": [
+        "每段开始，规划器读取起始帧、现有点云、已建立的框和该段相机路径。框记录类别、中心、旋转和大小，不规定精细外观。系统沿每一帧的相机姿态分别渲染布局和记忆，把它们与视角重叠最大的少量历史图一起送给 MiniMax H3 Ref2VA。段结束后用 Pi3X 将若干新帧与有重叠的旧帧共同重建，再写入点云与带位姿的图像库。生成模型本身不维持跨段内部状态；长期约束来自外部记忆。作者先用片段训练 LoRA，再加入续写片段以学习使用记忆，最后做少步蒸馏。",
+        "表 3 的 CA-1M 定向回访最能说明分工：完整模型旋转误差 2.2°、回访一致性 0.755；去布局变为 14.6° 和 0.653；去点云时一致性进一步降至 0.564。去外观参考图后旋转误差只到 2.9°，但一致性降到 0.707。附录 A.5 将回程相机平移 0.5 至 1 米，重投影后仍优于所列对照。也就是说，同一个回访指标可能同时在反映路线、几何和纹理，不能直接解释为模型变得更会记东西。"
+      ],
+      "connection": [
+        "公开可复用的是给已见和未见空间不同约束的思路：已见优先检索几何和外观，未见才靠结构化布局补全。评估时可把新区域的结构合理性与旧区域的身份保持分开。"
+      ],
+      "limitations": [
+        "主要衡量静态探索；框可编辑不等于学到了物体随事件演化。核心训练依赖大型模型和多卡资源；附录的小模型实验也不等于任意现成检查点可直接替换。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.28666v1",
+      "title": "RecallWorld: Episodic Memory for Persistent Embodied Video World Models",
+      "authors": [
+        "Bose, Sarosij",
+        "Karumuri, Gitika",
+        "Li, Chenqi",
+        "Tu, Allen",
+        "Sastry, Srikumar",
+        "Zhang, Mellon",
+        "Ravichandran, Avinash",
+        "Schwing, Alexander",
+        "Karydis, Konstantinos",
+        "Chowdhury, Amit K. Roy"
+      ],
+      "published": "2026-11-21",
+      "tags": [
+        "camera-return",
+        "video-world-model",
+        "video-generation"
+      ],
+      "score": 9,
+      "score_reason": "5+3+1：相机回访与记忆消融直接，创新集中在组织与读取已有几何。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "逐帧独立建记忆会丢掉相邻帧的几何约束；把所有历史重建到同一个模型里，又可能让后生成的错误污染早先的地图。RecallWorld 试图在这两种做法之间取一个更稳的粒度。"
+      ],
+      "summary": [
+        "系统从单图和目标相机姿态分段生成，以 Scenelet 保存短段多视角几何；回访时取互补片段，先处理可见性，再融合外观作为生成条件。"
+      ],
+      "insight": [
+        "每段完成后均匀选 5 张关键帧，联合重建局部几何，将局部坐标通过相机位姿对齐至世界坐标；早先 Scenelet 不随新段重新优化。读取时将候选记忆投影到目标视角，逐个选能补足未覆盖区域的片段，而非只取最近片段。像素位置发生冲突时，以最近表面为基准保留深度相容的投影，再融合颜色并提供有效支持掩码。SANA-WM 的空间条件分支用 flow matching 训练，此阶段冻结主干；存进记忆的下一段仍是模型自己生成的内容。",
+        "四数据集的主对比，作者报告较最强回访对照的局部回访与整圈回访 PSNR 分别高 2.6 和 3.9 dB。表 4 将假设落成对照：GrandTour 局部回访全局重建 17.02 dB，改用不做可见性筛选的 Scenelet 后 20.72，再加筛选为 20.82；LPIPS 则从 0.339 降到 0.322。主要增益不能全归给深度筛选，局部多视角重建本身贡献更大。"
+      ],
+      "connection": [
+        "这是区分相机回到哪里、哪里有视野支持、哪个表面应当被看到的静态基线。想进一步测动态持久性，应保持相机一致，再改变某个物体走向或姿态，单独评估它的状态，而不是把回访 PSNR 当成状态更新证据。"
+      ],
+      "limitations": [
+        "几何前后遮挡的冲突不同于同一物体的时间版本冲突；作者把动态物体纳为后续方向，未用动作干预验证。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.28137v1",
+      "title": "Choose What Returns: Object-Aware KV Memory for Selective Recall in Interactive Video Generation",
+      "authors": [
+        "Kang, Hyunwook",
+        "Park, Junoh",
+        "Lim, Hyunggyu",
+        "Kim, Taesup"
+      ],
+      "published": "2026-11-19",
+      "tags": [
+        "video-generation",
+        "video-world-model"
+      ],
+      "score": 9,
+      "score_reason": "5+2+2：把对象身份、外观版本和地点分开测，新颖但真实性仍依赖多级检测。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "长视频有记忆，不代表它能找回对的东西。例如同一人物有过两套衣着，检索错版本、顺带带回旧背景，以及换衣时丢脸，是三种不同失败。"
+      ],
+      "summary": [
+        "作者在冻结的 Self Forcing 视频扩散模型上建立按物体和来源场景索引的 KV 库，让语言模型选择要恢复的历史版本和属性。"
+      ],
+      "insight": [
+        "每个生成段先解码给检测与跟踪器识别，把人物拆成脸、头发和衣物等组件；对象区域保留原始 KV，背景只在区域外筛选注意力较高的 token。场景提交时，元数据记录实际检测到的属性，不照抄提示词。同名对象在不同场景下分别存放。读取时路由器可以从初见场景找脸、从指定场景找衣物；若当前指令要求改衣物，则不再召回旧衣物。被选 KV 不改值也不重算原位置编码，与当前段的 KV 拼接供注意力读取；来源属性另写进细化提示。",
+        "表 2 的自然语言请求中，VersionPick 为 93.0，对照最高 50.2；同一表里背景几何分数只有 27.6，并不领先。表 3 的组件替换也表明文本路由、原始对象 KV 和提示细化各起作用，部分指标甚至会在删组件后上浮。这是选对来源、保持身份与保持原地几何之间真实存在的取舍。"
+      ],
+      "connection": [
+        "视频里的对象记忆可以先把身份、可换属性、背景隔离，不必把错误都算成忘记人物。评估可以针对同一对象做两个相反的召回请求，再专门数旧背景或多余对象是否被误带回。"
+      ],
+      "limitations": [
+        "这是语言点名的历史版本读取，不是当前物理状态写入或相机回访；局部 ID、检测器、路由器和评估模型都会影响结果，背景空间结构仍有限。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.31209v1",
+      "title": "WorldLatent: A Unified 4D Latent Space for World Perception and Generation",
+      "authors": [
+        "Chen, Jingxi",
+        "Chen, Yujia",
+        "Fermuller, Cornelia",
+        "Aloimonos, Yiannis",
+        "Chu, Wen-Sheng",
+        "Tran, Du"
+      ],
+      "published": "2026-11-23",
+      "tags": [
+        "unified-understanding-generation",
+        "video-world-model",
+        "video-generation"
+      ],
+      "score": 9,
+      "score_reason": "5+2+2：同一 4D 表示贯通感知、生成和编辑；实验范围仍以短片段为主。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "常见流程先从视频估深度和相机，再拿独立模型生成新视频。几个输出即使逐项合理，彼此也可能对不上；WorldLatent 把问题前移到表示层。"
+      ],
+      "summary": [
+        "先训练压缩外观、深度及相机射线的 WorldVAE，再冻结它，在统一 latent 上训练同一个扩散模型完成视频感知、文本生成和深度约束编辑。"
+      ],
+      "insight": [
+        "相机用逐像素 Plücker 射线的方向与矩编码，与 RGB 和深度对齐到同一时空网格。四个编码器从 Wan VAE 初始化并冻结，训练融合模块与各模态解码器；融合后共享 token 网格，32 通道并不等同于把四类 latent 在序列轴直接拼起来。第二阶段统一预测完整 latent，输入把未给的模态置零；给 RGB 可读深度与相机，给文字从空条件生成整组模态，给深度和新文字可重新渲染外观。改外观案例甚至先用同一模型从 RGB 推深度，再用该深度生成。",
+        "表 3 里，相比 RGB 基模，统一版生成的相机平均旋转从 0.99° 到 30.45°，真实参考是 24.55°，而基模的平滑度与某些重投影误差更好。作者说明近静止基线会在这些指标上占便宜。第 4.5 节还展示了对 RGB latent 的线性投影，以及同深度不同文本下几何子空间的相对稳定，但这是分析，不证明所有属性可精确独立干预。"
+      ],
+      "connection": [
+        "可借鉴同一状态既供预测又供读出的接口，并在对比中把运动幅度和几何误差联报，避免把少运动误判为结构更一致。"
+      ],
+      "limitations": [
+        "14B 主实验用 17 帧片段；没有长期记忆、闭环控制或物体级动作干预的直接证据。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.30573v1",
+      "title": "Write, Evolve, Read: Streaming Cameras into a Persistent World State for 4D Occupancy Forecasting",
+      "authors": [
+        "Wang, ZiAn",
+        "Wang, Tianyi",
+        "Chen, Zhihao",
+        "Cui, Manni",
+        "Chen, Junkai",
+        "Chen, ZhiJin",
+        "Liu, Ruiqi",
+        "Wu, Junfei",
+        "Zhang, Huanyu",
+        "Wu, Shu"
+      ],
+      "published": "2026-11-23",
+      "tags": [
+        "4d-object-centric",
+        "video-world-model"
+      ],
+      "score": 9,
+      "score_reason": "4+3+2：已见不变、已见变化、未见三区的误差拆解可直接迁移。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "摄像头往前走时，前方空间很多其实之前就看过了。若预测错的是这些没变的区域，可能是感知或记忆失败，而不是不会预测动态。"
+      ],
+      "summary": [
+        "PersistWorld 将连续相机输入逐帧写入世界坐标下的持久 3D 特征，再按指定时刻与车辆位姿读出未来语义占据。"
+      ],
+      "insight": [
+        "先把上次状态推进到新观测时刻，Writer 再把多视角图像特征投到体素子格，结合深度段和可见性更新，只写一次。Evolver 按历史与查询路径的相对位姿、时间及格子观测年龄做残差推进；耗时为零时保持原状态。Reader 在车辆查询位姿取栅格，并用网格和射线视图的占据监督训练。它输出的是语义占据，不是视频。",
+        "Occ3D-nuScenes 的 1 至 3 秒平均，不变区 IoU 从相机基线 51.07 到 70.86。从当前估计只做位姿变换已能到 68.60，说明大部分改进来自预报前的状态；未见区则需要模型补全。表 3 中窗口模式的总 IoU 67.97、逐帧持久模式 67.82，但处理速度约为 12.02 对 23.15 FPS，逐帧写入的主要优势是近似精度下少做重复计算。"
+      ],
+      "connection": [
+        "可迁移的是设计独立的静态记忆、动态变化和新区域指标，并对照单纯重投影。这比只报汇总指标更能判断该改存储、更新还是补全。"
+      ],
+      "limitations": [
+        "驾驶栅格的预测包含自车位姿条件，不能据此推断能模拟任意机器人动作对物体的后果。变化区域较稀少，亦非长程回访测试。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.30120v1",
+      "title": "AxE: Benchmarking Agent-Environment Generalization of Video World Models via Grounded Events",
+      "authors": [
+        "Xu, Haiyu",
+        "Chen, Yiyang",
+        "Zhou, Jiayi",
+        "Ji, Jiaming",
+        "Dai, Juntao",
+        "Yang, Yaodong",
+        "Chen, Boyuan"
+      ],
+      "published": "2026-11-23",
+      "tags": [
+        "video-world-model",
+        "video-generation"
+      ],
+      "score": 9,
+      "score_reason": "5+3+1：配对事件评估直接诊断物理泛化，但测量仍需模型判定。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "视频生成给出一段流畅动作，不代表指定对象做了指定事情，更不代表模型换个场景还会做对。"
+      ],
+      "summary": [
+        "AxE Bench 对原录制和改变智能体或环境条件的变体做配对，比较生成视频的事件在何时发生、发生了什么，另扩展出多轮 WBench-plus。"
+      ],
+      "insight": [
+        "评估先让视觉语言模型写事件草稿，用视觉检测证据校核物体和轨迹，再比较生成与真实的参考事件。事件先按时间交并比筛选，过 0.5 的配对才交语义评审检查物体、动作、方向和结果；时间匹配和时间加语义匹配单独求解。最终用事件 Fidelity 和成对变化下的 Stability 合成 AxE 分数，不把视频质感直接算成动作成功。",
+        "表 1 共测 20 个模型，最好的 Fidelity 为 13.01，稳定性最高 0.55。最佳时间匹配表现和最佳事件语义并不等同；一些模型在视觉平滑或常识指标上一样好看，但事件选错对象或没有造成指定结果。多轮扩展不具备同样的真实视频参考，作者报告时也另列。"
+      ],
+      "connection": [
+        "可借鉴做同一初始布局下仅改变一项的配对，例如是否执行一个事件、改变它的对象、保持动作不变只换相机，看状态结果与时间先后哪一项先掉。"
+      ],
+      "limitations": [
+        "事件标注和语义等价依赖自动评审；有多个正确执行顺序的任务可能不匹配唯一参考。相机轨迹输入并非所有模型都有，应分组看结果。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.28350v1",
+      "title": "Two Actions from One State: Fork Futures Teach JEPA World Models to Compare",
+      "authors": [
+        "Wu, Yihao",
+        "Zeng, Runjia",
+        "Wang, Tongyan",
+        "Huang, Renzhong",
+        "Fang, Chongzhou",
+        "Wang, Qifan",
+        "Heng, Fan",
+        "Liu, Dongfang"
+      ],
+      "published": "2026-11-20",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 9,
+      "score_reason": "5+2+2：同状态分叉直接测动作效应，能解释为何预测准未必选得准。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "控制日志通常只记录同一个状态下一条走过的路。但规划要比较没走过的路；只预测熟悉行为后的画面，无法证明世界模型知道换个动作会怎样。"
+      ],
+      "summary": [
+        "Fork-JEPA 从同一恢复状态执行原动作与替代动作，用真实后继 latent 的差监督两条预测分支，部署仍以常规潜空间搜索选动作。"
+      ],
+      "insight": [
+        "预测器读取最近三帧编码和动作块，预测下一时刻 latent。训练保留原始后继预测与抗坍塌正则，再加上两分支差匹配和回看头。局部线性近似下共享初始状态项在差分里抵消，这个论证只覆盖被采样的动作方向；回看头用于保留可恢复的前态，在线既不用它，也不用模拟器恢复。",
+        "合成跨动力区实验表 3，预测跨度 10 下 LeWM 成功率 35%，单用分叉 48%，单用回看 61%，完整方法 68%。另一个方法区分动力区的准确率反而更高，但规划较差。这说明区分环境类别不等于学会了该区的动作响应。"
+      ],
+      "connection": [
+        "可先把同一仿真状态随机换动作当作诊断，不一定马上采大规模分叉数据；应同时报告各动作后果的误差和同状态下的排序。"
+      ],
+      "limitations": [
+        "需要足够准确地恢复同一物理状态。验证是视觉仿真任务，不保证能在接触复杂的真机上廉价获得同样分叉。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.30659v1",
+      "title": "ActField: Learning Action Effects as Continuous-Time Latent Dynamics",
+      "authors": [
+        "Qing, Yunpeng",
+        "Huang, Yuheng",
+        "Wei, Changxu",
+        "Kong, Yilun",
+        "Shi, Yichen",
+        "Liu, Shunyu",
+        "Zou, Changqing"
+      ],
+      "published": "2026-11-23",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 9,
+      "score_reason": "5+2+2：动作确实条件化未来并在线用于选择；连续时间贡献有消融但真实任务少。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "如果模型只在固定观察间隔预测下一帧 latent，动作何时生效、持续多久都可能藏在一个离散转移里。ActField 想把动作影响写成真实时间下的变化率。"
+      ],
+      "summary": [
+        "用轨迹中的参考帧与当前帧压缩 DINOv2 特征，得到共享参考下的动态 latent。给定动作后对状态依赖的向量场积分，得到可供下游评分的未来。"
+      ],
+      "insight": [
+        "向量场分成一个与动作输入无关的漂移项，以及由动作系数和当前状态共同决定的控制项。每个控制区间保持当前动作值，对区间做积分，换动作后再推进。训练冻结 DINOv2，联合训练动态编码器、解码器和向量场；一项把紧凑状态解回视觉特征，一项在 1、2、4、8 步上用真实后继监督预测的状态位移。该分解作为模型结构，不等同于学出了真实物理定律。",
+        "表 2 固定候选策略、候选预算和 VLM 打分器，仅换 rollout 模型。在 LIBERO-10，基础策略 71.7%，ActField 79.2%，两个世界模型对照则分别为 69.5% 和 61.0%。论文另测末端预测位移，避免把像素分数当作动作准确；真实验证是两个任务，不是广泛的双臂泛化。"
+      ],
+      "connection": [
+        "复现实验可以先对同一动作改持续时间、同一初始状态换动作，看看预测的位移和物体效果是否同步变，而不是只看整体画面。"
+      ],
+      "limitations": [
+        "外部 VLM 负责选择；没有比较预测残差触发、直接重选和显式语言重想的区别。图像质量评估中的 RGB 是另外解码得到的。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.29553v1",
+      "title": "Detecting Is Not Choosing: What a World Model Needs to Keep a VLA Policy Safe",
+      "authors": [
+        "Bolla, Thanish"
+      ],
+      "published": "2026-11-22",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 8,
+      "score_reason": "5+2+1：检出与排序的分离很扎实，核心安全增益依赖精确仿真状态。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "知道下一步可能不安全，和在同一时刻挑出一个更安全的动作，是不同目标。把各时刻混在一起做分类，主要可能在识别场景风险。"
+      ],
+      "summary": [
+        "作者让策略提出几个动作块，用模拟器或学习模型比较其后果，区分「当前候选有问题」与「哪个备选能解决」。"
+      ],
+      "insight": [
+        "有精确仿真前视时，LIBERO 等任务多处能提高约束满足率。学习模型在混合状态样本上 AUROC 可达 0.864，但同决策内排序只有 0.551 至 0.560，接近随机。在 LIBERO-Spatial，仿真状态扰动后，离线检出仍可能很高，动作选择却已经明显变差；在线位置误差中位数 3.18 mm 时损失了约七成精确前视带来的安全增益，换到 LIBERO-10 时影响较小而且区间重叠，不应推广成通用精度门槛。"
+      ],
+      "connection": [
+        "建议保持同一状态对备选做成对评估，并另报干预后的净收益、原安全回合被破坏的数量和任务成功率。要做在线诊断，先把误报漏报和重选是否改善分开。"
+      ],
+      "limitations": [
+        "结果集中于仿真约束和所测策略，精确模拟器是上界，不是学得的真机安全保证；不是物理执行指南。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.28803v1",
+      "title": "DeRail: Escaping Trajectory Priors via Counterfactual Action Steering for Mid-Execution Instruction Switching",
+      "authors": [
+        "Hong, Yitong",
+        "Feng, Xiangdong",
+        "Sun, Xiaoxi",
+        "Yang, Senqiao",
+        "Han, Boyao",
+        "Yang, Zhejian",
+        "Zhou, Shiyang",
+        "Wang, Yongcai",
+        "Chen, Pengguang",
+        "Liu, Shu",
+        "Jiang, Li",
+        "Tian, Zhuotao"
+      ],
+      "published": "2026-11-21",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 8,
+      "score_reason": "5+2+1：受控换指令和恢复轨迹质量对照明确；推理依赖外部给定的新任务。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "机器人做到一半收到新指令，仍可能沿着原动作轨迹继续，甚至完成无关任务。改了文字不代表动作就对新意图敏感。"
+      ],
+      "summary": [
+        "DeRail 在切换后用同一观测分别问目标指令和干扰指令，把动作输出差异用来引导生成；还用成功改道的轨迹做回训。"
+      ],
+      "insight": [
+        "完整版根据末端位置与示范点云的距离找相关的非目标任务，再额外查询策略；朝目标动作与干扰动作相差的方向修正。它不是生成将来的视频来评分。CALVIN 在 15 至 21 步换指令，表 1 中 π0.5 从 5.8% 到 54.6%。表 5 的 π0 对照中，完全没有示范库的旧任务单一引导从 6.7% 到 35.4%，完整版 45.4%，而固定用所有非目标只到 23.3%，说明反事实选错也会拖累。"
+      ],
+      "connection": [
+        "测试旧判断何时失效时，可以保留相同画面、只改任务意图作为可控干预。在成功恢复数据的训练对照里，匹配回合数后，还应检查切换前状态、任务配对和动作长度。"
+      ],
+      "limitations": [
+        "实验已知何时换指令，因此不是自主识别环境变化或语言重新推理。完整方法依赖候选任务库，也会增加策略查询开销。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.28098v1",
+      "title": "Causal Dioramas: Controllable Video Generation, Revision and Editing via Intervention",
+      "authors": [
+        "Shen, Yifan",
+        "Yang, Xinyi",
+        "Zhu, Peiyuan",
+        "Jian, Yichang",
+        "Hu, Jinyuan",
+        "He, Xilin",
+        "Zhu, Fengming",
+        "Chen, Guangyi",
+        "Zhang, Kun"
+      ],
+      "published": "2026-11-17",
+      "tags": [
+        "4d-object-centric",
+        "video-generation",
+        "unified-understanding-generation"
+      ],
+      "score": 8,
+      "score_reason": "4+2+2：图级最小干预与固定噪声对照清晰，仍是分段重生成而非闭环模拟。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "仅把提示词某个对象改掉，扩散模型常把其它物体的姿态、背景和相机也变了。作者把可改项放进概念图，而不是重写整段视频的语言。"
+      ],
+      "summary": [
+        "概念图记录角色、交互、相机、背景等及其依赖，连接器把它转成渲染代理和参考素材，视频生成器据此重生成。"
+      ],
+      "insight": [
+        "首轮由语言代理解析对象轨迹和时序关系，先在代理视频上检查条件，后用 MiniMax H3 Ref2VA 和已有 LoRA 渲染。修改生成视频时，尽量只改指令对应节点及其依赖，按需重做参考与首帧后复用原噪声；真实视频没有原图与噪声记录，则以分割、深度、相机轨迹和反演估计。表 4 的同生成器对照包括只改文字仍固定噪声，以区分结构图与初始噪声；附录另拆依赖传播与反演。真实视频编辑的 CoVEBench UAS 为 79.8，对照中 Bernini 为 65.3。"
+      ],
+      "connection": [
+        "适合借鉴为配对视频控制：共享初始条件，只改一个对象状态或相互作用，再明确检查不该变的区域。不要把生成器未遵守代理条件误判成图上没有指定。"
+      ],
+      "limitations": [
+        "因果关系在这里是代理定义和传播的依赖，不是从真实干预数据识别的物理规律。离线重生成不等同于在线接收新观测。"
+      ]
+    }
+  ]
+}
