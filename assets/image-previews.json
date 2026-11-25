@@ -142,23 +142,23 @@
     }
   },
   "portraits": {
-    "portrait-great-wall-v1.png": {
-      "source": "portrait-great-wall-v1.png",
-      "originalBytes": 2604484,
+    "portrait-window-light.png": {
+      "source": "portrait-window-light.png",
+      "originalBytes": 2554395,
       "originalWidth": 1086,
       "originalHeight": 1448,
       "variants": [
         {
-          "src": "previews/portrait-great-wall-v1-480.webp",
+          "src": "previews/portrait-window-light-480.webp",
           "width": 480,
           "height": 640,
-          "bytes": 107322
+          "bytes": 51042
         },
         {
-          "src": "previews/portrait-great-wall-v1-960.webp",
+          "src": "previews/portrait-window-light-960.webp",
           "width": 960,
           "height": 1280,
-          "bytes": 261504
+          "bytes": 196126
         }
       ]
     },
