@@ -142,23 +142,23 @@
     }
   },
   "portraits": {
-    "portrait-window-light.png": {
-      "source": "portrait-window-light.png",
-      "originalBytes": 3073068,
-      "originalWidth": 1200,
-      "originalHeight": 1600,
+    "portrait-great-wall-v1.png": {
+      "source": "portrait-great-wall-v1.png",
+      "originalBytes": 2604484,
+      "originalWidth": 1086,
+      "originalHeight": 1448,
       "variants": [
         {
-          "src": "previews/portrait-window-light-480.webp",
+          "src": "previews/portrait-great-wall-v1-480.webp",
           "width": 480,
           "height": 640,
-          "bytes": 50384
+          "bytes": 107322
         },
         {
-          "src": "previews/portrait-window-light-960.webp",
+          "src": "previews/portrait-great-wall-v1-960.webp",
           "width": 960,
           "height": 1280,
-          "bytes": 189422
+          "bytes": 261504
         }
       ]
     },
