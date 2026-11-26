@@ -1,0 +1,43 @@
+.page__content h2.section-with-glyph {
+  display: flex;
+  align-items: center;
+  column-gap: .38em;
+}
+.section-glyph {
+  display: block;
+  flex: none;
+  width: 1.03em;
+  height: 1.03em;
+  overflow: visible;
+  color: var(--home-link, #4242fa);
+}
+.section-glyph .section-tint { fill: var(--home-pill, #dceffd); }
+.section-glyph .section-page { fill: var(--home-surface, white); }
+.section-glyph .section-dot { fill: currentColor; stroke-width: 1; }
+.section-glyph .section-detail { transform-box: fill-box; transform-origin: center; }
+#news .section-glyph { --detail-motion: scale(1.14); }
+#publications .section-glyph { --detail-motion: translate(1px,-1.2px) rotate(5deg); }
+#honors .section-glyph { --detail-motion: rotate(-12deg); }
+#education .section-glyph { --detail-motion: rotate(-18deg); }
+#education .section-detail { transform-origin: center top; }
+#internships .section-glyph { --detail-motion: translateY(-1.2px); }
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .section-glyph-arrives {
+    animation: section-glyph-arrive 460ms cubic-bezier(.2,.7,.3,1) both;
+  }
+  @keyframes section-glyph-arrive {
+    from { opacity: .5; transform: translateY(3px) scale(.85) rotate(-7deg); }
+    65% { opacity: 1; transform: translateY(-.6px) scale(1.04) rotate(2deg); }
+    to { transform: none; }
+  }
+  .section-glyph .section-detail {
+    transition: transform 330ms cubic-bezier(.2,.75,.32,1.18);
+  }
+  @media (hover: hover) {
+    .section-with-glyph:hover .section-detail { transform: var(--detail-motion); }
+  }
+}
+@media print {
+  .section-glyph { display: none; }
+}

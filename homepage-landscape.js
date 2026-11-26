@@ -9,11 +9,7 @@
   let frame = 0;
   function measure() {
     frame = 0;
-    const aboutBottom = about.getBoundingClientRect().bottom + scrollY;
-    const mainTop = main.getBoundingClientRect().top + scrollY;
-    const skyBottom = Math.ceil(Math.max(aboutBottom + 82, mainTop + avatar.offsetHeight + 42));
-    root.style.setProperty('--home-sky-height', skyBottom + 'px');
-    root.style.setProperty('--home-about-gap', (skyBottom - aboutBottom + 22) + 'px');
+    window.layoutHomeLandscape?.();
   }
   function schedule() {
     if (!frame) frame = requestAnimationFrame(measure);

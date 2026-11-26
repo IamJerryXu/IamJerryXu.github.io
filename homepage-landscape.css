@@ -24,7 +24,7 @@ html[data-theme="dark"] .academic-home {
 .home-atmosphere {
   position: absolute;
   inset: 0 0 auto;
-  height: var(--home-sky-height,450px);
+  height: var(--home-sky-height,0px);
   z-index: -1;
   background: linear-gradient(var(--sky), var(--sky-bottom));
   pointer-events: none;
@@ -32,7 +32,7 @@ html[data-theme="dark"] .academic-home {
 .home-horizon {
   position: absolute;
   inset: auto 0 -1px;
-  height: 178.5px;
+  height: 210px;
   overflow: clip;
   display: flex;
   align-items: end;
@@ -40,9 +40,9 @@ html[data-theme="dark"] .academic-home {
 }
 .home-horizon .source-article-cloud {
   flex: none;
-  width: 2560px;
-  min-width: 2560px;
-  height: 178.5px;
+  width: 2600px;
+  min-width: 2600px;
+  height: 210px;
   max-width: none;
   transform: none;
 }
@@ -89,8 +89,8 @@ html[data-theme="dark"] .academic-home .masthead .greedy-nav a,
 .academic-home .footer-columns h2 { font-family: inherit; }
 .academic-home .footer-credit { margin-inline: auto; font-size: 14px; }
 @media (max-width:800px) {
-  .home-horizon { height: 139.45px; }
-  .home-horizon .source-article-cloud { width: 2000px; min-width: 2000px; height: 139.45px; }
+  .home-horizon { height: 161.54px; }
+  .home-horizon .source-article-cloud { width: 2000px; min-width: 2000px; height: 161.54px; }
 }
 @media (prefers-reduced-motion:reduce) {
   .home-horizon path, .academic-home .masthead, .site-footer path,
@@ -100,4 +100,17 @@ html[data-theme="dark"] .academic-home .masthead .greedy-nav a,
   .home-atmosphere, .site-footer { display: none; }
   .academic-home .page__content #about { margin-bottom: 20px!important; }
   .academic-home #main { margin-top: 0; }
+}
+
+/* Enlarge the signature without changing its original typeface. */
+.academic-home .sidebar .author__name { font-size: 26px; line-height: 1.25; }
+.academic-home .identity--profile .name-monogram { width: 21px; height: 34px; margin-inline: 0; }
+.academic-home .identity--profile .name-monogram svg { width: 20px; height: 17px; }
+@media (max-width:540px) {
+  .academic-home .sidebar .author__name { font-size: 24px; }
+}
+@media screen and (prefers-reduced-motion:no-preference) {
+  .home-cloud-distant { animation: home-cloud-drift 24s ease-in-out infinite alternate; }
+  .home-cloud-middle { animation: home-cloud-drift 30s ease-in-out -12s infinite alternate-reverse; }
+  @keyframes home-cloud-drift { from { transform: translateX(-10px); } to { transform: translateX(10px); } }
 }
