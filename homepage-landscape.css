@@ -169,8 +169,8 @@ html[data-theme] .academic-home #figure-original { color: var(--blue); }
   position: absolute;
   top: var(--home-companion-top, calc(var(--home-sky-height) - 131px));
   right: var(--home-companion-right, max(28px, calc((100% - 1280px) / 2 + 20px)));
-  width: 100px;
-  height: calc(100px * 720 / 397);
+  width: 110px;
+  height: calc(110px * 720 / 397);
   z-index: 2;
 }
 .home-character {
@@ -207,7 +207,7 @@ html[data-theme] .academic-home #figure-original { color: var(--blue); }
 }
 .home-companion:has(.is-happy) .home-character-greeting { opacity: 1; transform: none; }
 @media (max-width:800px) {
-  .home-companion { width: 78px; height: calc(78px * 720 / 397); }
+  .home-companion { width: 86px; height: calc(86px * 720 / 397); }
 }
 @media (prefers-reduced-motion:reduce) {
   .home-character-greeting { transition: none; transform: none; }
