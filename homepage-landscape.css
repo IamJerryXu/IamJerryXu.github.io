@@ -117,3 +117,40 @@ html[data-theme] .academic-home .page__content #about a { color: var(--blue); }
   .home-cloud-middle { animation: home-cloud-drift 30s ease-in-out -12s infinite alternate-reverse; }
   @keyframes home-cloud-drift { from { transform: translateX(-10px); } to { transform: translateX(10px); } }
 }
+
+/* The reading area uses the Blog's semantic colors, preserving academic type. */
+.academic-home {
+  --line: #e6e8ef;
+  --pill: #bde5f8;
+  --home-blue: var(--blue);
+  --home-link: var(--blue);
+  --home-heading: #2c0b8e;
+  --home-muted: var(--muted);
+  --home-outline: var(--line);
+  --home-pill: var(--pill);
+  --home-surface: var(--bg);
+}
+html[data-theme="dark"] .academic-home {
+  --line: #2b2b40;
+  --pill: #272b49;
+  --home-heading: #e6b3ff;
+}
+html[data-theme] body.academic-home,
+html[data-theme] .academic-home .paper,
+html[data-theme] .academic-home .sidebar,
+html[data-theme] .academic-home .citation pre {
+  color: var(--fg);
+}
+html[data-theme] .academic-home .page__content a { color: var(--blue); }
+html[data-theme] .academic-home .page__content .paper h3 a { color: var(--fg); }
+html[data-theme] .academic-home .page__content .paper h3 a:hover { color: var(--blue); }
+html[data-theme] .academic-home .page__content .publication-note,
+html[data-theme] .academic-home .date small,
+html[data-theme] .academic-home .copy-status,
+html[data-theme] .academic-home #figure-status { color: var(--muted); }
+html[data-theme] .academic-home :is(#figure-dialog, #wechat-dialog) {
+  color: var(--fg);
+  background: var(--bg);
+  border-color: var(--line);
+}
+html[data-theme] .academic-home #figure-original { color: var(--blue); }
