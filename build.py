@@ -45,7 +45,7 @@ def paper(p):
  title=e(p['title'])
  if p['links']:title=f'<a href="{e(p["links"][0][1])}" target="_blank" rel="noopener noreferrer">{title}</a>'
  return f'''<article class="paper" id="{p['id']}">
- <button class="figure-button" type="button" data-figure="assets/{p.get('image_full',p['image'])}" data-caption="{e(p['title'])}" aria-label="Enlarge figure: {e(p['short'])}"><img {preview_attrs("papers", p["id"], PAPER_SIZES)} alt="{e(p['short'])} overview" loading="lazy" decoding="async"></button>
+ <button class="figure-button" type="button" data-figure="assets/{p.get('image_full',p['image'])}" data-caption="{e(p['title'])}" aria-label="Enlarge figure: {e(p['short'])}"><span class="figure-curl" aria-hidden="true"></span><img {preview_attrs("papers", p["id"], PAPER_SIZES)} alt="{e(p['short'])} overview" loading="lazy" decoding="async"></button>
  <div class="paper-body"><h3>{title}</h3><p class="authors">{p['authors']}</p><p class="venue">{tr(p['venue'],p['venue_zh'])}{('<span class="award"> · '+tr('Best Paper Award','最佳论文奖')+'</span>') if p['id']=='road' else ''}</p>
  <div class="paper-links">{links}<details class="citation"><summary>BibTeX</summary><div class="citation-content"><button type="button" class="copy-bib">{tr('Copy citation','复制引用')}</button><pre>{e(p['bib'])}</pre><span class="copy-status" role="status"></span></div></details></div></div></article>'''
 nav=''.join(f'<a href="#{id}">'+tr(en,zh)+'</a>' for id,en,zh in [('about','About','关于'),('news','News','动态'),('publications','Publications','论文'),('education','Education','教育'),('honors','Honors','荣誉')])

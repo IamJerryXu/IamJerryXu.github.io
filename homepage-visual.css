@@ -127,24 +127,6 @@
     margin-bottom: 10px;
   }
   .page__content .paper h3 a:hover { color: var(--home-link); }
-  /* Blog figure treatment: a white image surface and small, quiet corners.
-     The requested outline belongs only to the thumbnail, never the paper row. */
-  .figure-button {
-    border: 1px solid var(--home-outline);
-    border-radius: 4px;
-    padding: 4px;
-    background: #fff;
-    transition: border-color 180ms ease, transform 180ms cubic-bezier(.2,.7,.3,1);
-  }
-  .figure-button img, html[data-theme="dark"] .figure-button img,
-  .figure-button:is(:hover,:focus-visible) img,
-  html[data-theme="dark"] .figure-button:is(:hover,:focus-visible) img {
-    border-radius: 2px;
-    box-shadow: none;
-  }
-  .figure-button:is(:hover,:focus-visible) { border-color: var(--home-link); }
-
-
   .paper-links {
     display: flex;
     flex-wrap: wrap;
