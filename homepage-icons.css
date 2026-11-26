@@ -1,0 +1,11 @@
+/* Keep the Blog drawings on the same text baseline as the other contact icons. */
+.sidebar .author__urls [data-blog-social] > .j-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  min-width: 0;
+  margin-right: 7px;
+  vertical-align: -.15em;
+  color: var(--home-link, currentColor);
+  transform-origin: 50% 65%;
+}

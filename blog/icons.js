@@ -1,6 +1,12 @@
 'use strict';
 (() => {
-  const themeOnly = document.currentScript?.dataset.iconsScope === 'theme';
+  const scope = document.currentScript?.dataset.iconsScope;
+  const blogTools = scope !== 'theme' && scope !== 'homepage';
+  const socialGestures = {
+    github: { angle: -9, lift: -1.3 },
+    linkedin: { angle: 4, lift: -1.6 },
+    scholar: { angle: -7, lift: -2 }
+  };
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   const root = document.documentElement;
   const active = new Set();
@@ -66,8 +72,11 @@
     button.insertAdjacentHTML('afterbegin', svgShell(type === 'theme' ? themeShape() : type === 'search' ? searchShape() : shapes[type]));
     const svg = button.querySelector('.j-icon');
     const find = name => svg.querySelector(`.${name}`);
-    const model = {button, type, booped: false, timer: 0};
+    const gesture = socialGestures[type];
+    const model = {button, type, booped: false, pressed: false, timer: 0};
+
     const animator = spring(v => {
+      if (gesture) svg.style.transform = `translateY(${v.lift}px) rotate(${v.angle}deg) scale(${v.scale})`;
       if (type === 'search') {
         svg.style.transform = `scale(${v.scale}) rotate(${v.rotate}deg)`;
         find('search-shine-sweep').setAttribute('transform', `rotate(-20 11 11) translate(${v.shine} 0)`);
@@ -97,6 +106,14 @@
     });
     model.update = (initial = false) => {
       const boop = model.booped && !reduce.matches;
+      if (gesture) {
+        const pressed = model.pressed && !reduce.matches;
+        animator.set({
+          angle: [boop && !pressed ? gesture.angle : 0,300,12],
+          lift: [boop && !pressed ? gesture.lift : 0,300,16],
+          scale: [pressed ? .86 : boop ? 1.06 : 1,380,18]
+        },initial);
+      }
       if (type === 'search') animator.set({scale:[boop?1.1:1,300,10],rotate:[boop?8:0,300,10],shine:[boop?-4.8:6,300,12]},initial);
       if (type === 'rss') animator.set({dot:[boop?2:1,300,22],inner:[boop?11:9,300,18,66.4],outer:[boop?18:16,250,12,132.8]},initial);
       if (type === 'sound') {
@@ -124,12 +141,26 @@
         animator.set({rotate:[dark?(boop?28:40):90,transitioning?160:300,transitioning?30:10],radius:[dark?9.5:boop?4:6,boop&&!transitioning?300:160,boop&&!transitioning?20:30],cut:[dark?4:-4,160,30],envelope:[dark?10.5:7,160,30],dots:[dark?0:1,210,20],orbit:[boop?9:10,300,10]},initial);
       }
     };
-    const end = () => { clearTimeout(model.timer); model.booped=false; model.update(); };
+    const end = () => { clearTimeout(model.timer); model.booped=false; model.pressed=false; model.update(); };
     const start = () => {
       if (reduce.matches) return;
       clearTimeout(model.timer); model.booped=true; model.update();
       model.timer=setTimeout(end,150);
     };
+    if (gesture) {
+      const press = () => {
+        if (reduce.matches) return;
+        clearTimeout(model.timer);
+        model.booped = false;
+        model.pressed = true;
+        model.update();
+      };
+      button.addEventListener('pointerdown', event => { if (event.button === 0) press(); });
+      button.addEventListener('pointerup', end);
+      button.addEventListener('pointercancel', end);
+      button.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.repeat) press(); });
+      button.addEventListener('keyup', event => { if (event.key === 'Enter') end(); });
+    }
     button.addEventListener('pointerenter', event => { if(event.pointerType!=='touch') start(); });
     button.addEventListener('pointerleave',end);
     button.addEventListener('focus', () => { if(button.matches(':focus-visible')) start(); });
@@ -144,7 +175,7 @@
     models.push(model);
   }
   // The small external-link mark has its own 150ms boop, independent of toolbar icons.
-  document.querySelectorAll(themeOnly ? ':not(*)' : '.nav-panel a[href]').forEach(link => {
+  document.querySelectorAll(!blogTools ? ':not(*)' : '.nav-panel a[href]').forEach(link => {
     if(!link.textContent.includes('↗') && link.target !== '_blank')return;
     const walker=document.createTreeWalker(link,NodeFilter.SHOW_TEXT);
     let textNode;while((textNode=walker.nextNode()))if(textNode.nodeValue.includes('↗'))textNode.nodeValue=textNode.nodeValue.replace(/\s*↗/g,'');
@@ -160,11 +191,17 @@
     link.addEventListener('pointerleave',end);link.addEventListener('focus',()=>{if(link.matches(':focus-visible'))start();});link.addEventListener('blur',end);
     model.update(true);models.push(model);
   });
-  const header = {search:themeOnly ? null : document.querySelector('#search-toggle'),sound:themeOnly ? null : document.querySelector('#sound-toggle'),theme:document.querySelector('#theme-toggle')};
+  const header = {search:!blogTools ? null : document.querySelector('#search-toggle'),sound:!blogTools ? null : document.querySelector('#sound-toggle'),theme:document.querySelector('#theme-toggle')};
   Object.entries(header).forEach(([type,button])=>mount(button,type));
   const labels = {'RSS':'rss','Google Scholar':'scholar','GitHub':'github','LinkedIn':'linkedin'};
-  if (!themeOnly) Object.entries(labels).forEach(([label,type])=>document.querySelectorAll(`a[aria-label="${label}"]`).forEach(button=>mount(button,type)));
-  document.querySelectorAll(themeOnly ? ':not(*)' : '[data-toolbar-action]').forEach(button=>{
+  if (blogTools) Object.entries(labels).forEach(([label,type])=>document.querySelectorAll(`a[aria-label="${label}"]`).forEach(button=>mount(button,type)));
+  if (scope === 'homepage') {
+    document.querySelectorAll('a[data-blog-social]').forEach(link => {
+      const type = link.dataset.blogSocial;
+      if (Object.hasOwn(socialGestures,type)) mount(link,type);
+    });
+  }
+  document.querySelectorAll(!blogTools ? ':not(*)' : '[data-toolbar-action]').forEach(button=>{
     const type=button.dataset.toolbarAction;
     if(!header[type])return;
     mount(button,type);
@@ -175,7 +212,7 @@
     const searchLabel=zh?'搜索':'Search';
     header.search?.setAttribute('aria-label',searchLabel);
     if(header.search)header.search.title=zh?'搜索 (⌘ K)':'Search (⌘ K)';
-    document.querySelectorAll(themeOnly ? ':not(*)' : '[data-toolbar-action]').forEach(button=>{
+    document.querySelectorAll(!blogTools ? ':not(*)' : '[data-toolbar-action]').forEach(button=>{
       const source=header[button.dataset.toolbarAction]; if(!source)return;
       ['aria-label','aria-pressed','aria-expanded','title'].forEach(name=>{
         const value=source.getAttribute(name);
@@ -189,6 +226,6 @@
   if(header.search)new MutationObserver(()=>{
     document.querySelectorAll('[data-toolbar-action="search"]').forEach(button=>button.setAttribute('aria-expanded',header.search.getAttribute('aria-expanded')||'false'));
   }).observe(header.search,{attributes:true,attributeFilter:['aria-expanded']});
-  reduce.addEventListener('change',()=>{models.forEach(model=>{clearTimeout(model.timer);model.booped=false;model.wiggle?.cancel();model.update(true);});});
+  reduce.addEventListener('change',()=>{models.forEach(model=>{clearTimeout(model.timer);model.booped=false;model.pressed=false;model.wiggle?.cancel();model.update(true);});});
   sync();
 })();

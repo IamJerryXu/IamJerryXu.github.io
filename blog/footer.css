@@ -1,3 +1,14 @@
+/* Common footer foundation, used on the academic and Blog pages. */
+footer.site-footer{position:relative;display:block;max-width:none;padding:0;border:0;color:var(--fg)}
+.site-footer a{margin-left:0}
+.footer-peek{position:absolute;transform:translateY(var(--peek-offset,-226px)) rotate(180deg);will-change:transform;pointer-events:none}
+.footer-peek img{width:100%;height:100%;object-fit:contain;display:block}
+.footer-credit{display:flex;flex-wrap:wrap;color:var(--muted)}
+.footer-credit a{color:inherit}
+.footer-social-links{display:flex;align-items:center}
+.site-footer .identity{display:inline-flex;align-items:center;gap:3px;white-space:nowrap;line-height:36px;color:var(--fg);text-decoration:none}
+.site-footer .icon-button{display:inline-flex;align-items:center;justify-content:center;width:28px;height:32px;padding:3px;background:none;border:0;color:var(--fg)}
+.site-footer .icon-button svg{width:23px;height:23px}
 /* Full-size cloud contours are centered and clipped, as in the reference. */
 footer.site-footer{margin:48px 0 0;min-height:0;isolation:isolate;background:linear-gradient(var(--sky),var(--sky-bottom));overflow:clip}
 .footer-cloud-window{position:absolute;inset:0 0 auto;display:flex;justify-content:center;overflow:clip;height:250px;pointer-events:none;z-index:2}

@@ -46,18 +46,6 @@ footer.site-footer{position:relative;isolation:isolate;overflow:clip;display:blo
 .footer-credit{max-width:1100px;margin:auto;padding:0 32px 40px;display:flex;flex-wrap:wrap;gap:8px 24px;font-size:14px;line-height:24px;color:var(--muted);position:relative;z-index:3}.footer-credit a{color:inherit;text-decoration:underline;text-underline-offset:4px}.footer-credit a:hover{color:var(--blue)}.article-body h2{font-size:32px;line-height:48px;font-weight:700;margin-top:48px;margin-bottom:32px}.article-toc{top:160px;font-size:16px}.article-toc h2{font-size:16px}.article-note{font-size:16px;line-height:24px}.blog-header{padding-top:40px;padding-bottom:8px}
 @media(max-width:800px){.blog-header{padding:16px}.article-body h2{font-size:26px;line-height:38px}.footer-credit{padding:0 24px 32px}}
 @media(max-width:563px){.footer-credit{padding:0 16px 28px;font-size:12px;gap:4px 12px}}
-/* The final u/e in Yongxue become a small handwritten vertical ligature. */
-.name-monogram{position:relative;display:inline-block;width:17px;height:28px;flex:none;overflow:visible;margin:0 2px 0 -2px;-webkit-text-stroke:0}
-.name-monogram svg{position:absolute;display:block;overflow:visible;fill:none;stroke:var(--muted);stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;transition:stroke 200ms;transform-origin:center}
-.name-letter-u{left:0;top:-1px;width:16px;height:14px}
-.name-letter-e{left:2px;bottom:-1px;width:16px;height:14px}
-.identity:is(:hover,:focus-visible) .name-letter-u{animation:name-u-greeting 500ms ease-out}
-.identity:is(:hover,:focus-visible) .name-letter-e{animation:name-e-greeting 500ms 55ms ease-out}
-@keyframes name-u-greeting{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(-1.3px) rotate(-5deg)}70%{transform:translateY(.3px) rotate(2deg)}}
-@keyframes name-e-greeting{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(1.3px) rotate(5deg)}70%{transform:translateY(-.3px) rotate(-2deg)}}
-@media(max-width:460px){.name-monogram{width:16px;height:26px}.name-monogram svg{width:15px;height:13px}}
-@media(max-width:350px){.name-monogram{width:15px;height:24px}.name-monogram svg{width:14px;height:12px}}
-@media(prefers-reduced-motion:reduce){.name-monogram svg{transition:none;animation:none!important}}
 
 /* The freely licensed Regular face is used throughout; light optical emphasis
    avoids the browser's much heavier synthetic bold at the reference sizes. */
@@ -72,11 +60,6 @@ footer.site-footer{position:relative;isolation:isolate;overflow:clip;display:blo
 @media(max-width:640px){.console-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:10px}.console-segment{grid-column:1/3;grid-row:auto;align-items:center}.console-bottom{flex-wrap:wrap}.console-bottom p{flex-basis:100%}.console-heading h2{font-size:17px}.console-actions{margin-left:auto}}
 @media(prefers-reduced-motion:reduce){.read-link:hover .read-arrow-extra,.read-link:focus-visible .read-arrow-extra{transition-delay:0ms}.console-action button{transition:none}}
 #rainbow-controls .console-toggle label{display:flex}#rainbow-controls .console-toggle span{display:block}
-/* Theme lighting is rendered into two original assets, not a brightness filter.
-   Only the expression regions are overlaid, so the body never shifts. */
-.scene-portrait::after,.footer-peek::after{display:none}.scene-portrait .character-layer,.footer-peek .character-layer{position:absolute;inset:0;display:block;transition:opacity 400ms ease;pointer-events:none}.character-layer--day{z-index:2;opacity:1}.character-layer--night{z-index:1;opacity:1}html[data-theme=dark] .character-layer--day{opacity:0}.scene-portrait .character-layer img,.footer-peek .character-layer img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:none!important;transition:none}.scene-portrait .character-expression,.footer-peek .character-expression{opacity:0;z-index:1;mask-image:radial-gradient(ellipse 6.55% 3.48% at 37.28% 28.47%,#000 70%,transparent 100%),radial-gradient(ellipse 6.55% 3.48% at 60.20% 28.06%,#000 70%,transparent 100%),radial-gradient(ellipse 7.06% 3.20% at 49.37% 32.64%,#000 70%,transparent 100%)}.scene-portrait.is-happy .character-expression,.footer-peek.is-happy .character-expression{opacity:1}
-@media(prefers-reduced-motion:reduce){.scene-portrait .character-layer,.footer-peek .character-layer{transition:none}}
-
 .read-link:hover .read-arrow-first{transition-duration:0ms}.read-arrow-extra--1{transition-delay:0ms}.read-arrow-extra--2{transition-delay:125ms}.read-arrow-extra--3{transition-delay:250ms}
 
 /* Separate real articles while retaining the open reading-list layout. */

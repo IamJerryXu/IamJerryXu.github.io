@@ -1,0 +1,97 @@
+/* The Blog's handwritten u/e, shared by both versions of the signature. */
+.name-monogram {
+  position: relative;
+  display: inline-block;
+  width: 17px;
+  height: 28px;
+  flex: none;
+  overflow: visible;
+  margin: 0 2px 0 -2px;
+  -webkit-text-stroke: 0;
+}
+.name-monogram-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.name-monogram svg {
+  position: absolute;
+  display: block;
+  width: 16px;
+  height: 14px;
+  overflow: visible;
+  fill: none;
+  stroke: var(--muted, var(--home-muted, currentColor));
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform-origin: center;
+}
+.name-letter-u { left: 0; top: -1px }
+.name-letter-e { left: 2px; bottom: -1px }
+
+.author__name .identity--profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+  color: inherit;
+  text-decoration: none;
+}
+.identity:focus-visible {
+  outline: 2px solid var(--blue, var(--home-link, currentColor));
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.identity:active .name-monogram svg {
+  stroke: var(--blue, var(--home-link, currentColor));
+}
+
+@media (max-width: 460px) {
+  .name-monogram { width: 16px; height: 26px }
+  .name-monogram svg { width: 15px; height: 13px }
+}
+@media (max-width: 350px) {
+  .name-monogram { width: 15px; height: 24px }
+  .name-monogram svg { width: 14px; height: 12px }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .name-monogram svg {
+    transition: stroke 200ms, translate 150ms cubic-bezier(.17,.67,.2,1);
+  }
+  .identity:is(:hover, :focus-visible) .name-letter-u {
+    animation: name-u-greeting 500ms ease-out;
+  }
+  .identity:is(:hover, :focus-visible) .name-letter-e {
+    animation: name-e-greeting 500ms 55ms ease-out;
+  }
+  .identity:active .name-letter-u { translate: 0 1.5px }
+  .identity:active .name-letter-e { translate: 0 -1.5px }
+  @keyframes name-u-greeting {
+    0%, 100% { transform: none }
+    40% { transform: translateY(-1.3px) rotate(-5deg) }
+    70% { transform: translateY(.3px) rotate(2deg) }
+  }
+  @keyframes name-e-greeting {
+    0%, 100% { transform: none }
+    40% { transform: translateY(1.3px) rotate(5deg) }
+    70% { transform: translateY(-.3px) rotate(-2deg) }
+  }
+}
+@media screen and (min-width: 801px) and (prefers-reduced-motion: no-preference) {
+  :is(.blog-home .site-header, html[data-home-entry="ready"] .author__name) .identity > span:first-child {
+    animation: name-first-arrive 300ms 750ms cubic-bezier(.27,.22,.44,1.03) both;
+  }
+  :is(.blog-home .site-header, html[data-home-entry="ready"] .author__name) .identity > span:last-child {
+    animation: name-last-arrive 300ms 825ms cubic-bezier(.27,.22,.44,1.03) both;
+  }
+  :is(.blog-home .site-header, html[data-home-entry="ready"] .author__name) .name-monogram {
+    animation: name-letters-arrive 400ms 1050ms cubic-bezier(.27,.22,.44,1.03) backwards;
+  }
+  @keyframes name-first-arrive { from { opacity: 0; transform: translateX(6px) } to { opacity: 1; transform: none } }
+  @keyframes name-last-arrive { from { opacity: 0; transform: translateX(-6px) } to { opacity: 1; transform: none } }
+  @keyframes name-letters-arrive { from { opacity: 0; transform: scale(.8) } to { opacity: 1; transform: none } }
+}
