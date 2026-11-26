@@ -26,7 +26,7 @@ html[data-theme="dark"] .academic-home {
   inset: 0 0 auto;
   height: var(--home-sky-height,0px);
   z-index: -1;
-  background: linear-gradient(var(--sky), var(--sky-bottom));
+  background: linear-gradient(180deg, var(--sky) 0%, var(--sky) 20%, color-mix(in srgb, var(--sky) 68%, var(--bg)) 100%);
   pointer-events: none;
 }
 .home-horizon {
@@ -47,7 +47,7 @@ html[data-theme="dark"] .academic-home {
   transform: none;
 }
 .academic-home .masthead, html[data-theme="dark"] .academic-home .masthead {
-  background: var(--sky);
+  background: transparent;
   border-bottom-color: transparent;
   box-shadow: none;
   transition: background-color 350ms cubic-bezier(.41,.1,.13,1);
@@ -73,7 +73,8 @@ html[data-theme="dark"] .academic-home .masthead .greedy-nav a,
 }
 .academic-home .page__content #about::before,
 .academic-home .page__content #about::after { display: none; }
-.academic-home .page__content #about p { color: var(--fg); }
+.academic-home .page__content #about p { color: var(--fg); margin: 0 0 12px; }
+.academic-home .page__content #about p:last-child { margin-bottom: 0; }
 .home-horizon path, .site-footer path { transition: fill 350ms cubic-bezier(.41,.1,.13,1); }
 .academic-home .footer-inner .identity { font-weight: bold; }
 .academic-home .site-footer .footer-subscribe {
