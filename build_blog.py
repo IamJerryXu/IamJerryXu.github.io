@@ -19,7 +19,7 @@ def render_blog(root, tr, theme_init, theme_button):
         raise ValueError('Article slugs must be unique')
     def asset(path):
         return '/' + path + '?v=' + hashlib.sha256((root/path).read_bytes()).hexdigest()[:12]
-    portrait=asset('assets/blog-character-seated-v1.webp')
+    portrait=asset('assets/blog-character-white-glasses-v2.webp')
     gear='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m9 3-.6 2.4-2 .9L4 5.6 2 9l1.8 1.7v2.6L2 15l2 3.4 2.4-.7 2 .9L9 21h4l.6-2.4 2-.9 2.4.7 2-3.4-1.8-1.7v-2.6L20 9l-2-3.4-2.4.7-2-.9L13 3Z"/><circle cx="11" cy="12" r="3"/></svg>'
     def icon(name):
         paths={

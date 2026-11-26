@@ -81,17 +81,30 @@
     70% { transform: translateY(-.3px) rotate(-2deg) }
   }
 }
-@media screen and (min-width: 801px) and (prefers-reduced-motion: no-preference) {
-  :is(.blog-home .site-header, html[data-home-entry="ready"] .author__name) .identity > span:first-child {
+/* The profile signature also appears on phones. Its entry is independent of
+   the Blog header, whose original desktop-only choreography stays unchanged. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  html[data-home-entry="ready"] .author__name .identity--profile > span:first-child {
     animation: name-first-arrive 300ms 750ms cubic-bezier(.27,.22,.44,1.03) both;
   }
-  :is(.blog-home .site-header, html[data-home-entry="ready"] .author__name) .identity > span:last-child {
+  html[data-home-entry="ready"] .author__name .identity--profile > span:last-child {
     animation: name-last-arrive 300ms 825ms cubic-bezier(.27,.22,.44,1.03) both;
   }
-  :is(.blog-home .site-header, html[data-home-entry="ready"] .author__name) .name-monogram {
+  html[data-home-entry="ready"] .author__name .identity--profile .name-monogram {
     animation: name-letters-arrive 400ms 1050ms cubic-bezier(.27,.22,.44,1.03) backwards;
   }
   @keyframes name-first-arrive { from { opacity: 0; transform: translateX(6px) } to { opacity: 1; transform: none } }
   @keyframes name-last-arrive { from { opacity: 0; transform: translateX(-6px) } to { opacity: 1; transform: none } }
   @keyframes name-letters-arrive { from { opacity: 0; transform: scale(.8) } to { opacity: 1; transform: none } }
+}
+@media screen and (min-width: 801px) and (prefers-reduced-motion: no-preference) {
+  .blog-home .site-header .identity > span:first-child {
+    animation: name-first-arrive 300ms 750ms cubic-bezier(.27,.22,.44,1.03) both;
+  }
+  .blog-home .site-header .identity > span:last-child {
+    animation: name-last-arrive 300ms 825ms cubic-bezier(.27,.22,.44,1.03) both;
+  }
+  .blog-home .site-header .name-monogram {
+    animation: name-letters-arrive 400ms 1050ms cubic-bezier(.27,.22,.44,1.03) backwards;
+  }
 }

@@ -12,8 +12,8 @@ def asset_url(root, path):
 def character_images(root):
     layers = []
     for mode, base, happy in [
-        ('day', 'assets/blog-character-seated-v1.webp', 'assets/blog-character-seated-happy-v1.webp'),
-        ('night', 'assets/blog-character-seated-night-v1.webp', 'assets/blog-character-seated-night-happy-v1.webp'),
+        ('day', 'assets/blog-character-white-glasses-v2.webp', 'assets/blog-character-white-glasses-happy-v2.webp'),
+        ('night', 'assets/blog-character-white-glasses-night-v2.webp', 'assets/blog-character-white-glasses-night-happy-v2.webp'),
     ]:
         layers.append(f'<span class="character-layer character-layer--{mode}"><img class="character-base" src="{asset_url(root, base)}" alt="" width="397" height="720" decoding="async" draggable="false"><img class="character-expression" src="{asset_url(root, happy)}" alt="" width="397" height="720" decoding="async" draggable="false"></span>')
     return ''.join(layers)
