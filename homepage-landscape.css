@@ -1,8 +1,8 @@
 /* The actual Blog cloud silhouettes surround the existing academic layout. */
 .academic-home {
   --sky: #a0d4ee;
-  --hero-sky: #c9e7f5;
-  --hero-sky-bottom: #b9dff1;
+  --hero-sky: var(--sky);
+  --hero-sky-bottom: var(--sky-bottom);
   --hero-cloud-far: #d7edf8;
   --hero-cloud: #ebf5fb;
   --sky-bottom: #7dc4e8;
