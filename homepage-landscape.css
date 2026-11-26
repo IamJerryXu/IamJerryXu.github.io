@@ -66,11 +66,6 @@ html[data-theme] body.academic-home { background: var(--bg); }
   box-shadow: none;
   transition: background-color 350ms cubic-bezier(.41,.1,.13,1);
 }
-.academic-home .masthead.is-scrolled,
-html[data-theme="dark"] .academic-home .masthead.is-scrolled {
-  background: var(--bg);
-  border-bottom-color: var(--home-outline);
-}
 .academic-home .masthead .greedy-nav a,
 html[data-theme="dark"] .academic-home .masthead .greedy-nav a,
 .academic-home #theme-toggle, .academic-home #language {
