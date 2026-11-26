@@ -20,10 +20,20 @@
     const aboutBottom = about.getBoundingClientRect().bottom + scrollY;
     const mainTop = main.getBoundingClientRect().top + scrollY;
     const companion = document.querySelector('.home-companion');
-    const cloudSpace = companion ? companion.offsetHeight + 20 : 100;
+    // Keep the accepted cloud spacing; enlarging the character must not push News down.
+    const cloudSpace = companion ? (innerWidth <= 800 ? 126 : 151) : 100;
     const skyBottom = Math.ceil(Math.max(aboutBottom + cloudSpace, mainTop + avatar.offsetHeight + 58));
     root.style.setProperty('--home-sky-height', `${skyBottom}px`);
     root.style.setProperty('--home-about-gap', `${skyBottom - aboutBottom + 22}px`);
+    const newsHeading = document.querySelector('#news > h2');
+    if (companion && newsHeading) {
+      // offsetTop excludes entry transforms; the feet stay on the actual border.
+      let headingTop = 0;
+      for (let node = newsHeading; node; node = node.offsetParent) headingTop += node.offsetTop;
+      const characterHeight = parseFloat(getComputedStyle(companion).height);
+      root.style.setProperty('--home-companion-top', `${headingTop + newsHeading.offsetHeight - 1 - characterHeight}px`);
+      root.style.setProperty('--home-companion-right', `${Math.max(20, document.documentElement.clientWidth - newsHeading.getBoundingClientRect().right + 4)}px`);
+    }
     root.dataset.landscapeReady = '';
   };
   window.layoutHomeLandscape();

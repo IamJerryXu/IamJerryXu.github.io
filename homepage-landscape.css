@@ -164,13 +164,13 @@ html[data-theme] .academic-home :is(#figure-dialog, #wechat-dialog) {
 }
 html[data-theme] .academic-home #figure-original { color: var(--blue); }
 
-/* A small seated companion at the cloud edge, outside the reading column. */
+/* The character rests on the News rule, independently of the cloud artwork. */
 .home-companion {
   position: absolute;
-  top: calc(var(--home-sky-height) - 131px);
-  right: max(28px, calc((100% - 1280px) / 2 + 20px));
-  width: 72px;
-  height: 131px;
+  top: var(--home-companion-top, calc(var(--home-sky-height) - 131px));
+  right: var(--home-companion-right, max(28px, calc((100% - 1280px) / 2 + 20px)));
+  width: 100px;
+  height: calc(100px * 720 / 397);
   z-index: 2;
 }
 .home-character {
@@ -185,6 +185,7 @@ html[data-theme] .academic-home #figure-original { color: var(--blue); }
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  transform-origin: 50% 100%;
 }
 .home-character:focus-visible { outline: 2px dashed var(--blue); outline-offset: 6px; }
 .home-character-greeting {
@@ -206,7 +207,7 @@ html[data-theme] .academic-home #figure-original { color: var(--blue); }
 }
 .home-companion:has(.is-happy) .home-character-greeting { opacity: 1; transform: none; }
 @media (max-width:800px) {
-  .home-companion { width: 58px; height: 106px; top: calc(var(--home-sky-height) - 106px); right: 28px; }
+  .home-companion { width: 78px; height: calc(78px * 720 / 397); }
 }
 @media (prefers-reduced-motion:reduce) {
   .home-character-greeting { transition: none; transform: none; }
