@@ -1,0 +1,458 @@
+{
+  "date": "2026-11-26",
+  "announcement_date": "2026-11-25",
+  "scope_note": "北京时间 2026-11-26 归档；以 2026-11-25 六分类 arXiv 公告为主，排除版本更新和跨期已发 canonical ID。官方 Atom 顺序读取六类首批各 150 条，并对 cs.CV/cs.LG 各补一页；共 1200 分类行、986 去重记录，按精确 UTC 16 小时窗口 43 条。公告含新交叉列入，不将公告日期当首次提交日期；另纳入 16 小时窗口内仅见于 API、可核实正文的两篇。以关键词和任务语义筛选，23 篇正文选读，最终纳入 12 篇。",
+  "papers": [
+    {
+      "arxiv_id": "2611.32473v1",
+      "title": "OmniPersist: Persistent Dynamic World Modeling via Coupled Panoramic Evolution",
+      "authors": [
+        "Zhilu Zhang",
+        "Xiaoyu Liu",
+        "Wenxi Liu",
+        "Shengfeng He"
+      ],
+      "published": "2026-11-24",
+      "tags": [
+        "video-world-model",
+        "camera-return",
+        "4d-object-centric"
+      ],
+      "score": 10,
+      "score_reason": "5+3+2：直接测出画后运动、重入身份和轨迹，两种相机条件均有对照。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "相机转开后，真正该延续的是物体的运动和身份，而不是最后一次看到它时那张图。靠相似帧检索能找回背景，却没有给屏外物体留一条持续演化的时间轴。"
+      ],
+      "summary": [
+        "OmniPersist 让同一个视频 DiT 同时去噪两条流：给用户看的高帧率透视视频，以及低帧率的全景视频。推理只需要透视前缀、相机参数和文本，初始全景不是输入。"
+      ],
+      "insight": [
+        "几何锚定保留原有空间 RoPE，用已知投影把同步时刻的全景与透视 token 对齐，让同一条视线在两条流之间交换证据。全景每隔若干透视帧才有一个状态，时间补偿从前后两个全景锚给中间透视帧补特征，同时用附近透视帧反向修正全景锚。两条流在同一去噪过程中耦合，不是先画完全景再把它裁成透视，也不是把返回时的真实画面当条件。",
+        "论文用成对的全景与透视训练素材，基于 Wan2.2-TI2V-5B 适配 CameraCtrl 和 UCPE，并分别评估单图生成与有视频前缀的续写。续写时 CameraCtrl 的重入身份指标由 0.2494 到 0.3771，轨迹误差由 0.5161 到 0.4289；UCPE 方向一致。消融里只加全景改善有限，空间锚定能改善相机和背景指标，却不总能改善重入身份；加时间补偿后才更稳定。这个对照比单纯比较返回帧清晰度更能说明哪部分有效。"
+      ],
+      "connection": [
+        "它给出一种不显式维护对象槽位的设计：与其在返回时选择旧的像素，不如让一个覆盖屏外的生成状态一直向前走。后续可单列「镜头没拍到的方向」和「被前景挡住」两类：全景提供的是更宽视场，未必提供遮挡内部的信息。"
+      ],
+      "limitations": [
+        "依赖成对全景训练数据和联合去噪，在单个片段中还会用相邻全景时间锚；不能把它当无未来锚的实时递推。指标反映所测数据分布中的动态持续性，不等价于能执行任意隐藏事件或维护可编辑的物体状态。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.32116v1",
+      "title": "The Old Scene Lives in the Cache: Diagnosing and Shedding Stale History in Streaming Video Generation",
+      "authors": [
+        "Hao Zhou",
+        "Ziyang Xu",
+        "Chenhan Jin",
+        "Hao Qin",
+        "Shengze Xu",
+        "Tieyong Zeng"
+      ],
+      "published": "2026-11-24",
+      "tags": [
+        "video-generation",
+        "video-world-model",
+        "camera-return"
+      ],
+      "score": 9,
+      "score_reason": "5+3+1：固定噪声的历史替换直接诊断旧内容残留；任务是切景而非相机回访。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "流式生成切场景时，旧缓存既帮助保住主角，也可能把应该消失的旧物件带过来。关键不是记忆长短，而是同一批历史 token 同时承载了应保留和应失效的信息。"
+      ],
+      "summary": [
+        "论文先对 LongLive 的历史窗口与固定注意力锚做干预，再用免训练的 Molt Forcing 选择性保留主角区域，并从冷启动的新场景补入历史。"
+      ],
+      "insight": [
+        "作者固定切换前的视频、目标提示和主分支噪声，分别替换滑窗和锚点。以 6.7 秒后三个旧物都消失计，无替换为 0/32，只替换锚为 3/32，只换窗口为 20/32，两者都换为 31/32；但全换会使主角长相漂移。单改文字，或只是清理并从旧帧重新计算 K/V，并不能复制这个效果。也就是说，重算缓存不等于替换缓存里编码的证据。",
+        "方法先在空缓存下生成一个短的新场景块，给切换块提供去掉旧物的目标锚；切换块还读原历史主体轮廓内的滑窗 token。后续以更收紧的原始主体锚保持身份，局部窗口则随新生成内容滚动。论文对同一历史键的空间 RoPE 做位移，生成背景随之移动，为历史内容以何种空间位置起作用提供了额外证据；主体位移的统计区间包含零，不能把它说成证明了严格解耦。"
+      ],
+      "connection": [
+        "最可移植的是实验逻辑：先比较重算、替换、分区替换，用同一噪声分别量主体身份和应失效区域，别只测整帧相似度。在「同一个物体发生状态变化」里，要进一步分开保住外观和保住旧姿态，不能直接照搬主体遮罩。"
+      ],
+      "limitations": [
+        "依赖特定流式骨干、旧帧主体遮罩和额外冷启动；背景会从轮廓泄漏，且评审的是指定旧物是否残留。结果不证明同一空间回访或隐藏动力学。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.32445v1",
+      "title": "A Mesh to Remember: Persistent Appearance for Interactive Video Worlds",
+      "authors": [
+        "Joonghyuk Shin",
+        "Alex Trevithick",
+        "KatarÃ­na TÃ³thovÃ¡",
+        "Liyuan Zhu",
+        "Shengyu Huang",
+        "Jaesik Park",
+        "Shalini De Mello",
+        "Laura Leal-TaixÃ©",
+        "Riccardo de Lutio",
+        "Haithem Turki"
+      ],
+      "published": "2026-11-24",
+      "tags": [
+        "video-world-model",
+        "camera-return",
+        "4d-object-centric"
+      ],
+      "score": 9,
+      "score_reason": "5+3+1：显式表面寻址直接检验移动物体，但物理状态来自外部可执行世界。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "历史帧的位置是过去的相机位置，不是物体今天的位置。只按过去视锥找帧，物体动过之后很难找到属于它的外观证据。"
+      ],
+      "summary": [
+        "M2R 把渲染器生成的 K/V 存在网格表面单元中，使用物体自身坐标；下一次光栅化命中那块表面，就取回该表面曾生成的外观。"
+      ],
+      "insight": [
+        "每帧的代理网格给出深度、法向、对象和像素到表面的映射。因果渲染器用代理条件生成 RGB 块，生成后把特征写到对应表面；既保留首次看到的内容也保留最近一次，取回时通过同一块表面的当前投影进入近帧上下文。由于物体坐标和相机坐标分开，同一物体挪位置或换摄像机后不必从旧屏幕坐标猜对应关系。论文对 K/V 做 PCA 后用低精度系数存储，不为每一帧保留全量历史。",
+        "训练先把模型改为逐块具因果性的渲染器，随后用可读取和写入表面记忆的 rollout 蒸馏。训练里加入一路往返的片段，并用自蒸馏项帮助同一场景重现。动态场景表 2 将物体永久性、返回一致性和被移动物体分开计分；物体永久性超过最强对比两倍，但视觉质量不是最优。表 4 同寻址下 RGB 缓存的重访分低于 K/V，说明结果不只来自换了几何地址。"
+      ],
+      "connection": [
+        "这是把「哪个表面」与「现在在哪里」两件事真正拆开的一条路。如果没有可靠状态引擎，合理的中间对照是先给真实对应和真实轨迹，量渲染记忆本身的上限，再分别换成估计状态。"
+      ],
+      "limitations": [
+        "网格和状态更新由外部引擎提供，不是模型根据有限视频自主推断或预测的。粗几何可以，但几何对应必须足够可靠；没有证明网格错误或表面本身变色时能正确纠错。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.31705v1",
+      "title": "FoveaWAM: Role-Aware 4D World-Action Modeling for Dynamic Manipulation",
+      "authors": [
+        "Jiaqi Yin",
+        "Baoyue Zhang",
+        "Jiyuan Zhang",
+        "Wenxuan Liu",
+        "Zhaofei Yu",
+        "Yue Deng",
+        "Tiejun Huang"
+      ],
+      "published": "2026-11-23",
+      "tags": [
+        "vla-world-model",
+        "4d-object-centric"
+      ],
+      "score": 9,
+      "score_reason": "5+3+1：原生 4D 预测和真实时延对照，覆盖抓取接触而非通用世界。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "移动物体的抓取窗口会随推理时延移动。全景生成太慢；只跟目标又可能忽略碰撞或邻物推动。"
+      ],
+      "summary": [
+        "FoveaWAM 对目标维护精细的位姿历史和未来轨迹，用稀疏 3D 流表示周围运动，静态内容交给当前观测，随后让动作流读取这些表示。"
+      ],
+      "insight": [
+        "目标在度量空间用 SE(3) 表示平移与转动，邻域只需保留影响接触和避障的动态信息，而不去预测每个像素。世界流先算一次，动作流在多步流匹配去噪中复用世界流的 K/V，避免持续重算预测。消融最大损失来自删掉目标位姿历史，说明精简设计并不是只取当前目标框。",
+        "OnTimeBench 在策略推理期间继续推进物理模拟，还分别测试原生延迟、注入延迟和暂停物理。作者报告 5090 单卡 15.1 毫秒、原生时延成功率 82.1%，高于最强对比 20.8 个百分点；暂停式 DOMINO 的单臂任务也领先，说明并非完全由刷新频率解释。六项真机测试平均 48.3%，仍有较大成功率缺口。"
+      ],
+      "connection": [
+        "可优先验证「只有接触对象需要高精度三维」：在同一控制器比较目标历史、目标加邻域流、全场景密集预测，并同时给出允许场景继续动和暂停后的结果。"
+      ],
+      "limitations": [
+        "任务主要是动态操作，不是长期遮挡后的重识别。几何输入、目标角色指认、不同机器人调参及真实时延条件都会影响结论；推理快也不等于训练成本低。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.32654v1",
+      "title": "DexWAC: A Unified World-Actor-Critic Model for Dexterous Robot Manipulation",
+      "authors": [
+        "Hongjia Liu",
+        "Dacheng Zhou",
+        "Minghao Fu",
+        "Chuanjun Guo",
+        "Tianze Wang",
+        "Qingtao Liu",
+        "He Wang",
+        "Li Yi"
+      ],
+      "published": "2026-11-24",
+      "tags": [
+        "vla-world-model"
+      ],
+      "score": 9,
+      "score_reason": "5+3+1：外部动作条件、端点想象和策略提升均有实测。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "联合预测动作和帧，不一定意味着模型真的可以接收一个候选动作、预测其后果并改进策略。"
+      ],
+      "summary": [
+        "DexWAC 让 actor、动作条件世界模型和带 bootstrap 的 critic 联合预训练，接着用真实成功和失败 rollout 适配，再以想象交互更新策略或重排候选。"
+      ],
+      "insight": [
+        "每个动作块作为可替换输入，世界模型预测块末相机 latent、机器人本体状态、奖励和是否继续，下一步直接拿这个端点作上下文，不必生成中间帧。价值头用后继端点的停止梯度估计做 bootstrap。第二阶段适配世界和价值模块时 actor 不动，第三阶段冻结适配后的动力学，用想象块更新 actor/critic，文中也讨论只重排候选的设置。",
+        "联合预训练报告 DexJoCo 65.5% 对 π0.5 的 57.9%，RoboTwin 2.0 平均 88.1%；世界预测另在留出的轨迹比较端点质量与延迟，真机则测试两项高接触任务。这里策略、世界预测和策略改进分别评估，比仅凭动作成功率推断学到了动力学更扎实。"
+      ],
+      "connection": [
+        "如果研究问题是换动作后物体会发生什么，可用端点 latent 作为最低成本对照，外加目标对象状态误差，区分「下一步可用」与「中间接触轨迹正确」。"
+      ],
+      "limitations": [
+        "端点会隐去瞬时碰撞、接触顺序等中间事件。想象策略仍受训练与适配 rollout 支撑范围限制，也不能从两项真机任务推出通用机器人增益。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.34288v1",
+      "title": "Rehearse in 3D, Render in 2D: Physically Consistent and Editable Robot World Models",
+      "authors": [
+        "Guangyu Liu",
+        "Hanzhang Wang",
+        "Huijia Zhang",
+        "Hanbei Zhan",
+        "Linjie Hu",
+        "Bin Xiao",
+        "Xuan Zhou",
+        "Dong Zhang",
+        "Hanwei Liu"
+      ],
+      "published": "2026-11-25",
+      "tags": [
+        "vla-world-model",
+        "4d-object-centric",
+        "video-world-model"
+      ],
+      "score": 9,
+      "score_reason": "5+3+1：同视频生成器的三维约束对照，把接触与视觉质量拆开。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "三维点流能预测物体往哪儿动，但点独立运动仍可能让物体拉长、夹爪滑脱或静态背景漂移。显式三维不能自动保证物理正确，价值在于能对状态加约束。"
+      ],
+      "summary": [
+        "RehearsalWorld 先用初始 RGB-D 和指定机器人动作预测 3D 点轨迹，再按对象和接触状态修正轨迹，最后投影到目标摄像机，用视频生成器渲染。"
+      ],
+      "insight": [
+        "冻结 PointWorld 提出未来点流，响应点按初始距离和位移相似性分组，静态点固定。抓取记忆保存接触点、它们在夹爪坐标中的相对位置，以及局部边长。修正器按刚体、可变形和关节体切换几何约束；例如抓住后以夹爪当前变换更新接触点目标，而不是每帧重新猜抓住了哪里。修正后的世界轨迹沿指定摄像机投影，视频分支在 Wan2.1 的适配模型上以 LoRA 和流匹配训练。",
+        "DROID 上三个物体类的夹爪相对偏移对比 PointWorld 减少约 79%–84%。同视频生成器下，只换成修正轨迹，二维轨迹误差从 9.58 到 8.12 像素。前一项检验三维接触，后一项才检验改进是否传给画面，不能互相替代。"
+      ],
+      "connection": [
+        "适合做「先确定约束后的对象状态，再渲染」的对照：同一动作保留、去掉或故意打乱抓取记忆，看错误到底出现于状态预测还是渲染。"
+      ],
+      "limitations": [
+        "依赖初始深度、动作输入与点流，物体点组固定，主要测抓取。材料编辑展示主要为定性结果，不是任意接触或新物体进场均可编辑的证据。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.34302v1",
+      "title": "Co-World Model for Human-Video-to-Robot Transfer via Co-Constructed Shared Latent Dynamics",
+      "authors": [
+        "Xuetao Li",
+        "Xuan Jiang",
+        "Chen Liu",
+        "Zhongrui Rao",
+        "Yu Ling",
+        "Hui Wang",
+        "Sheng Liu",
+        "Miao Li"
+      ],
+      "published": "2026-11-25",
+      "tags": [
+        "vla-world-model",
+        "4d-object-centric"
+      ],
+      "score": 9,
+      "score_reason": "5+3+1：双侧动作效果约束与同初始状态干预结合，不能由成功率独自替代。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "人手和机器人动作在关节空间很不同，但把物体推到同一位置可能是同一种任务动作。只对齐外观或终点，容易学会任务标签却忽略动作是否改变了对象。"
+      ],
+      "summary": [
+        "CoWM 用配对但非同步的人类与机器人视频学习共享对象关系和动作 latent，将跨本体动作是否等价定义为它们对对象产生的效果。"
+      ],
+      "insight": [
+        "冻结跟踪器和 DINOv2 特征提供对象与执行器关系，编码为共享状态和各自的私有上下文。共享转移既要拟合观测动作，还要让匹配效果的人手与机器人动作在互换后有相似后果，并让附近但不同效果的动作产生可分辨变化。这两项分别针对跨域不可替代与动作被预测器忽略。推理从当前机器人观测估计演示相位，以动作支持分布约束候选，滚动规划只执行第一步，再观测更新。",
+        "除 30 项 LIBERO 任务和两种真机之外，论文从完全相同的仿真状态分别执行目标动作、解码动作及独立标注的同效和异效对照，计对象关系变化。这个对照能检验 latent 替换是否对应真实执行的效果，不只是不同 latent 在特征距离上能分开。"
+      ],
+      "connection": [
+        "与其要求人手动作复刻机器人轨迹，可以先比较对象相对位移、开合或支撑关系能否被同一状态读出，再看跨本体动作是否可替换。"
+      ],
+      "limitations": [
+        "依赖角色标注与冻结跟踪，重遮挡会破坏状态读出；配对训练来源也限制外推。真机迁移不意味着任意在野视频或任务均能控制。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.31944v1",
+      "title": "DraftKV: Protecting Persistent Worlds through Hierarchical Streaming Retrieval",
+      "authors": [
+        "Xiaoling Zhou",
+        "Haopeng Li",
+        "Yufa Zhou",
+        "Rui Ding",
+        "Yu Li",
+        "Jun Lin",
+        "Enze Xie",
+        "Chunhua Shen",
+        "Xuan Shen"
+      ],
+      "published": "2026-11-24",
+      "tags": [
+        "video-world-model",
+        "camera-return"
+      ],
+      "score": 8,
+      "score_reason": "5+2+1：有几何与检索消融，核心解决如何找回而非如何更新状态。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "相机返回时，保存全部历史不切实际；但仅凭 pooled 特征相似度，也容易把外观相似、空间不重合的帧取回来。"
+      ],
+      "summary": [
+        "DraftKV 先以几何判断哪些历史块值得比较，再用低分辨率查询筛选，选中的 K/V 从 CPU 分块送入 GPU 做流式注意力。"
+      ],
+      "insight": [
+        "粗粒度分数能精确复现全分辨率块相关性中的均值项，不保证最大值分支；论文因此把几何放在前面，而不是期望降采样后仅靠注意力相似度恢复正确位置。传输策略和检索策略是两部分：前者对相同预取 K/V 重叠传输与计算，后者改变哪些历史被读入。",
+        "ORBIA 报告长程回访结果与组件消融；附录在匹配 token 预算的 SolarWM 回放中比较几何先行和只靠粗检索。几何筛选减少抽样零重叠块，但也会剔除几何候选域外的一些高分块。相关性是代理，不是物理对应真值，这个权衡值得保留。"
+      ],
+      "connection": [
+        "它适合作为「检索定位正确但状态可能过期」的基线。若要研究状态冲突，可固定几何命中，只交换同一表面最近和更早的版本来测因果影响。"
+      ],
+      "limitations": [
+        "依赖重叠估计，几何误差可能误删有用帧。长程取回与流式加速都不支持物体屏外演化的结论，也不能把实际测到的 rank overlap 当作回访成功率。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.31765v1",
+      "title": "Dreamcatcher: Remembering What Surprises a World Model in Video Streams",
+      "authors": [
+        "Jinxi He",
+        "Ce Zhang",
+        "Wenhe Liu",
+        "Jianshu Zhang",
+        "Katia P. Sycara",
+        "Yaqi Xie"
+      ],
+      "published": "2026-11-24",
+      "tags": [
+        "video-mllm",
+        "video-world-model"
+      ],
+      "score": 8,
+      "score_reason": "4+3+1：冻模型预测误差参与写入，固定预算对照明确。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "流式视频问答不知道稍后会问什么，因此写入时不能只按当前查询相似度。画面差异大也未必意味着发生了值得记住的事。"
+      ],
+      "summary": [
+        "Dreamcatcher 用冻结的世界模型预测即将到来的视觉特征，以归一化预测残差辅助选段和选 token；真正保留的是读者 Video-LLM 自己的视觉 token。"
+      ],
+      "insight": [
+        "数据到来前从局部历史预测特征，到来后才能与观测比较。时间残差辅助分段，空间残差为局部高惊讶区域分配存储，覆盖配额仍保留不显眼的上下文。片段预算随年龄衰减。查询时先筛相似片段，再由 Evidence Gate 判断该片段有没有补足当前视野之外的证据。",
+        "OVO-Bench 的同读者消融在默认保留率比较帧差与预测惊讶，整体 77.1 对 78.9。论文报告另一对照是相对 1 fps 的离线输入压缩超过八成生成输入 token；这不表示世界模型编码和证据筛选总延时一并减少。"
+      ],
+      "connection": [
+        "写入「观测与预期冲突」而不是「每次转头都写」值得测试，但残差本身不区分真状态变化、镜头自运动和预测器不熟悉的场景，应该分组验证不同误触发率。"
+      ],
+      "limitations": [
+        "面向真实流的读记忆与问答，未解决不可见期间如何主动更新隐状态；被彻底没看到的事件没有残差可写。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.31740v1",
+      "title": "LeanWAM: Learning Latent World Action Models from Frozen Video Models",
+      "authors": [
+        "Shaolong Li",
+        "Hongze Fu",
+        "Joyce Chai",
+        "Yinpei Dai"
+      ],
+      "published": "2026-11-24",
+      "tags": [
+        "vla-world-model",
+        "video-world-model"
+      ],
+      "score": 8,
+      "score_reason": "4+3+1：教师与部署阶段分清楚，小型策略蒸馏可比。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "未来监督不必把每个像素都交给策略；问题是少量 token 应该携带哪些可执行信息。"
+      ],
+      "summary": [
+        "LeanWAM 用冻结视频生成器训练能解释转移的紧凑代码，再将代码和生成器内部的读出蒸馏到 1.4B 策略。"
+      ],
+      "insight": [
+        "第一阶段训练才看到未来片段。Future Extractor 从 VAE 与 DINOv3 特征产出 32 个预测 token，作为 Cosmos-Predict2.5-2B 的条件；几何、语义和视频监督分别沿中层、较早层和输出产生梯度，更新提取器，不更新生成器。动作损失同时读代码和压缩过的生成器中间特征，把动作相关转移保留在瓶颈里。",
+        "第二阶段只从当前多视角和语言预测上述两种目标，和动作流匹配一并训练；动作 expert 通过当前 token 间接受未来查询影响。部署没有教师生成器和蒸馏头，不渲染未来视频。第 3 节冻结特征探针对比不同表示与 token 数，试图解释为什么足够小也能解码动作，而不只是给出最终成功率。"
+      ],
+      "connection": [
+        "适合用等大小策略对比几何教师、语义教师和视频教师，先问加入的状态能否解码同一任务需要的动作差异，再讨论是否需要视频预测。"
+      ],
+      "limitations": [
+        "未来真值只是训练目标。其预测不是可用来评估任意动作的独立可查询环境，也没有验证动作后果跨遮挡持久性。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.32053v1",
+      "title": "EffectWAM: Learning Action-Grounded Effects for Robot Manipulation",
+      "authors": [
+        "Yuan Zhang",
+        "Hao Cui",
+        "Jingfei Ni",
+        "Meiyi Wang",
+        "Xin Nie",
+        "Chi Liu",
+        "Wenjie Xu",
+        "Lin Gao",
+        "Hao Li",
+        "Xianhe Zhang",
+        "Jiajia Wu",
+        "Diyuan Liu",
+        "Jia Pan",
+        "Chao Ji"
+      ],
+      "published": "2026-11-24",
+      "tags": [
+        "vla-world-model",
+        "video-world-model"
+      ],
+      "score": 8,
+      "score_reason": "4+2+2：可选视频与快控制共用同一个动作样本；动作落地扰动仍有缺口。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "机器人能执行的动作和好看的未来视频不是一个指标；若视频模块预测的是另一套行为，图像看起来合理也无助于检查控制输出。"
+      ],
+      "summary": [
+        "EffectWAM 同时采样动作和视频变化 latent；需要可视化时，再用刚才采到的同一对结果生成未来 RGB。"
+      ],
+      "insight": [
+        "训练用 EMA 端点编码器独立编码当前和未来观测，未来减共享当前端点得到 Effect。可靠外参存在时用相对相机姿态辅助聚合，无外参时共享权重切到无姿态模式。Effect 还要解码末端平移、旋转、夹爪开合的实际变化。语义 expert 从当前图像与指令提供上下文，生成 expert 分开训练 Effect 与动作联合流匹配和条件视频生成。",
+        "部署先产出 Effect、动作块，需要展示的第二次前向从独立视频噪声起步，明确使用同一对 Effect 和动作，并非先预测一个视频再让逆动力学解码。论文以 LIBERO、RoboTwin 和 RoboCasa 等评估，报告扰动与未见组合下仍存在明显落差。"
+      ],
+      "connection": [
+        "它提供了检验「同一动作条件下视频后果一致」的接口，但实验上还可以固定 Effect 手动换动作或反过来做冲突试验，分清各分支究竟控制了什么。"
+      ],
+      "limitations": [
+        "联合采样动作不等价于任意输入动作都能可靠模拟。端点差值主要以机器人效应量监督，不能直接视作物体身份随时间的跟踪。"
+      ]
+    },
+    {
+      "arxiv_id": "2611.31397v1",
+      "title": "CoRe: Jointly Learning Contextual Representations for Understanding and Generation",
+      "authors": [
+        "Hangke Sui",
+        "Chang Li",
+        "Yuyan Li",
+        "Mohammad Haris Baig",
+        "Daniel Ulbricht"
+      ],
+      "published": "2026-11-23",
+      "tags": [
+        "unified-understanding-generation"
+      ],
+      "score": 8,
+      "score_reason": "4+3+1：数据架构匹配的对照清楚，但仍只在图文上验证。",
+      "reading_depth": "partial_text",
+      "motivation": [
+        "把对齐好的理解编码器冻结后接生成器，表示未必保留生成所需的细粒度结构。"
+      ],
+      "summary": [
+        "CoRe 从头训练两套上下文表征，一套图、一套文；每套既用于理解，也用来条件化另一模态，还作为本模态的连续生成空间。"
+      ],
+      "insight": [
+        "图文编码器同时受全局对比约束、可重建输出所需训练和生成信号约束；图文两个去噪器都在连续表示空间从噪声生成，最后还原像素或文本 token。同一数据和编码器架构比较纯对比、冻结对比后接生成、去掉对比的生成，以及联合训练。图转文对照中，联合塑造的 SPICE 是 13.53，冻结对比表征是 10.06；图像生成也超过冻结表征对照。理解方面全局表现接近同数据纯对比，对分割、深度或 VQA 的读出更强，说明全局对齐不会暴露表征里所有的局部区别。"
+      ],
+      "connection": [
+        "最干净的借鉴是共享表征不等于共用一个 decoder，评价应该同时看局部读出和受条件生成，而不是看其中一个总榜分。"
+      ],
+      "limitations": [
+        "在 CC12M 图文上验证，未测试长视频、动作或跨时间对象对齐；更不能直接推出理解任务会得到可靠动力学。"
+      ]
+    }
+  ]
+}
