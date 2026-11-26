@@ -19,7 +19,9 @@
     // Layout offsets exclude entry animations and sticky portrait movement.
     const aboutBottom = about.getBoundingClientRect().bottom + scrollY;
     const mainTop = main.getBoundingClientRect().top + scrollY;
-    const skyBottom = Math.ceil(Math.max(aboutBottom + 100, mainTop + avatar.offsetHeight + 58));
+    const companion = document.querySelector('.home-companion');
+    const cloudSpace = companion ? companion.offsetHeight + 20 : 100;
+    const skyBottom = Math.ceil(Math.max(aboutBottom + cloudSpace, mainTop + avatar.offsetHeight + 58));
     root.style.setProperty('--home-sky-height', `${skyBottom}px`);
     root.style.setProperty('--home-about-gap', `${skyBottom - aboutBottom + 22}px`);
     root.dataset.landscapeReady = '';

@@ -90,6 +90,7 @@ html[data-theme] .academic-home .page__content #about a { color: var(--sky-link)
   text-decoration: none;
   color: var(--fg);
 }
+.academic-home .home-character .character-layer,
 .academic-home .site-footer .character-layer {
   transition: opacity 850ms cubic-bezier(.41,.1,.13,1);
 }
@@ -104,7 +105,8 @@ html[data-theme] .academic-home .page__content #about a { color: var(--sky-link)
 }
 @media (prefers-reduced-motion:reduce) {
   .home-horizon path, .academic-home .masthead, .site-footer path,
-  .academic-home .site-footer .character-layer { transition: none; }
+  .academic-home .site-footer .character-layer,
+  .academic-home .home-character .character-layer { transition: none; }
 }
 @media print {
   .home-atmosphere, .site-footer { display: none; }
@@ -161,3 +163,52 @@ html[data-theme] .academic-home :is(#figure-dialog, #wechat-dialog) {
   border-color: var(--line);
 }
 html[data-theme] .academic-home #figure-original { color: var(--blue); }
+
+/* A small seated companion at the cloud edge, outside the reading column. */
+.home-companion {
+  position: absolute;
+  top: calc(var(--home-sky-height) - 131px);
+  right: max(28px, calc((100% - 1280px) / 2 + 20px));
+  width: 72px;
+  height: 131px;
+  z-index: 2;
+}
+.home-character {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 40%;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.home-character:focus-visible { outline: 2px dashed var(--blue); outline-offset: 6px; }
+.home-character-greeting {
+  position: absolute;
+  top: 12px;
+  right: calc(100% + 12px);
+  white-space: nowrap;
+  padding: 5px 10px;
+  border-radius: 12px 12px 2px 12px;
+  background: var(--bg);
+  color: var(--blue);
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgb(30 50 80 / .06);
+  opacity: 0;
+  transform: translateY(5px) scale(.9);
+  transform-origin: right bottom;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 300ms cubic-bezier(.34,1.56,.64,1);
+}
+.home-companion:has(.is-happy) .home-character-greeting { opacity: 1; transform: none; }
+@media (max-width:800px) {
+  .home-companion { width: 58px; height: 106px; top: calc(var(--home-sky-height) - 106px); right: 28px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .home-character-greeting { transition: none; transform: none; }
+}
+@media print { .home-companion { display: none; } }
