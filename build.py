@@ -57,8 +57,6 @@ icons={
 'cv':'<path d="M5 2h10l4 4v16H5zM15 2v5h4M8 12h8M8 16h8"/>',
 'linkedin':'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 10v7M7 7v.2M11 17v-7m0 3c0-4 6-4 6 0v4"/>'}
 def icon(name):
- if name=='pin':
-  return '<svg class="contact-icon" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><!-- Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com - Icons licensed CC BY 4.0: https://creativecommons.org/licenses/by/4.0/ --><path d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0z"/></svg>'
  return '<svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+icons[name]+'</svg>'
 SITE_URL = 'https://jerrysnow.me/'
 SITE_TITLE = 'Yongxue Xu - Homepage'
