@@ -10,8 +10,8 @@ def render_identity(href="/blog/", label="Yongxue Xu — Blog", *, homepage=Fals
             f'<svg class="profile-name-ear profile-name-ear--{side}" width="28" height="28" '
             'viewBox="0 0 28 28" fill="none" aria-hidden="true" focusable="false">'
             '<g class="profile-name-ear-lines">'
-            '<path d="M24 23C18 26 8 23 4.8 16.2C1.3 9.8 4.5 3.7 10.8 3.2C17.5 2.6 23 8.1 23.8 15.5"/>'
-            '<path d="M19 19C14 21 8.5 17.6 8.3 12.4C8.1 8.3 11.2 6.8 14.6 8.5C17 9.6 18.3 12.2 18.6 15.2"/>'
+            '<path d="M26 23C17.5 23 7.2 16.5 3 4C8.4 8 14.2 9.8 20 8.5C15.1 12 15.7 15.2 22.4 15.1C18.7 18.3 21 21.6 26 23"/>'
+            '<path d="M10.5 11.8C13.3 16 17 19 21.2 20.3"/>'
             '</g></svg>'
         ) if homepage else ''
 
