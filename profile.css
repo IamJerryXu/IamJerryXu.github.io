@@ -1,6 +1,9 @@
 /* A small interactive profile, with the original portrait and official artwork. */
 .portrait-scene{position:relative;width:fit-content;isolation:isolate;--badge-left:max(-60px,calc((925px - 100vw)/2 - 3px))}
 @media(min-width:1280px){.portrait-scene{--badge-left:max(-60px,calc((1280px - 100vw)/2 - 3px))}}
+.author__avatar .portrait-frame{transition:border-color 260ms,box-shadow 260ms;box-shadow:0 2px 8px #142a3c04}
+.portrait-toggle:hover .portrait-frame,.portrait-toggle:focus-visible .portrait-frame{border-color:#bacbd5;box-shadow:0 5px 22px #24465e0d}
+.portrait-toggle:active .portrait-frame{box-shadow:0 1px 5px #24465e12}
 .portrait-hint{display:flex;align-items:center;gap:6px;position:absolute;left:50%;bottom:8px;z-index:4;transform:translate(-50%,4px);padding:4px 9px;border-radius:20px;background:#fffffff0;border:1px solid #dbe3e8;box-shadow:0 2px 6px #142a3c08;color:#536775;font-family:inherit;font-size:11px;line-height:1.3;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity 180ms,transform 260ms}
 .portrait-toggle:hover~.portrait-hint,.portrait-toggle:focus-visible~.portrait-hint{opacity:1;transform:translate(-50%,0)}
 .portrait-scene.is-expanded .portrait-hint{visibility:hidden}
@@ -17,6 +20,7 @@
 .portrait-university:active img{scale:1.01}
 .portrait-scene:not(.is-expanded) .badge-float,.portrait-scene.is-paused .badge-float{animation-play-state:paused}
 @keyframes profile-badge-enter{from{opacity:0;transform:translateY(calc(-50% + 6px)) scale(.86)}to{opacity:1;transform:translateY(-50%) scale(1)}}
+html[data-theme=dark] .portrait-toggle:hover .portrait-frame,html[data-theme=dark] .portrait-toggle:focus-visible .portrait-frame{border-color:#637786;box-shadow:0 5px 22px #0003}
 html[data-theme=dark] .portrait-hint{background:#282d33f7;color:#dee8ef;border-color:#46515c;box-shadow:0 5px 22px #0003}
 /* A neutral backing protects official emblem colors on the dark canvas. */
 html[data-theme=dark] .portrait-university--sjtu .badge-float,html[data-theme=dark] .portrait-university--sysu .badge-float{background:#fff;border-radius:50%;box-shadow:0 0 0 2px #fff}
@@ -79,68 +83,10 @@ html[data-theme=dark] .portrait-university--westlake .badge-float::before,html[d
   .profile_box .author__urls-wrapper {margin-top:26px}
 }
 
-/* The portrait borrows the Blog sky, with a second printed edge behind the oval. */
-.portrait-scene {
-  --portrait-sky: #eaf5fd;
-  --portrait-edge: #c3deee;
-  --portrait-rim: #9bc7e3;
-}
-html[data-theme="dark"] .portrait-scene {
-  --portrait-sky: #20283d;
-  --portrait-edge: #313c5b;
-  --portrait-rim: #505e88;
-}
-.portrait-scene .portrait-frame,
-html[data-theme="dark"] .portrait-scene .portrait-frame {
-  background: var(--portrait-sky);
-  border-color: var(--portrait-edge);
-  box-shadow: 3px 4px 0 var(--portrait-edge);
-  transition: background-color 350ms cubic-bezier(.41,.1,.13,1),
-              border-color 350ms, box-shadow 350ms cubic-bezier(.17,.67,.2,1);
-}
-.portrait-scene .portrait-toggle:is(:hover, :focus-visible) .portrait-frame {
-  border-color: var(--portrait-rim);
-  box-shadow: 5px 6px 0 var(--portrait-edge);
-}
-.portrait-scene .portrait-toggle:active .portrait-frame {
-  box-shadow: 1px 2px 0 var(--portrait-edge);
-  transition-duration: 85ms;
-}
-.author__avatar .portrait-frame img {
-  transition: opacity 380ms cubic-bezier(.41,.1,.13,1);
-}
 /* Pinning opens the emblems. The sparkle tracks the pointer or keyboard focus. */
 .portrait-toggle.is-memoji:not(.is-previewing) .portrait-sparkle { opacity: 0 }
 .portrait-toggle.is-previewing .portrait-sparkle { opacity: 1 }
 
-.sidebar .author__name { color: var(--home-ink) }
-.sidebar .author__bio { color: var(--home-muted) }
-.sidebar .author__urls {
-  border-top: 1px solid var(--home-line);
-  padding-top: .65rem;
-}
-.sidebar .author__urls .profile-location,
-.sidebar .author__urls .profile-university {
-  color: var(--home-muted);
-}
-.sidebar .author__urls .profile-location .contact-icon,
-.sidebar .author__urls .profile-university .contact-icon {
-  width: .85em;
-  margin-right: .35em;
-}
-.sidebar .author__urls :is(a, button) {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  min-height: 24px;
-  text-underline-offset: .22em;
-  text-decoration-thickness: 1px;
-  transition: color 150ms;
-}
-.sidebar .author__urls :is(a, button):is(:hover, :focus-visible) {
-  color: var(--home-link);
-  text-decoration: underline;
-}
 .sidebar .author__urls .contact-icon {
   transform-origin: 50% 70%;
 }
@@ -162,8 +108,4 @@ html[data-theme="dark"] .portrait-scene .portrait-frame {
     32% { transform: translateY(-2px) rotate(-10deg) }
     62% { transform: rotate(4deg) }
   }
-}
-@media print {
-  .portrait-scene .portrait-frame,
-  html[data-theme="dark"] .portrait-scene .portrait-frame { background: white; box-shadow: none }
 }
