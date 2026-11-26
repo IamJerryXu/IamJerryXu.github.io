@@ -123,27 +123,27 @@
 
   .page__content .paper {
     align-items: start;
-    padding: 18px 20px;
-    margin-bottom: 16px;
-    border: 1px solid var(--home-outline);
-    border-color: color-mix(in srgb, var(--home-link) 22%, var(--home-surface));
-    border-radius: 14px;
-    background: var(--home-surface);
-    transition: border-color 180ms ease-out;
-  }
-  .page__content .paper:focus-within { border-color: color-mix(in srgb, var(--home-link) 38%, var(--home-surface)); }
-  @media (hover: hover) {
-    .page__content .paper:hover { border-color: color-mix(in srgb, var(--home-link) 38%, var(--home-surface)); }
+    padding-block: 8px 16px;
+    margin-bottom: 10px;
   }
   .page__content .paper h3 a:hover { color: var(--home-link); }
-  .figure-button, .figure-button img { border-radius: 8px; }
-  .figure-button img, html[data-theme="dark"] .figure-button img {
-    box-shadow: 0 0 0 1px var(--home-outline), 0 2px 6px hsl(var(--home-shadow) / .08);
+  /* Blog figure treatment: a white image surface and small, quiet corners.
+     The requested outline belongs only to the thumbnail, never the paper row. */
+  .figure-button {
+    border: 1px solid var(--home-outline);
+    border-radius: 4px;
+    padding: 4px;
+    background: #fff;
+    transition: border-color 180ms ease, transform 180ms cubic-bezier(.2,.7,.3,1);
   }
+  .figure-button img, html[data-theme="dark"] .figure-button img,
   .figure-button:is(:hover,:focus-visible) img,
   html[data-theme="dark"] .figure-button:is(:hover,:focus-visible) img {
-    box-shadow: 0 0 0 2px var(--home-blue), 0 5px 12px hsl(var(--home-shadow) / .14);
+    border-radius: 2px;
+    box-shadow: none;
   }
+  .figure-button:is(:hover,:focus-visible) { border-color: var(--home-link); }
+
 
   .paper-links {
     display: flex;
@@ -200,9 +200,9 @@
 @media screen and (max-width:540px) {
   .page__content #about { padding: 16px 17px 16px 15px; }
   .news-list li { grid-template-columns: 1fr; gap: 2px; }
-  .page__content .paper { padding: 14px; }
 }
 @media (prefers-reduced-motion:reduce) {
+  .figure-button { transition: none; }
   .paper-links > a:hover, .paper .citation summary:hover { transform: none; }
 }
 
