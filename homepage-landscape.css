@@ -7,7 +7,8 @@
   --bg: #fff;
   --fg: #101217;
   --muted: #5e637c;
-  --blue: #4242fa;
+  --blue: #465a96;
+  --sky-link: #354878;
   position: relative;
   isolation: isolate;
 }
@@ -19,7 +20,8 @@ html[data-theme="dark"] .academic-home {
   --bg: #0d0e17;
   --fg: #f5f5fc;
   --muted: #b8b8ce;
-  --blue: #a69bff;
+  --blue: #a6b4da;
+  --sky-link: var(--blue);
 }
 /* Match the Blog canvas so the cloud edge has no dark-theme seam. */
 html[data-theme] body.academic-home { background: var(--bg); }
@@ -76,7 +78,7 @@ html[data-theme="dark"] .academic-home .masthead .greedy-nav a,
 .academic-home .page__content #about::before,
 .academic-home .page__content #about::after { display: none; }
 .academic-home .page__content #about p { color: var(--fg); }
-html[data-theme] .academic-home .page__content #about a { color: var(--blue); }
+html[data-theme] .academic-home .page__content #about a { color: var(--sky-link); }
 .home-horizon path, .site-footer path { transition: fill 350ms cubic-bezier(.41,.1,.13,1); }
 .academic-home .footer-inner .identity { font-weight: bold; }
 .academic-home .site-footer .footer-subscribe {
@@ -118,13 +120,13 @@ html[data-theme] .academic-home .page__content #about a { color: var(--blue); }
   @keyframes home-cloud-drift { from { transform: translateX(-10px); } to { transform: translateX(10px); } }
 }
 
-/* The reading area uses the Blog's semantic colors, preserving academic type. */
+/* Keep the Blog's color roles, with softer blue accents for dense academic text. */
 .academic-home {
   --line: #e6e8ef;
-  --pill: #bde5f8;
+  --pill: #e6edf7;
   --home-blue: var(--blue);
   --home-link: var(--blue);
-  --home-heading: #2c0b8e;
+  --home-heading: #35436e;
   --home-muted: var(--muted);
   --home-outline: var(--line);
   --home-pill: var(--pill);
@@ -132,8 +134,8 @@ html[data-theme] .academic-home .page__content #about a { color: var(--blue); }
 }
 html[data-theme="dark"] .academic-home {
   --line: #2b2b40;
-  --pill: #272b49;
-  --home-heading: #e6b3ff;
+  --pill: #252d42;
+  --home-heading: #c7d0e8;
 }
 html[data-theme] body.academic-home,
 html[data-theme] .academic-home .paper,
