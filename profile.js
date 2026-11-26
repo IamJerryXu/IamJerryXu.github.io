@@ -3,13 +3,15 @@
   const scene = document.querySelector('.portrait-scene');
   if (!scene) return;
   const toggle = scene.querySelector('.portrait-toggle');
+  const memoji = toggle.querySelector('.portrait--memoji');
   const universities = scene.querySelector('.portrait-universities');
   const schools = [...universities.querySelectorAll('a')];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let pinned = false, preview = false, inView = true;
   const chinese = () => document.documentElement.lang.startsWith('zh');
   function render() {
-    toggle.classList.toggle('is-memoji', pinned || preview);
+    toggle.classList.toggle('is-memoji', (pinned || preview) && memoji.naturalWidth > 0);
+    toggle.classList.toggle('is-previewing', preview);
     toggle.setAttribute('aria-pressed', String(pinned));
     toggle.setAttribute('aria-label', chinese()
       ? (pinned ? '收起校徽并切回照片' : '显示卡通头像与校徽')
@@ -22,13 +24,14 @@
       school.setAttribute('aria-label', `${school.dataset[chinese() ? 'schoolZh' : 'schoolEn']}${chinese() ? '，打开学校官网（新窗口）' : ', open university website (new tab)'}`);
     });
   }
+  memoji.addEventListener('load', render);
   toggle.addEventListener('pointerenter', event => {
     if (event.pointerType === 'mouse' && matchMedia('(hover:hover)').matches) { preview = true; render(); }
   });
   toggle.addEventListener('pointerleave', () => { preview = false; render(); });
   toggle.addEventListener('focus', () => { if (toggle.matches(':focus-visible')) { preview = true; render(); } });
   toggle.addEventListener('blur', () => { preview = false; render(); });
-  toggle.addEventListener('click', () => { pinned = !pinned; preview = false; render(); });
+  toggle.addEventListener('click', () => { pinned = !pinned; render(); });
   scene.addEventListener('keydown', event => {
     if (event.key === 'Escape' && pinned) { event.preventDefault(); pinned = false; preview = false; render(); toggle.focus({preventScroll:true}); preview = false; render(); }
   });
