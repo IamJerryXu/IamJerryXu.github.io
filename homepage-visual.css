@@ -123,8 +123,17 @@
 
   .page__content .paper {
     align-items: start;
-    padding-block: 8px 16px;
-    margin-bottom: 10px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    border: 1px solid var(--home-outline);
+    border-color: color-mix(in srgb, var(--home-link) 22%, var(--home-surface));
+    border-radius: 14px;
+    background: var(--home-surface);
+    transition: border-color 180ms ease-out;
+  }
+  .page__content .paper:focus-within { border-color: color-mix(in srgb, var(--home-link) 38%, var(--home-surface)); }
+  @media (hover: hover) {
+    .page__content .paper:hover { border-color: color-mix(in srgb, var(--home-link) 38%, var(--home-surface)); }
   }
   .page__content .paper h3 a:hover { color: var(--home-link); }
   .figure-button, .figure-button img { border-radius: 8px; }
@@ -191,6 +200,7 @@
 @media screen and (max-width:540px) {
   .page__content #about { padding: 16px 17px 16px 15px; }
   .news-list li { grid-template-columns: 1fr; gap: 2px; }
+  .page__content .paper { padding: 14px; }
 }
 @media (prefers-reduced-motion:reduce) {
   .paper-links > a:hover, .paper .citation summary:hover { transform: none; }
