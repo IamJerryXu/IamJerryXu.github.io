@@ -20,7 +20,7 @@ html[data-theme=dark] .home-project-note{--promo-paper:rgba(29,33,48,.5);--promo
 .astra-word{display:block;transform-origin:center}
 .home-project-note .astra-sticker-image{display:block;width:100%;max-width:none;height:auto;aspect-ratio:2/1;border:0;border-radius:0}
 .sidebar .home-project-note p{margin:0;font-size:16px;line-height:25px;color:var(--promo-text);font-synthesis:none;text-wrap:pretty}
-.sidebar .home-project-note .astra-summary{text-align:center}
+.sidebar .home-project-note .astra-summary{text-align:center;position:relative;left:-8px}
 .astra-summary-lead,.astra-summary-detail{display:block}
 .astra-summary-lead{font-weight:400;-webkit-text-stroke:0}
 .astra-summary-detail{margin-top:6px;font-size:15px;line-height:24px;color:var(--promo-muted);font-weight:400}
