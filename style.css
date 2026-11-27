@@ -29,7 +29,7 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 .research-interests>span>span{white-space:nowrap}
 @media(max-width:540px){.profile_box .author__urls-wrapper{width:100%;justify-self:start;text-align:left}.sidebar .name-zh{display:block;margin:2px 0 0}}
 
-.sidebar .research-interests{text-align:justify;text-align-last:left;word-spacing:normal;letter-spacing:normal;text-wrap:pretty;hyphens:none}
+.sidebar .research-interests{text-align:left;text-align-last:auto;word-spacing:normal;letter-spacing:normal;text-wrap:pretty;hyphens:none}
 @media(min-width:925px){.sidebar .research-interests{width:calc(100% + 24px)}}
 
 .page__content #about p{text-align:left;text-align-last:auto;word-spacing:normal;letter-spacing:normal}
@@ -237,3 +237,11 @@ html[data-theme="dark"] #theme-toggle .theme-icon--sun{display:block}
 @media screen{html[data-theme="dark"] .greedy-nav .visible-links .blog-entry{--playground-accent:#b3a2fa}}
 @media(prefers-reduced-motion:reduce){.greedy-nav .visible-links .blog-entry,.playground-arrows path{transition:none!important;transition-delay:0ms!important}}
 @media(forced-colors:active){.greedy-nav .visible-links .blog-entry:is(:hover,:focus-visible){color:LinkText}}
+
+/* Let the contact grid set the shared text-column width. The paragraph
+   must not widen that column through its intrinsic text size. */
+@media(min-width:925px){
+  .sidebar .author__urls-wrapper{width:fit-content;max-width:100%}
+  .sidebar .author__urls{width:max-content;max-width:100%}
+  .sidebar .research-interests{box-sizing:border-box;width:0;min-width:100%;max-width:100%}
+}
