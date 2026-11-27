@@ -31,12 +31,11 @@ def character_images(root, interactive=False):
 </g></svg></svg></span>''')
     if interactive:
         layers.append('<span class="character-hello" aria-hidden="true"><svg class="character-hello-cloud" viewBox="0 0 180 84" aria-hidden="true" focusable="false"><path d="M25 65C10 68 3 59 7 48C-2 37 5 22 20 22C22 7 40 2 53 11C65 0 86 2 94 11C107 2 128 7 133 18C150 14 163 27 159 40C162 48 169 53 179 52C174 65 161 64 150 59C141 72 123 73 111 66C97 79 77 78 65 69C50 78 34 75 25 65Z"/></svg><span class="character-hello-words"><span class="character-hello-hi">Hi,</span> I’m Jerry</span></span>')
-        pet_images = ''.join(f'<img class="character-pet-art character-pet-{state}-{mode}" src="{asset_url(root, asset)}" width="470" height="640" alt="" draggable="false" decoding="async">' for state, mode, asset in [
-            ('rest', 'day', 'assets/mouse-companion-day.webp'),
-            ('rest', 'night', 'assets/mouse-companion-night.webp'),
-            ('bite', 'day', 'assets/mouse-bite-day.webp'),
-            ('bite', 'night', 'assets/mouse-bite-night.webp'),
-        ])
+        pet_images = ''
+        for state in ['rest', 'reach', 'lift', 'bite', 'chew']:
+            prefix = 'mouse-companion' if state == 'rest' else f'mouse-{state}'
+            images = ''.join(f'<img class="character-pet-art character-pet-art--{mode}" src="{asset_url(root, f"assets/{prefix}-{mode}.webp")}" width="470" height="640" alt="" draggable="false" decoding="async">' for mode in ['day', 'night'])
+            pet_images += f'<span class="character-pet-frame character-pet-frame--{state}">{images}</span>'
         layers.append(f'<span class="character-pet" aria-hidden="true">{pet_images}<span class="character-discovery"><svg viewBox="0 0 24 40" fill="none"><path d="M12 5L12 24" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="12" cy="35" r="4" fill="currentColor"/></svg></span></span>')
         layers.append('''<span class="character-cheese" aria-hidden="true"><svg viewBox="0 0 64 54" fill="none" aria-hidden="true" focusable="false"><g stroke-linecap="round" stroke-linejoin="round">
 <path class="cheese-side" d="M7 24L39 7Q41 6 43 8L58 22V43Q58 46 55 46H9Q6 46 6 43V27Q6 25 7 24Z"/>
