@@ -5,11 +5,16 @@
   document.querySelectorAll('.character-interactive').forEach(character => {
     const cheese = character.querySelector('.character-cheese');
     if (!cheese) return;
-    const rest = [1, 18, 12, -20, .5, 0];
+    const pet = character.querySelector('.character-pet');
+    const rest = [1, 6, 10, -20, .5, 0, 0, 0];
     const values = rest.map(x => ({x, target:x, v:0}));
     let frame = 0, previous = 0, timer = 0, pressed = false;
     function draw() {
       character.style.scale = values[0].x;
+      if (pet) {
+        pet.style.setProperty('--pet-y', `${values[6].x}px`);
+        pet.style.setProperty('--pet-rotate', `${values[7].x}deg`);
+      }
       ['x','y','rotate','scale','opacity'].forEach((key, index) => {
         const value = values[index + 1].x;
         const unit = index < 2 ? 'px' : index === 2 ? 'deg' : '';
@@ -65,11 +70,11 @@
       character.classList.add('is-happy');
       // Fast taps still show the small compression before the spring releases.
       if (!reduce.matches) values[0].x = Math.min(values[0].x, .975);
-      set([1, 0, -6, -8, 1, 1]);
+      set([1, 0, -6, -8, 1, 1, -7, -9]);
       draw();
       timer = setTimeout(() => {
         character.classList.remove('is-happy');
-        set([1, -8, -20, 4, .85, 0]);
+        set([1, -4, -14, 4, .85, 0, 0, 0]);
       }, 1200);
     }
     character.addEventListener('pointerdown', event => {if (event.button === 0) press();});

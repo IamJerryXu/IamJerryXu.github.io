@@ -170,8 +170,8 @@ html[data-theme] .academic-home #figure-original { color: var(--blue); }
   position: absolute;
   top: var(--home-companion-top, calc(var(--home-sky-height) - 131px));
   right: var(--home-companion-right, max(28px, calc((100% - 1280px) / 2 + 20px)));
-  width: 110px;
-  height: calc(110px * 720 / 397);
+  width: calc(var(--home-companion-height, 200px) * 397 / 720);
+  height: var(--home-companion-height, 200px);
   z-index: 2;
 }
 .home-character {
@@ -190,6 +190,6 @@ html[data-theme] .academic-home #figure-original { color: var(--blue); }
 }
 .home-character:focus-visible { outline: 2px dashed var(--blue); outline-offset: 6px; }
 @media (max-width:800px) {
-  .home-companion { width: 86px; height: calc(86px * 720 / 397); }
+  .home-companion { width: calc(var(--home-companion-height, 156px) * 397 / 720); height: var(--home-companion-height, 156px); }
 }
 @media print { .home-companion { display: none; } }

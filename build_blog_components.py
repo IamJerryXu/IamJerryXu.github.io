@@ -29,6 +29,23 @@ def character_images(root, interactive=False):
 <path class="stitch-nose" d="M29.5 38.5Q32 37 34.5 38.5Q34 42 32 42Q30 42 29.5 38.5Z"/>
 </g></svg></svg></span>''')
     if interactive:
+        layers.append('''<span class="character-pet" aria-hidden="true"><svg viewBox="0 0 90 108" fill="none" focusable="false" aria-hidden="true"><g stroke-linecap="round" stroke-linejoin="round">
+<path class="pet-tail" d="M61 91C88 96 91 69 77 73C68 76 86 84 74 90"/>
+<path class="pet-body" d="M27 75C26 59 60 58 63 77L65 97Q45 106 25 97Z"/>
+<ellipse class="pet-belly" cx="44" cy="86" rx="12" ry="16"/>
+<g class="pet-head">
+<circle class="pet-body" cx="20" cy="23" r="18"/><circle class="pet-inner" cx="20" cy="23" r="12"/>
+<circle class="pet-body" cx="67" cy="23" r="18"/><circle class="pet-inner" cx="67" cy="23" r="12"/>
+<path class="pet-body" d="M20 44C19 17 66 16 68 43C70 65 58 76 44 77C28 75 18 62 20 44Z"/>
+<path class="pet-belly" d="M26 56C28 49 36 50 43 55C50 49 59 50 61 56C65 68 53 73 44 73C34 73 23 66 26 56Z"/>
+<g class="pet-eyes"><ellipse cx="34" cy="46" rx="3.8" ry="5"/><ellipse cx="54" cy="46" rx="3.8" ry="5"/></g>
+<path class="pet-smile-eyes" d="M30 46Q34 41 38 46M50 46Q54 41 58 46"/>
+<path class="pet-nose" d="M39 56Q44 53 49 56Q48 62 44 62Q40 62 39 56Z"/>
+<path class="pet-mouth" d="M39 66Q44 70 49 66"/>
+</g>
+<path class="pet-arm" d="M28 79Q24 88 34 89M59 79Q64 87 54 89"/>
+<ellipse class="pet-feet" cx="30" cy="102" rx="11" ry="5"/><ellipse class="pet-feet" cx="58" cy="102" rx="11" ry="5"/>
+</g></svg></span>''')
         layers.append('''<span class="character-cheese" aria-hidden="true"><svg viewBox="0 0 64 54" fill="none" aria-hidden="true" focusable="false"><g stroke-linecap="round" stroke-linejoin="round">
 <path class="cheese-side" d="M7 24L39 7Q41 6 43 8L58 22V43Q58 46 55 46H9Q6 46 6 43V27Q6 25 7 24Z"/>
 <path class="cheese-top" d="M7 24L39 7Q41 6 43 8L58 22L24 31Z"/>

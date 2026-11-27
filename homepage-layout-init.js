@@ -30,7 +30,9 @@
       // offsetTop excludes entry transforms; the feet stay on the actual border.
       let headingTop = 0;
       for (let node = newsHeading; node; node = node.offsetParent) headingTop += node.offsetTop;
-      const characterHeight = parseFloat(getComputedStyle(companion).height);
+      const baseline = headingTop + newsHeading.offsetHeight - 1;
+      const characterHeight = Math.max(150, Math.min(260, baseline - aboutBottom - 6));
+      root.style.setProperty('--home-companion-height', `${characterHeight}px`);
       root.style.setProperty('--home-companion-top', `${headingTop + newsHeading.offsetHeight - 1 - characterHeight}px`);
       root.style.setProperty('--home-companion-right', `${Math.max(20, document.documentElement.clientWidth - newsHeading.getBoundingClientRect().right + 4)}px`);
     }
