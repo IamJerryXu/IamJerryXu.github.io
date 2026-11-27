@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Jerry Greeting";
+  src: url('/assets/fonts/nunito-700-latin.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 /* Shared garment detail and click surprise for the same character on all pages. */
 .character-stitch,
 .character-cheese {
@@ -100,11 +107,84 @@ html[data-theme=dark] .scene-portrait.is-biting .character-pet .character-pet-re
 html[data-theme=dark] .scene-portrait.is-biting .character-pet .character-pet-bite-day { opacity:0; }
 html[data-theme=dark] .scene-portrait.is-biting .character-pet .character-pet-bite-night { opacity:1; }
 .scene-portrait.is-biting .character-cheese { visibility:hidden; }
-.character-discovery { position:absolute; right:-8%; top:6%; width:20%; height:auto; color:#e8a735; opacity:0; transform:scale(.35) rotate(-14deg); transform-origin:50% 100%; pointer-events:none; }
+.character-discovery { position:absolute; left:-30%; right:auto; top:4%; width:clamp(15px, 1.25vw, 18px); height:auto; color:#e8a735; opacity:0; transform:scale(.35) rotate(-14deg); transform-origin:50% 100%; pointer-events:none; }
 .character-discovery svg { display:block; width:100%; height:auto; overflow:visible; filter:drop-shadow(0 1px 0 #fff8); }
-.is-discovering .character-discovery { opacity:1; transform:scale(1) rotate(8deg); }
+.is-discovering .character-discovery { opacity:1; transform:scale(1) rotate(-9deg); }
 html[data-theme=dark] .character-discovery { color:#f5c974; }
 @media (prefers-reduced-motion:no-preference) {
   .character-discovery { transition:transform 350ms cubic-bezier(.2,1.7,.4,1),opacity 120ms ease; }
 }
 @media print { .character-discovery { display:none; } }
+
+/* A small Blog-style greeting surface, anchored beside the character’s head. */
+.character-hello {
+  --hello-surface: #f4faff;
+  --hello-edge: #bfd7ec;
+  --hello-ink: #425b87;
+  position: absolute;
+  right: 96%;
+  top: 17%;
+  z-index: 5;
+  display: block;
+  width: max-content;
+  max-width: 170px;
+  padding: 10px 15px 11px;
+  border: 1px solid var(--hello-edge);
+  border-radius: 15px;
+  background: var(--hello-surface);
+  color: var(--hello-ink);
+  font-family: "Jerry Greeting", "Nunito", ui-rounded, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -.25px;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px #21394b0a, 0 5px 12px #21394b0c, 0 12px 24px #21394b0a;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(8px, 5px) scale(.78) rotate(3deg);
+  transform-origin: 100% 75%;
+}
+.character-hello > span { position: relative; z-index: 1; }
+.character-hello::after { content:""; position:absolute; right:-1px; bottom:13px; width:3px; height:8px; background:var(--hello-surface); }
+.character-hello-tail {
+  position: absolute;
+  right: -15px;
+  bottom: 7px;
+  display: block;
+  width: 22px;
+  height: 15px;
+  overflow: visible;
+  fill: var(--hello-surface);
+  stroke: var(--hello-edge);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.is-greeting .character-hello {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, 0) scale(1) rotate(-2deg);
+}
+html[data-theme=dark] .character-hello {
+  --hello-surface: #242b46;
+  --hello-edge: #485679;
+  --hello-ink: #e1eaff;
+  box-shadow: 0 1px 2px #05091233, 0 5px 12px #05091226, 0 12px 24px #05091220;
+}
+@media (prefers-reduced-motion:no-preference) {
+  .character-hello {
+    transition: opacity 150ms ease, transform 180ms ease, visibility 0s 180ms;
+  }
+  .is-greeting .character-hello {
+    transition: opacity 180ms ease, transform 450ms cubic-bezier(.2,1.65,.4,1), visibility 0s;
+  }
+}
+@media (max-width:540px) {
+  .character-hello { font-size: 16px; padding: 9px 12px 10px; right: 97%; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .character-hello, .is-greeting .character-hello { transform: none; }
+}
+@media print { .character-hello { display: none; } }
