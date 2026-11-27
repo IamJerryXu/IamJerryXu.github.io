@@ -27,6 +27,7 @@
 .masthead .greedy-nav .visible-links > li:first-child {
   margin-right: clamp(0px, 1.2vw, 18px);
 }
+.masthead__inner-wrap > #sound-toggle,
 .masthead__inner-wrap > #theme-toggle,
 .masthead__inner-wrap > #language {
   flex-shrink: 0;
@@ -35,6 +36,7 @@
   .masthead__inner-wrap {
     align-items: flex-start;
   }
+  .masthead__inner-wrap > #sound-toggle,
   .masthead__inner-wrap > #theme-toggle,
   .masthead__inner-wrap > #language {
     margin-top: 3px;
@@ -51,6 +53,7 @@
     display: block;
     position: relative;
   }
+  .masthead__inner-wrap > #sound-toggle,
   .masthead__inner-wrap > #theme-toggle,
   .masthead__inner-wrap > #language {
     position: absolute;
@@ -58,6 +61,7 @@
     top: 8px;
     margin-top: 0;
   }
+  .masthead__inner-wrap > #sound-toggle { right: 112px; }
   .masthead__inner-wrap > #theme-toggle { right: 72px; }
   .masthead__inner-wrap > #language { right: 20px; }
   .masthead .greedy-nav .visible-links > li:first-child {
@@ -65,7 +69,7 @@
   }
   .masthead .greedy-nav .visible-links > li:first-child > a {
     width: fit-content;
-    max-width: calc(100% - 92px);
+    max-width: calc(100% - 140px);
   }
   .masthead .greedy-nav .visible-links {
     column-gap: 14px;

@@ -191,7 +191,7 @@
     link.addEventListener('pointerleave',end);link.addEventListener('focus',()=>{if(link.matches(':focus-visible'))start();});link.addEventListener('blur',end);
     model.update(true);models.push(model);
   });
-  const header = {search:!blogTools ? null : document.querySelector('#search-toggle'),sound:!blogTools ? null : document.querySelector('#sound-toggle'),theme:document.querySelector('#theme-toggle')};
+  const header = {search:!blogTools ? null : document.querySelector('#search-toggle'),sound:scope === 'theme' ? null : document.querySelector('#sound-toggle'),theme:document.querySelector('#theme-toggle')};
   Object.entries(header).forEach(([type,button])=>mount(button,type));
   const labels = {'RSS':'rss','Google Scholar':'scholar','GitHub':'github','LinkedIn':'linkedin'};
   if (blogTools) Object.entries(labels).forEach(([label,type])=>document.querySelectorAll(`a[aria-label="${label}"]`).forEach(button=>mount(button,type)));

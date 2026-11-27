@@ -1,7 +1,8 @@
 'use strict';
 
 (() => {
-  const themeOnly = document.currentScript?.dataset.soundScope === 'theme';
+  const homepageSounds = ['homepage', 'theme'].includes(document.currentScript?.dataset.soundScope);
+  const audioBase = new URL('../assets/sounds/josh/', document.currentScript.src);
   const searchButton = document.querySelector('#search-toggle');
   const dialog = document.querySelector('#site-search');
   const input = document.querySelector('#site-search-input');
@@ -13,10 +14,9 @@
   const soundButton = document.querySelector('#sound-toggle');
   const chinese = () => document.documentElement.lang.startsWith('zh');
   const soundStorageKey = 'blog-sound-enabled';
-  const storedSoundEnabled = value => value === null ? themeOnly : value === 'true';
-  let soundEnabled = themeOnly;
+  const storedSoundEnabled = value => value === null ? true : value === 'true';
+  let soundEnabled = true;
   try { soundEnabled = storedSoundEnabled(localStorage.getItem(soundStorageKey)); } catch {}
-  let audioContext = null;
   let indexPromise = null;
   let searchIndex = [];
   let loaded = false;
@@ -32,109 +32,80 @@
     soundButton.setAttribute('aria-label', label);
     soundButton.title = label;
   }
-  // Original synthesized sounds: short material clicks and elastic pops, not tones.
-  // Reference interaction timing is documented in output/josh-reference/audio-reference.md.
-  const soundBuffers = new Map();
-  const activeSounds = new Map();
-  const soundTokens = new Map();
+  // Original reference recordings and volumes, verified against Josh's public
+  // IconSpeaker / IconColorMode / HitCounter / navigation source maps.
+  const voices = {
+    enable: ['enable-sound', .4], disable: ['disable-sound', .25],
+    light: ['switch-on', 1], dark: ['switch-off', 1],
+    down: ['pop-down', .25], press: ['pop-down', .25],
+    on: ['pop-up-on', .25], release: ['pop-up-on', .25], off: ['pop-up-off', .25],
+    open: ['menu-open-softer', .6], close: ['menu-close', .6],
+    rising: ['rising-pops', .25], hover: ['plunger-immediate', .15]
+  };
+  const recordings = new Map();
+  const activeSounds = new Map(), soundTokens = new Map();
   let soundRevision = 0;
   function stopSound(group) {
     if (group) soundTokens.set(group, (soundTokens.get(group) || 0) + 1);
     else for (const key of soundTokens.keys()) soundTokens.set(key, soundTokens.get(key) + 1);
-    for (const [source, label] of activeSounds) {
-      if (!group || group === label) {
-        try { source.stop(); } catch {}
-        activeSounds.delete(source);
+    for (const [id, voice] of activeSounds) {
+      if (!group || group === voice.group) {
+        voice.sound.stop(id);
+        activeSounds.delete(id);
       }
     }
   }
-  function makeSound(kind) {
-    if (soundBuffers.has(kind)) return soundBuffers.get(kind);
-    const rate = audioContext.sampleRate;
-    const duration = {enable: .29, disable: .36, light: .072, dark: .096,
-      down: .105, on: .105, off: .156, open: .24, close: .245,
-      press: .13, release: .15, rising: .385}[kind] || .105;
-    const buffer = audioContext.createBuffer(1, Math.ceil(rate * duration), rate);
-    const data = buffer.getChannelData(0);
-    let seed = 5381;
-    for (const character of kind) seed = (seed * 33) ^ character.charCodeAt(0);
-    const noise = () => { seed = (Math.imul(seed, 1664525) + 1013904223) | 0; return (seed >>> 0) / 2147483648 - 1; };
-    // Each voice combines a transient with a rapidly damped, pitch-bent resonance.
-    function pop(at, frequency, length, level, rising = false) {
-      let phase = 0, smooth = 0;
-      for (let i = 0; i < length * rate; i++) {
-        const index = Math.round(at * rate) + i;
-        if (index >= data.length) break;
-        const t = i / rate, progress = t / length;
-        const pitch = frequency * (rising ? .65 + .65 * progress : 1.5 - .95 * progress);
-        phase += 2 * Math.PI * pitch / rate;
-        smooth = smooth * .6 + noise() * .4;
-        const envelope = Math.min(1, t / .0015) * Math.exp(-progress * 6) * (1 - progress);
-        data[index] += level * envelope * (Math.sin(phase) * .72 + Math.sin(phase * 2.13) * .12 + smooth * .35);
-      }
+  function recording(kind) {
+    if (!window.Howl) return null;
+    const [file, volume] = voices[kind];
+    if (!recordings.has(file)) {
+      const sound = new window.Howl({
+        src: [new URL(file + '.mp3', audioBase).href],
+        volume,
+        preload: true,
+        onend: id => activeSounds.delete(id),
+        onstop: id => activeSounds.delete(id),
+        onplayerror: id => {
+          // Never retry on a later unlock: that would replay an old gesture.
+          sound.stop(id);
+          activeSounds.delete(id);
+        }
+      });
+      recordings.set(file, sound);
     }
-    function click(at, length, level, pitch) {
-      let low = 0, phase = 0;
-      for (let i = 0; i < length * rate; i++) {
-        const index = Math.round(at * rate) + i;
-        if (index >= data.length) break;
-        const t = i / rate, progress = t / length;
-        const raw = noise(); low = low * .8 + raw * .2;
-        phase += 2 * Math.PI * pitch / rate;
-        const envelope = Math.min(1, t / .0006) * Math.exp(-progress * 9) * (1 - progress);
-        data[index] += level * envelope * ((raw - low) * .7 + Math.sin(phase) * .25);
-      }
-    }
-    function air(reverse) {
-      let low = 0;
-      for (let i = 0; i < data.length; i++) {
-        const p = i / data.length;
-        low = .82 * low + .18 * noise();
-        const envelope = Math.pow(Math.sin(Math.PI * p), 2) * (reverse ? 1 - p : p);
-        data[i] += low * envelope * .085;
-      }
-    }
-    if (kind === 'rising') {
-      [410, 550, 730].forEach((frequency, i) => pop(i * .125, frequency, .11, .115));
-    } else if (kind === 'enable' || kind === 'disable') {
-      const frequencies = kind === 'enable' ? [400, 620, 860] : [700, 500, 320];
-      frequencies.forEach((frequency, i) => pop(i * .075, frequency, .12, .12, kind === 'enable'));
-    } else if (kind === 'light' || kind === 'dark') {
-      click(0, .042, .15, kind === 'light' ? 2100 : 1400);
-      click(kind === 'light' ? .014 : .024, .04, .075, kind === 'light' ? 2900 : 1800);
-      pop(.003, kind === 'light' ? 390 : 270, .06, .045);
-    } else if (kind === 'open' || kind === 'close') {
-      air(kind === 'close');
-      pop(kind === 'open' ? .055 : .012, kind === 'open' ? 400 : 280, .13, .07, kind === 'open');
-    } else if (kind === 'press' || kind === 'release') {
-      click(0, .04, .15, kind === 'press' ? 1600 : 2300);
-      pop(.003, kind === 'press' ? 190 : 260, .085, .065);
-      click(.014, .04, .035, 3200);
-    } else {
-      pop(0, kind === 'down' ? 245 : kind === 'off' ? 300 : 470, duration, .14, kind === 'on');
-      click(0, .018, .022, 1600);
-    }
-    soundBuffers.set(kind, buffer);
-    return buffer;
+    return recordings.get(file);
+  }
+  function preloadSounds() {
+    // As in use-sound, preload even while muted so enabling is immediately audible.
+    Object.keys(voices).forEach(recording);
   }
   async function playSound(kind, {force = false, group = kind} = {}) {
-    if ((!soundEnabled && !force) || document.hidden) return;
+    if (!voices[kind] || (!soundEnabled && !force) || document.hidden) return;
     stopSound(group);
     const token = soundTokens.get(group);
     const revision = soundRevision;
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContextClass) return;
+    const requestedAt = performance.now();
     try {
-      if (!audioContext) audioContext = new AudioContextClass();
-      if (audioContext.state === 'suspended') await audioContext.resume();
-      if (token !== soundTokens.get(group) || revision !== soundRevision || (!soundEnabled && !force) || document.hidden || audioContext.state !== 'running') return;
+      const sound = recording(kind);
+      // use-sound likewise ignores playback until its Howl has loaded.
+      // Do not queue unloaded hover/press sounds for a later interaction.
+      if (!sound || sound.state() !== 'loaded') return;
+      const context = window.Howler?.ctx;
+      if (window.Howler?.usingWebAudio && context?.state !== 'running') {
+        // Hover cannot unlock audio. A trusted activation may resume the shared
+        // Howler context; its token still has to belong to the current gesture.
+        if (!navigator.userActivation?.isActive || context?.state === 'closed') return;
+        await context.resume();
+      } else if (!window.Howler?.usingWebAudio && !navigator.userActivation?.hasBeenActive) {
+        return;
+      }
+      if (token !== soundTokens.get(group) || revision !== soundRevision ||
+          (!soundEnabled && !force) || document.hidden ||
+          performance.now() - requestedAt > 400 ||
+          (window.Howler?.usingWebAudio && context?.state !== 'running')) return;
       if (activeSounds.size > 10) stopSound();
-      const source = audioContext.createBufferSource();
-      source.buffer = makeSound(kind);
-      source.connect(audioContext.destination);
-      source.addEventListener('ended', () => { activeSounds.delete(source); source.disconnect(); }, {once: true});
-      activeSounds.set(source, group);
-      source.start();
+      const id = sound.play();
+      if (id !== null) activeSounds.set(id, {sound, group});
     } catch {
       // An unavailable audio device must never affect navigation or controls.
     }
@@ -142,7 +113,6 @@
   function suspendSounds() {
     soundRevision++;
     stopSound();
-    if (audioContext?.state === 'running') audioContext.suspend().catch(() => {});
   }
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) suspendSounds();
@@ -160,7 +130,24 @@
     stopSound();
     updateSoundLabel();
   });
-  if (themeOnly) {
+  soundButton?.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    soundRevision++;
+    stopSound();
+    try { localStorage.setItem(soundStorageKey, String(soundEnabled)); } catch {}
+    updateSoundLabel();
+    preloadSounds();
+    playSound(soundEnabled ? 'enable' : 'disable', {force: true, group: 'preference'});
+  });
+  updateSoundLabel();
+  preloadSounds();
+  if (homepageSounds) {
+    new MutationObserver(updateSoundLabel).observe(document.documentElement, {attributes: true, attributeFilter: ['lang']});
+    document.addEventListener('site:interaction-sound', event => {
+      const {kind, group = 'control'} = event.detail || {};
+      if (kind === 'stop') stopSound('home-' + group);
+      else if (voices[kind]) playSound(kind, {group: 'home-' + group});
+    });
     // Share the Blog's exact light/dark voices, without mounting its search,
     // menu, rainbow or article interactions on the academic homepage.
     document.addEventListener('click', event => {
@@ -181,15 +168,6 @@
     if (kind === 'stop') stopSound('research-scene');
     else if (kind === 'press' || kind === 'release') playSound(kind, {group: 'research-scene'});
   });
-  soundButton?.addEventListener('click', () => {
-    soundEnabled = !soundEnabled;
-    soundRevision++;
-    stopSound();
-    try { localStorage.setItem(soundStorageKey, String(soundEnabled)); } catch {}
-    updateSoundLabel();
-    playSound(soundEnabled ? 'enable' : 'disable', {force: true, group: 'preference'});
-  });
-  updateSoundLabel();
   // Capture the old state, before the control's own handler changes it.
   document.addEventListener('click', event => {
     if (!(event.target instanceof Element)) return;

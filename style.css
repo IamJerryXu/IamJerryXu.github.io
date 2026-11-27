@@ -150,13 +150,13 @@ html[data-theme="dark"] .internship-logo img{filter:url(#simpleai-dark-ink)}
 }
 @media(prefers-reduced-motion:reduce){.portrait-universities{transition:none}.portrait-university,.portrait-university img{animation:none!important;will-change:auto!important}}
 
-/* A compact theme control sits beside the language switch. */
+/* Compact sound and theme controls sit beside the language switch. */
 html{color-scheme:light}
-#theme-toggle,#language{display:inline-flex;align-items:center;justify-content:center;flex:0 0 32px;width:32px;height:32px;padding:4px;border:0;border-radius:4px;background:transparent;color:#7a8288;line-height:1;touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#sound-toggle,#theme-toggle,#language{display:inline-flex;align-items:center;justify-content:center;flex:0 0 32px;width:32px;height:32px;padding:4px;border:0;border-radius:4px;background:transparent;color:#7a8288;line-height:1;touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #language{font-size:14px;letter-spacing:0}
-#theme-toggle:hover,#language:hover{color:#346888}
-#theme-toggle:focus-visible,#language:focus-visible{outline:2px solid #346888;outline-offset:4px}
-#theme-toggle svg{display:block;width:20px;height:20px;flex-shrink:0}
+#sound-toggle:hover,#theme-toggle:hover,#language:hover{color:#346888}
+#sound-toggle:focus-visible,#theme-toggle:focus-visible,#language:focus-visible{outline:2px solid #346888;outline-offset:4px}
+#sound-toggle svg,#theme-toggle svg{display:block;width:20px;height:20px;flex-shrink:0}
 #theme-toggle .theme-icon--sun{display:none}
 html[data-theme="dark"] #theme-toggle .theme-icon--moon{display:none}
 html[data-theme="dark"] #theme-toggle .theme-icon--sun{display:block}
@@ -174,11 +174,13 @@ html[data-theme="dark"] #theme-toggle .theme-icon--sun{display:block}
   html[data-theme="dark"] a{color:#91b9d8}
   html[data-theme="dark"] .greedy-nav a,
   html[data-theme="dark"] #language,
+  html[data-theme="dark"] #sound-toggle,
   html[data-theme="dark"] #theme-toggle{color:#b8bdc5}
   html[data-theme="dark"] .greedy-nav a:hover,
   html[data-theme="dark"] #language:hover,
+  html[data-theme="dark"] #sound-toggle:hover,
   html[data-theme="dark"] #theme-toggle:hover{color:#eef0f4}
-  html[data-theme="dark"] #theme-toggle:focus-visible,html[data-theme="dark"] #language:focus-visible{outline-color:#91b9d8}
+  html[data-theme="dark"] #sound-toggle:focus-visible,html[data-theme="dark"] #theme-toggle:focus-visible,html[data-theme="dark"] #language:focus-visible{outline-color:#91b9d8}
   html[data-theme="dark"] .greedy-nav .visible-links a:before{background:#818b97}
   html[data-theme="dark"] .author__urls{background:transparent;border-color:#35383d}
   html[data-theme="dark"] .author__avatar .portrait-frame{background:#25272c;border-color:#35383d}
@@ -217,7 +219,7 @@ html[data-theme="dark"] #theme-toggle .theme-icon--sun{display:block}
   html[data-theme="dark"] img.contact-icon{filter:invert(1) grayscale(1)}
   html[data-theme="dark"] ::selection{background:#4b627a;color:#fff}
 }
-@media print{#theme-toggle{display:none}html[data-theme="dark"]{color-scheme:light}}
+@media print{#sound-toggle,#theme-toggle{display:none}html[data-theme="dark"]{color-scheme:light}}
 
 /* The Blog is a separate reading space; its link comes after all existing sections. */
 .greedy-nav{overflow-x:auto;scrollbar-width:none}
@@ -243,7 +245,7 @@ html[data-theme="dark"] #theme-toggle .theme-icon--sun{display:block}
 @media(min-width:925px){
   .sidebar .author__urls-wrapper{width:fit-content;max-width:100%}
   .sidebar .author__urls{width:max-content;max-width:100%}
-  .sidebar .research-interests{box-sizing:border-box;width:0;min-width:100%;max-width:100%;font-size:14px}
+  .sidebar .research-interests{box-sizing:border-box;width:0;min-width:100%;max-width:100%;font-size:14.5px}
 }
 
 @media(max-width:924px){.sidebar .research-interests{text-wrap:balance}}
