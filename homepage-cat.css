@@ -1,0 +1,51 @@
+/* Peeking-cat geometry adapted from Josh W. Comeau. Paws stay fixed while the head reacts. */
+.home-project-promo .home-cat-button {
+  position: absolute;
+  z-index: 3;
+  top: 56px;
+  left: -52px;
+  display: block;
+  width: 75px;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: inherit;
+  cursor: pointer;
+  line-height: 0;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.home-cat-art { display: block; width: 100%; height: auto; overflow: visible; }
+.home-cat-head { transform-box: fill-box; transform-origin: center center; }
+.home-cat-expression { display: none; }
+.home-cat-normal { display: inline; }
+.home-cat-button[data-cat-state="happy"] .home-cat-normal,
+.home-cat-button[data-cat-state="playful"] .home-cat-normal { display: none; }
+.home-cat-button[data-cat-state="happy"] .home-cat-happy,
+.home-cat-button[data-cat-state="playful"] .home-cat-playful { display: inline; }
+.home-project-promo .home-cat-button:focus-visible {
+  outline: 2px solid var(--color-primary, #527ad1);
+  outline-offset: 5px;
+  border-radius: 28px;
+}
+@media (prefers-reduced-motion:reduce){.home-cat-head{transform:none!important}}
+@media (max-width:540px){
+  .sidebar .home-project-promo{width:calc(100% - 48px);margin-left:auto;margin-right:0}
+  .home-project-promo .home-cat-button{left:-55px;top:62px;width:75px}
+}
+/* Each desktop column-width change starts close to the left page gutter. */
+@media (min-width:925px) and (max-width:1015px){
+  .sidebar .home-project-promo{--cat-room:clamp(0px,calc((1015px - 100vw)/2),45px);margin-left:var(--cat-room);width:calc(100% - var(--cat-room));padding-inline:16px}
+}
+@media (min-width:1280px) and (max-width:1370px){
+  .sidebar .home-project-promo{--cat-room:clamp(0px,calc((1370px - 100vw)/2),45px);margin-left:var(--cat-room);width:calc(100% - var(--cat-room));padding-inline:16px}
+}
+@media (min-width:1440px){.home-project-promo .home-cat-button{left:-85px;top:45px;width:110px}}
+@media (min-width:925px) and (max-width:1015px), (min-width:1280px) and (max-width:1370px){
+  .home-project-promo .home-cat-button{left:-58px}
+}

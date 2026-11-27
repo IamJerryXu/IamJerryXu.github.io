@@ -1,33 +1,41 @@
-/* Paper-note geometry from Josh's article aside (.b1btlj5u/.sl0r50n),
-   shared with our Blog's article-components.css. Narrow-column spacing only.
-   Reference: output/home-motion/josh-paper-note-source-audit.md. */
+/* Josh JOY promo: .w1naqn51 paper, .sr2iah3 overlapping artwork,
+   layered shadow and scale(.9)->scale(1) reveal (.6s .17,.67,.39,1).
+   Original AstraDraw lettering; dimensions adapted for the profile column. */
 @font-face{font-family:"Home Blog Wotfard";src:url('/blog/fonts/wotfard-regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Astra Sticker";src:url('/assets/fonts/nunito-700-latin.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
 .sidebar .home-project-note{
-  --note-ink:#4242fa;--note-paper:#e8f1fc;
+  --promo-paper:#fff5cc;--promo-border:#18213b;--promo-text:#18213b;
   position:relative;isolation:isolate;grid-column:1/-1;box-sizing:border-box;width:100%;
-  margin:40px 0 8px;padding:22px 18px 22px 21px;
-  border-left:3px solid transparent;border-radius:0 4px 4px 0;
-  background:none;color:var(--fg);
+  display:flex;flex-direction:column;gap:16px;margin:105px 0 16px;padding:0 20px 20px;
+  border:3px dashed var(--promo-border);border-radius:24px;outline:5px solid var(--promo-paper);
+  background:var(--promo-paper);color:var(--promo-text);
+  box-shadow:0 1px 2px hsl(30 100% 30%/.15),0 3px 6px hsl(30 100% 30%/.15),0 9px 18px hsl(30 100% 30%/.15);
   font-family:"Home Blog Wotfard",sans-serif;
-  transition:background-color 350ms cubic-bezier(.41,.1,.13,1),border-color 350ms cubic-bezier(.41,.1,.13,1);
+  transition:background-color 400ms,outline-color 400ms,border-color 400ms;
 }
-html[data-theme=dark] .home-project-note{--note-ink:hsl(215 100% 72%);--note-paper:hsl(214 40% 15%)}
-.sidebar .home-project-note h2{margin:0 0 10px;padding:0;border:0;font:500 21px/28px "Home Blog Wotfard",sans-serif;letter-spacing:0;color:var(--fg);-webkit-text-stroke:.15px currentColor}
-.sidebar .home-project-note p{margin:0 0 16px;font-size:16px;line-height:24px;color:var(--fg)}
-.home-note-symbol{position:absolute;left:-19px;top:-16px;width:32px;height:32px;color:var(--note-ink)}
-.home-note-symbol svg{display:block;width:28px;height:28px}
-.home-project-note .elsewhere a{display:flex;align-items:center;gap:8px;min-height:28px;color:var(--note-ink);font-size:15px;line-height:24px;text-decoration:none}
-.home-project-note .elsewhere a>span:first-child{display:block;flex:0 0 20px;width:20px;line-height:0}
-.home-project-note .elsewhere svg,.home-project-note .elsewhere .link-motion-icon{display:block;width:20px;height:20px;margin:0;overflow:visible}
-.home-project-note .elsewhere a:hover>span:last-child{text-decoration:underline;text-underline-offset:4px}
-.home-project-note .elsewhere a:focus-visible{outline:2px solid var(--note-ink);outline-offset:4px;border-radius:2px}
+html[data-theme=dark] .home-project-note{--promo-paper:#191e2c;--promo-border:#ffda2f;--promo-text:#f6f2e8;box-shadow:0 1px 2px #0003,0 3px 6px #0003,0 9px 18px #0003}
+.home-project-note .astra-sticker{display:block;position:relative;align-self:center;width:calc(100% + 42px);margin:-81px -21px -4px;color:inherit;text-decoration:none;transform:rotate(-5deg);transform-origin:50% 80%;}
+.astra-sticker-art{display:block;width:100%;height:auto;overflow:visible}
+.astra-lettering{font-family:"Astra Sticker",sans-serif;font-weight:700;paint-order:stroke fill;stroke-linejoin:round;letter-spacing:-2px}
+.astra-lettering--small{font-size:53px}
+.astra-lettering--large{font-size:85px;letter-spacing:-4px}
+.astra-word{transform-box:fill-box;transform-origin:center}
+.sidebar .home-project-note p{margin:0;font-size:16px;line-height:24px;color:var(--promo-text)}
+.home-project-note .astra-promo-action{width:100%}
+.home-project-note .astra-promo-link{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:36px;padding:3px 3px 3px 12px;background:#0d0f12;color:white;border-radius:4px;font-size:14px;line-height:22px;text-decoration:none}
+.home-project-note .astra-promo-link>span:first-child{display:grid;place-items:center;order:2;flex:0 0 28px;align-self:stretch;background:#3b4058}
+.home-project-note .astra-promo-link svg,.home-project-note .astra-promo-link .link-motion-icon{display:block;width:18px;height:18px;margin:0;overflow:visible}
+.home-project-note a:focus-visible{outline:2px solid var(--blue);outline-offset:6px;border-radius:4px}
+.home-project-note .astra-promo-link>span:first-child{transition:transform 200ms cubic-bezier(0,.67,.6,1.24);border-radius:2px}
+.home-project-note .astra-promo-link>span:first-child>svg{transition:scale 300ms cubic-bezier(0,.67,.6,1.24)}
+.home-project-note .astra-promo-link[data-pressed=true]>span:first-child{transform:scale(.8);transition:none}
+.home-project-note .astra-promo-link[data-pressed=true]>span:first-child>svg{scale:1.25;transition:none}
+html[data-theme=dark] .home-project-note .astra-promo-link{background:#ffda2f;color:#111}
+html[data-theme=dark] .home-project-note .astra-promo-link>span:first-child{background:#ffe680}
+.home-project-note[data-reveal="waiting"]{opacity:0;transform:scale(.9);pointer-events:none}
+.home-project-note[data-reveal="visible"]{animation:astra-promo-enter 600ms cubic-bezier(.17,.67,.39,1) both}
+@keyframes astra-promo-enter{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
 @media(min-width:925px){.academic-home #main>.sidebar{top:var(--profile-sticky-top,calc(var(--masthead-height,55px) + 10px))}}
-@media(max-width:924px){.sidebar .home-project-note{max-width:420px;margin-top:32px;padding:22px 24px 22px 25px}}
-@media(prefers-reduced-motion:reduce){.sidebar .home-project-note,.home-project-note::before,.home-project-note::after{transition:none}}
+@media(max-width:924px){.sidebar .home-project-note{max-width:280px;margin:110px auto 24px;padding:0 24px 24px}.home-project-note .astra-sticker{width:230px;margin-top:-91px}}
+@media(prefers-reduced-motion:reduce){.sidebar .home-project-note,.home-project-note .astra-word{animation:none!important;transition:none!important}.home-project-note[data-reveal]{opacity:1;transform:none}}
 @media print{.home-project-note{display:none}}
-
-.home-project-note::before,.home-project-note::after{content:"";position:absolute;left:-3px;top:0;width:28.5px;height:34.5px;pointer-events:none;mask-size:100% 100%;mask-repeat:no-repeat}
-.home-project-note::before{inset:0 0 0 -3px;width:auto;height:auto;z-index:-2;border-radius:0 4px 4px 0;background:var(--note-paper);mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2057%2069%22%3E%3Cpath%20fill%3D%22black%22%20d%3D%22M54%200V0.716804C54%2025.9434%2035.0653%2047.1517%2010%2050L0%2057V0H54Z%22%2F%3E%3C%2Fsvg%3E"),linear-gradient(#000 0 0);mask-size:28.5px 34.5px,100% 100%;mask-position:top left;mask-repeat:no-repeat;mask-composite:exclude;transition:background-color 350ms cubic-bezier(.41,.1,.13,1)}
-.home-project-note::after{background:var(--note-ink);mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2057%2069%22%3E%3Cpath%20fill%3D%22black%22%20d%3D%22M56.9961%204.15364C57.0809%202.49896%2055.8083%201.08879%2054.1536%201.00394C52.499%200.919082%2051.0888%202.19168%2051.0039%203.84636L56.9961%204.15364ZM9.09704%2051.7557L8.49716%2048.8163L9.09704%2051.7557ZM6%2069V59.2227H0V69H6ZM9.69692%2054.6951L14.3373%2053.7481L13.1375%2047.8693L8.49716%2048.8163L9.69692%2054.6951ZM14.3373%2053.7481C38.202%2048.8777%2055.7486%2028.4783%2056.9961%204.15364L51.0039%203.84636C49.8967%2025.4384%2034.3213%2043.5461%2013.1375%2047.8693L14.3373%2053.7481ZM6%2059.2227C6%2057.0268%207.54537%2055.1342%209.69692%2054.6951L8.49716%2048.8163C3.55195%2049.8255%200%2054.1756%200%2059.2227H6Z%22%2F%3E%3C%2Fsvg%3E");transition:background-color 350ms cubic-bezier(.41,.1,.13,1)}
-
-.home-note-edge{position:absolute;left:-3px;top:34px;bottom:0;width:3px;background:var(--note-ink);border-radius:0 0 100px 100px;z-index:-1}
