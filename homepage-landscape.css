@@ -1,11 +1,11 @@
 /* The actual Blog cloud silhouettes surround the existing academic layout. */
 .academic-home {
-  --sky: #addaf1;
+  --sky: #b4d3e3;
   --hero-sky: var(--sky);
   --hero-sky-bottom: var(--sky-bottom);
   --hero-cloud-far: #d7edf8;
   --hero-cloud: #ebf5fb;
-  --sky-bottom: #96cfeb;
+  --sky-bottom: #a4c9dd;
   --cloud-far: #b1dff6;
   --cloud: #ddeef8;
   --bg: #fff;
@@ -82,7 +82,7 @@ html[data-theme="dark"] .academic-home .masthead .greedy-nav a,
 }
 .academic-home .page__content #about::before,
 .academic-home .page__content #about::after { display: none; }
-.academic-home .page__content #about p { color: var(--fg); }
+.academic-home .page__content #about p { color: var(--fg); font-size: 17px; line-height: 1.6; }
 html[data-theme] .academic-home .page__content #about a { color: var(--sky-link); }
 .home-horizon path, .site-footer path { transition: fill 350ms cubic-bezier(.41,.1,.13,1); }
 .academic-home .footer-inner .identity { font-weight: bold; }
@@ -100,6 +100,7 @@ html[data-theme] .academic-home .page__content #about a { color: var(--sky-link)
 .academic-home .footer-columns h2 { font-family: inherit; }
 .academic-home .footer-credit { margin-inline: auto; font-size: 14px; }
 @media (max-width:800px) {
+  .academic-home .page__content #about p { font-size: 16px; }
   .home-horizon { height: 161.54px; }
   .home-horizon .source-article-cloud { width: 2000px; min-width: 2000px; height: 161.54px; }
 }
