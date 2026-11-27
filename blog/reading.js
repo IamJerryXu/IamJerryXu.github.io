@@ -60,16 +60,3 @@
   new IntersectionObserver(entries => {ratio=entries[0].intersectionRatio;update();},{threshold:[0,.2,.5,1]}).observe(footer);
   reduced.addEventListener('change',update);visibleSize.addEventListener('change',update);document.addEventListener('visibilitychange',update);paint();
 })();
-
-// Reference interaction: Random gives the character a brief, reversible smile.
-(() => {
-  const character = document.querySelector('.scene-portrait');
-  const random = document.querySelector('#rainbow-random');
-  if (!character || !random) return;
-  let moodTimer;
-  random.addEventListener('click', () => {
-    clearTimeout(moodTimer);
-    character.classList.add('is-happy');
-    moodTimer = setTimeout(() => character.classList.remove('is-happy'), 800);
-  });
-})();

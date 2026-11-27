@@ -9,13 +9,34 @@ def asset_url(root, path):
     return '/' + path + '?v=' + hashlib.sha256((root/path).read_bytes()).hexdigest()[:12]
 
 
-def character_images(root):
+def character_images(root, interactive=False):
     layers = []
     for mode, base, happy in [
         ('day', 'assets/blog-character-white-glasses-v2.webp', 'assets/blog-character-white-glasses-happy-v2.webp'),
         ('night', 'assets/blog-character-white-glasses-night-v2.webp', 'assets/blog-character-white-glasses-night-happy-v2.webp'),
     ]:
         layers.append(f'<span class="character-layer character-layer--{mode}"><img class="character-base" src="{asset_url(root, base)}" alt="" width="397" height="720" decoding="async" draggable="false"><img class="character-expression" src="{asset_url(root, happy)}" alt="" width="397" height="720" decoding="async" draggable="false"></span>')
+    # Match the image's intrinsic canvas: the stitched mark stays registered even
+    # when a footer uses a differently proportioned object-fit container.
+    layers.append('''<span class="character-stitch" aria-hidden="true"><svg class="character-stitch-art" viewBox="0 0 397 720" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><svg x="163" y="371" width="71" height="64" viewBox="0 0 64 58" fill="none">
+<g stroke-linecap="round" stroke-linejoin="round">
+<circle class="stitch-brown" cx="15" cy="16" r="12"/><circle class="stitch-brown" cx="49" cy="16" r="12"/>
+<circle class="stitch-cream" cx="15" cy="16" r="7.5"/><circle class="stitch-cream" cx="49" cy="16" r="7.5"/>
+<path class="stitch-brown" d="M16 30C16 20 22 14 32 14C42 14 48 20 48 30C48 41 41 50 32 53C23 50 16 41 16 30Z"/>
+<path class="stitch-thread" d="M18.5 30C18.5 21.5 23.8 16.5 32 16.5C40.2 16.5 45.5 21.5 45.5 30C45.5 39.5 39.5 47 32 50.3C24.5 47 18.5 39.5 18.5 30Z"/>
+<path class="stitch-cream" d="M22 38C24 34 28 35 32 38C36 35 40 34 42 38C44 44 37 49 32 49C27 49 20 44 22 38Z"/>
+<path class="stitch-eye" d="M25 29V31M39 29V31"/>
+<path class="stitch-nose" d="M29.5 38.5Q32 37 34.5 38.5Q34 42 32 42Q30 42 29.5 38.5Z"/>
+</g></svg></svg></span>''')
+    if interactive:
+        layers.append('''<span class="character-cheese" aria-hidden="true"><svg viewBox="0 0 64 54" fill="none" aria-hidden="true" focusable="false"><g stroke-linecap="round" stroke-linejoin="round">
+<path class="cheese-side" d="M7 24L39 7Q41 6 43 8L58 22V43Q58 46 55 46H9Q6 46 6 43V27Q6 25 7 24Z"/>
+<path class="cheese-top" d="M7 24L39 7Q41 6 43 8L58 22L24 31Z"/>
+<path class="cheese-front" d="M7 24L24 31L58 22V43Q58 46 55 46H9Q6 46 6 43V27Q6 25 7 24Z"/>
+<path class="cheese-rind" d="M24 31V45"/>
+<ellipse class="cheese-hole" cx="36" cy="19" rx="4" ry="2.4" transform="rotate(-14 36 19)"/>
+<circle class="cheese-hole" cx="15" cy="35" r="2.8"/><circle class="cheese-hole" cx="34" cy="37" r="3.5"/><circle class="cheese-hole" cx="49" cy="31.5" r="2.3"/>
+</g></svg></span>''')
     return ''.join(layers)
 
 

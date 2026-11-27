@@ -1,0 +1,73 @@
+/* Shared garment detail and click surprise for the same character on all pages. */
+.character-stitch,
+.character-cheese {
+  --stitch-brown: #a67853;
+  --stitch-edge: #896246;
+  --stitch-cream: #edcf9f;
+  --stitch-thread: #c79569;
+  --stitch-ink: #664c3c;
+  --cheese-top: #ffe0a0;
+  --cheese-front: #f4bd58;
+  --cheese-edge: #bb8339;
+  --cheese-hole: #d99b43;
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.character-stitch { inset: 0; z-index: 3; }
+.character-stitch-art { display: block; width: 100%; height: 100%; overflow: visible; }
+.character-stitch .stitch-brown { fill: var(--stitch-brown); stroke: var(--stitch-edge); stroke-width: 1.6; }
+.character-stitch .stitch-cream { fill: var(--stitch-cream); }
+.character-stitch .stitch-thread { stroke: var(--stitch-thread); stroke-width: 1.3; stroke-dasharray: 1.3 2.7; }
+.character-stitch .stitch-eye { stroke: var(--stitch-ink); stroke-width: 2.8; }
+.character-stitch .stitch-nose { fill: var(--stitch-ink); }
+.character-cheese {
+  left: -20%;
+  top: 52%;
+  width: 34%;
+  z-index: 4;
+  opacity: var(--cheese-opacity, 0);
+  transition: none;
+  transform: translate(var(--cheese-x, 0px), var(--cheese-y, 0px)) rotate(var(--cheese-rotate, -14deg)) scale(var(--cheese-scale, .6));
+  transform-origin: 75% 70%;
+}
+.character-cheese > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.character-cheese .cheese-side { fill: var(--cheese-front); stroke: var(--cheese-edge); stroke-width: 1.8; }
+.character-cheese .cheese-top { fill: var(--cheese-top); stroke: var(--cheese-edge); stroke-width: 1.8; }
+.character-cheese .cheese-front { fill: var(--cheese-front); stroke: var(--cheese-edge); stroke-width: 1.8; }
+.character-cheese .cheese-rind { stroke: var(--cheese-edge); stroke-width: 1.4; opacity: .55; }
+.character-cheese .cheese-hole { fill: var(--cheese-hole); }
+html[data-theme=dark] :is(.character-stitch, .character-cheese) {
+  --stitch-brown: #795f50;
+  --stitch-edge: #554a45;
+  --stitch-cream: #b29d80;
+  --stitch-thread: #957a62;
+  --stitch-ink: #413a37;
+  --cheese-top: #c1a371;
+  --cheese-front: #aa864d;
+  --cheese-edge: #75603f;
+  --cheese-hole: #8e6c3e;
+}
+@media (prefers-reduced-motion:no-preference) {
+  .character-stitch svg *, .character-cheese svg * { transition: fill 850ms cubic-bezier(.41,.1,.13,1), stroke 850ms cubic-bezier(.41,.1,.13,1); }
+}
+
+/* Native buttons share the same gesture on the homepage and Playground. */
+.scene-portrait.character-interactive {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 40%;
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
+  transform-origin: 50% 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+.scene-portrait.character-interactive:focus-visible {
+  outline: 2px dashed var(--blue);
+  outline-offset: 6px;
+}
+@media print { .character-cheese { display: none; } }

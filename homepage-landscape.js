@@ -33,26 +33,11 @@
   const character = holder?.querySelector('.home-character');
   if (!character) return;
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  let timer, gesture, entrance;
+  let entrance;
   let active = true;
   function reset() {
-    clearTimeout(timer);
-    character.classList.remove('is-happy');
-    gesture?.cancel();
     entrance?.cancel();
   }
-  character.addEventListener('click', () => {
-    clearTimeout(timer);
-    gesture?.cancel();
-    character.classList.add('is-happy');
-    if (!motion.matches) gesture = character.animate([
-      {transform: 'scale(.97)'},
-      {transform: 'scale(1.015)', offset: .42},
-      {transform: 'scale(.997)', offset: .72},
-      {transform: 'scale(1)'}
-    ], {duration: 460, easing: 'cubic-bezier(.2,.7,.3,1)'});
-    timer = setTimeout(() => character.classList.remove('is-happy'), 800);
-  });
   if (!motion.matches && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver(async entries => {
       if (!entries.some(entry => entry.isIntersecting)) return;

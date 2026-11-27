@@ -188,28 +188,7 @@ html[data-theme] .academic-home #figure-original { color: var(--blue); }
   transform-origin: 50% 100%;
 }
 .home-character:focus-visible { outline: 2px dashed var(--blue); outline-offset: 6px; }
-.home-character-greeting {
-  position: absolute;
-  top: 12px;
-  right: calc(100% + 12px);
-  white-space: nowrap;
-  padding: 5px 10px;
-  border-radius: 12px 12px 2px 12px;
-  background: var(--bg);
-  color: var(--blue);
-  font-size: 14px;
-  box-shadow: 0 2px 8px rgb(30 50 80 / .06);
-  opacity: 0;
-  transform: translateY(5px) scale(.9);
-  transform-origin: right bottom;
-  pointer-events: none;
-  transition: opacity 180ms ease, transform 300ms cubic-bezier(.34,1.56,.64,1);
-}
-.home-companion:has(.is-happy) .home-character-greeting { opacity: 1; transform: none; }
 @media (max-width:800px) {
   .home-companion { width: 86px; height: calc(86px * 720 / 397); }
-}
-@media (prefers-reduced-motion:reduce) {
-  .home-character-greeting { transition: none; transform: none; }
 }
 @media print { .home-companion { display: none; } }
