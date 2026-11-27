@@ -2,34 +2,38 @@
    transparent poster-lettering asset for AstraDraw. */
 @font-face{font-family:"Home Blog Wotfard";src:url('/blog/fonts/wotfard-regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 .sidebar .home-project-note{
-  --promo-paper:#fff5cc;--promo-border:#18213b;--promo-text:#18213b;
+  --promo-paper:#edf5fb;--promo-border:#66809a;--promo-text:#344a63;--promo-muted:#536b83;--promo-button:#b6cfe5;--promo-button-hover:#c8dced;--promo-button-icon:#d9e8f5;--promo-button-shadow:#87a9c7;--promo-button-text:#273f58;
   position:relative;isolation:isolate;grid-column:1/-1;box-sizing:border-box;width:100%;
-  display:flex;flex-direction:column;gap:18px;margin:88px 0 16px;padding:0 20px 22px;
+  display:flex;flex-direction:column;gap:18px;margin:88px 0 16px;padding:0 16px 22px;
   border:3px dashed var(--promo-border);border-radius:24px;outline:5px solid var(--promo-paper);
   background:var(--promo-paper);color:var(--promo-text);
-  box-shadow:0 1px 2px hsl(30 100% 30%/.15),0 3px 6px hsl(30 100% 30%/.15),0 9px 18px hsl(30 100% 30%/.15);
+  box-shadow:0 1px 2px hsl(210 30% 40%/.13),0 3px 6px hsl(210 30% 40%/.13),0 9px 18px hsl(210 30% 40%/.13);
   font-family:"Home Blog Wotfard",sans-serif;
   transition:background-color 400ms,outline-color 400ms,border-color 400ms;
 }
-html[data-theme=dark] .home-project-note{--promo-paper:#191e2c;--promo-border:#ffda2f;--promo-text:#f6f2e8;box-shadow:0 1px 2px #0003,0 3px 6px #0003,0 9px 18px #0003}
+html[data-theme=dark] .home-project-note{--promo-paper:#182333;--promo-border:#7a96b5;--promo-text:#deebf5;--promo-muted:#adbed1;--promo-button:#829fbf;--promo-button-hover:#94afcb;--promo-button-icon:#afc5dc;--promo-button-shadow:#536e90;--promo-button-text:#142a40;box-shadow:0 1px 2px #0003,0 3px 6px #0003,0 9px 18px #0003}
  .sidebar .astra-promo-heading{
-  align-self:center;flex-shrink:0;position:relative;width:calc(100% + 54px);max-width:none;
-  margin:-61px -27px 0;padding:0;border:0;border-radius:0;background:none;
+  align-self:flex-start;flex-shrink:0;position:relative;width:calc(100% + 48px);max-width:none;
+  margin:-61px -20px 0 -28px;padding:0;border:0;border-radius:0;background:none;
   font-size:0;line-height:0;-webkit-text-stroke:0;
 }
 .home-project-note .astra-sticker{display:block;color:var(--promo-text);text-decoration:none}
 .astra-word{display:block;transform-origin:center}
 .home-project-note .astra-sticker-image{display:block;width:100%;max-width:none;height:auto;aspect-ratio:2/1;border:0;border-radius:0}
-.sidebar .home-project-note p{margin:0;font-size:16px;line-height:24px;color:var(--promo-text)}
+.sidebar .home-project-note p{margin:0;font-size:16px;line-height:25px;color:var(--promo-text);font-synthesis:none;text-wrap:pretty}
+.astra-summary-lead,.astra-summary-detail{display:block}
+.astra-summary-lead{font-weight:500;-webkit-text-stroke:.12px currentColor}
+.astra-summary-detail{margin-top:6px;font-size:15px;line-height:24px;color:var(--promo-muted);font-weight:400}
+html:lang(zh) .astra-summary-lead{-webkit-text-stroke:0;font-weight:500}
 .home-project-note .astra-promo-action{width:100%;margin-top:2px}
 .home-project-note .astra-promo-link{
   display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:40px;
-  padding:4px 4px 4px 13px;border:0;border-radius:6px;background:#ffda2f;color:#16191e;
+  padding:4px 4px 4px 13px;border:0;border-radius:6px;background:var(--promo-button);color:var(--promo-button-text);
   font-size:14px;line-height:24px;font-weight:500;text-decoration:none;
-  box-shadow:0 2px 0 #d8ac15;transition:background-color 150ms;
+  box-shadow:0 2px 0 var(--promo-button-shadow);transition:background-color 150ms;
 }
-.home-project-note .astra-promo-link:hover{background:#ffe05b}
-.home-project-note .astra-promo-link>span:first-child{display:grid;place-items:center;order:2;flex:0 0 30px;align-self:stretch;background:#ffe680;border-radius:3px;transition:transform 200ms cubic-bezier(0,.67,.6,1.24)}
+.home-project-note .astra-promo-link:hover{background:var(--promo-button-hover)}
+.home-project-note .astra-promo-link>span:first-child{display:grid;place-items:center;order:2;flex:0 0 30px;align-self:stretch;background:var(--promo-button-icon);border-radius:3px;transition:transform 200ms cubic-bezier(0,.67,.6,1.24)}
 .home-project-note .astra-promo-link svg{display:block;width:18px;height:18px;margin:0;overflow:visible;transition:scale 300ms cubic-bezier(0,.67,.6,1.24)}
 .home-project-note .astra-promo-link[data-pressed=true]>span:first-child{transform:scale(.8);transition:none}
 .home-project-note .astra-promo-link[data-pressed=true]>span:first-child>svg{scale:1.25;transition:none}
@@ -38,6 +42,6 @@ html[data-theme=dark] .home-project-note{--promo-paper:#191e2c;--promo-border:#f
 .home-project-note[data-reveal="visible"]{animation:astra-promo-enter 600ms cubic-bezier(.17,.67,.39,1) both}
 @keyframes astra-promo-enter{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
 @media(min-width:925px){.academic-home #main>.sidebar{top:var(--profile-sticky-top,calc(var(--masthead-height,55px) + 10px))}}
-@media(max-width:924px){.sidebar .home-project-note{max-width:280px;margin:88px auto 24px;padding:0 24px 24px}}
+@media(max-width:924px){.sidebar .home-project-note{max-width:280px;margin:88px auto 24px;padding:0 20px 24px}}
 @media(prefers-reduced-motion:reduce){.sidebar .home-project-note,.home-project-note .astra-word,.home-project-note .astra-promo-heading,.home-project-note .astra-promo-link,.home-project-note .astra-promo-link>span:first-child,.home-project-note .astra-promo-link svg{animation:none!important;transition:none!important}.home-project-note[data-reveal]{opacity:1;transform:none}}
 @media print{.home-project-note{display:none}}

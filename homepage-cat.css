@@ -3,7 +3,7 @@
   position: absolute;
   z-index: 3;
   top: 56px;
-  left: -52px;
+  left: -56px;
   display: block;
   width: 75px;
   height: auto;
@@ -45,7 +45,7 @@
 @media (min-width:1280px) and (max-width:1370px){
   .sidebar .home-project-promo{--cat-room:clamp(0px,calc((1370px - 100vw)/2),45px);margin-left:var(--cat-room);width:calc(100% - var(--cat-room));padding-inline:16px}
 }
-@media (min-width:1440px){.home-project-promo .home-cat-button{left:-85px;top:45px;width:110px}}
+@media (min-width:1440px){.home-project-promo .home-cat-button{left:-89px;top:45px;width:110px}}
 @media (min-width:925px) and (max-width:1015px), (min-width:1280px) and (max-width:1370px){
   .home-project-promo .home-cat-button{left:-58px}
 }
