@@ -20,7 +20,7 @@ html[data-theme=dark] .home-project-note{--promo-paper:rgba(29,33,48,.5);--promo
 .astra-word{display:block;transform-origin:center}
 .home-project-note .astra-sticker-image{display:block;width:100%;max-width:none;height:auto;aspect-ratio:2/1;border:0;border-radius:0}
 .sidebar .home-project-note p{margin:0;font-size:16px;line-height:25px;color:var(--promo-text);font-synthesis:none;text-wrap:pretty}
-.sidebar .home-project-note .astra-summary{text-align:center;position:relative;left:-8px}
+.sidebar .home-project-note .astra-summary{text-align:center}
 .astra-summary-lead,.astra-summary-detail{display:block}
 .astra-summary-lead{font-weight:400;-webkit-text-stroke:0}
 .astra-summary-detail{margin-top:6px;font-size:15px;line-height:24px;color:var(--promo-muted);font-weight:400}
@@ -61,4 +61,17 @@ html:lang(zh) .astra-summary-lead{-webkit-text-stroke:0;font-weight:400}
   .sidebar .home-project-note{left:0}
   .sidebar .astra-promo-heading{margin-left:-5px}
   .sidebar .home-project-promo .home-cat-button{left:auto;right:-4px}
+}
+
+/* Move the entire promo, rather than offsetting its copy. Keep narrow
+   viewport edges and the wide-layout peeking cat inside the viewport. */
+@media(min-width:925px) and (max-width:1279px){
+  .sidebar .home-project-note{left:clamp(-12px,calc((931px - 100vw)/2),0px)}
+}
+@media(min-width:1280px) and (max-width:1439px){
+  .sidebar .home-project-note{left:clamp(-12px,calc((1286px - 100vw)/2),0px)}
+}
+@media(min-width:1440px){
+  .sidebar .home-project-note{left:-18px}
+  .sidebar .home-project-promo .home-cat-button{left:clamp(-72px,calc(-62px + (1440px - 100vw)/2),-62px)}
 }
