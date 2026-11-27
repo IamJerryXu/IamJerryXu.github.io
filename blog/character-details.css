@@ -84,6 +84,7 @@ html[data-theme=dark] :is(.character-stitch, .character-cheese) {
 .character-pet {
   position: absolute; left: -50%; bottom: 1px; width: 48%; z-index: 3;
   display: block; pointer-events: auto; transition: none;
+  isolation: isolate;
   transform-origin: 55% 100%;
   transform: translateY(var(--pet-y, 0px)) rotate(var(--pet-rotate, 0deg));
 }
@@ -97,7 +98,7 @@ html[data-theme=dark] :is(.character-stitch, .character-cheese) {
 
 
 /* Each pose shares a canvas; only the rest frame defines layout height. */
-.scene-portrait .character-pet-frame { position:absolute; inset:0; display:block; opacity:0; pointer-events:none; }
+.scene-portrait .character-pet-frame { position:absolute; inset:0; display:block; opacity:0; pointer-events:none; isolation:isolate; mix-blend-mode:plus-lighter; }
 .scene-portrait .character-pet-frame--rest { position:relative; }
 .scene-portrait .character-pet .character-pet-art--day { position:relative; opacity:1; }
 .scene-portrait .character-pet .character-pet-art--night { position:absolute; inset:0; opacity:0; }
@@ -111,8 +112,15 @@ html[data-theme=dark] .scene-portrait .character-pet .character-pet-art--night {
 .scene-portrait[data-pet-pose=chew] .character-pet-frame--chew { opacity:1; }
 .scene-portrait[data-pet-pose]:not([data-pet-pose=rest]) .character-cheese { visibility:hidden; }
 @media (prefers-reduced-motion:no-preference) {
+  /* Source-over opacity fades expose the backdrop at each midpoint (0.5 over
+     0.5 covers only 75%). Add the two premultiplied poses inside the isolated
+     pet instead, retaining full coverage where both images are opaque. */
   .scene-portrait .character-pet-frame { transition: opacity 80ms ease-out; }
-  .scene-portrait .character-pet .character-pet-art { transition: opacity 350ms cubic-bezier(.41,.1,.13,1); }
+  .scene-portrait .character-pet .character-pet-art { mix-blend-mode:plus-lighter; transition: opacity 350ms cubic-bezier(.41,.1,.13,1); }
+}
+@supports not (mix-blend-mode:plus-lighter) {
+  .scene-portrait .character-pet-frame,
+  .scene-portrait .character-pet .character-pet-art { transition:none; }
 }
 .character-discovery { position:absolute; left:-30%; right:auto; top:4%; width:clamp(15px, 1.25vw, 18px); height:auto; color:#e8a735; opacity:0; transform:scale(.35) rotate(-14deg); transform-origin:50% 100%; pointer-events:none; }
 .character-discovery svg { display:block; width:100%; height:auto; overflow:visible; filter:drop-shadow(0 1px 0 #fff8); }
