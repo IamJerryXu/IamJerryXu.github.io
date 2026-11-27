@@ -37,14 +37,7 @@ def character_images(root, interactive=False):
             images = ''.join(f'<img class="character-pet-art character-pet-art--{mode}" src="{asset_url(root, f"assets/{prefix}-{mode}.webp")}" width="470" height="640" alt="" draggable="false" decoding="async">' for mode in ['day', 'night'])
             pet_images += f'<span class="character-pet-frame character-pet-frame--{state}">{images}</span>'
         layers.append(f'<span class="character-pet" aria-hidden="true">{pet_images}<span class="character-discovery"><svg viewBox="0 0 24 40" fill="none"><path d="M12 5L12 24" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="12" cy="35" r="4" fill="currentColor"/></svg></span></span>')
-        layers.append('''<span class="character-cheese" aria-hidden="true"><svg viewBox="0 0 64 54" fill="none" aria-hidden="true" focusable="false"><g stroke-linecap="round" stroke-linejoin="round">
-<path class="cheese-side" d="M7 24L39 7Q41 6 43 8L58 22V43Q58 46 55 46H9Q6 46 6 43V27Q6 25 7 24Z"/>
-<path class="cheese-top" d="M7 24L39 7Q41 6 43 8L58 22L24 31Z"/>
-<path class="cheese-front" d="M7 24L24 31L58 22V43Q58 46 55 46H9Q6 46 6 43V27Q6 25 7 24Z"/>
-<path class="cheese-rind" d="M24 31V45"/>
-<ellipse class="cheese-hole" cx="36" cy="19" rx="4" ry="2.4" transform="rotate(-14 36 19)"/>
-<circle class="cheese-hole" cx="15" cy="35" r="2.8"/><circle class="cheese-hole" cx="34" cy="37" r="3.5"/><circle class="cheese-hole" cx="49" cy="31.5" r="2.3"/>
-</g></svg></span>''')
+
     return ''.join(layers)
 
 

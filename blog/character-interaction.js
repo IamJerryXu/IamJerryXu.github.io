@@ -3,13 +3,11 @@
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   document.querySelectorAll('.character-interactive').forEach(character => {
-    const cheese = character.querySelector('.character-cheese');
-    if (!cheese) return;
     const pet = character.querySelector('.character-pet');
-    const rest = [1, 6, 10, -20, .5, 0, 0, 0];
+    const rest = [1, 0, 0];
     const values = rest.map(x => ({x, target:x, v:0}));
     const timers = new Set();
-    let frame = 0, previous = 0, pressed = false, sequence = 0;
+    let frame = 0, previous = 0, pressed = false, playing = false, sequence = 0;
     // Decode both lighting variants before showing a new pose, including when
     // the user switches themes during the bite. Failed assets keep the rest pose.
     const framesReady = Promise.all([...character.querySelectorAll('.character-pet-art')].map(image =>
@@ -26,14 +24,10 @@
     function draw() {
       character.style.scale = values[0].x;
       if (pet) {
-        pet.style.setProperty('--pet-y', `${values[6].x}px`);
-        pet.style.setProperty('--pet-rotate', `${values[7].x}deg`);
+        pet.style.setProperty('--pet-y', `${values[1].x}px`);
+        pet.style.setProperty('--pet-rotate', `${values[2].x}deg`);
       }
-      ['x','y','rotate','scale','opacity'].forEach((key, index) => {
-        const value = values[index + 1].x;
-        const unit = index < 2 ? 'px' : index === 2 ? 'deg' : '';
-        cheese.style.setProperty(`--cheese-${key}`, `${key === 'opacity' ? Math.max(0, Math.min(1, value)) : value}${unit}`);
-      });
+
     }
     function tick(now) {
       frame = 0;
@@ -53,7 +47,7 @@
     }
     function set(targets, instant = reduce.matches) {
       // Reduced motion keeps the same readable story without scaling or bouncing.
-      if (reduce.matches) targets = [1, 0, 0, 0, 1, targets[5], 0, 0];
+      if (reduce.matches) targets = rest;
       values.forEach((value, index) => {
         value.target = targets[index];
         if (instant) {value.x = targets[index]; value.v = 0;}
@@ -65,13 +59,13 @@
       sequence++;
       timers.forEach(clearTimeout);
       timers.clear();
-      pressed = false;
+      pressed = false; playing = false;
       character.classList.remove('is-happy', 'is-greeting', 'is-discovering', 'is-biting');
       character.dataset.petPose = 'rest';
       set(rest, true);
     }
     function press() {
-      if (pressed) return;
+      if (pressed || playing) return;
       pressed = true;
       if (!reduce.matches) {
         values[0].x = .975;
@@ -85,21 +79,23 @@
       const targets = values.map(value => value.target); targets[0] = 1;
       set(targets);
     }
-    function pose(name, y = 0, angle = 0) {
+    function pose(name) {
       character.dataset.petPose = name;
       character.classList.toggle('is-biting', name === 'bite' || name === 'chew');
-      // Every non-rest image includes its cheese, so only the discovery uses
-      // the separate piece. CSS hides it immediately while the spring settles.
-      set([1, 0, 5, -12, .7, 0, y, angle]);
+      // The new pictures carry the whole gesture. Keep the body planted instead
+      // of competing with their arm/mouth changes using a second bounce.
+      set(rest);
     }
     async function celebrate() {
-      // A new tap replaces the complete sequence rather than queuing bites.
+      // Taps during a bite coalesce: never flash back to rest or queue a replay.
+      if (playing) return;
       reset();
+      playing = true;
       const current = sequence;
       const began = performance.now();
       character.classList.add('is-happy', 'is-greeting', 'is-discovering');
       if (!reduce.matches) values[0].x = .975;
-      set([1, 0, 0, -8, 1, 1, -3, -3]);
+      set(rest);
       draw();
       // A stalled download must not leave a greeting permanently onscreen.
       const loadingTimeout = later(6000, reset);
@@ -107,7 +103,7 @@
       if (current !== sequence) return;
       clearTimeout(loadingTimeout); timers.delete(loadingTimeout);
       if (!ready) { later(1500, reset); return; }
-      const delay = Math.max(0, (reduce.matches ? 500 : 300) - (performance.now() - began));
+      const delay = Math.max(0, (reduce.matches ? 500 : 150) - (performance.now() - began));
       if (reduce.matches) {
         later(delay, () => {
           pose('chew');
@@ -116,21 +112,17 @@
         later(delay + 1600, reset);
         return;
       }
-      // Reach → lift → bite → chew, then gently lower the cheese again.
-      // Offsets are relative to the first ready frame; slow decoding never
-      // compresses the in-betweens or skips directly to the last pose.
+      // One readable bite: take the same piece, lift it, bite, savour, lower.
+      // Slow decoding retains these intervals instead of skipping poses.
       [
-        [0, 'reach', -2, -2],
-        [250, 'lift', -1, -1],
-        [550, 'bite', -1, 1.5],
-        [850, 'chew', 0, -.7],
-        [1150, 'bite', -.5, .8],
-        [1400, 'chew', 0, -.4],
-        [1750, 'lift', 0, 0],
-        [2000, 'reach', 0, 0],
-      ].forEach(([offset, name, y, angle]) => later(delay + offset, () => pose(name, y, angle)));
-      later(delay + 700, () => character.classList.remove('is-discovering'));
-      later(delay + 2300, reset);
+        [0, 'reach'],
+        [420, 'lift'],
+        [800, 'bite'],
+        [1150, 'chew'],
+        [1950, 'reach'],
+      ].forEach(([offset, name]) => later(delay + offset, () => pose(name)));
+      later(delay + 850, () => character.classList.remove('is-discovering'));
+      later(delay + 2400, reset);
     }
     character.addEventListener('pointerdown', event => {if (event.button === 0) press();});
     window.addEventListener('pointerup', release);
