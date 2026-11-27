@@ -127,46 +127,119 @@
     margin-bottom: 10px;
   }
   .page__content .paper h3 a:hover { color: var(--home-link); }
+  /* The Blog's raised button face, sized for publication metadata. */
   .paper-links {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: start;
-    gap: 7px;
-    margin-top: 9px;
+    display: block;
+    margin-top: 12px;
+    line-height: 1.6;
   }
-  .paper-links > a, .paper .citation summary {
+  .paper-links > .paper-control,
+  .paper .citation > .paper-control,
+  .paper .copy-bib.paper-control,
+  html[data-theme="dark"] .paper .copy-bib.paper-control {
+    --paper-face-y: -2px;
+    --paper-face-scale: 1;
+    position: relative;
     display: inline-flex;
     align-items: center;
-    min-height: 29px;
-    margin: 0;
-    padding: 3px 9px;
-    background: var(--home-pill);
-    border-radius: 7px;
-    border: 1px solid transparent;
-    text-decoration: none;
-    transition: background-color 180ms, border-color 180ms, transform 220ms cubic-bezier(.17,.67,.2,1);
-  }
-  .paper-links > a:hover, .paper .citation summary:hover {
-    background: var(--home-note);
-    border-color: var(--home-outline);
-    text-decoration: none;
-    transform: translateY(-2px);
-  }
-  .paper-links > a:active, .paper .citation summary:active { transform: translateY(1px); }
-  .paper .citation { min-width: 0; max-width: 100%; }
-  .paper .citation[open] { flex-basis: 100%; }
-  .citation-content, html[data-theme="dark"] .citation-content {
-    background: var(--home-note);
-    border-color: var(--home-outline);
-    border-radius: 8px;
-  }
-  .copy-bib, html[data-theme="dark"] .copy-bib {
-    background: var(--home-surface);
+    vertical-align: middle;
+    margin: 0 6px 5px 0;
+    padding: 0;
+    border: 0;
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--home-link) 24%, var(--home-pill));
     color: var(--home-link);
-    border: 1px solid var(--home-outline);
-    border-radius: 6px;
-    padding: 5px 10px;
+    font: inherit;
+    font-weight: 500;
+    line-height: 1.25;
+    text-decoration: none;
+    cursor: pointer;
+    isolation: isolate;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transform: none;
+    transition: background-color 200ms;
   }
+  .paper-control::before {
+    content: "";
+    position: absolute;
+    inset: 2px 1px -2px;
+    border-radius: inherit;
+    z-index: -1;
+    background: hsl(var(--home-shadow) / .05);
+    box-shadow: 0 2px 4px hsl(var(--home-shadow) / .055);
+    pointer-events: none;
+  }
+  .paper-control .paper-control-face {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 32px;
+    padding: 5px 11px;
+    box-sizing: border-box;
+    border: 1px solid color-mix(in srgb, var(--home-link) 13%, transparent);
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--home-pill) 80%, var(--bg, #fff));
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--bg, #fff) 65%, transparent);
+    transform: translateY(var(--paper-face-y)) scale(var(--paper-face-scale));
+    transition: background-color 200ms, border-color 200ms, color 200ms;
+    pointer-events: none;
+  }
+  .paper-control .paper-control-icon {
+    display: block;
+    flex: none;
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    overflow: visible;
+    transform: translate(var(--paper-icon-x, 0px), var(--paper-icon-y, 0px)) rotate(var(--paper-icon-rotate, 0deg));
+  }
+  .paper-control .paper-control-icon--disclosure {
+    rotate: var(--paper-disclosure-angle, 0deg);
+    transition: rotate 250ms cubic-bezier(.3,.7,.4,1);
+  }
+  .citation[open] { --paper-disclosure-angle: 180deg; }
+  .paper-links .paper-control:hover,
+  .paper .copy-bib.paper-control:hover { text-decoration: none; transform: none; }
+  .paper-control:hover .paper-control-face,
+  .paper-control:focus-visible .paper-control-face {
+    background: var(--home-note);
+    border-color: color-mix(in srgb, var(--home-link) 30%, transparent);
+  }
+  .paper-control:focus-visible {
+    outline: 2px solid var(--home-link);
+    outline-offset: 4px;
+  }
+  .paper .citation { display: inline; min-width: 0; max-width: 100%; }
+  .paper .citation > summary { list-style: none; }
+  .paper .citation > summary::-webkit-details-marker { display: none; }
+  .paper .citation[open] > summary .paper-control-face {
+    background: var(--home-note);
+    border-color: color-mix(in srgb, var(--home-link) 34%, transparent);
+  }
+  .citation-content, html[data-theme="dark"] .citation-content {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    margin: 7px 0 3px;
+    padding: 16px;
+    background: var(--home-note);
+    border: 1px solid color-mix(in srgb, var(--home-link) 17%, transparent);
+    border-radius: 9px;
+    box-shadow: 0 1px 3px hsl(var(--home-shadow) / .035), 0 6px 12px hsl(var(--home-shadow) / .035);
+    transform-origin: top left;
+  }
+  .citation-content pre { line-height: 1.6; margin-top: 10px; }
+  .paper .copy-bib.paper-control { font-size: 13px; }
+  .paper .copy-bib .paper-control-face { min-height: 29px; padding: 4px 9px; }
+  .citation-content .copy-status { color: var(--home-muted); font-size: 13px; line-height: 1.5; }
+  .citation-content .copy-status:empty { display: none; }
   .education-row strong, .internship-list > li > em {
     color: var(--home-heading);
   }
@@ -185,7 +258,7 @@
 }
 @media (prefers-reduced-motion:reduce) {
   .figure-button { transition: none; }
-  .paper-links > a:hover, .paper .citation summary:hover { transform: none; }
+  .paper-control .paper-control-face, .paper-control .paper-control-icon { transform: none; transition: none; }
 }
 
 /* Same corner contours as the Blog reading note. */

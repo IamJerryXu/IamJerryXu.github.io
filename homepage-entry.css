@@ -40,7 +40,7 @@
 
 /* The Blog opens small panels with a short rise and opacity change. */
 @media screen and (prefers-reduced-motion: no-preference) {
-  .citation[open] .citation-content, #figure-dialog[open], #wechat-dialog[open] {
+  #figure-dialog[open], #wechat-dialog[open] {
     animation: home-sheet-in 260ms cubic-bezier(.17,.67,.2,1);
   }
   @keyframes home-sheet-in {
