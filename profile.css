@@ -9,7 +9,16 @@ html[data-theme=dark] .portrait-toggle:hover .portrait-frame,html[data-theme=dar
 @media(prefers-reduced-motion:reduce){.portrait-scene *{animation:none!important;transition:none!important}}
 
 /* Keep the established profile and content spacing across portrait sizes. */
+.sidebar .author__content::after {
+  content:"";
+  display:block;
+  height:1.5em;
+  margin:3px 0 12px;
+}
 @media (min-width:925px) {
+  .sidebar .author__content::after {
+    margin-bottom:calc(10px + var(--profile-space));
+  }
   #main {
     display:grid;
     grid-template-columns:210px minmax(0,1fr);

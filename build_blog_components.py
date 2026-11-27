@@ -12,10 +12,10 @@ def asset_url(root, path):
 def character_images(root, interactive=False):
     layers = []
     for mode, base, happy in [
-        ('day', 'assets/blog-character-white-glasses-v2.webp', 'assets/blog-character-white-glasses-happy-v2.webp'),
-        ('night', 'assets/blog-character-white-glasses-night-v2.webp', 'assets/blog-character-white-glasses-night-happy-v2.webp'),
+        ('day', 'assets/character-hazelnut-day-v1.webp', 'assets/blog-character-white-glasses-happy-v2.webp'),
+        ('night', 'assets/character-hazelnut-night-v1.webp', 'assets/blog-character-white-glasses-night-happy-v2.webp'),
     ]:
-        greeting = f'<img class="character-greeting" src="{asset_url(root, f"assets/character-wave-{mode}.webp")}" alt="" width="397" height="720" decoding="async" draggable="false">' if interactive else ''
+        greeting = f'<img class="character-greeting" src="{asset_url(root, f"assets/character-hazelnut-wave-{mode}-v1.webp")}" alt="" width="397" height="720" decoding="async" draggable="false">' if interactive else ''
         layers.append(f'<span class="character-layer character-layer--{mode}"><img class="character-base" src="{asset_url(root, base)}" alt="" width="397" height="720" decoding="async" draggable="false"><img class="character-expression" src="{asset_url(root, happy)}" alt="" width="397" height="720" decoding="async" draggable="false">{greeting}</span>')
     # Match the image's intrinsic canvas: the stitched mark stays registered even
     # when a footer uses a differently proportioned object-fit container.
