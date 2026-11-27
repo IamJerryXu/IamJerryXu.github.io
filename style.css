@@ -29,7 +29,7 @@ html{scroll-behavior:smooth;scroll-padding-top:85px}body{background:#fff}button,
 .research-interests>span>span{white-space:nowrap}
 @media(max-width:540px){.profile_box .author__urls-wrapper{width:100%;justify-self:start;text-align:left}.sidebar .name-zh{display:block;margin:2px 0 0}}
 
-.sidebar .research-interests{text-align:left;text-align-last:auto;word-spacing:normal;letter-spacing:normal;text-wrap:pretty;hyphens:none}
+.sidebar .research-interests{text-align:justify;text-align-last:left;word-spacing:normal;letter-spacing:normal;text-wrap:pretty;hyphens:none}
 @media(min-width:925px){.sidebar .research-interests{width:calc(100% + 24px)}}
 
 .page__content #about p{text-align:left;text-align-last:auto;word-spacing:normal;letter-spacing:normal}
