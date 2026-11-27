@@ -2,10 +2,10 @@
 .home-project-promo .home-cat-button {
   position: absolute;
   z-index: 3;
-  top: 56px;
-  left: -56px;
+  top: -34px;
+  left: -4px;
   display: block;
-  width: 75px;
+  width: 68px;
   height: auto;
   padding: 0;
   margin: 0;
@@ -34,18 +34,6 @@
   border-radius: 28px;
 }
 @media (prefers-reduced-motion:reduce){.home-cat-head{transform:none!important}}
-@media (max-width:540px){
-  .sidebar .home-project-promo{width:calc(100% - 48px);margin-left:auto;margin-right:0}
-  .home-project-promo .home-cat-button{left:-55px;top:62px;width:75px}
-}
-/* Each desktop column-width change starts close to the left page gutter. */
-@media (min-width:925px) and (max-width:1015px){
-  .sidebar .home-project-promo{--cat-room:clamp(0px,calc((1015px - 100vw)/2),45px);margin-left:var(--cat-room);width:calc(100% - var(--cat-room));padding-inline:16px}
-}
-@media (min-width:1280px) and (max-width:1370px){
-  .sidebar .home-project-promo{--cat-room:clamp(0px,calc((1370px - 100vw)/2),45px);margin-left:var(--cat-room);width:calc(100% - var(--cat-room));padding-inline:16px}
-}
-@media (min-width:1440px){.home-project-promo .home-cat-button{left:-89px;top:45px;width:110px}}
-@media (min-width:925px) and (max-width:1015px), (min-width:1280px) and (max-width:1370px){
-  .home-project-promo .home-cat-button{left:-58px}
-}
+/* At narrow widths the cat occupies the header, not a left-hand gutter.
+   This keeps the card aligned with the contacts without pushing it right. */
+@media(min-width:1440px){.home-project-promo .home-cat-button{left:-72px;top:48px;width:90px}}
