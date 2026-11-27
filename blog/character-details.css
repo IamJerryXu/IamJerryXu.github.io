@@ -73,32 +73,17 @@ html[data-theme=dark] :is(.character-stitch, .character-cheese) {
 }
 @media print { .character-cheese { display: none; } }
 
-/* A small companion, sharing the shirt's warm mouse palette. */
+/* Classic Jerry artwork; only the shared spring moves the companion. */
 .character-pet {
-  --pet-coat: #b67c50; --pet-edge: #916143; --pet-inner: #e6ae95;
-  --pet-cream: #f4d8ae; --pet-ink: #493329;
-  position: absolute; left: -37%; bottom: 1px; width: 39%; z-index: 3;
+  position: absolute; left: -41%; bottom: 1px; width: 40%; z-index: 3;
   display: block; pointer-events: auto; transition: none;
-  transform-origin: 70% 100%;
+  transform-origin: 55% 100%;
   transform: translateY(var(--pet-y, 0px)) rotate(var(--pet-rotate, 0deg));
 }
-.character-pet > svg { display: block; width: 100%; height: auto; overflow: visible; }
-.character-pet .pet-body { fill: var(--pet-coat); stroke: var(--pet-edge); stroke-width: 1.5; }
-.character-pet .pet-inner { fill: var(--pet-inner); }
-.character-pet .pet-belly,.character-pet .pet-feet { fill: var(--pet-cream); }
-.character-pet .pet-feet { stroke: var(--pet-edge); stroke-width: 1; }
-.character-pet .pet-tail { stroke: var(--pet-coat); stroke-width: 4; }
-.character-pet .pet-arm { stroke: var(--pet-edge); stroke-width: 3; }
-.character-pet .pet-eyes,.character-pet .pet-nose { fill: var(--pet-ink); }
-.character-pet .pet-mouth,.character-pet .pet-smile-eyes { stroke: var(--pet-ink); stroke-width: 2.5; }
-.character-pet .pet-smile-eyes { opacity: 0; }
-.is-happy .character-pet .pet-eyes { opacity: 0; }
-.is-happy .character-pet .pet-smile-eyes { opacity: 1; }
-html[data-theme=dark] .character-pet {
-  --pet-coat: #836650; --pet-edge: #5d4c44; --pet-inner: #ab8b80;
-  --pet-cream: #b4a48b; --pet-ink: #332d2b;
-}
-@media (prefers-reduced-motion:no-preference) {
-  .character-pet svg * { transition: fill 850ms cubic-bezier(.41,.1,.13,1), stroke 850ms cubic-bezier(.41,.1,.13,1); }
+.scene-portrait .character-pet .character-pet-art {
+  position: static; display: block; width: 100%; height: auto;
+  max-width: none; object-fit: contain; opacity: 1;
+  margin: 0; border: 0; border-radius: 0; box-shadow: none;
+  filter: none; transition: none;
 }
 @media print { .character-pet { display: none; } }

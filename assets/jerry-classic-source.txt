@@ -1,0 +1,5 @@
+Jerry from Tom and Jerry. Character artwork: Warner Bros. / Turner Entertainment.
+Source: official Tom and Jerry Chase website, https://tom.163.com/
+Role record: https://test.nie.163.com/test_cdn/tom/pc/zt/20200428165812/data/data.js (jr)
+Original PNG: https://test.nie.163.com/test_cdn/tom/pc/zt/20200428165812/img/roles/roleBig5_3338e53.png
+Prepared by removing transparent margins and lossless WebP encoding; no character redrawing.
