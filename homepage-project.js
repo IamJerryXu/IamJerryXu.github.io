@@ -82,11 +82,10 @@
     if (revealed) return;
     revealed = true;
     if (reduce.matches) {note.dataset.reveal = 'visible';return;}
-    letters[0].set([.75,-27,0],true); letters[1].set([.7,-20,28],true);
+    letters.forEach(letter => letter.set([.85,-8,0],true));
     later(() => {
       note.dataset.reveal = 'visible';
-      later(() => letters[0].set([1,0,0]),200);
-      later(() => letters[1].set([1,0,0]),240);
+      letters.forEach((letter,index) => later(() => letter.set([1,0,0]),200 + index * 40));
     },500);
   }
   let observer;

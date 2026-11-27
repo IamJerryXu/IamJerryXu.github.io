@@ -100,7 +100,6 @@ home_footer_links = (
  '<a class="icon-button social-tool" data-blog-social="linkedin" href="https://www.linkedin.com/in/%E6%B0%B8%E9%9B%AA-%E5%BE%90-6340a4415/" aria-label="LinkedIn">'+icon('linkedin')+'</a>'
 )
 home_footer = render_blog_footer(ROOT, tr, social_links=home_footer_links)
-home_astra_art=(ROOT/'homepage-astradraw.svg').read_text()
 home_cat_art=(ROOT/'homepage-cat.svg').read_text()
 body=f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{SITE_TITLE}</title>
@@ -131,7 +130,7 @@ body=f'''<!doctype html>
 <li><button id="wechat-open" type="button" aria-haspopup="dialog" aria-controls="wechat-dialog"><img class="contact-icon" src="assets/wechat.svg" alt="" aria-hidden="true">{tr('WeChat','微信')}</button></li>
 <li><a href="https://xhslink.cn/o/60IapESrKEh" target="_blank" rel="noopener noreferrer"><img class="contact-icon" src="assets/rednote.svg" alt="" aria-hidden="true">{tr('Rednote','小红书')}</a></li>
 </ul></div>
-<section class="home-project-note home-project-promo" aria-labelledby="home-project-heading"><h2 id="home-project-heading" class="visually-hidden">AstraDraw</h2><button class="home-cat-button" type="button"><span class="visually-hidden">{tr("Pet the gray cat","摸摸小灰猫")}</span>{home_cat_art}</button><a class="astra-sticker" href="/blog/astradraw/" aria-label="AstraDraw">{home_astra_art}</a><p>{tr('Draw research figures, then refine them in PowerPoint.','用 Astra 画科研图，再到 PowerPoint 里继续修改。')}</p><div class="astra-promo-action"><a class="astra-promo-link" href="/blog/astradraw/"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h16m-6-7 7 7-7 7"/></svg></span><span>{tr('Take a look','看看怎么画')}</span></a></div></section>
+<section class="home-project-note home-project-promo" aria-labelledby="home-project-heading"><button class="home-cat-button" type="button"><span class="visually-hidden">{tr("Pet the gray cat","摸摸小灰猫")}</span>{home_cat_art}</button><h2 id="home-project-heading" class="astra-promo-heading"><a class="astra-sticker" href="/blog/astradraw/"><span class="astra-word">AstraDraw</span></a></h2><p>{tr('Draw research figures, then refine them in PowerPoint.','用 Astra 画科研图，再到 PowerPoint 里继续修改。')}</p><div class="astra-promo-action"><a class="astra-promo-link" href="/blog/astradraw/"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-6-7 7 7-7 7"/></svg></span><span>{tr('Read more','了解更多')}</span></a></div></section>
 </div></aside>
 <main class="page" id="content"><div class="page__inner-wrap"><div class="page__content">
 <section id="about" aria-label="About Me"><p>{' '.join(tr(x[0],x[1]) for x in D['bio'])} {tr('I welcome research collaborations in generative modeling and embodied intelligence. Feel free to <a href="mailto:jiangjiangcheng753@gmail.com">contact me</a>.','欢迎生成式模型与具身智能方向的科研合作，欢迎通过<a href="mailto:jiangjiangcheng753@gmail.com">邮件联系我</a>。')}</p></section>
