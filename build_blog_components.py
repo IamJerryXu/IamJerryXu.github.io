@@ -15,7 +15,8 @@ def character_images(root, interactive=False):
         ('day', 'assets/blog-character-white-glasses-v2.webp', 'assets/blog-character-white-glasses-happy-v2.webp'),
         ('night', 'assets/blog-character-white-glasses-night-v2.webp', 'assets/blog-character-white-glasses-night-happy-v2.webp'),
     ]:
-        layers.append(f'<span class="character-layer character-layer--{mode}"><img class="character-base" src="{asset_url(root, base)}" alt="" width="397" height="720" decoding="async" draggable="false"><img class="character-expression" src="{asset_url(root, happy)}" alt="" width="397" height="720" decoding="async" draggable="false"></span>')
+        greeting = f'<img class="character-greeting" src="{asset_url(root, f"assets/character-wave-{mode}.webp")}" alt="" width="397" height="720" decoding="async" draggable="false">' if interactive else ''
+        layers.append(f'<span class="character-layer character-layer--{mode}"><img class="character-base" src="{asset_url(root, base)}" alt="" width="397" height="720" decoding="async" draggable="false"><img class="character-expression" src="{asset_url(root, happy)}" alt="" width="397" height="720" decoding="async" draggable="false">{greeting}</span>')
     # Match the image's intrinsic canvas: the stitched mark stays registered even
     # when a footer uses a differently proportioned object-fit container.
     layers.append('''<span class="character-stitch" aria-hidden="true"><svg class="character-stitch-art" viewBox="0 0 397 720" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><svg x="163" y="371" width="71" height="64" viewBox="0 0 64 58" fill="none">
@@ -29,7 +30,13 @@ def character_images(root, interactive=False):
 <path class="stitch-nose" d="M29.5 38.5Q32 37 34.5 38.5Q34 42 32 42Q30 42 29.5 38.5Z"/>
 </g></svg></svg></span>''')
     if interactive:
-        layers.append(f'<span class="character-pet" aria-hidden="true"><img class="character-pet-art character-pet-day" src="{asset_url(root, "assets/mouse-companion-day.webp")}" width="470" height="640" alt="" draggable="false" decoding="async"><img class="character-pet-art character-pet-night" src="{asset_url(root, "assets/mouse-companion-night.webp")}" width="470" height="640" alt="" draggable="false" decoding="async"></span>')
+        pet_images = ''.join(f'<img class="character-pet-art character-pet-{state}-{mode}" src="{asset_url(root, asset)}" width="470" height="640" alt="" draggable="false" decoding="async">' for state, mode, asset in [
+            ('rest', 'day', 'assets/mouse-companion-day.webp'),
+            ('rest', 'night', 'assets/mouse-companion-night.webp'),
+            ('bite', 'day', 'assets/mouse-bite-day.webp'),
+            ('bite', 'night', 'assets/mouse-bite-night.webp'),
+        ])
+        layers.append(f'<span class="character-pet" aria-hidden="true">{pet_images}<span class="character-discovery"><svg viewBox="0 0 24 40" fill="none"><path d="M12 5L12 24" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="12" cy="35" r="4" fill="currentColor"/></svg></span></span>')
         layers.append('''<span class="character-cheese" aria-hidden="true"><svg viewBox="0 0 64 54" fill="none" aria-hidden="true" focusable="false"><g stroke-linecap="round" stroke-linejoin="round">
 <path class="cheese-side" d="M7 24L39 7Q41 6 43 8L58 22V43Q58 46 55 46H9Q6 46 6 43V27Q6 25 7 24Z"/>
 <path class="cheese-top" d="M7 24L39 7Q41 6 43 8L58 22L24 31Z"/>

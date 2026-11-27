@@ -1,3 +1,14 @@
+/* Registered colors let the sky gradient interpolate with its cloud layers. */
+@property --home-sky-top-color {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #b9e7ff;
+}
+@property --home-sky-bottom-color {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #cceefe;
+}
 /* The actual Blog cloud silhouettes surround the existing academic layout. */
 .academic-home {
   --sky: #a0d4ee;
@@ -32,7 +43,10 @@ html[data-theme="dark"] .academic-home {
   --sky-link: var(--blue);
 }
 /* Match the Blog canvas so the cloud edge has no dark-theme seam. */
-html[data-theme] body.academic-home { background: var(--bg); }
+html[data-theme] body.academic-home {
+  background: var(--bg);
+  transition: background-color 350ms cubic-bezier(.41,.1,.13,1);
+}
 .home-atmosphere {
   --cloud-far: var(--hero-cloud-far);
   --cloud: var(--hero-cloud);
@@ -40,7 +54,10 @@ html[data-theme] body.academic-home { background: var(--bg); }
   inset: 0 0 auto;
   height: var(--home-sky-height,0px);
   z-index: -1;
-  background: linear-gradient(var(--hero-sky), var(--hero-sky-bottom));
+  --home-sky-top-color: var(--hero-sky);
+  --home-sky-bottom-color: var(--hero-sky-bottom);
+  background: linear-gradient(var(--home-sky-top-color), var(--home-sky-bottom-color));
+  transition: --home-sky-top-color 350ms cubic-bezier(.41,.1,.13,1), --home-sky-bottom-color 350ms cubic-bezier(.41,.1,.13,1);
   pointer-events: none;
 }
 .home-horizon {
@@ -105,6 +122,7 @@ html[data-theme] .academic-home .page__content #about a { color: var(--sky-link)
   .home-horizon .source-article-cloud { width: 2000px; min-width: 2000px; height: 161.54px; }
 }
 @media (prefers-reduced-motion:reduce) {
+  html[data-theme] body.academic-home, .home-atmosphere,
   .home-horizon path, .academic-home .masthead, .site-footer path,
   .academic-home .site-footer .character-layer,
   .academic-home .home-character .character-layer { transition: none; }

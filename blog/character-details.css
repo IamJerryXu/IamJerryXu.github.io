@@ -24,15 +24,15 @@
 .character-stitch .stitch-eye { stroke: var(--stitch-ink); stroke-width: 2.8; }
 .character-stitch .stitch-nose { fill: var(--stitch-ink); }
 .character-cheese {
-  left: -53%;
+  left: -33%;
   top: auto;
-  bottom: 22%;
-  width: 25%;
+  bottom: calc(4% + 4px);
+  width: 31%;
   z-index: 4;
   opacity: var(--cheese-opacity, 0);
   transition: none;
   transform: translate(var(--cheese-x, 0px), var(--cheese-y, 0px)) rotate(var(--cheese-rotate, -14deg)) scale(var(--cheese-scale, .6));
-  transform-origin: 75% 70%;
+  transform-origin: 50% 65%;
 }
 .character-cheese > svg { display: block; width: 100%; height: auto; overflow: visible; }
 .character-cheese .cheese-side { fill: var(--cheese-front); stroke: var(--cheese-edge); stroke-width: 1.8; }
@@ -75,7 +75,7 @@ html[data-theme=dark] :is(.character-stitch, .character-cheese) {
 
 /* Original blue-scarf mouse, with matching day/night studio lighting. */
 .character-pet {
-  position: absolute; left: -41%; bottom: 1px; width: 40%; z-index: 3;
+  position: absolute; left: -50%; bottom: 1px; width: 48%; z-index: 3;
   display: block; pointer-events: auto; transition: none;
   transform-origin: 55% 100%;
   transform: translateY(var(--pet-y, 0px)) rotate(var(--pet-rotate, 0deg));
@@ -88,10 +88,23 @@ html[data-theme=dark] :is(.character-stitch, .character-cheese) {
 }
 @media print { .character-pet { display: none; } }
 
-.scene-portrait .character-pet .character-pet-day { position: relative; z-index: 1; }
-.scene-portrait .character-pet .character-pet-night { position: absolute; inset: 0; opacity: 0; }
-html[data-theme=dark] .scene-portrait .character-pet .character-pet-night { opacity: 1; }
-html[data-theme=dark] .scene-portrait .character-pet .character-pet-day { opacity: 0; }
+
+/* Keep one image in flow; all poses share its canvas and foot baseline. */
+.scene-portrait .character-pet .character-pet-art { position:absolute; inset:0; opacity:0; }
+.scene-portrait .character-pet .character-pet-rest-day { position:relative; opacity:1; }
+html[data-theme=dark] .scene-portrait .character-pet .character-pet-rest-day { opacity:0; }
+html[data-theme=dark] .scene-portrait .character-pet .character-pet-rest-night { opacity:1; }
+.scene-portrait.is-biting .character-pet .character-pet-rest-day,
+html[data-theme=dark] .scene-portrait.is-biting .character-pet .character-pet-rest-night { opacity:0; }
+.scene-portrait.is-biting .character-pet .character-pet-bite-day { opacity:1; }
+html[data-theme=dark] .scene-portrait.is-biting .character-pet .character-pet-bite-day { opacity:0; }
+html[data-theme=dark] .scene-portrait.is-biting .character-pet .character-pet-bite-night { opacity:1; }
+.scene-portrait.is-biting .character-cheese { visibility:hidden; }
+.character-discovery { position:absolute; right:-8%; top:6%; width:20%; height:auto; color:#e8a735; opacity:0; transform:scale(.35) rotate(-14deg); transform-origin:50% 100%; pointer-events:none; }
+.character-discovery svg { display:block; width:100%; height:auto; overflow:visible; filter:drop-shadow(0 1px 0 #fff8); }
+.is-discovering .character-discovery { opacity:1; transform:scale(1) rotate(8deg); }
+html[data-theme=dark] .character-discovery { color:#f5c974; }
 @media (prefers-reduced-motion:no-preference) {
-  .scene-portrait .character-pet .character-pet-art { transition: opacity 850ms cubic-bezier(.41,.1,.13,1); }
+  .character-discovery { transition:transform 350ms cubic-bezier(.2,1.7,.4,1),opacity 120ms ease; }
 }
+@media print { .character-discovery { display:none; } }

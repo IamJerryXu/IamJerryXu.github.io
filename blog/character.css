@@ -3,3 +3,10 @@
 .scene-portrait::after,.footer-peek::after{display:none}.scene-portrait .character-layer,.footer-peek .character-layer{position:absolute;inset:0;display:block;transition:opacity 400ms ease;pointer-events:none}.character-layer--day{z-index:2;opacity:1}.character-layer--night{z-index:1;opacity:1}html[data-theme=dark] .character-layer--day{opacity:0}.scene-portrait .character-layer img,.footer-peek .character-layer img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:none!important;transition:none}.scene-portrait .character-expression,.footer-peek .character-expression{opacity:0;z-index:1;mask-image:radial-gradient(ellipse 7% 3.15% at 38.15% 28.9%,#000 70%,transparent 100%),radial-gradient(ellipse 7% 3.15% at 61.8% 28.5%,#000 70%,transparent 100%)}.scene-portrait.is-happy .character-expression,.footer-peek.is-happy .character-expression{opacity:1}
 @media(prefers-reduced-motion:reduce){.scene-portrait .character-layer,.footer-peek .character-layer{transition:none}}
 
+
+/* The greeting is a complete pose; never leave the resting hands underneath. */
+.scene-portrait .character-layer .character-greeting { opacity:0; }
+.scene-portrait.is-greeting .character-layer .character-greeting { opacity:1; }
+.scene-portrait.is-greeting .character-layer :is(.character-base,.character-expression) { opacity:0; }
+.scene-portrait .character-layer--night { opacity:0; }
+html[data-theme=dark] .scene-portrait .character-layer--night { opacity:1; }

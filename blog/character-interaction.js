@@ -8,7 +8,15 @@
     const pet = character.querySelector('.character-pet');
     const rest = [1, 6, 10, -20, .5, 0, 0, 0];
     const values = rest.map(x => ({x, target:x, v:0}));
-    let frame = 0, previous = 0, timer = 0, pressed = false;
+    const timers = new Set();
+    let frame = 0, previous = 0, pressed = false;
+    function later(delay, callback) {
+      const timer = setTimeout(() => {
+        timers.delete(timer);
+        callback();
+      }, delay);
+      timers.add(timer);
+    }
     function draw() {
       character.style.scale = values[0].x;
       if (pet) {
@@ -38,6 +46,8 @@
       else previous = 0;
     }
     function set(targets, instant = reduce.matches) {
+      // Reduced motion keeps the same readable story without scaling or bouncing.
+      if (reduce.matches) targets = [1, 0, 0, 0, 1, targets[5], 0, 0];
       values.forEach((value, index) => {
         value.target = targets[index];
         if (instant) {value.x = targets[index]; value.v = 0;}
@@ -46,8 +56,10 @@
       else if (!frame) frame = requestAnimationFrame(tick);
     }
     function reset() {
-      clearTimeout(timer); pressed = false;
-      character.classList.remove('is-happy');
+      timers.forEach(clearTimeout);
+      timers.clear();
+      pressed = false;
+      character.classList.remove('is-happy', 'is-greeting', 'is-discovering', 'is-biting');
       set(rest, true);
     }
     function press() {
@@ -66,23 +78,26 @@
       set(targets);
     }
     function celebrate() {
-      clearTimeout(timer);
-      character.classList.add('is-happy');
-      // Fast taps still show the small compression before the spring releases.
-      if (!reduce.matches) values[0].x = Math.min(values[0].x, .975);
-      set([1, 0, -6, -8, 1, 1, -7, -9]);
+      // A new tap replaces the complete sequence rather than queuing another bite.
+      reset();
+      character.classList.add('is-happy', 'is-greeting', 'is-discovering');
+      if (!reduce.matches) values[0].x = .975;
+      set([1, 0, 0, -8, 1, 1, -3, -3]);
       draw();
-      timer = setTimeout(() => {
-        character.classList.remove('is-happy');
-        set([1, -4, -14, 4, .85, 0, 0, 0]);
-      }, 1200);
+      later(500, () => {
+        character.classList.add('is-biting');
+        // The bite artwork contains the cheese; the separate piece now disappears.
+        set([1, 0, 5, -12, .7, 0, -1, 2]);
+      });
+      later(800, () => set([1, 0, 5, -12, .7, 0, 0, 0]));
+      later(1000, () => character.classList.remove('is-discovering'));
+      later(2100, reset);
     }
     character.addEventListener('pointerdown', event => {if (event.button === 0) press();});
     window.addEventListener('pointerup', release);
     character.addEventListener('pointercancel', reset);
     character.addEventListener('keydown', event => {
       if (['Enter',' '].includes(event.key) && !event.repeat) press();
-      if (event.key === 'Escape') reset();
     });
     character.addEventListener('keyup', event => {if (['Enter',' '].includes(event.key)) release();});
     character.addEventListener('click', celebrate);
@@ -91,6 +106,7 @@
     document.querySelector('#rainbow-random')?.addEventListener('click', celebrate);
     reduce.addEventListener('change', reset);
     window.addEventListener('blur', reset);
+    document.addEventListener('keydown', event => {if (event.key === 'Escape') reset();});
     window.addEventListener('pagehide', reset);
     document.addEventListener('visibilitychange', () => {if (document.hidden) reset();});
     new IntersectionObserver(entries => {if (!entries[0].isIntersecting) reset();}).observe(character);
