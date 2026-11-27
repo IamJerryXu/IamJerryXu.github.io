@@ -4,7 +4,7 @@
     new CustomEvent('site:interaction-sound', {detail: {kind, group}})
   );
   const selector = 'a[href], button, summary, [role="button"]';
-  const separate = '#sound-toggle, #theme-toggle, [data-figure], #wechat-open, .close-figure, #wechat-close, summary';
+  const separate = '#sound-toggle, #theme-toggle, [data-figure], #wechat-open, .close-figure, #wechat-close, summary, .character-interactive';
   const controlFor = target => {
     if (!(target instanceof Element)) return null;
     const control = target.closest(selector);

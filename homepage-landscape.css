@@ -85,7 +85,7 @@ html[data-theme] body.academic-home {
 }
 .academic-home .masthead .greedy-nav a,
 html[data-theme="dark"] .academic-home .masthead .greedy-nav a,
-.academic-home #theme-toggle, .academic-home #language {
+.academic-home #sound-toggle, .academic-home #theme-toggle, .academic-home #language {
   color: var(--fg);
 }
 .academic-home .masthead .greedy-nav a:hover { color: var(--blue); }

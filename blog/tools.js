@@ -14,8 +14,8 @@
   const soundButton = document.querySelector('#sound-toggle');
   const chinese = () => document.documentElement.lang.startsWith('zh');
   const soundStorageKey = 'blog-sound-enabled';
-  const storedSoundEnabled = value => value === null ? true : value === 'true';
-  let soundEnabled = true;
+  const storedSoundEnabled = value => value === 'true';
+  let soundEnabled = false;
   try { soundEnabled = storedSoundEnabled(localStorage.getItem(soundStorageKey)); } catch {}
   let indexPromise = null;
   let searchIndex = [];
@@ -40,7 +40,9 @@
     down: ['pop-down', .25], press: ['pop-down', .25],
     on: ['pop-up-on', .25], release: ['pop-up-on', .25], off: ['pop-up-off', .25],
     open: ['menu-open-softer', .6], close: ['menu-close', .6],
-    rising: ['rising-pops', .25], hover: ['plunger-immediate', .15]
+    rising: ['rising-pops', .25], hover: ['plunger-immediate', .15],
+    // Character-specific mixes of the reference's pop and bubbling recordings.
+    greet: ['pop', .2], glug: ['glug-b', .2], bite: ['glug-b', .16], chew: ['pop', .13]
   };
   const recordings = new Map();
   const activeSounds = new Map(), soundTokens = new Map();
@@ -58,7 +60,7 @@
   function recording(kind) {
     if (!window.Howl) return null;
     const [file, volume] = voices[kind];
-    if (!recordings.has(file)) {
+    if (!recordings.has(kind)) {
       const sound = new window.Howl({
         src: [new URL(file + '.mp3', audioBase).href],
         volume,
@@ -71,15 +73,15 @@
           activeSounds.delete(id);
         }
       });
-      recordings.set(file, sound);
+      recordings.set(kind, sound);
     }
-    return recordings.get(file);
+    return recordings.get(kind);
   }
   function preloadSounds() {
     // As in use-sound, preload even while muted so enabling is immediately audible.
     Object.keys(voices).forEach(recording);
   }
-  async function playSound(kind, {force = false, group = kind} = {}) {
+  async function playSound(kind, {force = false, group = kind, rate = 1} = {}) {
     if (!voices[kind] || (!soundEnabled && !force) || document.hidden) return;
     stopSound(group);
     const token = soundTokens.get(group);
@@ -105,11 +107,21 @@
           (window.Howler?.usingWebAudio && context?.state !== 'running')) return;
       if (activeSounds.size > 10) stopSound();
       const id = sound.play();
-      if (id !== null) activeSounds.set(id, {sound, group});
+      if (id !== null) {
+        sound.rate(Number.isFinite(rate) ? Math.max(.85, Math.min(1.25, rate)) : 1, id);
+        activeSounds.set(id, {sound, group});
+      }
     } catch {
       // An unavailable audio device must never affect navigation or controls.
     }
   }
+  document.addEventListener('site:character-sound', event => {
+    const {kind, rate} = event.detail || {};
+    if (kind === 'stop') stopSound('character');
+    else if (['greet', 'hover', 'rising', 'glug', 'on', 'bite', 'chew'].includes(kind)) {
+      playSound(kind, {group: 'character', rate});
+    }
+  });
   function suspendSounds() {
     soundRevision++;
     stopSound();

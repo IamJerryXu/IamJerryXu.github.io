@@ -15,3 +15,5 @@ Playback uses the official Howler 2.2.4 distribution, the playback dependency de
 - Dependency verification: https://cdn.jsdelivr.net/npm/use-sound@5.0.0/package.json
 
 The Howler MIT license covers the playback library, not these recordings.
+
+Character greetings and the mouse bite/chew sequence adapt the original `pop.mp3` and `glug-b.mp3` recordings alongside existing pop/plunger/rising sounds, with restrained volume and per-play pitch variation. These are site-specific character cues, not a claim about the original site’s characters.

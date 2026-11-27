@@ -7,6 +7,13 @@
     const rest = [1, 0, 0];
     const values = rest.map(x => ({x, target:x, v:0}));
     const timers = new Set();
+    const greetings = {human: ['greet', 'hover', 'rising'], mouse: ['glug', 'on', 'greet']};
+    const greetingIndex = {human: 0, mouse: 0};
+    let lastGreeting = null;
+    const rates = [.95, 1.06, 1.18];
+    function sound(kind, rate = 1) {
+      document.dispatchEvent(new CustomEvent('site:character-sound', {detail: {kind, rate}}));
+    }
     let frame = 0, previous = 0, pressed = false, playing = false, sequence = 0;
     // Decode both lighting variants before showing a new pose, including when
     // the user switches themes during the bite. Failed assets keep the rest pose.
@@ -56,6 +63,7 @@
       else if (!frame) frame = requestAnimationFrame(tick);
     }
     function reset() {
+      sound('stop');
       sequence++;
       timers.forEach(clearTimeout);
       timers.clear();
@@ -81,16 +89,23 @@
     }
     function pose(name) {
       character.dataset.petPose = name;
+      if (name === 'bite') sound('bite', 1.04);
+      else if (name === 'chew') sound('chew', 1.16);
       character.classList.toggle('is-biting', name === 'bite' || name === 'chew');
       // The new pictures carry the whole gesture. Keep the body planted instead
       // of competing with their arm/mouth changes using a second bounce.
       set(rest);
     }
-    async function celebrate() {
+    async function celebrate(event) {
       // Taps during a bite coalesce: never flash back to rest or queue a replay.
       if (playing) return;
       reset();
       playing = true;
+      const actor = event?.target instanceof Element && event.target.closest('.character-pet') ? 'mouse' : 'human';
+      let index = greetingIndex[actor]++;
+      if (greetings[actor][index % greetings[actor].length] === lastGreeting) index = greetingIndex[actor]++;
+      lastGreeting = greetings[actor][index % greetings[actor].length];
+      sound(lastGreeting, rates[index % rates.length]);
       const current = sequence;
       const began = performance.now();
       character.classList.add('is-happy', 'is-greeting', 'is-discovering');

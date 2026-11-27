@@ -22,7 +22,13 @@
   toggle.addEventListener('pointerleave', () => { preview = false; render(); });
   toggle.addEventListener('focus', () => { if (toggle.matches(':focus-visible')) { preview = true; render(); } });
   toggle.addEventListener('blur', () => { preview = false; render(); });
-  toggle.addEventListener('click', () => { pinned = !pinned; render(); });
+  toggle.addEventListener('click', () => {
+    pinned = !pinned;
+    // An explicit return to the photo wins over the current hover/focus preview.
+    // Preview is available again after the next pointer entry or keyboard focus.
+    if (!pinned) preview = false;
+    render();
+  });
   scene.addEventListener('keydown', event => {
     if (event.key === 'Escape' && pinned) { event.preventDefault(); pinned = false; preview = false; render(); toggle.focus({preventScroll:true}); preview = false; render(); }
   });
