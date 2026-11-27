@@ -53,3 +53,11 @@ html:lang(zh) .astra-summary-lead{-webkit-text-stroke:0;font-weight:400}
 @media(max-width:540px){.sidebar .home-project-note{left:-4px}}
 @media(min-width:925px) and (max-width:941px){.sidebar .home-project-note{left:clamp(-6px,calc((929px - 100vw)/2),0px)}}
 @media(min-width:1280px) and (max-width:1296px){.sidebar .home-project-note{left:clamp(-6px,calc((1284px - 100vw)/2),0px)}}
+
+/* Align the compact desktop sticker with the profile name, independently
+   of the card's optical offset. Keep the cat clear of the lettering. */
+@media(min-width:925px) and (max-width:1439px){
+  .sidebar .home-project-note{left:0}
+  .sidebar .astra-promo-heading{margin-left:-5px}
+  .sidebar .home-project-promo .home-cat-button{left:auto;right:-4px}
+}
