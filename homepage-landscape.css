@@ -102,6 +102,14 @@ html[data-theme="dark"] .academic-home .masthead .greedy-nav a,
 .academic-home .page__content #about p { color: var(--fg); font-size: 17px; line-height: 1.6; }
 html[data-theme] .academic-home .page__content #about a { color: var(--sky-link); }
 .home-horizon path, .site-footer path { transition: fill 350ms cubic-bezier(.41,.1,.13,1); }
+/* Carry the bright homepage sky through the footer as one landscape. */
+.academic-home footer.site-footer {
+  --home-sky-top-color: var(--hero-sky);
+  --home-sky-bottom-color: var(--hero-sky-bottom);
+  background: linear-gradient(var(--home-sky-top-color), var(--home-sky-bottom-color));
+  transition: --home-sky-top-color 350ms cubic-bezier(.41,.1,.13,1), --home-sky-bottom-color 350ms cubic-bezier(.41,.1,.13,1);
+}
+.academic-home .footer-lower-cloud { fill: var(--hero-cloud-far); }
 .academic-home .footer-inner .identity { font-weight: bold; }
 .academic-home .site-footer .footer-subscribe {
   text-decoration: none;
@@ -122,7 +130,7 @@ html[data-theme] .academic-home .page__content #about a { color: var(--sky-link)
   .home-horizon .source-article-cloud { width: 2000px; min-width: 2000px; height: 161.54px; }
 }
 @media (prefers-reduced-motion:reduce) {
-  html[data-theme] body.academic-home, .home-atmosphere,
+  html[data-theme] body.academic-home, .home-atmosphere, .academic-home footer.site-footer,
   .home-horizon path, .academic-home .masthead, .site-footer path,
   .academic-home .site-footer .character-layer,
   .academic-home .home-character .character-layer { transition: none; }
