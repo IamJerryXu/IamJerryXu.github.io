@@ -1,6 +1,7 @@
 'use strict';
 
 (() => {
+  const themeOnly = document.currentScript?.dataset.soundScope === 'theme';
   const searchButton = document.querySelector('#search-toggle');
   const dialog = document.querySelector('#site-search');
   const input = document.querySelector('#site-search-input');
@@ -12,8 +13,9 @@
   const soundButton = document.querySelector('#sound-toggle');
   const chinese = () => document.documentElement.lang.startsWith('zh');
   const soundStorageKey = 'blog-sound-enabled';
-  let soundEnabled = false;
-  try { soundEnabled = localStorage.getItem(soundStorageKey) === 'true'; } catch {}
+  const storedSoundEnabled = value => value === null ? themeOnly : value === 'true';
+  let soundEnabled = themeOnly;
+  try { soundEnabled = storedSoundEnabled(localStorage.getItem(soundStorageKey)); } catch {}
   let audioContext = null;
   let indexPromise = null;
   let searchIndex = [];
@@ -137,6 +139,36 @@
       // An unavailable audio device must never affect navigation or controls.
     }
   }
+  function suspendSounds() {
+    soundRevision++;
+    stopSound();
+    if (audioContext?.state === 'running') audioContext.suspend().catch(() => {});
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) suspendSounds();
+  });
+  window.addEventListener('pagehide', suspendSounds);
+  window.addEventListener('blur', suspendSounds);
+  window.addEventListener('pageshow', () => {
+    try { soundEnabled = storedSoundEnabled(localStorage.getItem(soundStorageKey)); } catch {}
+    updateSoundLabel();
+  });
+  window.addEventListener('storage', event => {
+    if (event.key !== soundStorageKey && event.key !== null) return;
+    soundEnabled = storedSoundEnabled(event.newValue);
+    soundRevision++;
+    stopSound();
+    updateSoundLabel();
+  });
+  if (themeOnly) {
+    // Share the Blog's exact light/dark voices, without mounting its search,
+    // menu, rainbow or article interactions on the academic homepage.
+    document.addEventListener('click', event => {
+      if (!(event.target instanceof Element) || !event.target.closest('#theme-toggle')) return;
+      playSound(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark', {group: 'theme'});
+    }, true);
+    return;
+  }
   // The article counter shares the existing sound preference and playback lifecycle.
   document.addEventListener('blog:counter-sound', event => {
     const kind = event.detail?.kind;
@@ -158,12 +190,6 @@
     playSound(soundEnabled ? 'enable' : 'disable', {force: true, group: 'preference'});
   });
   updateSoundLabel();
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) return;
-    soundRevision++;
-    stopSound();
-    if (audioContext?.state === 'running') audioContext.suspend().catch(() => {});
-  });
   // Capture the old state, before the control's own handler changes it.
   document.addEventListener('click', event => {
     if (!(event.target instanceof Element)) return;

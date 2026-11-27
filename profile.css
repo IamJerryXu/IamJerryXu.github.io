@@ -1,39 +1,14 @@
-/* A small interactive profile, with the original portrait and official artwork. */
-.portrait-scene{position:relative;width:fit-content;isolation:isolate;--badge-left:max(-60px,calc((925px - 100vw)/2 - 3px))}
-@media(min-width:1280px){.portrait-scene{--badge-left:max(-60px,calc((1280px - 100vw)/2 - 3px))}}
+/* Interactive photo and cartoon portraits. */
+.portrait-scene{position:relative;width:fit-content;isolation:isolate}
 .author__avatar .portrait-frame{transition:border-color 260ms,box-shadow 260ms;box-shadow:0 2px 8px #142a3c04}
 .portrait-toggle:hover .portrait-frame,.portrait-toggle:focus-visible .portrait-frame{border-color:#bacbd5;box-shadow:0 5px 22px #24465e0d}
 .portrait-toggle:active .portrait-frame{box-shadow:0 1px 5px #24465e12}
-.portrait-scene.is-expanded .portrait-universities{opacity:1;visibility:visible}
-.portrait-universities{z-index:3}
-.portrait-university{appearance:none;padding:0;border:0;background:transparent;cursor:pointer;pointer-events:none;border-radius:50%;text-decoration:none!important;outline-offset:5px;touch-action:manipulation;--badge-x:0px;--badge-y:0px}
-.portrait-scene.is-expanded .portrait-university{pointer-events:auto;animation:profile-badge-enter 540ms cubic-bezier(.2,.85,.25,1.16) var(--emblem-delay) both}
-.badge-response,.badge-float{display:block;width:100%;height:100%}
-.badge-response{transform:translate(var(--badge-x),var(--badge-y));transition:filter 220ms;will-change:auto}
-.badge-float{animation:emblem-float-y var(--float-duration) cubic-bezier(.45,0,.55,1) var(--float-phase) infinite}
-.portrait-university--westlake .badge-float,.portrait-university--hkust .badge-float{animation-name:emblem-sway}
-.author__avatar .portrait-university img{transition:scale 240ms cubic-bezier(.2,.8,.3,1),filter 240ms;filter:drop-shadow(0 2px 2px #203c4c08)}
-.portrait-university:hover img,.portrait-university:focus-visible img{scale:1.16;filter:drop-shadow(0 4px 5px #203c4c20)}
-.portrait-university:active img{scale:1.01}
-.portrait-scene:not(.is-expanded) .badge-float,.portrait-scene.is-paused .badge-float{animation-play-state:paused}
-@keyframes profile-badge-enter{from{opacity:0;transform:translateY(calc(-50% + 6px)) scale(.86)}to{opacity:1;transform:translateY(-50%) scale(1)}}
 html[data-theme=dark] .portrait-toggle:hover .portrait-frame,html[data-theme=dark] .portrait-toggle:focus-visible .portrait-frame{border-color:#637786;box-shadow:0 5px 22px #0003}
-/* A neutral backing protects official emblem colors on the dark canvas. */
-html[data-theme=dark] .portrait-university--sjtu .badge-float,html[data-theme=dark] .portrait-university--sysu .badge-float{background:#fff;border-radius:50%;box-shadow:0 0 0 2px #fff}
-html[data-theme=dark] .portrait-university--westlake img,html[data-theme=dark] .portrait-university--hkust img{filter:drop-shadow(0 0 1px #fff9) drop-shadow(0 2px 3px #0003)}
 @media(max-width:924px){.portrait-scene.is-expanded .portrait-sparkle{right:37px;top:-10px}}
 @media(max-width:540px){.portrait-scene.is-expanded .portrait-sparkle{right:33px}}
-@media(prefers-reduced-motion:reduce){.portrait-scene *{animation:none!important;transition:none!important}.badge-response{transform:none}.portrait-university:hover img,.portrait-university:focus-visible img{scale:1}}
-@media print{.portrait-universities{display:none!important}}
+@media(prefers-reduced-motion:reduce){.portrait-scene *{animation:none!important;transition:none!important}}
 
-html[data-theme=dark] .portrait-university--westlake .badge-float,html[data-theme=dark] .portrait-university--hkust .badge-float{position:relative;isolation:isolate}
-html[data-theme=dark] .portrait-university--westlake .badge-float::before,html[data-theme=dark] .portrait-university--hkust .badge-float::before{content:"";position:absolute;inset:-4px;z-index:-1;border-radius:12px;background:#b9c8d7}
-
-/* Four tiny dots unfold into the same arrangement as the four emblems. */
-
-/* Reserve the emblem's full hover/spring envelope beside the portrait.
-   Use the same pixel breakpoints as the portrait sizes; the reference theme's
-   em-based float columns otherwise switch at different browser font settings. */
+/* Keep the established profile and content spacing across portrait sizes. */
 @media (min-width:925px) {
   #main {
     display:grid;
@@ -66,11 +41,11 @@ html[data-theme=dark] .portrait-university--westlake .badge-float::before,html[d
   #main {max-width:1280px;column-gap:55px}
 }
 @media (max-width:540px) {
-  /* Bottom emblems extend below the oval, including their animated hover. */
+  /* Preserve the established spacing below the profile. */
   .profile_box .author__urls-wrapper {margin-top:26px}
 }
 
-/* Pinning opens the emblems. The sparkle tracks the pointer or keyboard focus. */
+/* The sparkle tracks the pointer or keyboard focus. */
 .portrait-toggle.is-memoji:not(.is-previewing) .portrait-sparkle { opacity: 0 }
 .portrait-toggle.is-previewing .portrait-sparkle { opacity: 1 }
 
