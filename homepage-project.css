@@ -48,3 +48,8 @@ html:lang(zh) .astra-summary-lead{-webkit-text-stroke:0;font-weight:400}
 }
 @media(prefers-reduced-motion:reduce){.sidebar .home-project-note,.home-project-note .astra-word,.home-project-note .astra-promo-heading,.home-project-note .astra-promo-link,.home-project-note .astra-promo-link>span:first-child,.home-project-note .astra-promo-link svg{animation:none!important;transition:none!important}.home-project-note[data-reveal]{opacity:1;transform:none}}
 @media print{.home-project-note{display:none}}
+/* Small optical left adjustment; preserve the cat at the two tight gutters. */
+.sidebar .home-project-note{left:-6px}
+@media(max-width:540px){.sidebar .home-project-note{left:-4px}}
+@media(min-width:925px) and (max-width:941px){.sidebar .home-project-note{left:clamp(-6px,calc((929px - 100vw)/2),0px)}}
+@media(min-width:1280px) and (max-width:1296px){.sidebar .home-project-note{left:clamp(-6px,calc((1284px - 100vw)/2),0px)}}
