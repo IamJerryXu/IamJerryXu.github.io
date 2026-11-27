@@ -1,0 +1,5 @@
+Original blue-scarf mouse companion generated for this personal website on 2026-11-27 using the built-in image generation tool.
+Style reference: the site's white-shirt character; only material, lighting and friendly toy-like mood.
+Day prompt: Original cinnamon-brown mouse with large peach-centered round ears, glossy black bead eyes, oatmeal belly, tiny cocoa nose, blush, closed-mouth smile, pale sky-blue neckerchief. Seated upright, paws together, both feet on the baseline, curved tail to the left; facing slightly right. Soft matte 3D clay with gentle studio light. Entire character visible, transparent background; independent facial proportions, not based on an existing cartoon character.
+Night prompt: Lighting-only edit of the original day image, matching the site's cool blue nighttime character illumination; preserve composition, pose, expression, proportions and transparency.
+Preparation: common transparent-margin crop for both light variants, resized to 470x640 WebP.

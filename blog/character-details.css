@@ -73,7 +73,7 @@ html[data-theme=dark] :is(.character-stitch, .character-cheese) {
 }
 @media print { .character-cheese { display: none; } }
 
-/* JCThornton's 3D Jerry; the shared spring keeps the companion animated. */
+/* Original blue-scarf mouse, with matching day/night studio lighting. */
 .character-pet {
   position: absolute; left: -41%; bottom: 1px; width: 40%; z-index: 3;
   display: block; pointer-events: auto; transition: none;
@@ -87,3 +87,11 @@ html[data-theme=dark] :is(.character-stitch, .character-cheese) {
   filter: none; transition: none;
 }
 @media print { .character-pet { display: none; } }
+
+.scene-portrait .character-pet .character-pet-day { position: relative; z-index: 1; }
+.scene-portrait .character-pet .character-pet-night { position: absolute; inset: 0; opacity: 0; }
+html[data-theme=dark] .scene-portrait .character-pet .character-pet-night { opacity: 1; }
+html[data-theme=dark] .scene-portrait .character-pet .character-pet-day { opacity: 0; }
+@media (prefers-reduced-motion:no-preference) {
+  .scene-portrait .character-pet .character-pet-art { transition: opacity 850ms cubic-bezier(.41,.1,.13,1); }
+}

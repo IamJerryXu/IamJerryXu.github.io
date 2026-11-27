@@ -29,7 +29,7 @@ def character_images(root, interactive=False):
 <path class="stitch-nose" d="M29.5 38.5Q32 37 34.5 38.5Q34 42 32 42Q30 42 29.5 38.5Z"/>
 </g></svg></svg></span>''')
     if interactive:
-        layers.append(f'<span class="character-pet" aria-hidden="true" title="Jerry · 3D artwork by JCThornton"><img class="character-pet-art" src="{asset_url(root, "assets/jerry-3d-wave.webp")}" width="463" height="640" alt="" draggable="false" decoding="async"></span>')
+        layers.append(f'<span class="character-pet" aria-hidden="true"><img class="character-pet-art character-pet-day" src="{asset_url(root, "assets/mouse-companion-day.webp")}" width="470" height="640" alt="" draggable="false" decoding="async"><img class="character-pet-art character-pet-night" src="{asset_url(root, "assets/mouse-companion-night.webp")}" width="470" height="640" alt="" draggable="false" decoding="async"></span>')
         layers.append('''<span class="character-cheese" aria-hidden="true"><svg viewBox="0 0 64 54" fill="none" aria-hidden="true" focusable="false"><g stroke-linecap="round" stroke-linejoin="round">
 <path class="cheese-side" d="M7 24L39 7Q41 6 43 8L58 22V43Q58 46 55 46H9Q6 46 6 43V27Q6 25 7 24Z"/>
 <path class="cheese-top" d="M7 24L39 7Q41 6 43 8L58 22L24 31Z"/>
