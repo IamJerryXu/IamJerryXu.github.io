@@ -1,6 +1,16 @@
 /* An entrance for a fresh homepage visit. The head bootstrap opts in;
    the default, history restore, print and reduced-motion views stay visible. */
 @media screen and (prefers-reduced-motion: no-preference) {
+  /* Establish the first frame before deferred scripts or image decoding finish.
+     Per-element states survive the navigation animation's cleanup. */
+  html[data-home-entry="ready"] .home-companion:not([data-entry-state]),
+  .home-companion[data-entry-state="waiting"],
+  html[data-home-entry="ready"] .home-project-note:not([data-reveal]),
+  html[data-home-entry="ready"] .page__content section:not(#about) > h2:not([data-entry-state]),
+  html[data-home-entry="ready"] .paper:not([data-entry-state]),
+  .page__content [data-entry-state="waiting"] {
+    opacity: 0;
+  }
   @media (min-width: 801px) {
   html[data-home-entry="ready"] .greedy-nav .visible-links > li {
     /* Josh’s dropIcon timing, extended to our eight navigation links. */

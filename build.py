@@ -77,7 +77,17 @@ THEME_INIT = """(() => {
  document.documentElement.dataset.theme = theme;
  document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#1c1d20' : '#ffffff';
 })();"""
-HOME_ENTRY_INIT = "try { if (!location.hash && !matchMedia('(prefers-reduced-motion: reduce)').matches && performance.getEntriesByType('navigation')[0]?.type !== 'back_forward') document.documentElement.dataset.homeEntry = 'ready'; } catch {}"
+HOME_ENTRY_INIT = """try {
+ if (!location.hash && !matchMedia('(prefers-reduced-motion: reduce)').matches && performance.getEntriesByType('navigation')[0]?.type !== 'back_forward') {
+  document.documentElement.dataset.homeEntry = 'ready';
+  // Failed interaction downloads must never leave readable content hidden.
+  document.addEventListener('DOMContentLoaded', () => {
+   document.querySelectorAll('.home-companion:not([data-entry-state]), .page__content section:not(#about) > h2:not([data-entry-state]), .paper:not([data-entry-state])').forEach(node => { node.dataset.entryState = 'visible'; });
+   const note = document.querySelector('.home-project-note:not([data-reveal])');
+   if (note) note.dataset.reveal = 'settled';
+  }, {once:true});
+ }
+} catch {}"""
 THEME_BUTTON = '<button id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode"><svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.9 13a9 9 0 0 1-9.9-9.9A9 9 0 1 0 20.9 13Z"/></svg><svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button>'
 SOUND_BUTTON = '<button class="icon-button" id="sound-toggle" type="button" aria-label="Enable sounds" title="Enable sounds" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4 6 8H3v8h3l5 4Z"/><path d="m16 9 5 6m0-6-5 6"/></svg></button>'
 home_cloud = render_cloud(ROOT, 'homepage-clouds.svg', 'source-article-cloud')

@@ -89,18 +89,21 @@
     },500);
   }
   let observer;
-  if ('IntersectionObserver' in window && !reduce.matches) {
+  if ('IntersectionObserver' in window && !reduce.matches && document.documentElement.hasAttribute('data-home-entry')) {
     note.dataset.reveal = 'waiting';
     observer = new IntersectionObserver(entries => {
       if (entries.some(entry => entry.isIntersecting)) {observer.disconnect();reveal();}
     },{threshold:0,rootMargin:'0px 0px 80px 0px'});
     observer.observe(note);
-  } else reveal();
+  } else finish();
   function finish() {
     timers.forEach(clearTimeout);timers.clear();observer?.disconnect();revealed = true;
-    note.dataset.reveal = 'visible';letters.forEach(letter => letter.set([1,0,0],true));
+    note.dataset.reveal = 'settled';letters.forEach(letter => letter.set([1,0,0],true));
     arrowSpring.set([0],true);release();cancelAnimationFrame(frame);frame = 0;previous = 0;
   }
   reduce.addEventListener('change', () => {if (reduce.matches) finish();});
   addEventListener('pagehide',finish);
+  note.addEventListener('focusin',finish);
+  addEventListener('hashchange',finish,{once:true});
+  document.addEventListener('home:entry-skip',finish,{once:true});
 })();

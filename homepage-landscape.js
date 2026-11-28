@@ -33,29 +33,43 @@
   const character = holder?.querySelector('.home-character');
   if (!character) return;
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  let entrance;
-  let active = true;
-  function reset() {
+  let entrance, observer;
+  let cancelled = false;
+  const finish = () => {
+    cancelled = true;
+    observer?.disconnect();
     entrance?.cancel();
+    holder.dataset.entryState = 'visible';
+  };
+  if (motion.matches || !('IntersectionObserver' in window) || !Element.prototype.animate ||
+      !document.documentElement.hasAttribute('data-home-entry')) {
+    finish();
+    return;
   }
-  if (!motion.matches && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(async entries => {
-      if (!entries.some(entry => entry.isIntersecting)) return;
-      observer.disconnect();
-      const mode = document.documentElement.dataset.theme === 'dark' ? 'night' : 'day';
-      await character.querySelector(`.character-layer--${mode} .character-base`).decode().catch(() => {});
-      if (active && !document.hidden && !motion.matches && document.activeElement !== character) entrance = holder.animate([
-        {opacity: 0},
-        {opacity: 1}
-      ], {duration: 600, delay: 200, easing: 'ease', fill: 'backwards'});
-    }, {threshold: .2});
-    observer.observe(holder);
-    addEventListener('pagehide', () => observer.disconnect(), {once:true});
-  }
-  character.addEventListener('focus', () => entrance?.cancel());
-  character.addEventListener('blur', reset);
-  motion.addEventListener('change', reset);
-  document.addEventListener('visibilitychange', () => {if (document.hidden) reset();});
-  addEventListener('pagehide', () => {active = false; reset();});
-  addEventListener('pageshow', () => {active = true;});
+  holder.dataset.entryState = 'waiting';
+  observer = new IntersectionObserver(async entries => {
+    if (!entries.some(entry => entry.isIntersecting)) return;
+    observer.disconnect();
+    const mode = document.documentElement.dataset.theme === 'dark' ? 'night' : 'day';
+    await character.querySelector(`.character-layer--${mode} .character-base`).decode().catch(() => {});
+    if (cancelled) return;
+    if (document.hidden || motion.matches || document.activeElement === character) {
+      finish();
+      return;
+    }
+    entrance = holder.animate([
+      {opacity: 0},
+      {opacity: 1}
+    ], {duration: 600, delay: 200, easing: 'ease', fill: 'backwards'});
+    // The animation owns opacity before the waiting state is released.
+    holder.dataset.entryState = 'visible';
+  }, {threshold: .2});
+  observer.observe(holder);
+  character.addEventListener('focus', finish);
+  character.addEventListener('blur', finish);
+  motion.addEventListener('change', finish);
+  document.addEventListener('visibilitychange', () => {if (document.hidden) finish();});
+  addEventListener('hashchange', finish, {once:true});
+  addEventListener('pagehide', finish, {once:true});
+  document.addEventListener('home:entry-skip', finish, {once:true});
 })();
